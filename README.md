@@ -1,5 +1,5 @@
 # SensePath
-Ear free intuitive navigation indoors* 
+Ear free, intuitive navigation indoors* 
 
 🛠️ Built by Sam Piryns & Titus Impens  
 🔥 Supervised by ``prof. dr. Bas Baccarne``, ``Yannick Christiaens`` & ``Wouter Devriese``    
