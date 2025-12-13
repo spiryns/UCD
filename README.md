@@ -1,7 +1,7 @@
 # SensePath
 Ear free, intuitive navigation indoors
 
-🛠️ Built by Sam Piryns & Titus Impens  
+🛠️ Built by Sam Piryns, Titus Impens, Han Deburchgraeve 
 🔥 Supervised by ``prof. dr. Bas Baccarne``, ``Yannick Christiaens`` & ``Wouter Devriese``    
 🌱 Grown at ``Ghent University`` 🏛️ ``Industrial Design Engineering`` ([project overview](https://github.com/basbaccarne/human-centered-design))       
 
