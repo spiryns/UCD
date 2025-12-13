@@ -18,17 +18,11 @@ Onze oplossing is SensePath: een slimme handgreep die op een bestaande lange wit
 </p>
 
 ## Introductie
-Navigeren is voor blinde en slechtziende personen niet enkel “de weg vinden”, maar ook continu beslissingen nemen op basis van beperkte informatie: waar is de ingang, welke gang is juist, waar bevindt de lift, en wanneer moet je handelen aan een kruispunt. In grote publieke gebouwen wordt dit extra moeilijk omdat herkenningspunten minder consistent zijn, routes vaak veranderen door tijdelijke werken en omdat klassieke GPS-navigatie binnenshuis onvoldoende betrouwbaar is. In onze interviews benoemden gebruikers vooral onzekerheid op keuzemomenten en de mentale belasting van voortdurend moeten verifiëren of men nog “goed zit”, vaak met afhankelijkheid van hulp van anderen als gevolg (SensePath User Interviews, 2025). 
+Navigeren is voor blinde en slechtziende personen niet enkel “de weg vinden”, maar ook continu beslissingen nemen op basis van beperkte informatie: waar is de ingang, welke gang is juist, waar bevindt de lift, en wanneer moet je handelen aan een kruispunt. In grote publieke gebouwen wordt dit extra moeilijk omdat herkenningspunten minder consistent zijn, routes vaak veranderen door tijdelijke werken en omdat klassieke GPS-navigatie binnenshuis onvoldoende betrouwbaar is. In onze interviews benoemden gebruikers vooral onzekerheid op keuzemomenten en de mentale belasting van voortdurend moeten verifiëren of men nog “goed zit”, vaak met afhankelijkheid van hulp van anderen als gevolg (User Interviews, 2025).
 
-Onderzoeksrapport_user_intervie…
+Het doel van dit project is het ontwikkelen van een onderbouwd concept: een slimme handgreep die op een bestaande lange witte stok wordt geplaatst en indoor begeleiding mogelijk maakt via discrete feedback, met de witte stok als primair mobiliteitshulpmiddel. Om dit concept te definiëren combineren we deskresearch en benchmarking van bestaande navigatie- en mobiliteitsoplossingen met gebruikersonderzoek (interviews en iteratieve concepttesten), zodat ontwerpkeuzes expliciet voortkomen uit gebruikersnoden en realistische contexten (Benchmarking, 2025; User Interviews, 2025).
 
-Het doel van dit project is het ontwikkelen van een onderbouwd concept voor SensePath: een slimme handgreep die op een bestaande lange witte stok wordt geplaatst en indoor begeleiding mogelijk maakt via discrete feedback, met de witte stok als primair mobiliteitshulpmiddel. Om dit concept te definiëren combineren we deskresearch en benchmarking van bestaande navigatie- en mobiliteitsoplossingen met gebruikersonderzoek (interviews en iteratieve concepttesten), zodat ontwerpkeuzes expliciet voortkomen uit gebruikersnoden en realistische contexten (SensePath Benchmarking, 2025; SensePath User Interviews, 2025).
-
-Binnen het eerste semester ligt de focus op concept testing (en in mindere mate usability testing) en op het doorlopen van minimaal twee sequentiële iteraties (waves) waarin prototypes worden getest, inzichten geanalyseerd en vertaald naar design requirements en een bijgewerkte PRD (PGGO Deelopdracht 2, 2025). 
-
-Deelopdracht 2_ Definition
-
- Boundary conditions voor deze fase zijn: (1) de oplossing moet compact blijven (geen bulky wearables), (2) zo weinig mogelijk actieve smartphone-interactie tijdens het stappen, (3) toepasbaarheid op 2D-navigatie per verdieping, en (4) een duidelijke fail-safe workflow voor afwijkingen of blokkades (SensePath Benchmarking, 2025; SensePath User Interviews, 2025).
+Binnen het eerste semester ligt de focus op concept testing en op het doorlopen van sequentiële iteraties waarin prototypes worden getest, inzichten geanalyseerd en vertaald naar design requirements en een bijgewerkte PRD. Boundary conditions voor deze fase zijn: (1) de oplossing moet compact blijven (geen bulky wearables), (2) zo weinig mogelijk actieve smartphone-interactie tijdens het stappen, (3) toepasbaarheid op 2D-navigatie per verdieping, en (4) een duidelijke fail-safe workflow voor afwijkingen of blokkades (Benchmarking, 2025; User Interviews, 2025).
 
 ## Inhoudstafel
 
