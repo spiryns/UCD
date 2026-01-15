@@ -160,9 +160,13 @@ Deze conclusies vormen de basis voor verdere ontwikkeling in volgende fases, waa
 > - D2.2 Richtinginformatie moet **intuïtief** zijn (geen codes/patronen die je moet aanleren)
 > - D2.3 Bewegingsgebaseerde haptiek (links/rechts, voor/achter) moet **duidelijk en consistent** aanvoelen
 > - D2.4 Vibratie mag enkel dienen als **secundaire feedback** (bevestiging/waarschuwing), niet continu
+> - D2.5 Het systeem moet **obstakeldetectie op hoofdhoogte** ondersteunen (bv. takken, borden, uitstekende objecten)
+> - D2.6 Het systeem moet **obstakeldetectie voor putten en niveauverschillen** ondersteunen (bv. trappen, afstappen, gaten)
 > - D3.1 De gebruiker moet **controle behouden** (duidelijk start/stop; geen onverwachte automatische acties)
 > - D3.2 Interactie tijdens het stappen moet **minimaal** blijven
 > - D3.3 De smartphone mag enkel een **ondersteunende rol** hebben (instellen/starten), niet als constante interface
+> - D3.4 De gebruiker moet op een **bewust gekozen moment** een **volledig overzicht** kunnen opvragen van weg en locatie
+> - D3.5 Deze overzichtsinformatie mag **niet continu aanwezig** zijn, maar enkel **op vraag van de gebruiker**
 > - D4.1 Het systeem mag het **normale stokgebruik niet verstoren** (gewicht, balans, grip)
 > - D4.2 Het systeem moet **betrouwbaar en voorspelbaar** aanvoelen in dagelijks gebruik
 
