@@ -150,28 +150,21 @@ Op basis van Wave 1 en Wave 2 kan worden geconcludeerd dat SensePath het meeste 
 Gebruikers verwachten eerst en vooral betrouwbaarheid, controle en mentale rust. Extra functies zijn enkel waardevol wanneer ze deze basis versterken.
 
 Deze conclusies vormen de basis voor verdere ontwikkeling in volgende fases, waarin de focus zal verschuiven naar verfijning, realistischere contexten en mogelijke technische implementatie.
-> 💡 **Important**
-
-**Design Requirements (Definition – Wave 1 & 2):**
-
-- **D1.1** SensePath wordt ontworpen als **een volledige stok** (niet enkel een afneembaar handvat).
-- **D1.2** De stok wordt aangeboden in **meerdere lengtes** (bv. kort/medium/lang) zodat gebruikers een lengte kunnen kiezen die past bij hun context.
-- **D1.3** De gebruiker moet **snel en eenvoudig kunnen switchen tussen lengtes** (modulair systeem), zonder gereedschap of met minimale handelingen.
-- **D1.4** De verbinding tussen lengtesegmenten moet **mechanisch stabiel** zijn (geen speling/rotatie) en veilig aanvoelen tijdens gebruik.
-
-- **D2.1** Haptische feedback moet de **primaire informatiedrager** zijn.
-- **D2.2** Richtinginformatie moet **intuïtief en niet-symbolisch** zijn (geen codes/patronen die je moet aanleren).
-- **D2.3** **Bewegingsgebaseerde haptiek** (links/rechts, voor/achter) is de voorkeursrichting voor duidelijke feedback.
-
-- **D3.1** Vibratie mag enkel gebruikt worden als **secundaire feedback** (bevestiging/waarschuwing), niet als continue richtingsinfo.
-- **D3.2** De feedback moet **rustig en niet-opdringerig** zijn om mentale belasting te beperken.
-
-- **D4.1** De gebruiker moet **controle behouden** (duidelijk start/stop, geen “random” automatische acties).
-- **D4.2** Interactie tijdens het stappen moet **minimaal** zijn.
-- **D4.3** De smartphone mag enkel een **ondersteunende rol** hebben (instellen/starten), niet als constante interface.
-
-- **D5.1** Het systeem mag het **normale stokgebruik niet verstoren** (gewicht, balans, grip).
-- **D5.2** SensePath moet **betrouwbaar en voorspelbaar** aanvoelen in dagelijks gebruik.
+> [!IMPORTANT]
+> Design Requirements:
+> - D1.1 SensePath wordt ontworpen als **volledige slimme stok** (geen universeel afneembaar handvat)
+> - D1.2 De stok moet beschikbaar zijn in **meerdere lengtes**
+> - D1.3 De gebruiker moet **kunnen switchen tussen lengtes** (modulair systeem)
+> - D1.4 De lengte-verbinding(en) moeten **mechanisch stabiel** zijn (geen speling/rotatie)
+> - D2.1 Haptische feedback moet de **primaire informatiedrager** zijn (boven audio)
+> - D2.2 Richtinginformatie moet **intuïtief** zijn (geen codes/patronen die je moet aanleren)
+> - D2.3 Bewegingsgebaseerde haptiek (links/rechts, voor/achter) moet **duidelijk en consistent** aanvoelen
+> - D2.4 Vibratie mag enkel dienen als **secundaire feedback** (bevestiging/waarschuwing), niet continu
+> - D3.1 De gebruiker moet **controle behouden** (duidelijk start/stop; geen onverwachte automatische acties)
+> - D3.2 Interactie tijdens het stappen moet **minimaal** blijven
+> - D3.3 De smartphone mag enkel een **ondersteunende rol** hebben (instellen/starten), niet als constante interface
+> - D4.1 Het systeem mag het **normale stokgebruik niet verstoren** (gewicht, balans, grip)
+> - D4.2 Het systeem moet **betrouwbaar en voorspelbaar** aanvoelen in dagelijks gebruik
 
 ## Kritische reflectie
 Max. 500 woorden
