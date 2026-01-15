@@ -88,18 +88,18 @@ In Wave 2 werd voortgebouwd op de inzichten uit Wave 1. Op basis van duidelijke 
 De focus van Wave 2 lag op:
 
 - verfijning van geselecteerde haptische principes;
-
 - evaluatie van de fysieke integratie van technologie in relatie tot de witte stok;
-
-- het testen van stabiliteit, ergonomie en vertrouwen.
+- het testen van stabiliteit, ergonomie en vertrouwen;
+- het prioriteren van design requirements aan de hand van een MoSCoW-analyse;
+- het aftoetsen van veiligheidsperceptie bij obstakeldetectie via een observatietest.
 
 De onderzoeksvragen voor deze fase waren onder andere:
 
 - Hoe ervaren gebruikers de fysieke bevestiging van een extra component op hun stok?
-
 - Welke haptische feedback blijft begrijpelijk en comfortabel tijdens langere interactie?
-
 - Wanneer voelt een oplossing aan als een logisch onderdeel van de stok, en wanneer als storend?
+- Welke design requirements zijn volgens gebruikers absoluut noodzakelijk (Must) en welke zijn onderhandelbaar?
+- Hoe ervaren gebruikers het veiligheidsgevoel bij het naderen van een obstakel?
 
 Voor deze fase werden nieuwe prototypes ontwikkeld:
 
@@ -110,6 +110,9 @@ Voor deze fase werden nieuwe prototypes ontwikkeld:
 👉 Hier een foto plaatsen van de fitting-prototypes (Wave 2)
 👉 Hier een foto plaatsen van de haptische prototypes (Wave 2)
 
+Daarnaast werd een MoSCoW-prioriteringsoefening uitgevoerd. De respondenten kregen een overzicht van de design requirements uit Wave 1, aangevuld met strategische requirements van het ontwerpteam, en werden gevraagd deze te rangschikken volgens de categorieën Must, Should, Could en Won’t. Tijdens deze oefening werd expliciet gevraagd om luidop te redeneren, zodat onderliggende motieven en twijfels zichtbaar werden.
+
+Om het veiligheidsgevoel rond obstakeldetectie te evalueren, werd een observatietest uitgevoerd. De respondenten wandelden traag in de richting van een obstakel terwijl de interviewer auditieve waarschuwingen gaf in de vorm van een herhaald “bieb”-signaal dat sneller werd naarmate de afstand tot het obstakel kleiner werd. Deze test had niet als doel technische detectie te evalueren, maar om te begrijpen of en wanneer dergelijke waarschuwingen als veilig, stressvol of ondersteunend worden ervaren.
 Dezelfde respondenten als in Wave 1 (n = 5) namen deel aan deze fase, zodat evoluties in mening en voorkeur konden worden opgevolgd. De sessies combineerden unguided interactie, guided simulatie en reflectie.
 
 ### Resultaten
@@ -132,6 +135,8 @@ In Wave 2 konden gebruikers explicieter vergelijken en verdiepen.
 Wat betreft de fitting-prototypes werd duidelijk dat stabiliteit en het gevoel van “één geheel” met de stok essentieel zijn. Oplossingen die eenvoudig te monteren waren maar enige speling vertoonden, werden negatief beoordeeld. Gebruikers gaven aan liever iets meer moeite te doen bij montage dan onzekerheid te ervaren tijdens gebruik.
 
 Bij de haptische prototypes werd opnieuw bevestigd dat beweging een zeer sterke informatiedrager is. Continue, rustige bewegingsfeedback werd als geruststellend en betrouwbaar ervaren. Vibratie werd enkel aanvaard als aanvullende feedback, bijvoorbeeld ter bevestiging.
+
+Tijdens de objectdetectietest, waarbij gebruikers traag in de richting van een obstakel wandelden terwijl een waarschuwing steeds sneller werd aangeboden, bleek dat het veiligheidsgevoel sterk afhankelijk is van de manier waarop de feedback wordt opgebouwd. Een graduele toename van het signaal werd als ondersteunend ervaren en hielp gebruikers om afstand en naderend gevaar in te schatten. Wanneer de waarschuwing echter te snel of te dwingend werd, nam het stressniveau toe en voelden sommige gebruikers zich opgejaagd. De test bevestigde dat objectdetectie enkel waardevol is wanneer deze rust, voorspelbaarheid en controle behoudt.
 
 Gebruikers benadrukten dat technologie hen moet ondersteunen op beslissingsmomenten, maar nooit de controle mag overnemen.
 
