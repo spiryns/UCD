@@ -31,7 +31,8 @@ Binnen het eerste semester ligt de focus op concept testing en op het doorlopen 
 3. [Defintion](./docs/definition.md)
 4. [Design Requirements](./docs/design_requirements.md)
 5. [Bill of materials](./docs/bom.md)
-
+## Discover
+## Define
 ## Kritische reflectie
 Max. 500 woorden
 
