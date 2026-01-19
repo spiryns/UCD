@@ -16,7 +16,7 @@ Onderzoeksvragen
 Doelgroep
 ---------
 Primair
-- Volledig blinde volwassenen die autonoom publieke gebouwen willen kunnen bezoeken.
+- Blinde en zeer slechtziende volwassenen die autonoom publieke gebouwen willen kunnen bezoeken.
 - Vertrouwd met iPhone (VoiceOver) en gebruiken witte stok (soms ook geleidehond).
 
 Secundair en stakeholders
