@@ -108,7 +108,11 @@ Voor deze fase werden nieuwe prototypes ontwikkeld:
 - haptische prototypes met verfijnde bewegings- en vibratiefeedback.
 
 👉 Hier een foto plaatsen van de fitting-prototypes (Wave 2)
-👉 Hier een foto plaatsen van de haptische prototypes (Wave 2)
+<p align="left">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
+</p>
 
 Daarnaast werd een MoSCoW-prioriteringsoefening uitgevoerd. De respondenten kregen een overzicht van de design requirements uit Wave 1, aangevuld met strategische requirements van het ontwerpteam, en werden gevraagd deze te rangschikken volgens de categorieën Must, Should, Could en Won’t. Tijdens deze oefening werd expliciet gevraagd om luidop te redeneren, zodat onderliggende motieven en twijfels zichtbaar werden.
 
