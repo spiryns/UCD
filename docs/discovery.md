@@ -32,8 +32,10 @@ User interviews (N = 3)
 - Doel: rijke, contextuele inzichten verzamelen over routines, frustraties, veiligheid en voorkeuren (audio vs haptiek).
 
 Links
+## Links (Discovery)
 - Protocol: [Interview protocol SensePath](./Interview%20-%20protocol%20-%20SensePath.docx)
 - Rapport: [Onderzoeksrapport user interviews SensePath](./Onderzoeksrapport_user_interviews_SensePath.docx)
+
 
 Benchmarking / technology scouting (N = 11)
 - Type: systematische vergelijking van bestaande (indoor) navigatie oplossingen.
