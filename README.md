@@ -14,7 +14,7 @@ We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navi
 Onze oplossing is SensePath: een slimme handgreep die op een bestaande lange witte stok wordt bevestigd en gekoppeld is aan een eenvoudige app-workflow. SensePath vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker “hands-free, heads-up” kan blijven bewegen met de stok als primair hulpmiddel. Optioneel biedt het systeem een fail-safe flow om te herstarten of hulp te vragen bij afwijkingen of blokkades. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
 - Hero sketch/render/image, vb.
 <p align="center">
-  <img src="WhatsApp Image 2026-01-07 at 20.23.09.jpeg" width="100%">
+  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" width="100%">
 </p>
 
 ## Introductie
