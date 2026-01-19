@@ -32,8 +32,6 @@ Binnen het eerste semester ligt de focus op concept testing en op het doorlopen 
 4. [Design Requirements](./docs/design_requirements.md)
 5. [Bill of materials](./docs/bom.md)
 ## Discovery
-Discovery
-========
 
 Doelstellingen
 --------------
