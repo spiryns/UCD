@@ -32,8 +32,8 @@ User interviews (N = 3)
 - Doel: rijke, contextuele inzichten verzamelen over routines, frustraties, veiligheid en voorkeuren (audio vs haptiek).
 
 Links
-- Protocol: Interview - protocol - SensePath.docx
-- Rapport: Onderzoeksrapport_user_interviews_SensePath.docx
+- Protocol: [Interview protocol SensePath](./Interview%20-%20protocol%20-%20SensePath.docx)
+- Rapport: [Onderzoeksrapport user interviews SensePath](./Onderzoeksrapport_user_interviews_SensePath.docx)
 
 Benchmarking / technology scouting (N = 11)
 - Type: systematische vergelijking van bestaande (indoor) navigatie oplossingen.
@@ -41,8 +41,8 @@ Benchmarking / technology scouting (N = 11)
 - Criteria (o.a.): lokalisatiemethode, benodigde infrastructuur, nauwkeurigheid en robuustheid, feedbackmodaliteit, schaalbaarheid en beheer, rijpheid (TRL).
 
 Links
-- Protocol: Benchmarkingprotocol_SensePath.docx
-- Rapport: Benchmarkingrapport _SensePath.docx
+- Protocol: [Benchmarkingprotocol SensePath](./Benchmarkingprotocol_SensePath.docx)
+- Rapport: [Benchmarkingrapport SensePath](./Benchmarkingrapport_SensePath.docx)
 
 Resultaten
 ----------
