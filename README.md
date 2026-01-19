@@ -5,7 +5,7 @@ Ear free, intuitive navigation indoors
 🔥 Supervised by ``prof. dr. Bas Baccarne``, ``Yannick Christiaens`` & ``Wouter Devriese``    
 🌱 Grown at ``Ghent University`` 🏛️ ``Industrial Design Engineering`` ([project overview](https://github.com/basbaccarne/human-centered-design))       
 
-*Dag/Maand/Jaar van de laatste update*   
+*19/01/2026*   
 
 Mensen die blind of slechtziend zijn kunnen buiten relatief goed navigeren met GPS, maar in grote publieke gebouwen (stations, ziekenhuizen, campussen) valt die ondersteuning vaak weg. Vooral op kruispunten, splitsingen en bij tijdelijke omleidingen leidt dit tot twijfel, extra mentale belasting en afhankelijkheid van hulp van anderen.
 
