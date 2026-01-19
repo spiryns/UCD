@@ -75,7 +75,13 @@ Om deze vragen te onderzoeken, werden low-fidelity prototypes ontwikkeld die ver
 
 Deze prototypes werden manueel aangestuurd (Wizard-of-Oz) zodat gebruikers de ervaring konden beoordelen zonder technische beperkingen.
 
-👉 Hier een foto plaatsen van de haptische prototypes uit Wave 1
+<p align="left">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51.jpeg" width="32%">
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.37 (1).jpeg" width="32%">
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (2).jpeg" width="32%">
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (3).jpeg" width="32%">
+  <img src="img/WhatsApp Image 2026-01-19 at 20.29.34.jpeg" width="32%">
+</p>
 
 De prototypes werden getest via semigestructureerde interviews en think-aloud tests met ervaren gebruikers van de witte stok (n = 5). De focus lag op interpretatie, comfort, vertrouwen en mentale belasting.
 
@@ -106,12 +112,16 @@ Voor deze fase werden nieuwe prototypes ontwikkeld:
 - fitting-prototypes met verschillende klemmechanismes;
 
 - haptische prototypes met verfijnde bewegings- en vibratiefeedback.
+<p align="left">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.19.jpeg" width="32%">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.52.jpeg" width="32%">
 
-👉 Hier een foto plaatsen van de fitting-prototypes (Wave 2)
+</p>
+
 <p align="left">
   <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.50.jpeg" width="32%">
+
 </p>
 
 Daarnaast werd een MoSCoW-prioriteringsoefening uitgevoerd. De respondenten kregen een overzicht van de design requirements uit Wave 1, aangevuld met strategische requirements van het ontwerpteam, en werden gevraagd deze te rangschikken volgens de categorieën Must, Should, Could en Won’t. Tijdens deze oefening werd expliciet gevraagd om luidop te redeneren, zodat onderliggende motieven en twijfels zichtbaar werden.
