@@ -329,7 +329,7 @@ Deze conclusies vormen de basis voor verdere ontwikkeling in volgende fases, waa
 > - D3.5 Deze overzichtsinformatie mag **niet continu aanwezig** zijn, maar enkel **op vraag van de gebruiker**
 > - D4.1 Het systeem mag het **normale stokgebruik niet verstoren** (gewicht, balans, grip)
 > - D4.2 Het systeem moet **betrouwbaar en voorspelbaar** aanvoelen in dagelijks gebruik
-
+> - D5.1 Het navigatiesysteem moet zowel indoor als outdoor gebruikt kunnen worden, waarbij de overgang tussen beide omgevingen automatisch verloopt zonder tussenkomst van de gebruiker.
 ## Kritische reflectie
 Max. 500 woorden
 
