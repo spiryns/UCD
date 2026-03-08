@@ -508,21 +508,13 @@ Kompas (continue koersfeedback) + vibratie (afslagcue) samen op hetzelfde parcou
 
 ## Kritische reflectie
 
-De Discovery-fase leverde waardevolle inzichten op, maar kende ook beperkingen. De user interviews (N=3) gaven rijke, kwalitatieve data, maar het beperkte aantal respondenten maakt het moeilijk om de bevindingen breed te generaliseren. Desondanks kwamen er opvallend consistente patronen naar voren — met name de onzekerheid aan knooppunten en de voorkeur voor haptische feedback — wat erop wijst dat de kernproblemen goed geïdentificeerd zijn.
+Uit de vergelijking tussen test 1 en test 2 blijkt dat gebruikers fouten sneller corrigeren. Dat wijst erop dat ze het pad beter begrijpen naarmate ze er vaker mee in contact komen en dat hun reactie op fouten met de tijd efficiënter wordt. 
 
-De benchmarking van 11 bestaande oplossingen gaf een breed overzicht van de markt, maar was beperkt tot publiek beschikbare informatie en demonstraties. Niet alle oplossingen konden hands-on getest worden, waardoor sommige beoordelingen op secundaire bronnen gebaseerd zijn.
+Daarnaast toont de evolutie over test 1, test 2 en test 3 dat gebruikers het pad onbewust beginnen te onthouden. Door herhaling ontstaat er dus een vorm van path learning, waardoor de uitvoering vlotter en waarschijnlijk ook consistenter verloopt. 
 
-Qua teamwerking verliep de samenwerking over het algemeen vlot. De taakverdeling tussen de drie teamleden was duidelijk, maar bij de planning van user tests bleek dat het coördineren van sessies met de doelgroep meer doorlooptijd vraagt dan verwacht. Dit leidde tot tijdsdruk in de latere weken van semester 1, iets dat we in semester 2 beter hebben geanticipeerd door vroeger contact te leggen met Licht en Liefde.
+Een belangrijk inzicht is dat 90% van alle fouten te wijten is aan de timing van de wizard. Dat betekent dat een groot deel van de fouten niet noodzakelijk door de gebruiker zelf veroorzaakt wordt, maar eerder samenhangt met het moment waarop de begeleiding of tussenkomst plaatsvindt. Op basis daarvan kan verondersteld worden dat een geautomatiseerde aanpak minder fouten zou opleveren. 
 
-In de Definition-fase werkten de Wizard-of-Oz tests goed om snel feedback te verzamelen zonder technische beperkingen, maar de gecontroleerde testomgeving verschilt sterk van de echte complexiteit van publieke gebouwen. De respondenten waren zich bewust van de testsituatie, wat hun reacties mogelijk beïnvloed heeft.
-
-De Develop 1-fase bracht een aantal fundamentele inzichten maar ook methodologische beperkingen aan het licht. De vergelijking met de Tactile Compass (Liu et al., CHI 2021) toont dat SensePath onder moeilijkere omstandigheden vergelijkbare resultaten behaalt — maar de vergelijking is niet één-op-één: Liu et al. gebruikten OptiTrack (mm-precisie) terwijl wij video-observatie gebruikten, hun deelnemers hielden een los handvat vast terwijl onze deelnemers een volledige stok gebruikten, en hun feedback was geautomatiseerd terwijl de onze via Wizard-of-Oz verliep. Met name dat laatste punt is significant: circa 90% van de fouten tijdens onze tests was te wijten aan de timing van de wizard, niet aan het concept zelf.
-
-Een belangrijk aandachtspunt is dat gebruikers het parcours onbewust memoriseren over de drie opeenvolgende tests, wat een confound vormt in de stijgende SIZ-scores. Voor toekomstige tests zou het parcours per conditie moeten variëren.
-
-De ergonomie van het huidige prototype bleek de belangrijkste bottleneck: palmsensatie was zwak, het handvat paste niet bij elke handgrootte, en de sensorpositionering was asymmetrisch (links past goed = rechts past slecht). Dit maakt het moeilijk om de haptische concepten eerlijk te evalueren — verbeteringen in Develop 2 moeten hier prioriteit aan geven.
-
-Tot slot bleek de testomgeving bij Licht en Liefde (rustig interieur) sterk te verschillen van de uiteindelijke gebruikscontext (druk station, publiek gebouw). De cognitieve belasting zal in realistische omgevingen waarschijnlijk hoger liggen, wat de subjectieve scores kan beïnvloeden.
+Ten slotte wijst de vergelijking tussen omgeving en cognitieve belasting erop dat de context waarin de test plaatsvindt een invloed kan hebben op de prestaties van de gebruiker. Een complexere of minder geschikte omgeving kan de cognitieve load verhogen, wat op zijn beurt het aantal fouten of de moeilijkheidsgraad van de taak kan beïnvloeden. 
 
 ---
 
