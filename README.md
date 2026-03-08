@@ -29,10 +29,11 @@ Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange
 2. [Discovery](#discovery)
 3. [Definition](#definition)
 4. [Design Requirements](#design-requirements)
-5. [Kritische reflectie](#kritische-reflectie)
-6. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
-7. [Bijlagen](#bijlagen)
-8. [Bronnen](#bronnen)
+5. [Develop 1](#develop-1)
+6. [Kritische reflectie](#kritische-reflectie)
+7. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
+8. [Bijlagen](#bijlagen)
+9. [Bronnen](#bronnen)
 
 ---
 
@@ -242,15 +243,176 @@ Gebruikers verwachten eerst en vooral **betrouwbaarheid, controle en mentale rus
 
 ---
 
+## Develop 1
+
+### Doelstellingen
+
+In de Develop 1-fase verschuift de focus van conceptvalidatie naar **functionele verfijning**. Het doel is om van concept naar een onderbouwde functionele architectuur te evolueren: onzekerheden wegnemen via gerichte onderzoeksvragen, het product ontleden in deelaspecten, en prototypevarianten bouwen en testen.
+
+### Onderzoeksvragen
+
+- Kan de gebruiker via een trilsignaal in het handvat correct en tijdig een afslag herkennen en uitvoeren (links, rechts, schuin)?
+- Kan de gebruiker via continue kompasfeedback in het handvat een bocht volgen en op koers blijven?
+- Hoe effectief is de combinatie van trilsignaal (event-cue) en kompasfeedback (continue koerscorrectie) bij een gecombineerd parcours?
+- Hoe verhoudt de nauwkeurigheid (out-of-area proportion) zich tot vergelijkbare systemen in de literatuur, specifiek het Tactile Compass (Liu et al., CHI 2021)?
+- Wat is de subjectieve ervaring (workload, vertrouwen, leerbaarheid) van de gebruiker bij elke conditie?
+
+### Scenario & user flow (Norman's 7 stages of action)
+
+Het kernscenario is: **van punt A naar punt B (bv. station → lokaal) wandelen met SensePath, zonder dat aandacht (auditief/mentaal) overbelast raakt.**
+
+### Storyboard
+
+<!-- TODO: storyboard afbeelding toevoegen als img/storyboard.jpg -->
+
+De user flow werd geanalyseerd via Norman's 7 stages of action:
+
+| Fase | Wat de gebruiker doet | Fricties & aandachtspunten |
+|---|---|---|
+| **Goal** | Veilig en zelfstandig aankomen, met rust/vertrouwen | Doel is breder dan "navigeren": ook veiligheid, vertrouwen, stress |
+| **Plan** | Beslissen: SensePath gebruiken? Smartphone nodig? Haptiek-only of audio? | Te veel opties = keuzestress → overchoice-effect. Mental model mismatch: user verwacht "stok blijft stok" |
+| **Specify** | "SensePath ON", route starten naar bestemming, mode kiezen | Onduidelijke signifiers: waar/hoe start ik? (knop, lang indrukken, dubbelklik) |
+| **Perform** | Wandelen met stok + haptische richtingscue + evt. waarschuwing/confirmatie | Interactie mag niet "extra handelingen" vragen. Recall i.p.v. recognition = hogere load |
+| **Perceive** | Haptiek voelen (primair), evt. audio horen, stokfeedback voelen | In echte context (wind, handschoenen, stress) kan haptiek minder onderscheidbaar zijn |
+| **Interpret** | Cue → betekenis → actie (mentale mapping) | Ambiguïteit tussen soorten feedback. Mental model mismatch door verkeerde systeemimage |
+| **Compare** | "Ben ik nog op koers? Voel ik me veiliger?" | Resultaat niet eenduidig te linken aan systeem. Emotie en stress domineren de evaluatie |
+
+### User flow
+
+<p align="center">
+  <img src="img/PGGO - SensePath - User flow.jpg" alt="User flow SensePath" width="800"/>
+</p>
+
+### Functionele breakdown
+
+Het product werd ontleed in 8 functionele deelgebieden:
+
+**1) Locatie instellen + vertrekken**
+Persoon krijgt afspraakgegevens, zet bestemming in app (spraak/typ), bevestigt routekeuze, pakt handvat van oplaadstation, klikt/lockt op stok, handvat gaat aan (auto-on), app koppelt (BT) en geeft "klaar om te vertrekken" (korte haptische ping).
+
+**2) Buiten wandelen: "kompas"-feedback (draaiend bolletje in handpalm)**
+Systeem bepaalt startpositie + richting (GPS/kompas/IMU), handvat geeft startsignaal, bolletje draait naar "juiste looprichting", persoon voelt bol-oriëntatie in handpalm en corrigeert lichaam/looplijn. Bij GPS drift/urban canyon → systeem schakelt naar "lage zekerheid" patroon.
+
+**3) Kruispunt: links/rechts instructie via trillmotoren (duim/middelvinger)**
+Systeem herkent aankomend kruispunt (route-data + positie), handvat "waarschuwt vooraf", persoon vertraagt/zoekt veilig punt. Afslaaninstructie: trilling duim = rechts, trilling middelvinger = links. Persoon bevestigt (optioneel): knop/knijp/voice "ok".
+
+**4) Obstakel: detectie + audiofeedback**
+Sensoren scannen vooruit (hoogte/afstand), systeem detecteert obstakel, classificatie "urgentie": ver weg → zachte waarschuwing, dichtbij/snel → dringende waarschuwing. Audiofeedback start (via telefoon of speaker/bone conduction). Zodra obstakel voorbij: audio stopt + korte haptische "clear".
+
+**5) Gebouw binnen: overgang outdoor → indoor**
+Systeem merkt "GPS weg / signaalpatroon verandert" of detecteert ingang (geo-fence), handvat geeft transitie-signaal, app schakelt naar indoor positioning (BLE/Wi-Fi/UWB/QR-kaart). Kalibratie: "sta 1 seconde stil" (haptische vraag) om heading/IMU te resetten.
+
+**6) Binnen: preciezere navigatie door het gebouw**
+Systeem bepaalt indoor startpunt (ingang node), route door gebouw wordt gekozen (corridors, deuren, obstakels, toegankelijkheid). Persoon wandelt rechtuit: bolletje haptiek voor koers (subtwieler dan buiten). Turn-instructie via duim/middelvinger (zoals kruispunt, maar korter).
+
+**7) Trappen en liften: verticale navigatie**
+Systeem detecteert "verticale keuze punt" (trap/lift in route), handvat geeft speciaal patroon. Trap = ritmisch oploppend patroon, lift = lang-kort-lang. Persoon nadert trap/lift en stopt op veilige positie. Systeem geeft keuze/advies (toegankelijkheid). Trap-flow: waarschuwing → tempo-haptiek voor op/af → "einde trap" signaal.
+
+**8) Aankomst op locatie**
+Systeem herkent "bestemming bereikt", handvat geeft duidelijk eindsignaal (uniek patroon), systeem geeft "precise cue": exacte deur/desk. Persoon verifieert bestemming (tast naambordje, vraagt hulp, luistert). Navigatie stopt automatisch of na bevestiging ("stop"). Handvat gaat naar idle (energie besparen).
+
+### Productarchitectuur (I/O)
+
+<p align="center">
+  <img src="img/PGGO - SensePath - HPI - Productarchitectuur (I_O).jpg" alt="Productarchitectuur I/O diagram" width="800"/>
+</p>
+
+De technische architectuur is opgebouwd rond drie lagen:
+
+**Voor gebruik (initiatie + interactie):**
+- Input: movement input (presence sensor) + push input (push button)
+- Processing: microcontroller (Arduino/ESP32) met BLE of WiFi Direct pairing stok ↔ app
+- Output: bestemmingselectie via app
+
+**Tijdens gebruik:**
+- Montage op stok → behuizing → obstakeldfeedback (pulsfrequentie/intensiteit stijgt)
+- Vibratie (vibratiemotor) + audio (speaker) als outputmodaliteiten
+- Gevaarsdetectie via lasersensor + ultrasoon sensor → afstandsmeting → obstakel → microcontroller
+- Koersfeedback via draaiend element (servo/stepper/brushless motor → motor driver)
+- Afslagcue via trilmotor omhulsel (vibratiemotor)
+
+**Energiemanagement:**
+- Batterij: lithium (cilindrisch/plat) of AAA oplaadbaar
+- Opladen: USB-C / draadloos / magnetisch
+- Low battery detectie → batterij feedback (korte toon / piezo buzzer)
+
+### MVP-definitie
+
+De MVP wordt gedefinieerd als de minimale set functies die moet werken om de kernwaarde van het concept aan te tonen: dat een gebruiker via haptische feedback binnenshuis van A naar B begeleid kan worden, met minimale smartphone-interactie tijdens het stappen.
+
+**Essentieel voor proof of interaction:**
+1. Start/stop van guidance
+2. Continue haptische koersfeedback (recht lopen)
+3. Turn cue op beslissingspunten (links/rechts) met duidelijke mapping
+4. Aankomst/stop signaal (afscheidsritueel) zodat het systeem "sluit"
+5. Basis statuszekerheid (minimaal: "guidance is aan")
+
+**Niet essentieel voor proof of interaction:**
+- Automatische herberekening
+- Obstakeldetectie (los van navigatie)
+- Uitgebreide contextbeschrijvingen
+- Geavanceerde personalisatie in real time
+
+**MVP-gate: speaker ja of nee**
+Speaker wordt als experimentele variant binnen de MVP-test behandeld:
+- Variant A: haptiek-only (baseline)
+- Variant B: haptiek + minimale audio (alleen status of arrival, niet continu)
+- Variant C: audio-first benchmark (zoals veel bestaande systemen)
+
+### Morfologische matrix
+
+<p align="center">
+  <img src="img/PGGO - SensePath - Morfologische matrix.jpg" alt="Morfologische matrix SensePath" width="800"/>
+</p>
+
+| Component | Optie 1 | Optie 2 | Optie 3 | Optie 4 |
+|---|---|---|---|---|
+| Activatie-input | presence sensor ✅ | druk knop | schuifknop | touch knop |
+| Microcontroller | ESP32 ✅ | ESP32-S3 | nRF52840 | Arduino Nano ESP32 |
+| Communicatie protocol | WiFi Direct | BLE ✅ | NFC + BLE | / |
+| Afstandsensor | Lasersensor ✅ | Ultrasoon sensor | / | / |
+| Batterij | Lithium cilindrisch | Lithium plat ✅ | AAA oplaadbaar | / |
+| Oplaad module | USB-C | Draadloos | Magnetisch | / |
+| Kompas motor | Servo | Stepper | Brushless | / |
+| Afslag cue | trilmotor ✅ | solenoide | voice coil actuator | lineaire actuator |
+| Speaker | geen ✅ | micro speaker | mini dynamische speaker | bone conduction transducer |
+| Stokverbinding | Schroef ✅ | wrijving | klemming | twist-lock |
+| Handinterface | groeven | verhoogde feedback-eilandjes | adaptieve ergonomische grip | feedback relief zones ✅ |
+| Route selectie | preset locaties | spraak ✅ | dropdown | typen |
+| Kompasrichting | tov telefoon orientatie | tov noorden ✅ | tov IMU clip | tov stok |
+
+✅ = keuze voor prototype (sommige afwijkend voor finaal product)
+
+### Interactieblokken & informatiehiërarchie
+
+De MVP-interacties zijn opgedeeld in 5 blokken met oplopende pressure:
+
+**A. Voor vertrek** (low pressure, smartphone toegestaan): route/bestemming selecteren, handle bevestigen, grip checken.
+
+**B. Start guidance**: actie via fysieke input of gesture (knop duidelijk en robuust, gesture vereist filtering tegen accidental triggers).
+
+**C. Tijdens wandelen** (high pressure, geen smartphone): continue koersfeedback voelen (background), omgeving scannen met stok (parallelle primaire taak), micro-correcties uitvoeren.
+
+**D. Beslissingspunten**: turn cue detecteren en interpreteren (event), actie uitvoeren (links/rechts), korte bevestiging na turn (optioneel).
+
+**E. Stop of aankomst**: arrival/stop cue (closure), guidance stopt en wordt stil.
+
+**Informatiehiërarchie:**
+- Background info: koersfeedback (mag niet opdringerig zijn)
+- Event info: turn cue (hoog belang, korte duidelijke cue)
+- Fail/status info: alleen wanneer nodig (bv. guidance aan/uit)
+
+---
+
 ## Kritische reflectie
 
-<!-- INSTRUCTIE: Vul hieronder je eigen ervaringen in per punt. Pas de tekst aan waar nodig. -->
+<!-- Kritische reflectie -->
 
 De Discovery-fase leverde waardevolle inzichten op, maar kende ook beperkingen. De user interviews (N=3) gaven rijke, kwalitatieve data, maar het beperkte aantal respondenten maakt het moeilijk om de bevindingen breed te generaliseren. Desondanks kwamen er opvallend consistente patronen naar voren — met name de onzekerheid aan knooppunten en de voorkeur voor haptische feedback — wat erop wijst dat de kernproblemen goed geïdentificeerd zijn. Een grotere steekproef in volgende fases zal nodig zijn om deze inzichten te bevestigen.
 
 De benchmarking van 11 bestaande oplossingen gaf een breed overzicht van de markt, maar was beperkt tot publiek beschikbare informatie en demonstraties. Niet alle oplossingen konden hands-on getest worden, waardoor sommige beoordelingen op secundaire bronnen gebaseerd zijn.
 
-<!-- INSTRUCTIE: Voeg hieronder toe wat specifiek voor jullie team goed/minder goed ging -->
+Qua teamwerking verliep de samenwerking over het algemeen vlot. De taakverdeling tussen de drie teamleden was duidelijk, maar bij de planning van user tests bleek dat het coördineren van sessies met de doelgroep meer doorlooptijd vraagt dan verwacht. Dit leidde tot tijdsdruk in de latere weken van semester 1, iets dat we in semester 2 beter anticiperen door vroeger te plannen.
 
 In de Definition-fase werkten de Wizard-of-Oz tests goed om snel feedback te verzamelen zonder technische beperkingen, maar de gecontroleerde testomgeving verschilt sterk van de echte complexiteit van publieke gebouwen. De respondenten waren zich bewust van de testsituatie, wat hun reacties mogelijk beïnvloed heeft. In semester 2 zal het cruciaal zijn om in meer realistische contexten te testen.
 
@@ -305,14 +467,12 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 
 ## Bronnen
 
-<!-- INSTRUCTIE: Vul hieronder jullie eigen bronnen aan in APA-stijl. Hieronder staan voorbeelden op basis van de thema's uit het project. -->
-
-- World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd op [datum], van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
+- World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
 - Guerreiro, J., Ahmetovic, D., Sato, D., Kitani, K., & Asakawa, C. (2019). Airport accessibility and navigation assistance for people with visual impairments. *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems*, 1–14.
 - Slade, P., Tambe, A., & Kochenderfer, M. J. (2021). Multimodal sensing and intuitive steering assistance improve navigation and mobility for people with impaired vision. *Science Robotics, 6*(59), eabg6594.
-- Design Council. (2005). *The Double Diamond: A universally accepted depiction of the design process.* Geraadpleegd op [datum], van https://www.designcouncil.org.uk/double-diamond
-
-<!-- Voeg hier jullie overige bronnen toe -->
+- Liu, Z., Qian, G., Takashima, K., & Kitamura, Y. (2021). Tactile Compass: Enabling Visually Impaired People to Follow a Path with Haptic Feedback. *Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems*, 1–13.
+- Norman, D. A. (2013). *The Design of Everyday Things: Revised and Expanded Edition.* Basic Books.
+- Design Council. (2005). *The Double Diamond: A universally accepted depiction of the design process.* Geraadpleegd van https://www.designcouncil.org.uk/double-diamond
 
 ---
 
@@ -324,7 +484,3 @@ This repository contains both software and design materials created as part of a
 - **Design, documentation, CAD, and media:** [CC BY 4.0 License](LICENSE)
 
 You are free to reuse and build upon this work, both commercially and non-commercially, as long as proper attribution is given to the original authors.
-You are free to reuse and build upon this work, both commercially and non-commercially, as long as proper attribution is given to the original authors.
-
-## Bronnen
- [^1]: Thomas, T., & Ritter, A. (2022). Wandering & sundowning in dementia. _Practical Neurology, 21_(3), 36–44.
