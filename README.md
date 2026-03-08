@@ -265,7 +265,7 @@ Het kernscenario is: **van punt A naar punt B (bv. station → lokaal) wandelen 
 
 ### Storyboard
 <p align="center">
-  <img src="ChatGPT Image 19 feb 2026, 20_31_14.png" alt="User flow SensePath" width="800"/>
+  <img src="img/ChatGPT Image 19 feb 2026, 20_31_14.png" alt="User flow SensePath" width="800"/>
 </p>
 
 De user flow werd geanalyseerd via Norman's 7 stages of action:
