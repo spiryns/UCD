@@ -264,8 +264,9 @@ In de Develop 1-fase verschuift de focus van conceptvalidatie naar **functionele
 Het kernscenario is: **van punt A naar punt B (bv. station → lokaal) wandelen met SensePath, zonder dat aandacht (auditief/mentaal) overbelast raakt.**
 
 ### Storyboard
-
-<!-- TODO: storyboard afbeelding toevoegen als img/storyboard.jpg -->
+<p align="center">
+  <img src="ChatGPT Image 19 feb 2026, 20_31_14.png" alt="User flow SensePath" width="800"/>
+</p>
 
 De user flow werd geanalyseerd via Norman's 7 stages of action:
 
