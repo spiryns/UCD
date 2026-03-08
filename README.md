@@ -364,7 +364,7 @@ Speaker wordt als experimentele variant binnen de MVP-test behandeld:
 ### Morfologische matrix
 
 <p align="center">
-  <img src="img/PGGO - SensePath - Morfologische matrix.jpg" alt="Morfologische matrix SensePath" width="800"/>
+  <img src="img/PGGO - SensePath - Morfologische matrix.jpg"
 </p>
 
 
