@@ -367,23 +367,6 @@ Speaker wordt als experimentele variant binnen de MVP-test behandeld:
   <img src="img/PGGO - SensePath - Morfologische matrix.jpg" alt="Morfologische matrix SensePath" width="800"/>
 </p>
 
-| Component | Optie 1 | Optie 2 | Optie 3 | Optie 4 |
-|---|---|---|---|---|
-| Activatie-input | presence sensor ✅ | druk knop | schuifknop | touch knop |
-| Microcontroller | ESP32 ✅ | ESP32-S3 | nRF52840 | Arduino Nano ESP32 |
-| Communicatie protocol | WiFi Direct | BLE ✅ | NFC + BLE | / |
-| Afstandsensor | Lasersensor ✅ | Ultrasoon sensor | / | / |
-| Batterij | Lithium cilindrisch | Lithium plat ✅ | AAA oplaadbaar | / |
-| Oplaad module | USB-C | Draadloos | Magnetisch | / |
-| Kompas motor | Servo | Stepper | Brushless | / |
-| Afslag cue | trilmotor ✅ | solenoide | voice coil actuator | lineaire actuator |
-| Speaker | geen ✅ | micro speaker | mini dynamische speaker | bone conduction transducer |
-| Stokverbinding | Schroef ✅ | wrijving | klemming | twist-lock |
-| Handinterface | groeven | verhoogde feedback-eilandjes | adaptieve ergonomische grip | feedback relief zones ✅ |
-| Route selectie | preset locaties | spraak ✅ | dropdown | typen |
-| Kompasrichting | tov telefoon orientatie | tov noorden ✅ | tov IMU clip | tov stok |
-
-✅ = keuze voor prototype (sommige afwijkend voor finaal product)
 
 ### Interactieblokken & informatiehiërarchie
 
