@@ -21,20 +21,6 @@ Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange
   <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="Hero render SensePath" width="600"/>
 </p>
 
-De morfologische matrix werd gebruikt om per functieblok een afweging te maken tussen wat vandaag het meest geschikt is voor het prototype, wat later het meest geschikt lijkt voor het eindproduct, en welke keuzes in beide fasen overeind blijven.
-
-Volgens de legende betekent:
-- **grijs** = keuze voor het prototype
-- **lichtgroen** = keuze voor het eindproduct
-- **donkergroen** = keuze voor beide
-
-## Interpretatie van de keuzes
-
-De matrix toont dat we voor het **prototype** vooral kozen voor oplossingen die snel testbaar, robuust en technisch haalbaar zijn binnen een iteratief ontwikkelproces. De nadruk ligt daar op het kunnen valideren van de kerninteractie en het betrouwbaar opzetten van experimenten.
-
-Voor het **eindproduct** verschuiven de keuzes meer naar verfijning, compactheid, integratie en gebruikskwaliteit. Hier ligt de focus sterker op comfort, subtiliteit van feedback, toegankelijkheid en een meer afgewerkte gebruikerservaring.
-
-De keuzes die voor **beide** gelden, tonen welke principes voor ons conceptueel fundamenteel zijn. Het gaat daarbij vooral om de basis van de interactie: hoe het systeem geactiveerd wordt, hoe de gebruiker begeleid wordt, hoe feedback wordt gegeven en welke referentiestructuur het systeem gebruikt om richting betekenisvol te maken.
 ---
 
 ## Inhoudstafel
@@ -382,6 +368,20 @@ Speaker wordt als experimentele variant binnen de MVP-test behandeld:
   <img src="img/PGGO - SensePath - Morfologische matrix.jpg"
 </p>
 
+De morfologische matrix werd gebruikt om per functieblok een afweging te maken tussen wat vandaag het meest geschikt is voor het prototype, wat later het meest geschikt lijkt voor het eindproduct, en welke keuzes in beide fasen overeind blijven.
+
+Volgens de legende betekent:
+- **grijs** = keuze voor het prototype
+- **lichtgroen** = keuze voor het eindproduct
+- **donkergroen** = keuze voor beide
+
+## Interpretatie van de keuzes
+
+De matrix toont dat we voor het **prototype** vooral kozen voor oplossingen die snel testbaar, robuust en technisch haalbaar zijn binnen een iteratief ontwikkelproces. De nadruk ligt daar op het kunnen valideren van de kerninteractie en het betrouwbaar opzetten van experimenten.
+
+Voor het **eindproduct** verschuiven de keuzes meer naar verfijning, compactheid, integratie en gebruikskwaliteit. Hier ligt de focus sterker op comfort, subtiliteit van feedback, toegankelijkheid en een meer afgewerkte gebruikerservaring.
+
+De keuzes die voor **beide** gelden, tonen welke principes voor ons conceptueel fundamenteel zijn. Het gaat daarbij vooral om de basis van de interactie: hoe het systeem geactiveerd wordt, hoe de gebruiker begeleid wordt, hoe feedback wordt gegeven en welke referentiestructuur het systeem gebruikt om richting betekenisvol te maken.
 
 ### Interactieblokken & informatiehiërarchie
 
