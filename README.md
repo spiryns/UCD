@@ -30,6 +30,8 @@ Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange
 3. [Definition](#definition)
 4. [Design Requirements](#design-requirements)
 5. [Develop 1](#develop-1)
+   - [Prototypes & User Testing](#user-testing)
+   - [Develop 1 conclusies](#develop-1-conclusies)
 6. [Kritische reflectie](#kritische-reflectie)
 7. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
 8. [Bijlagen](#bijlagen)
@@ -402,36 +404,157 @@ De MVP-interacties zijn opgedeeld in 5 blokken met oplopende pressure:
 - Event info: turn cue (hoog belang, korte duidelijke cue)
 - Fail/status info: alleen wanneer nodig (bv. guidance aan/uit)
 
+### Prototypes
+
+Er werden twee prototypevarianten gebouwd op basis van de morfologische matrix:
+
+**Prototype 1: Vibratie (afslagcue)**
+3D-geprint handvat met drie trilmotoren (duim, wijsvinger, middelvinger) aangestuurd via ESP32 en een Wizard-of-Oz controller-app. De wizard triggert op het juiste moment links/rechts/rechtdoor signalen.
+
+**Prototype 2: Kompas (koersfeedback)**
+3D-geprint handvat met een draaiend bolletje in de handpalm dat continue richtingsfeedback geeft. De wizard stuurt de kompasrichting aan op basis van de gewenste looprichting.
+
+<p align="center">
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.35 (1).jpeg" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.35.jpeg" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.34 (1).jpeg" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.34.jpeg" width="200"/>
+</p>
+
+### User testing
+
+**Sample (N=5):**
+
+| Naam | Leeftijd | Relevantie | Locatie | Datum |
+|---|---|---|---|---|
+| Mario | 52 | Verloor zicht op 18-jarige leeftijd | Licht en Liefde | 04/03/2026 |
+| Rory | 55 | Ernstig slechtziend | Licht en Liefde | 04/03/2026 |
+| Herman | 65 | Blind sinds geboorte | Licht en Liefde | 06/03/2026 |
+| Milo | 20 | Ziend (controle) | Thuis | 08/03/2026 |
+| Milos | 20 | Ziend (controle) | Thuis | 08/03/2026 |
+
+**Protocol:** Introductie & leerfase → Test 1 (kompas) → Interview & subjectieve scores → Test 2 (vibratie) → Interview & subjectieve scores → Test 3 (gecombineerd) → Reflectie. Alle tests via Wizard-of-Oz op een afgetaped parcours (60cm breedte).
+
+### Test 1: Bocht via kompasfeedback
+
+De wizard biedt continue feedback via het draaiende kompasbolletje in het handvat.
+
+> *"Ik denk dat het zelfs zou lukken om niet buiten het pad te gaan."*
+
+**Key findings:**
+- **Grip bepaalt interpretatie** — Verschillende grip = links/rechts omgekeerd. Handoriëntatie is cruciaal.
+- **Palmsensatie is zwak** — Meerdere deelnemers voelden het bolletje nauwelijks.
+- **Ergonomie onvoldoende** — Handvat past niet bij elke hand. Bolletje is verkeerd gepositioneerd.
+- **Rechtdoor lopen werkt** — Goede resultaten bij rechtdoor; bochten zijn moeilijker.
+- **Winter = probleem** — Handschoenen en dikke jassen blokkeren de sensatie.
+
+**Benchmark vergelijking Test 1:**
+
+| Metric | Tactile Compass (Liu et al.) | SensePath |
+|---|---|---|
+| SIZ (% stappen in zone) | 92,6% | 83,78% |
+| Leerbaarheid (1–7) | 6,67 | 5,67 |
+| Soepelheid (1–7) | 6,06 | 5,50 |
+| Cognitieve belasting (1–7) | 5,22 | 3,67 |
+| Bereidheid (1–7) | 6,39 | 5,33 |
+| Vertrouwen (1–7) | n.v.t. | 5,33 |
+
+### Test 2: Afslag via trilsignaal
+
+De wizard stuurt trilsignalen op het juiste moment via de controller-app.
+
+> *"Die trilmotoren, dat ging wel goed."*
+> *"Het voelde beter, minder concentreren dan het balletje."*
+
+**Key findings:**
+- **Vingertoppen voelen het best** — "Daar zitten de voelers."
+- **Afslaan werkt goed** — Richtingssignalen worden snel begrepen en aangeleerd.
+- **Rechtdoor is moeilijker** — Zonder continu signaal drijven gebruikers af.
+- **Bevestigingssignaal nodig** — Gebruikers willen feedback dat ze rechtdoor lopen.
+- **Niet te veel signalen** — "Begin niet met zevenhonderdachtendertig verschillende signalen."
+- **Sensorpositie problematisch** — Links past goed = rechts past slecht, en omgekeerd. Handgrootte speelt een rol.
+
+**Benchmark vergelijking Test 2:**
+
+| Metric | Tactile Compass (Liu et al.) | SensePath |
+|---|---|---|
+| SIZ (% stappen in zone) | 92,6% | 79,85% |
+| Leerbaarheid (1–7) | 6,67 | 6,50 |
+| Soepelheid (1–7) | 6,06 | 6,33 |
+| Cognitieve belasting (1–7) | 5,22 | 4,67 |
+| Bereidheid (1–7) | 6,39 | 6,33 |
+| Vertrouwen (1–7) | n.v.t. | 6,00 |
+
+### Test 3: Gecombineerd parcours
+
+Kompas (continue koersfeedback) + vibratie (afslagcue) samen op hetzelfde parcours.
+
+> *"Ik ben wel onder indruk van deze keer."*
+> *"Het was beter dan ik had verwacht."*
+
+**Key findings:**
+- **Vibratie interfereert met kompas** — Twee systemen tegelijk aflezen op één hand is moeilijk.
+- **Ergonomie is de bottleneck** — Huidig prototype laat geen eerlijke evaluatie toe.
+- **Concept heeft potentieel** — Vibratie als aankondiging + kompas voor koerscorrectie is logisch.
+- **Hogere cognitieve belasting** — Scores dalen vergeleken met individuele tests.
+- **Herpositionering bolletje** — Suggestie: naar de knokkels of hiel van de hand i.p.v. de palm.
+- **Audio als back-up** — Speaker/bluetooth voor wanneer vibraties niet waarneembaar zijn.
+
+**Benchmark vergelijking Test 3:**
+
+| Metric | Tactile Compass (Liu et al.) | SensePath |
+|---|---|---|
+| SIZ (% stappen in zone) | 92,6% | **97,52%** |
+| Leerbaarheid (1–7) | 6,67 | 6,00 |
+| Soepelheid (1–7) | 6,06 | 4,67 |
+| Cognitieve belasting (1–7) | 5,22 | 3,00 |
+| Bereidheid (1–7) | 6,39 | 4,33 |
+| Vertrouwen (1–7) | n.v.t. | 3,00 |
+
+### Develop 1 conclusies
+
+- **Vibratie is intuïtiever** dan kompas voor discrete navigatie-events (afslagen).
+- **Kompas biedt superieure koersbewaking** maar lijdt onder perceptuele ambiguïteit.
+- De **gecombineerde conditie scoorde het hoogst op nauwkeurigheid** (97,52% SIZ) maar het laagst op subjectieve ervaring.
+- **Ergonomie is geen bijzaak** — het is de primaire confound in de data.
+- SensePath houdt stand tegen de **Tactile Compass benchmark** onder moeilijkere condities (met stok, video-observatie i.p.v. OptiTrack, Wizard-of-Oz i.p.v. automatisch).
+- **90% van alle fouten** is te wijten aan wizard-timing — bij automatisering worden minder fouten verwacht.
+- Gebruikers memoriseren onbewust het pad over de drie tests heen, wat een confound vormt voor de SIZ-scores.
+
 ---
 
 ## Kritische reflectie
 
-<!-- Kritische reflectie -->
-
-De Discovery-fase leverde waardevolle inzichten op, maar kende ook beperkingen. De user interviews (N=3) gaven rijke, kwalitatieve data, maar het beperkte aantal respondenten maakt het moeilijk om de bevindingen breed te generaliseren. Desondanks kwamen er opvallend consistente patronen naar voren — met name de onzekerheid aan knooppunten en de voorkeur voor haptische feedback — wat erop wijst dat de kernproblemen goed geïdentificeerd zijn. Een grotere steekproef in volgende fases zal nodig zijn om deze inzichten te bevestigen.
+De Discovery-fase leverde waardevolle inzichten op, maar kende ook beperkingen. De user interviews (N=3) gaven rijke, kwalitatieve data, maar het beperkte aantal respondenten maakt het moeilijk om de bevindingen breed te generaliseren. Desondanks kwamen er opvallend consistente patronen naar voren — met name de onzekerheid aan knooppunten en de voorkeur voor haptische feedback — wat erop wijst dat de kernproblemen goed geïdentificeerd zijn.
 
 De benchmarking van 11 bestaande oplossingen gaf een breed overzicht van de markt, maar was beperkt tot publiek beschikbare informatie en demonstraties. Niet alle oplossingen konden hands-on getest worden, waardoor sommige beoordelingen op secundaire bronnen gebaseerd zijn.
 
-Qua teamwerking verliep de samenwerking over het algemeen vlot. De taakverdeling tussen de drie teamleden was duidelijk, maar bij de planning van user tests bleek dat het coördineren van sessies met de doelgroep meer doorlooptijd vraagt dan verwacht. Dit leidde tot tijdsdruk in de latere weken van semester 1, iets dat we in semester 2 beter anticiperen door vroeger te plannen.
+Qua teamwerking verliep de samenwerking over het algemeen vlot. De taakverdeling tussen de drie teamleden was duidelijk, maar bij de planning van user tests bleek dat het coördineren van sessies met de doelgroep meer doorlooptijd vraagt dan verwacht. Dit leidde tot tijdsdruk in de latere weken van semester 1, iets dat we in semester 2 beter hebben geanticipeerd door vroeger contact te leggen met Licht en Liefde.
 
-In de Definition-fase werkten de Wizard-of-Oz tests goed om snel feedback te verzamelen zonder technische beperkingen, maar de gecontroleerde testomgeving verschilt sterk van de echte complexiteit van publieke gebouwen. De respondenten waren zich bewust van de testsituatie, wat hun reacties mogelijk beïnvloed heeft. In semester 2 zal het cruciaal zijn om in meer realistische contexten te testen.
+In de Definition-fase werkten de Wizard-of-Oz tests goed om snel feedback te verzamelen zonder technische beperkingen, maar de gecontroleerde testomgeving verschilt sterk van de echte complexiteit van publieke gebouwen. De respondenten waren zich bewust van de testsituatie, wat hun reacties mogelijk beïnvloed heeft.
 
-Een sterk punt van het proces was de iteratieve aanpak: de inzichten uit Wave 1 stuurden Wave 2 concreet bij, waardoor het concept stap voor stap scherper werd. De MoSCoW-prioritering met gebruikers zorgde ervoor dat de design requirements niet enkel vanuit het ontwerpteam werden bepaald, maar expliciet gedragen worden door de doelgroep.
+De Develop 1-fase bracht een aantal fundamentele inzichten maar ook methodologische beperkingen aan het licht. De vergelijking met de Tactile Compass (Liu et al., CHI 2021) toont dat SensePath onder moeilijkere omstandigheden vergelijkbare resultaten behaalt — maar de vergelijking is niet één-op-één: Liu et al. gebruikten OptiTrack (mm-precisie) terwijl wij video-observatie gebruikten, hun deelnemers hielden een los handvat vast terwijl onze deelnemers een volledige stok gebruikten, en hun feedback was geautomatiseerd terwijl de onze via Wizard-of-Oz verliep. Met name dat laatste punt is significant: circa 90% van de fouten tijdens onze tests was te wijten aan de timing van de wizard, niet aan het concept zelf.
 
-Een aandachtspunt is dat de huidige tests uitsluitend met ervaren stokgebruikers zijn uitgevoerd. Personen die recent blind zijn geworden of minder ervaring hebben met de witte stok kunnen andere noden en verwachtingen hebben. Dit verdient aandacht in de volgende fases.
+Een belangrijk aandachtspunt is dat gebruikers het parcours onbewust memoriseren over de drie opeenvolgende tests, wat een confound vormt in de stijgende SIZ-scores. Voor toekomstige tests zou het parcours per conditie moeten variëren.
 
-Tot slot is de overstap van een afneembaar handvat (oorspronkelijk concept) naar een volledige slimme stok (D1.1) een fundamentele pivot die goed onderbouwd is door gebruikersfeedback, maar die aanzienlijke technische en productie-implicaties heeft voor het vervolg.
+De ergonomie van het huidige prototype bleek de belangrijkste bottleneck: palmsensatie was zwak, het handvat paste niet bij elke handgrootte, en de sensorpositionering was asymmetrisch (links past goed = rechts past slecht). Dit maakt het moeilijk om de haptische concepten eerlijk te evalueren — verbeteringen in Develop 2 moeten hier prioriteit aan geven.
+
+Tot slot bleek de testomgeving bij Licht en Liefde (rustig interieur) sterk te verschillen van de uiteindelijke gebruikscontext (druk station, publiek gebouw). De cognitieve belasting zal in realistische omgevingen waarschijnlijk hoger liggen, wat de subjectieve scores kan beïnvloeden.
 
 ---
 
 ## Noot inzake het gebruik van AI
 
-Binnen dit project werd AI (Claude, Anthropic) ingezet als ondersteunend hulpmiddel op twee vlakken:
+Binnen dit project werden meerdere AI-tools ingezet als ondersteunend hulpmiddel:
 
-- **Tekst en rapportage** — AI werd gebruikt om ruwe notities en onderzoeksdata te structureren tot leesbare paragrafen en om teksten taalkundig te verfijnen. De inhoudelijke keuzes, analyses en conclusies zijn steeds door het team zelf gemaakt; AI diende enkel om deze helderder en consistenter te formuleren.
-- **Benchmarking en analyse** — Bij de benchmarking van bestaande indoor navigatieoplossingen werd AI ingezet om publiek beschikbare informatie samen te vatten, vergelijkingscriteria te structureren en eerste analyses te genereren. Alle bevindingen werden daarna door het team handmatig geverifieerd en aangevuld met eigen inzichten.
+- **Tekst en rapportage** — Claude (Anthropic) werd gebruikt om ruwe notities en onderzoeksdata te structureren tot leesbare paragrafen en om teksten taalkundig te verfijnen. De inhoudelijke keuzes, analyses en conclusies zijn steeds door het team zelf gemaakt.
+- **Benchmarking en analyse** — AI werd ingezet om publiek beschikbare informatie samen te vatten, vergelijkingscriteria te structureren en eerste analyses te genereren. Alle bevindingen werden handmatig geverifieerd.
+- **Storyboard** — Het script werd geschreven met Claude Code, image direction via ChatGPT (GPT-4o), en de uiteindelijke beeldgeneratie via NanoBanana (Gemini 3 Pro Image).
+- **Codering** — Claude en Gemini werden gebruikt voor ondersteuning bij de ESP32-firmware en de Wizard-of-Oz controller-app.
 
 AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, het nemen van ontwerpbeslissingen, of het formuleren van design requirements. Deze zijn volledig gebaseerd op eigen gebruikersonderzoek en teamreflectie.
+
+> *"All content in this document has been reviewed and approved by the author. AI tools were used solely to support text processing, coding, and image editing, not for generating research data or conclusions."*
 
 ---
 
@@ -467,12 +590,15 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 
 ## Bronnen
 
-- World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
+- Liu, G., Yu, T., Yu, C., Xu, H., Xu, S., Yang, C., Wang, F., Mi, H., & Shi, Y. (2021). Tactile Compass: Enabling visually impaired people to follow a path with continuous directional feedback. *Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems*. ACM. https://doi.org/10.1145/3411764.3445644
 - Guerreiro, J., Ahmetovic, D., Sato, D., Kitani, K., & Asakawa, C. (2019). Airport accessibility and navigation assistance for people with visual impairments. *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems*, 1–14.
 - Slade, P., Tambe, A., & Kochenderfer, M. J. (2021). Multimodal sensing and intuitive steering assistance improve navigation and mobility for people with impaired vision. *Science Robotics, 6*(59), eabg6594.
-- Liu, Z., Qian, G., Takashima, K., & Kitamura, Y. (2021). Tactile Compass: Enabling Visually Impaired People to Follow a Path with Haptic Feedback. *Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems*, 1–13.
 - Norman, D. A. (2013). *The Design of Everyday Things: Revised and Expanded Edition.* Basic Books.
+- World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
 - Design Council. (2005). *The Double Diamond: A universally accepted depiction of the design process.* Geraadpleegd van https://www.designcouncil.org.uk/double-diamond
+- Anthropic. (2025). Claude (Claude Opus 4.6) [Groot taalmodel]. https://claude.ai
+- OpenAI. (2025). ChatGPT (GPT-4o) [Groot taalmodel]. https://chat.openai.com
+- Google DeepMind. (2025). Nano Banana Pro (Gemini 3 Pro Image) [AI-beeldgeneratiemodel].
 
 ---
 
