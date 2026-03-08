@@ -375,7 +375,7 @@ Volgens de legende betekent:
 - **lichtgroen** = keuze voor het eindproduct
 - **donkergroen** = keuze voor beide
 
-## Interpretatie van de keuzes
+### Interpretatie van de keuzes
 
 De matrix toont dat we voor het **prototype** vooral kozen voor oplossingen die snel testbaar, robuust en technisch haalbaar zijn binnen een iteratief ontwikkelproces. De nadruk ligt daar op het kunnen valideren van de kerninteractie en het betrouwbaar opzetten van experimenten.
 
