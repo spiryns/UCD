@@ -1,366 +1,329 @@
 # SensePath
-Ear free, intuitive navigation indoors
+### Ear-free, intuitive navigation indoors
 
-🛠️ Built by Sam Piryns, Titus Impens, Han Deburchgraeve 
-🔥 Supervised by ``prof. dr. Bas Baccarne``, ``Yannick Christiaens`` & ``Wouter Devriese``    
-🌱 Grown at ``Ghent University`` 🏛️ ``Industrial Design Engineering`` ([project overview](https://github.com/basbaccarne/human-centered-design))       
+🛠️ Built by **Sam Piryns**, **Titus Impens**, **Han Deburchgraeve**  
+🔥 Supervised by `prof. dr. Bas Baccarne`, `Yannick Christiaens` & `Wouter Devriese`  
+🌱 Grown at `Ghent University` 🏛️ `Industrial Design Engineering` ([project overview](https://github.com/basbaccarne/human-centered-design))
 
-*19/01/2026*   
+*19/01/2026*
 
-Mensen die blind of slechtziend zijn kunnen buiten relatief goed navigeren met GPS, maar in grote publieke gebouwen (stations, ziekenhuizen, campussen) valt die ondersteuning vaak weg. Vooral op kruispunten, splitsingen en bij tijdelijke omleidingen leidt dit tot twijfel, extra mentale belasting en afhankelijkheid van hulp van anderen.
-
-We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navigatieoplossingen, en via user interviews en feedbackmomenten met gebruikers en organisaties uit de blinden- en mobiliteitswereld. Daaruit kwamen duidelijke noden naar voren: betrouwbare “decision support” op keuzemomenten, zo weinig mogelijk telefoongebruik tijdens het stappen, en discrete feedback die ook in publieke context bruikbaar is.
-
-Onze oplossing is SensePath: een slimme handgreep die op een bestaande lange witte stok wordt bevestigd en gekoppeld is aan een eenvoudige app-workflow. SensePath vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker “hands-free, heads-up” kan blijven bewegen met de stok als primair hulpmiddel. Optioneel biedt het systeem een fail-safe flow om te herstarten of hulp te vragen bij afwijkingen of blokkades. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
-- Hero render
-<p align="center">
-  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" width="100%">
-</p>
+---
 
 ## Introductie
-Navigeren is voor blinde en slechtziende personen niet enkel “de weg vinden”, maar ook continu beslissingen nemen op basis van beperkte informatie: waar is de ingang, welke gang is juist, waar bevindt de lift, en wanneer moet je handelen aan een kruispunt. In grote publieke gebouwen wordt dit extra moeilijk omdat herkenningspunten minder consistent zijn, routes vaak veranderen door tijdelijke werken en omdat klassieke GPS-navigatie binnenshuis onvoldoende betrouwbaar is. In onze interviews benoemden gebruikers vooral onzekerheid op keuzemomenten en de mentale belasting van voortdurend moeten verifiëren of men nog “goed zit”, vaak met afhankelijkheid van hulp van anderen als gevolg (User Interviews, 2025).
 
-Het doel van dit project is het ontwikkelen van een onderbouwd concept: een slimme handgreep die op een bestaande lange witte stok wordt geplaatst en indoor begeleiding mogelijk maakt via discrete feedback, met de witte stok als primair mobiliteitshulpmiddel. Om dit concept te definiëren combineren we deskresearch en benchmarking van bestaande navigatie- en mobiliteitsoplossingen met gebruikersonderzoek (interviews en iteratieve concepttesten), zodat ontwerpkeuzes expliciet voortkomen uit gebruikersnoden en realistische contexten (Benchmarking, 2025; User Interviews, 2025).
+Mensen die blind of slechtziend zijn navigeren buitenshuis relatief goed met GPS, maar in grote publieke gebouwen (stations, ziekenhuizen, campussen) valt die ondersteuning weg. Vooral op kruispunten, splitsingen en bij tijdelijke omleidingen leidt dit tot twijfel, extra mentale belasting en afhankelijkheid van hulp van anderen.
 
-Binnen het eerste semester ligt de focus op concept testing en op het doorlopen van sequentiële iteraties waarin prototypes worden getest, inzichten geanalyseerd en vertaald naar design requirements en een bijgewerkte PRD. Boundary conditions voor deze fase zijn: (1) de oplossing moet compact blijven (geen bulky wearables), (2) zo weinig mogelijk actieve smartphone-interactie tijdens het stappen, (3) toepasbaarheid op 2D-navigatie per verdieping, en (4) een duidelijke fail-safe workflow voor afwijkingen of blokkades (Benchmarking, 2025; User Interviews, 2025).
+We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navigatieoplossingen, en via user interviews en feedbackmomenten met gebruikers en organisaties uit de blinden- en mobiliteitswereld. Daaruit kwamen duidelijke noden naar voren: betrouwbare "decision support" op keuzemomenten, zo weinig mogelijk telefoongebruik tijdens het stappen, en discrete feedback die ook in publieke context bruikbaar is.
 
-## Methodologie
+Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange witte stok wordt bevestigd en gekoppeld is aan een eenvoudige app-workflow. SensePath vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Optioneel biedt het systeem een fail-safe flow om te herstarten of hulp te vragen bij afwijkingen of blokkades. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
 
-Dit project werd uitgewerkt volgens de **Double Diamond** aanpak (Discover, Define, Develop, Deliver), met een sterke nadruk op **gebruikersgericht ontwerpen** en iteratieve validatie. In semester 1 lag de focus op **Discovery** en **Definition**: het scherpstellen van het probleem, het onderbouwen van ontwerpkeuzes met onderzoek en het valideren van het concept via opeenvolgende tests. De **Develop**- en **Deliver**-fasen bouwen verder op de output van semester 1 en worden hier op hoofdlijnen toegelicht.
+<p align="center">
+  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="Hero render SensePath" width="600"/>
+</p>
 
-### Discovery (problem space)
-In de discoveryfase werd de probleemruimte verkend om te begrijpen waar blinde en slechtziende personen vandaag vast: lopen bij indoor navigatie in publieke gebouwen. Hiervoor werd een combinatie gebruikt van:
-
-- **User interviews** om fricties, routines, copingstrategieën en contextfactoren (zoals drukte, tijdelijke werken en knooppunten) te identificeren.
-- **Deskresearch en benchmarking** om bestaande navigatie- en mobiliteitsoplossingen in kaart te brengen en hun sterktes/zwaktes te analyseren op vlak van feedbackmodaliteit, infrastructuurbehoefte, betrouwbaarheid en schaalbaarheid.
-
-De resultaten uit discovery werden samengebracht tot een duidelijke probleemdefinitie (met focus op onzekerheid aan keuzemomenten), een eerste set **design requirements** en een initiële **PRD** die richting geeft aan de volgende fase.
-
-### Definition (solution space)
-In de definitionfase werd onderzocht hoe het concept vorm kan krijgen en of het effectief aansluit bij de noden uit discovery. De kern van deze fase bestond uit **iteratief prototypen en testen** (in waves), waarbij elk testmoment werd gebruikt om het concept scherper te maken en de PRD te verfijnen.
-
-**Wave 1: vroege conceptvalidatie**
-- Doel: nagaan of de richting van het concept (slimme handgreep op bestaande witte stok met discrete feedback) begrijpelijk, wenselijk en geloofwaardig aanvoelt.
-- Aanpak: concepttesten met low- tot mid-fidelity prototypes en scenario’s (bv. beslismomenten aan knooppunten, bestemmingen bereiken per verdieping).
-- Output: eerste validatie van kernfunctionaliteiten en boundary conditions, plus bijsturing van design requirements.
-
-**Wave 2: verfijning van interactie en feedback**
-- Doel: de manier van begeleiden optimaliseren met nadruk op (1) minimale smartphone-interactie tijdens het stappen, (2) haptische feedback als primaire modaliteit en (3) een fail-safe workflow bij afwijkingen of blokkades.
-- Aanpak: concepttesten met varianten (variety prototyping) om alternatieven eerlijk te vergelijken en confirmation bias te vermijden.
-- Output: aangescherpte user flow, bijgewerkte PRD en een onderbouwde keuze voor de meest robuuste conceptrichting.
-
-Doorheen de definitionfase werden inzichten systematisch vertaald naar (1) een bijgewerkte **PRD**, (2) aangescherpte **design requirements** en (3) een onderbouwde conceptbeschrijving.
-
-### Develop (concretiseren en realiseren)
-In de developfase wordt de gekozen conceptrichting uit definition omgezet naar een **functioneel en consistent ontwerp**. Op basis van de PRD en de gevalideerde design requirements zal de focus liggen op:
-
-- **Technische uitwerking en haalbaarheid**: componentkeuzes, architectuur en integratie van de belangrijkste functies (detectie, begeleiding en feedback).
-- **Interaction design en user flow**: het uitwerken en verfijnen van de volledige gebruikerservaring, met aandacht voor toegankelijkheid en low-friction bediening.
-- **Prototyping met oplopende fideliteit**: van quick-and-dirty varianten naar meer realistische (mid/high-fidelity) prototypes om onzekerheden stap voor stap te reduceren.
-- **Usability testing in iteraties**: herhaalde tests met gebruikers om pijnpunten te identificeren, de feedbacktaal te verfijnen en de UX te optimaliseren.
-- **Vormgeving en integratie**: het verder uitwerken van de fysieke vormfactor (compact, niet bulky) en de manier waarop het product op de witte stok bevestigd wordt.
-
-De output van deze fase is een geïntegreerd prototype dat voldoende robuust is om in de volgende fase in realistische contexten te valideren.
-
-### Deliver (validatie in context en afronding)
-In de deliverfase wordt het ontwerp finaal gevalideerd en afgerond. De nadruk ligt op testen in (meer) realistische omgevingen, het aantonen dat het concept betrouwbaar werkt aan knooppunten en bij afwijkingen, en het finaliseren van het prototype en de documentatie op basis van de laatste feedback.
-
+---
 
 ## Inhoudstafel
 
-1. [Methodologie](./docs/methodologie.md)
-2. [Discovery](./docs/discovery.md)
-3. [Defintion](./docs/definition.md)
-4. [Design Requirements](./docs/design_requirements.md)
-5. [Bill of materials](./docs/bom.md)
+1. [Methodologie](#methodologie)
+2. [Discovery](#discovery)
+3. [Definition](#definition)
+4. [Design Requirements](#design-requirements)
+5. [Kritische reflectie](#kritische-reflectie)
+6. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
+7. [Bijlagen](#bijlagen)
+8. [Bronnen](#bronnen)
+
+---
+
+## Methodologie
+
+Dit project volgt de **Double Diamond** aanpak (Discover, Define, Develop, Deliver), met nadruk op gebruikersgericht ontwerpen en iteratieve validatie.
+
+### Discovery (problem space)
+
+In de discoveryfase werd de probleemruimte verkend via:
+
+- **User interviews** — fricties, routines, copingstrategieën en contextfactoren identificeren (drukte, tijdelijke werken, knooppunten).
+- **Deskresearch en benchmarking** — bestaande navigatie- en mobiliteitsoplossingen in kaart brengen en analyseren op feedbackmodaliteit, infrastructuurbehoefte, betrouwbaarheid en schaalbaarheid.
+
+De resultaten werden samengebracht tot een probleemdefinitie, een eerste set **design requirements** en een initiële **PRD**.
+
+### Definition (solution space)
+
+In de definitionfase werd het concept getoetst en aangescherpt via **iteratief prototypen en testen** in twee waves:
+
+- **Wave 1** — Vroege conceptvalidatie met low- tot mid-fidelity prototypes en Wizard-of-Oz scenario's. Focus op begrijpelijkheid, wenselijkheid en aanvaardbaarheid van de conceptrichting.
+- **Wave 2** — Verfijning van interactie en feedback met nadruk op minimale smartphone-interactie, haptische feedback als primaire modaliteit, en een fail-safe workflow. Inclusief MoSCoW-prioritering en obstakeldetectie-observatietest.
+
+### Develop (semester 2)
+
+Technische uitwerking, interaction design, prototyping met oplopende fideliteit en usability testing in iteraties.
+
+### Deliver (semester 2)
+
+Finale validatie in realistische omgevingen, afronding prototype en documentatie.
+
+📄 [Volledige methodologie](docs/methodologie.md)
+
+---
+
 ## Discovery
 
-Doelstellingen
---------------
-- Een scherp beeld krijgen van waar blinde en ernstig slechtziende gebruikers vandaag vastlopen bij indoor navigatie in complexe publieke gebouwen (bv. gemeentehuis, station, museum).
-- Begrijpen waarom knooppunten (junctions) de grootste frictie veroorzaken en welke situaties daar het vaakst mislopen (geleidelijnen, drukte, werken, omleidingen).
-- Onderzoeken welke bestaande indoor wayfinding oplossingen al bestaan en waar ze tekortschieten (feedback, infrastructuur, betrouwbaarheid, schaalbaarheid).
-- Eindigen met een heldere "How Might We" en eerste design requirements als basis voor Definition.
-
-Onderzoeksvragen
-----------------
-- Welke ervaringen hebben personen met een visuele beperking bij het navigeren in publieke gebouwen, en waar ontstaat onzekerheid tijdens taken, beslismomenten en obstakels?
-- Welke indoor wayfinding technologieen leveren aantoonbare meerwaarde, en waar liggen marktopportuniteiten voor differentiatie?
-
-Doelgroep
----------
-Primair
-- Blinde en zeer slechtziende volwassenen die autonoom publieke gebouwen willen kunnen bezoeken.
-- Vertrouwd met iPhone (VoiceOver) en gebruiken witte stok (soms ook geleidehond).
-
-Secundair en stakeholders
-- Partner/begeleiders, balie medewerkers, gebouwbeheerders, lokale overheid.
-
-Materiaal en methoden
----------------------
-
-User interviews (N = 3)
-- Type: semigestructureerde diepte interviews (15-20 min).
-- Periode: 18/10/2025 - 25/10/2025.
-- Locatie: BrailleTech (18/10/2025).
-- Doel: rijke, contextuele inzichten verzamelen over routines, frustraties, veiligheid en voorkeuren (audio vs haptiek).
-
-Links
-- Protocol: Interview - protocol - SensePath.docx
-- Rapport: Onderzoeksrapport_user_interviews_SensePath.docx
-
-Benchmarking / technology scouting (N = 11)
-- Type: systematische vergelijking van bestaande (indoor) navigatie oplossingen.
-- Doel: sterktes vertalen naar best practices, zwaktes vertalen naar design opportuniteiten.
-- Criteria (o.a.): lokalisatiemethode, benodigde infrastructuur, nauwkeurigheid en robuustheid, feedbackmodaliteit, schaalbaarheid en beheer, rijpheid (TRL).
-
-Links
-- Protocol: Benchmarkingprotocol_SensePath.docx
-- Rapport: Benchmarkingrapport _SensePath.docx
-
-Resultaten
-----------
-
-User interviews (N = 3)
-Key findings
-- Thuis is orientatie grotendeels automatisme, maar in publieke gebouwen ontstaat onzekerheid, vooral aan knooppunten.
-  - "Binnen in huis doe ik eigenlijk alles op de tast... dat wordt een automatisme."
-  - "In uw thuisomgeving weet je alles te staan... na een week zit dat erin."
-- Geleidelijnen zijn "love-hate": ze helpen vooruit, maar op kruispunten ontbreekt beslissingsinformatie.
-  - "Je volgt een lijn... probleem is dat je niet weet naar waar."
-  - "In stations goed uitgewerkt, maar aan kruispunten weet niet naar welke kant."
-- Real world messiness is een probleem: bezette geleidelijnen, slechte opvolging/onderhoud, en vooral werken/omleidingen veroorzaken onzekerheid en tijdverlies.
-  - "Plots werken op het pad... niemand in de buurt, dan zoek je lang."
-- Feedbackvoorkeur is contextgebonden: in publieke context is er duidelijke voorkeur om het gehoor vrij te houden, waardoor haptische feedback aantrekkelijk is.
-
-Korte conclusie
-De grootste pijn zit niet in "vooruit geraken", maar in keuzes maken aan knooppunten en omgaan met onbetrouwbare context (drukte, bezette lijnen, tijdelijke veranderingen). Een oplossing moet dus vooral junction ambiguity wegnemen met korte, zekere en contextgevoelige aanwijzingen.
-
-Benchmarking / technology scouting (N = 11)
-Key findings
-- Veel systemen steunen sterk op audio (turn-by-turn), maar dat botst met de nood om het gehoor vrij te houden in publieke ruimtes.
-- Infrastructuur gebaseerde oplossingen (beacons/codes) zijn bewezen, maar vragen inzet van gebouwbeheerders en zijn minder schaalbaar zonder uitrol.
-- Infra vrije smartphone only oplossingen zijn schaalbaar, maar hebben trade offs:
-  - afhankelijk van mapping/kaartwerk en updates
-  - gevoelig voor kalibratie of cameracondities
-- Haptische feedback is discreet en laat oren vrij, maar vraagt een duidelijke "taal" en leercurve. Combinaties van haptiek en korte spraak lijken vaak het meest robuust.
-- Form factor is cruciaal: integratie in bestaande mobiliteitshulpmiddelen (bv. stokhandvat) of handsfree dragers verlaagt drempel en verhoogt bruikbaarheid.
-
-Korte conclusie
-Er is een duidelijke opportuniteit voor een hybride aanpak: haptisch eerst, handsfree waar mogelijk, schaalbaar met minimale infrastructuur, en doelgericht tot een exacte bestemming. De kern is betrouwbaarheid aan beslismomenten.
-
-Conclusies en implicaties
--------------------------
-Kernproblematiek
-- Junction ambiguity in publieke gebouwen: geleidelijnen en bestaande oplossingen geven te weinig zekerheid op beslismomenten, zeker wanneer de omgeving afwijkt door drukte, bezette lijnen, werken of omleidingen.
-
-Design implicaties
-- Feedback moet primair haptisch zijn zodat het gehoor vrij blijft; audio kan optioneel als korte fallback.
-- Het systeem moet expliciet ontworpen zijn rond decision points (knooppunten) in plaats van alleen algemene turn-by-turn begeleiding.
-- De oplossing moet werken in realistische omstandigheden (bezette/inconsistente geleidelijnen, tijdelijke obstakels, omleidingen).
-- De gebruiker moet eenvoudig een exacte bestemming kunnen kiezen en daarna frictieloos begeleid worden.
-
-How Might We
-------------
-Hoe kunnen we blinde en ernstig slechtziende gebruikers in complexe publieke gebouwen betrouwbaar naar hun exacte doel leiden, met focus op knooppunten, minimale frictie en contextgevoelige feedback (haptisch en indien nodig korte spraak), zodat het ook werkt wanneer geleidelijnen bezet, onduidelijk of inconsistent zijn?
-
-Design requirements (eerste versie)
------------------------------------
-- D1.1 Het systeem leidt de gebruiker in publieke gebouwen doelgericht naar een exacte bestemming (bv. balie, toilet, perron, uitgang).
-- D1.2 Het systeem vermindert onzekerheid op knooppunten door ondubbelzinnige guidance op beslismomenten.
-- D1.3 De primaire feedback is haptisch zodat het gehoor vrij blijft; audio is optioneel en kort (fallback).
-- D1.4 De oplossing blijft bruikbaar wanneer geleidelijnen bezet, onduidelijk of inconsistent zijn en houdt rekening met tijdelijke obstakels/omleidingen.
-- D2.1 De bestemming kiezen is toegankelijk en low friction (VoiceOver compatibel) en vereist minimale handelingen.
-- D2.2 De oplossing is schaalbaar: minimale infrastructuur en haalbaar qua kost en beheer.
-
-## Definition
 ### Doelstellingen
-Het doel van de definition-fase is om een diepgaand inzicht te krijgen in de noden, verwachtingen en mentale modellen van blinde en slechtziende gebruikers tijdens navigatie, en deze inzichten te vertalen naar een onderbouwd concept voor SensePath.
 
-Concreet wil deze fase:
+- Scherp beeld krijgen van waar blinde en ernstig slechtziende gebruikers vastlopen bij indoor navigatie in complexe publieke gebouwen.
+- Begrijpen waarom knooppunten (junctions) de grootste frictie veroorzaken.
+- Onderzoeken welke bestaande indoor wayfinding oplossingen bestaan en waar ze tekortschieten.
+- Eindigen met een heldere "How Might We" en eerste design requirements.
 
-- inzicht krijgen in hoe gebruikers zich vandaag verplaatsen en welke rol technologie hierin mag spelen;
+### Onderzoeksvragen
 
-- verschillende haptische en fysieke concepten uittesten en onderling vergelijken;
+- Welke ervaringen hebben personen met een visuele beperking bij het navigeren in publieke gebouwen, en waar ontstaat onzekerheid?
+- Welke indoor wayfinding technologieën leveren aantoonbare meerwaarde, en waar liggen marktopportuniteiten?
 
-- bepalen welke functies en feedbackvormen als logisch, betrouwbaar en aanvaardbaar worden ervaren;
+### Doelgroep
 
-- de belangrijkste design requirements definiëren die richting geven aan verdere ontwikkeling.
+**Primair:** Blinde en zeer slechtziende volwassenen die autonoom publieke gebouwen willen bezoeken. Vertrouwd met iPhone (VoiceOver) en gebruiken witte stok.
 
-### Materiaal & methoden
-#### Wave 1 – Concept testing in een gecontroleerde omgeving
+**Secundair:** Partner/begeleiders, baliemedewerkers, gebouwbeheerders, lokale overheid.
 
-In Wave 1 werd vertrokken vanuit een eerste conceptueel kader voor SensePath: een slimme, afneembare handgreep voor de witte stok die via haptische feedback ondersteuning biedt bij navigatie.
+### Materiaal en methoden
 
-De sessies vonden plaats in een gecontroleerde omgeving en hadden een exploratief karakter. Het doel was niet om oplossingen te valideren, maar om mogelijke richtingen te openen.
-
-Vanuit dit kader werden volgende onderzoeksvragen geformuleerd:
-
-- Welke rol mag technologie spelen tijdens het stappen?
-
-- Welke vormen van haptische feedback worden spontaan begrepen?
-
-- In welke mate mag een hulpmiddel afwijken van bestaande stokgebruik-routines?
-
-- Welke conceptuele drager (handvat vs. volledige stok) wordt aanvaard?
-
-Om deze vragen te onderzoeken, werden low-fidelity prototypes ontwikkeld die verschillende haptische principes representeerden:
-
-- mechanische feedback;
-
-- vibratie;
-
-- bewegingsgebaseerde feedback;
-
-- tactiele patronen.
-
-Deze prototypes werden manueel aangestuurd (Wizard-of-Oz) zodat gebruikers de ervaring konden beoordelen zonder technische beperkingen.
-
-<p align="left">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51.jpeg" width="32%">
-  <img src="img/WhatsApp Image 2026-01-19 at 16.18.37 (1).jpeg" width="32%">
-  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (2).jpeg" width="32%">
-  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (3).jpeg" width="32%">
-  <img src="img/WhatsApp Image 2026-01-19 at 20.29.34.jpeg" width="32%">
-</p>
-
-De prototypes werden getest via semigestructureerde interviews en think-aloud tests met ervaren gebruikers van de witte stok (n = 5). De focus lag op interpretatie, comfort, vertrouwen en mentale belasting.
-
-De inzichten uit deze sessies vormden de basis voor een eerste set richtinggevende design requirements.
-
-#### Wave 2 – Gerichte prototype-testing (verdieping)
-
-In Wave 2 werd voortgebouwd op de inzichten uit Wave 1. Op basis van duidelijke voorkeuren en afwijzingen werd het aantal concepten bewust beperkt.
-
-De focus van Wave 2 lag op:
-
-- verfijning van geselecteerde haptische principes;
-- evaluatie van de fysieke integratie van technologie in relatie tot de witte stok;
-- het testen van stabiliteit, ergonomie en vertrouwen;
-- het prioriteren van design requirements aan de hand van een MoSCoW-analyse;
-- het aftoetsen van veiligheidsperceptie bij obstakeldetectie via een observatietest.
-
-De onderzoeksvragen voor deze fase waren onder andere:
-
-- Hoe ervaren gebruikers de fysieke bevestiging van een extra component op hun stok?
-- Welke haptische feedback blijft begrijpelijk en comfortabel tijdens langere interactie?
-- Wanneer voelt een oplossing aan als een logisch onderdeel van de stok, en wanneer als storend?
-- Welke design requirements zijn volgens gebruikers absoluut noodzakelijk (Must) en welke zijn onderhandelbaar?
-- Hoe ervaren gebruikers het veiligheidsgevoel bij het naderen van een obstakel?
-
-Voor deze fase werden nieuwe prototypes ontwikkeld:
-
-- fitting-prototypes met verschillende klemmechanismes;
-
-- haptische prototypes met verfijnde bewegings- en vibratiefeedback.
-<p align="left">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.19.jpeg" width="32%">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.52.jpeg" width="32%">
-
-</p>
-
-<p align="left">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="32%">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.50.jpeg" width="32%">
-
-</p>
-
-Daarnaast werd een MoSCoW-prioriteringsoefening uitgevoerd. De respondenten kregen een overzicht van de design requirements uit Wave 1, aangevuld met strategische requirements van het ontwerpteam, en werden gevraagd deze te rangschikken volgens de categorieën Must, Should, Could en Won’t. Tijdens deze oefening werd expliciet gevraagd om luidop te redeneren, zodat onderliggende motieven en twijfels zichtbaar werden.
-
-Om het veiligheidsgevoel rond obstakeldetectie te evalueren, werd een observatietest uitgevoerd. De respondenten wandelden traag in de richting van een obstakel terwijl de interviewer auditieve waarschuwingen gaf in de vorm van een herhaald “bieb”-signaal dat sneller werd naarmate de afstand tot het obstakel kleiner werd. Deze test had niet als doel technische detectie te evalueren, maar om te begrijpen of en wanneer dergelijke waarschuwingen als veilig, stressvol of ondersteunend worden ervaren.
-Dezelfde respondenten als in Wave 1 (n = 5) namen deel aan deze fase, zodat evoluties in mening en voorkeur konden worden opgevolgd. De sessies combineerden unguided interactie, guided simulatie en reflectie.
+| Methode | Type | N | Periode | Doel |
+|---|---|---|---|---|
+| User interviews | Semigestructureerde diepte-interviews (15–20 min) | 3 | 18/10 – 25/10/2025 | Contextuele inzichten over routines, frustraties en voorkeuren |
+| Benchmarking | Systematische vergelijking bestaande oplossingen | 11 | — | Sterktes → best practices, zwaktes → design opportuniteiten |
 
 ### Resultaten
-#### Wave 1
 
-Uit de eerste testfase kwamen een aantal duidelijke patronen naar voren.
+#### User interviews — key findings
 
-Alle respondenten gaven aan sterk gehecht te zijn aan hun bestaande witte stok. Het idee van een volledige slimme stok werd vrijwel unaniem afgewezen. Een afneembaar handvat werd daarentegen als een realistische en aanvaardbare oplossing gezien.
+> *"Je volgt een lijn... probleem is dat je niet weet naar waar."*
 
-Auditieve feedback werd door de meeste gebruikers als storend ervaren, aangezien gehoor cruciaal is tijdens navigatie. Haptische feedback werd consequent verkozen als primaire informatiedrager.
+- **Thuis vs. publiek** — Thuis is oriëntatie automatisme. In publieke gebouwen ontstaat onzekerheid, vooral aan knooppunten waar beslissingsinformatie ontbreekt.
+- **Geleidelijnen: love-hate** — Ze helpen vooruit, maar op kruispunten ontbreekt informatie over richting.
+- **Real world messiness** — Bezette geleidelijnen, slecht onderhoud, en vooral werken/omleidingen veroorzaken onzekerheid en tijdverlies.
+- **Feedbackvoorkeur is contextgebonden** — In publieke context duidelijke voorkeur om gehoor vrij te houden → haptische feedback aantrekkelijk.
 
-Niet alle haptiek werd echter gelijk beoordeeld. Mechanische en bewegingsgebaseerde feedback werd spontaan en correct geïnterpreteerd, terwijl meer abstracte of symbolische vormen (zoals patronen of braille-achtige signalen) als te complex werden ervaren tijdens het stappen.
+> *"Plots werken op het pad... niemand in de buurt, dan zoek je lang."*
 
-Daarnaast bleek vertrouwen een cruciale factor: zelfs kleine vormen van instabiliteit of onduidelijkheid leiden tot onmiddellijke afwijzing van een concept.
+**Korte conclusie:** De grootste pijn zit niet in "vooruit geraken", maar in keuzes maken aan knooppunten en omgaan met onbetrouwbare context.
 
-#### Wave 2
+#### Benchmarking — key findings
 
-In Wave 2 konden gebruikers explicieter vergelijken en verdiepen.
+- Veel systemen steunen op **audio** (turn-by-turn), maar dat botst met de nood om het gehoor vrij te houden.
+- **Infrastructuurgebaseerde oplossingen** (beacons/codes) zijn bewezen, maar vragen inzet van gebouwbeheerders en zijn minder schaalbaar.
+- **Infra-vrije smartphone-only oplossingen** zijn schaalbaar, maar hebben trade-offs (mapping, kalibratie).
+- **Haptische feedback** is discreet en laat oren vrij, maar vraagt een duidelijke "taal". Combinatie haptiek + korte spraak is meest robuust.
+- **Form factor is cruciaal** — integratie in bestaande mobiliteitshulpmiddelen verlaagt drempel.
 
-Wat betreft de fitting-prototypes werd duidelijk dat stabiliteit en het gevoel van “één geheel” met de stok essentieel zijn. Oplossingen die eenvoudig te monteren waren maar enige speling vertoonden, werden negatief beoordeeld. Gebruikers gaven aan liever iets meer moeite te doen bij montage dan onzekerheid te ervaren tijdens gebruik.
+**Korte conclusie:** Duidelijke opportuniteit voor een hybride aanpak: haptisch eerst, handsfree, schaalbaar met minimale infrastructuur, doelgericht tot exacte bestemming.
 
-Bij de haptische prototypes werd opnieuw bevestigd dat beweging een zeer sterke informatiedrager is. Continue, rustige bewegingsfeedback werd als geruststellend en betrouwbaar ervaren. Vibratie werd enkel aanvaard als aanvullende feedback, bijvoorbeeld ter bevestiging.
+### How Might We
 
-Tijdens de objectdetectietest, waarbij gebruikers traag in de richting van een obstakel wandelden terwijl een waarschuwing steeds sneller werd aangeboden, bleek dat het veiligheidsgevoel sterk afhankelijk is van de manier waarop de feedback wordt opgebouwd. Een graduele toename van het signaal werd als ondersteunend ervaren en hielp gebruikers om afstand en naderend gevaar in te schatten. Wanneer de waarschuwing echter te snel of te dwingend werd, nam het stressniveau toe en voelden sommige gebruikers zich opgejaagd. De test bevestigde dat objectdetectie enkel waardevol is wanneer deze rust, voorspelbaarheid en controle behoudt.
+> Hoe kunnen we blinde en ernstig slechtziende gebruikers in complexe publieke gebouwen betrouwbaar naar hun exacte doel leiden, met focus op knooppunten, minimale frictie en contextgevoelige feedback (haptisch en indien nodig korte spraak), zodat het ook werkt wanneer geleidelijnen bezet, onduidelijk of inconsistent zijn?
 
-Gebruikers benadrukten dat technologie hen moet ondersteunen op beslissingsmomenten, maar nooit de controle mag overnemen.
+📄 [Volledig discovery-rapport](docs/discovery.md)
 
-### Conclusies & implicaties
+---
 
-Op basis van Wave 1 en Wave 2 kan worden geconcludeerd dat SensePath het meeste potentieel heeft als:
+## Definition
 
-- een afneembaar, modulair handvat dat compatibel is met meerdere witte stokken;
+### Doelstellingen
 
-- een hulpmiddel dat haptische feedback als primaire informatiedrager gebruikt;
+- Inzicht krijgen in hoe gebruikers zich vandaag verplaatsen en welke rol technologie hierin mag spelen.
+- Verschillende haptische en fysieke concepten uittesten en vergelijken.
+- Bepalen welke functies en feedbackvormen als logisch, betrouwbaar en aanvaardbaar worden ervaren.
+- De belangrijkste design requirements definiëren.
 
-- een systeem dat inzet op rustige, intuïtieve beweging in plaats van complexe signalen;
+### Wave 1 — Vroege conceptvalidatie
 
-- een oplossing die bestaande routines respecteert en minimale extra handelingen vereist.
+**Doel:** Nagaan of de conceptrichting (slimme handgreep op bestaande witte stok met discrete feedback) begrijpelijk, wenselijk en geloofwaardig aanvoelt.
 
-Gebruikers verwachten eerst en vooral betrouwbaarheid, controle en mentale rust. Extra functies zijn enkel waardevol wanneer ze deze basis versterken.
+**Aanpak:** Low-fidelity prototypes met verschillende haptische principes (mechanisch, vibratie, beweging, tactiel) werden getest via Wizard-of-Oz met ervaren stokgebruikers (N=5).
 
-Deze conclusies vormen de basis voor verdere ontwikkeling in volgende fases, waarin de focus zal verschuiven naar verfijning, realistischere contexten en mogelijke technische implementatie.
+<p align="center">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51.jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.37 (1).jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (2).jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (3).jpeg" width="180"/>
+</p>
+
+**Key findings:**
+
+- Alle respondenten wezen een **volledige slimme stok** af. Een **afneembaar handvat** werd unaniem aanvaard.
+- **Auditieve feedback** werd als storend ervaren — gehoor is cruciaal tijdens navigatie.
+- **Mechanische en bewegingsgebaseerde feedback** werd spontaan en correct geïnterpreteerd.
+- Abstracte/symbolische patronen werden als te complex ervaren tijdens het stappen.
+- **Vertrouwen** is cruciaal: zelfs kleine vormen van instabiliteit leiden tot onmiddellijke afwijzing.
+
+### Wave 2 — Verfijning en prioritering
+
+**Doel:** Feedbackwijze optimaliseren, fysieke integratie evalueren, en design requirements prioriteren via MoSCoW-analyse.
+
+**Aanpak:** Fitting-prototypes met klemmechanismes + verfijnde haptische varianten, getest met dezelfde respondenten (N=5). Inclusief obstakeldetectie-observatietest.
+
+<p align="center">
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.19.jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.52.jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.50.jpeg" width="180"/>
+</p>
+
+**Key findings:**
+
+- **Stabiliteit en "één geheel"-gevoel** zijn essentieel — zelfs kleine speling leidde tot afwijzing.
+- **Continue, rustige bewegingsfeedback** werd als geruststellend en betrouwbaar ervaren.
+- **Vibratie** werd enkel aanvaard als aanvullende feedback (bevestiging), niet continu.
+- Bij obstakeldetectie: **graduele toename** van het signaal werd als ondersteunend ervaren. Te snelle/dwingende waarschuwingen verhoogden stress.
+- Technologie moet ondersteunen op beslismomenten, maar **nooit de controle overnemen**.
+
+### Conclusies
+
+SensePath heeft het meeste potentieel als:
+
+- Een **afneembaar, modulair handvat** compatibel met meerdere witte stokken.
+- Een hulpmiddel met **haptische feedback als primaire informatiedrager**.
+- Een systeem met **rustige, intuïtieve bewegingsfeedback** in plaats van complexe signalen.
+- Een oplossing die **bestaande routines respecteert** en minimale extra handelingen vereist.
+
+Gebruikers verwachten eerst en vooral **betrouwbaarheid, controle en mentale rust**.
+
+📄 [Volledig definition-rapport](docs/definition.md)
+
+---
+
+## Design Requirements
+
 > [!IMPORTANT]
-> Design Requirements:
-> - D1.1 SensePath wordt ontworpen als **volledige slimme stok** (geen universeel afneembaar handvat)
-> - D1.2 De stok moet beschikbaar zijn in **meerdere lengtes**
-> - D1.3 De gebruiker moet **kunnen switchen tussen lengtes** (modulair systeem)
-> - D1.4 De lengte-verbinding(en) moeten **mechanisch stabiel** zijn (geen speling/rotatie)
-> - D2.1 Haptische feedback moet de **primaire informatiedrager** zijn (boven audio)
-> - D2.2 Richtinginformatie moet **intuïtief** zijn (geen codes/patronen die je moet aanleren)
-> - D2.3 Bewegingsgebaseerde haptiek (links/rechts, voor/achter) moet **duidelijk en consistent** aanvoelen
-> - D2.4 Vibratie mag enkel dienen als **secundaire feedback** (bevestiging/waarschuwing), niet continu
-> - D2.5 Het systeem moet **obstakeldetectie op hoofdhoogte** ondersteunen (bv. takken, borden, uitstekende objecten)
-> - D2.6 Het systeem moet **obstakeldetectie voor putten en niveauverschillen** ondersteunen (bv. trappen, afstappen, gaten)
-> - D3.1 De gebruiker moet **controle behouden** (duidelijk start/stop; geen onverwachte automatische acties)
-> - D3.2 Interactie tijdens het stappen moet **minimaal** blijven
-> - D3.3 De smartphone mag enkel een **ondersteunende rol** hebben (instellen/starten), niet als constante interface
-> - D3.4 De gebruiker moet op een **bewust gekozen moment** een **volledig overzicht** kunnen opvragen van weg en locatie
-> - D3.5 Deze overzichtsinformatie mag **niet continu aanwezig** zijn, maar enkel **op vraag van de gebruiker**
-> - D4.1 Het systeem mag het **normale stokgebruik niet verstoren** (gewicht, balans, grip)
-> - D4.2 Het systeem moet **betrouwbaar en voorspelbaar** aanvoelen in dagelijks gebruik
-> - D5.1 Het navigatiesysteem moet zowel indoor als outdoor gebruikt kunnen worden, waarbij de overgang tussen beide omgevingen automatisch verloopt zonder tussenkomst van de gebruiker.
+> **Fysiek ontwerp**
+>
+> | ID | Requirement |
+> |---|---|
+> | D1.1 | SensePath wordt ontworpen als **volledige slimme stok** (geen universeel afneembaar handvat) |
+> | D1.2 | De stok moet beschikbaar zijn in **meerdere lengtes** |
+> | D1.3 | De gebruiker moet **kunnen switchen tussen lengtes** (modulair systeem) |
+> | D1.4 | De lengte-verbinding(en) moeten **mechanisch stabiel** zijn (geen speling/rotatie) |
+
+> [!IMPORTANT]
+> **Feedback & detectie**
+>
+> | ID | Requirement |
+> |---|---|
+> | D2.1 | Haptische feedback moet de **primaire informatiedrager** zijn (boven audio) |
+> | D2.2 | Richtinginformatie moet **intuïtief** zijn (geen codes/patronen die je moet aanleren) |
+> | D2.3 | Bewegingsgebaseerde haptiek moet **duidelijk en consistent** aanvoelen |
+> | D2.4 | Vibratie mag enkel dienen als **secundaire feedback** (bevestiging/waarschuwing), niet continu |
+> | D2.5 | Het systeem moet **obstakeldetectie op hoofdhoogte** ondersteunen |
+> | D2.6 | Het systeem moet **obstakeldetectie voor putten en niveauverschillen** ondersteunen |
+
+> [!IMPORTANT]
+> **Interactie & controle**
+>
+> | ID | Requirement |
+> |---|---|
+> | D3.1 | De gebruiker moet **controle behouden** (duidelijk start/stop; geen onverwachte automatische acties) |
+> | D3.2 | Interactie tijdens het stappen moet **minimaal** blijven |
+> | D3.3 | De smartphone mag enkel een **ondersteunende rol** hebben (instellen/starten) |
+> | D3.4 | De gebruiker moet op een bewust gekozen moment een **volledig overzicht** kunnen opvragen |
+> | D3.5 | Overzichtsinformatie mag **niet continu aanwezig** zijn, maar enkel op vraag |
+
+> [!IMPORTANT]
+> **Betrouwbaarheid & compatibiliteit**
+>
+> | ID | Requirement |
+> |---|---|
+> | D4.1 | Het systeem mag het **normale stokgebruik niet verstoren** (gewicht, balans, grip) |
+> | D4.2 | Het systeem moet **betrouwbaar en voorspelbaar** aanvoelen in dagelijks gebruik |
+> | D5.1 | Het navigatiesysteem moet zowel **indoor als outdoor** gebruikt kunnen worden, met automatische overgang |
+
+📄 [Volledige design requirements](docs/design_requirements.md)
+
+---
+
 ## Kritische reflectie
-Max. 500 woorden
+
+<!-- INSTRUCTIE: Vul hieronder je eigen ervaringen in per punt. Pas de tekst aan waar nodig. -->
+
+De Discovery-fase leverde waardevolle inzichten op, maar kende ook beperkingen. De user interviews (N=3) gaven rijke, kwalitatieve data, maar het beperkte aantal respondenten maakt het moeilijk om de bevindingen breed te generaliseren. Desondanks kwamen er opvallend consistente patronen naar voren — met name de onzekerheid aan knooppunten en de voorkeur voor haptische feedback — wat erop wijst dat de kernproblemen goed geïdentificeerd zijn. Een grotere steekproef in volgende fases zal nodig zijn om deze inzichten te bevestigen.
+
+De benchmarking van 11 bestaande oplossingen gaf een breed overzicht van de markt, maar was beperkt tot publiek beschikbare informatie en demonstraties. Niet alle oplossingen konden hands-on getest worden, waardoor sommige beoordelingen op secundaire bronnen gebaseerd zijn.
+
+<!-- INSTRUCTIE: Voeg hieronder toe wat specifiek voor jullie team goed/minder goed ging -->
+
+In de Definition-fase werkten de Wizard-of-Oz tests goed om snel feedback te verzamelen zonder technische beperkingen, maar de gecontroleerde testomgeving verschilt sterk van de echte complexiteit van publieke gebouwen. De respondenten waren zich bewust van de testsituatie, wat hun reacties mogelijk beïnvloed heeft. In semester 2 zal het cruciaal zijn om in meer realistische contexten te testen.
+
+Een sterk punt van het proces was de iteratieve aanpak: de inzichten uit Wave 1 stuurden Wave 2 concreet bij, waardoor het concept stap voor stap scherper werd. De MoSCoW-prioritering met gebruikers zorgde ervoor dat de design requirements niet enkel vanuit het ontwerpteam werden bepaald, maar expliciet gedragen worden door de doelgroep.
+
+Een aandachtspunt is dat de huidige tests uitsluitend met ervaren stokgebruikers zijn uitgevoerd. Personen die recent blind zijn geworden of minder ervaring hebben met de witte stok kunnen andere noden en verwachtingen hebben. Dit verdient aandacht in de volgende fases.
+
+Tot slot is de overstap van een afneembaar handvat (oorspronkelijk concept) naar een volledige slimme stok (D1.1) een fundamentele pivot die goed onderbouwd is door gebruikersfeedback, maar die aanzienlijke technische en productie-implicaties heeft voor het vervolg.
+
+---
 
 ## Noot inzake het gebruik van AI
-Licht toe op welke manier je AI gebruikte in dit project.
+
+Binnen dit project werd AI (Claude, Anthropic) ingezet als ondersteunend hulpmiddel op twee vlakken:
+
+- **Tekst en rapportage** — AI werd gebruikt om ruwe notities en onderzoeksdata te structureren tot leesbare paragrafen en om teksten taalkundig te verfijnen. De inhoudelijke keuzes, analyses en conclusies zijn steeds door het team zelf gemaakt; AI diende enkel om deze helderder en consistenter te formuleren.
+- **Benchmarking en analyse** — Bij de benchmarking van bestaande indoor navigatieoplossingen werd AI ingezet om publiek beschikbare informatie samen te vatten, vergelijkingscriteria te structureren en eerste analyses te genereren. Alle bevindingen werden daarna door het team handmatig geverifieerd en aangevuld met eigen inzichten.
+
+AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, het nemen van ontwerpbeslissingen, of het formuleren van design requirements. Deze zijn volledig gebaseerd op eigen gebruikersonderzoek en teamreflectie.
+
+---
 
 ## Bijlagen
+
 ### Discovery
-* Literatuuronderzoek (N=x)
-  * [Protocol](url)
-  * [Rapport](url)
-* Interviews (N=x)
-  * [Protocol](url)
-  * [Rapport](url)
-    
+
+| Document | Link |
+|---|---|
+| Interview protocol | [Interview - protocol - SensePath.docx](reports%20and%20protocols/Interview%20-%20protocol%20-%20SensePath.docx) |
+| Onderzoeksrapport interviews | [Onderzoeksrapport_user_interviews_SensePath.docx](reports%20and%20protocols/Onderzoeksrapport_user_interviews_SensePath.docx) |
+| Benchmarking protocol | [Benchmarkingprotocol_SensePath.docx](reports%20and%20protocols/Benchmarkingprotocol_SensePath.docx) |
+| Benchmarking rapport | [Benchmarkingrapport_SensePath.docx](reports%20and%20protocols/Benchmarkingrapport_SensePath.docx) |
+
 ### Definition
-* User testing wave 1 (N=x)
-  * [Protocol](url)
-  * [Rapport](url)
-* User testing wave 2 (N=x)
-  * [Protocol](url)
-  * [Rapport](url)
+
+| Document | Link |
+|---|---|
+| Wave 1 — Protocol | [Protocol](reports%20and%20protocols/) |
+| Wave 1 — Rapport | [Rapport](reports%20and%20protocols/) |
+| Wave 2 — Protocol | [Protocol](reports%20and%20protocols/) |
+| Wave 2 — Rapport | [Rapport](reports%20and%20protocols/) |
+
+### Overige documenten
+
+- [Methodologie](docs/methodologie.md)
+- [Discovery](docs/discovery.md)
+- [Definition](docs/definition.md)
+- [Design Requirements](docs/design_requirements.md)
+- [Bill of Materials](docs/bom.md)
+
+---
+
+## Bronnen
+
+<!-- INSTRUCTIE: Vul hieronder jullie eigen bronnen aan in APA-stijl. Hieronder staan voorbeelden op basis van de thema's uit het project. -->
+
+- World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd op [datum], van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
+- Guerreiro, J., Ahmetovic, D., Sato, D., Kitani, K., & Asakawa, C. (2019). Airport accessibility and navigation assistance for people with visual impairments. *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems*, 1–14.
+- Slade, P., Tambe, A., & Kochenderfer, M. J. (2021). Multimodal sensing and intuitive steering assistance improve navigation and mobility for people with impaired vision. *Science Robotics, 6*(59), eabg6594.
+- Design Council. (2005). *The Double Diamond: A universally accepted depiction of the design process.* Geraadpleegd op [datum], van https://www.designcouncil.org.uk/double-diamond
+
+<!-- Voeg hier jullie overige bronnen toe -->
+
+---
 
 ## Licentie
-> :warning: voeg jullie namen toe in de documenten hieronder en delete dan dit lijntje   
 
-This repository contains both software and design materials created as part of an industrial design energineering project at Ghent University.
+This repository contains both software and design materials created as part of an industrial design engineering project at Ghent University.
 
-- **Software and code:** [MIT License](./LICENSE-MIT)  
-- **Design, documentation, CAD, and media:** [CC BY 4.0 License](./LICENSE)
-  
+- **Software and code:** [MIT License](LICENSE-MIT)
+- **Design, documentation, CAD, and media:** [CC BY 4.0 License](LICENSE)
+
+You are free to reuse and build upon this work, both commercially and non-commercially, as long as proper attribution is given to the original authors.
 You are free to reuse and build upon this work, both commercially and non-commercially, as long as proper attribution is given to the original authors.
 
 ## Bronnen
