@@ -33,9 +33,10 @@ Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange
    - [Prototypes & User Testing](#user-testing)
    - [Develop 1 conclusies](#develop-1-conclusies)
 6. [Kritische reflectie](#kritische-reflectie)
-7. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
-8. [Bijlagen](#bijlagen)
-9. [Bronnen](#bronnen)
+7. [Develop 2](#develop-2)
+8. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
+9. [Bijlagen](#bijlagen)
+10. [Bronnen](#bronnen)
 
 ---
 
@@ -47,8 +48,8 @@ Dit project volgt de **Double Diamond** aanpak (Discover, Define, Develop, Deliv
 
 In de discoveryfase werd de probleemruimte verkend via:
 
-- **User interviews** — fricties, routines, copingstrategieën en contextfactoren identificeren (drukte, tijdelijke werken, knooppunten).
-- **Deskresearch en benchmarking** — bestaande navigatie- en mobiliteitsoplossingen in kaart brengen en analyseren op feedbackmodaliteit, infrastructuurbehoefte, betrouwbaarheid en schaalbaarheid.
+- **User interviews**: fricties, routines, copingstrategieën en contextfactoren identificeren (drukte, tijdelijke werken, knooppunten).
+- **Deskresearch en benchmarking**: bestaande navigatie- en mobiliteitsoplossingen in kaart brengen en analyseren op feedbackmodaliteit, infrastructuurbehoefte, betrouwbaarheid en schaalbaarheid.
 
 De resultaten werden samengebracht tot een probleemdefinitie, een eerste set **design requirements** en een initiële **PRD**.
 
@@ -56,8 +57,8 @@ De resultaten werden samengebracht tot een probleemdefinitie, een eerste set **d
 
 In de definitionfase werd het concept getoetst en aangescherpt via **iteratief prototypen en testen** in twee waves:
 
-- **Wave 1** — Vroege conceptvalidatie met low- tot mid-fidelity prototypes en Wizard-of-Oz scenario's. Focus op begrijpelijkheid, wenselijkheid en aanvaardbaarheid van de conceptrichting.
-- **Wave 2** — Verfijning van interactie en feedback met nadruk op minimale smartphone-interactie, haptische feedback als primaire modaliteit, en een fail-safe workflow. Inclusief MoSCoW-prioritering en obstakeldetectie-observatietest.
+- **Wave 1**: Vroege conceptvalidatie met low- tot mid-fidelity prototypes en Wizard-of-Oz scenario's. Focus op begrijpelijkheid, wenselijkheid en aanvaardbaarheid van de conceptrichting.
+- **Wave 2**: Verfijning van interactie en feedback met nadruk op minimale smartphone-interactie, haptische feedback als primaire modaliteit, en een fail-safe workflow. Inclusief MoSCoW-prioritering en obstakeldetectie-observatietest.
 
 ### Develop (semester 2)
 
@@ -100,26 +101,26 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 
 ### Resultaten
 
-#### User interviews — key findings
+#### User interviews: key findings
 
 > *"Je volgt een lijn... probleem is dat je niet weet naar waar."*
 
-- **Thuis vs. publiek** — Thuis is oriëntatie automatisme. In publieke gebouwen ontstaat onzekerheid, vooral aan knooppunten waar beslissingsinformatie ontbreekt.
-- **Geleidelijnen: love-hate** — Ze helpen vooruit, maar op kruispunten ontbreekt informatie over richting.
-- **Real world messiness** — Bezette geleidelijnen, slecht onderhoud, en vooral werken/omleidingen veroorzaken onzekerheid en tijdverlies.
-- **Feedbackvoorkeur is contextgebonden** — In publieke context duidelijke voorkeur om gehoor vrij te houden → haptische feedback aantrekkelijk.
+- **Thuis vs. publiek**: Thuis is oriëntatie automatisme. In publieke gebouwen ontstaat onzekerheid, vooral aan knooppunten waar beslissingsinformatie ontbreekt.
+- **Geleidelijnen: love-hate**: Ze helpen vooruit, maar op kruispunten ontbreekt informatie over richting.
+- **Real world messiness**: Bezette geleidelijnen, slecht onderhoud, en vooral werken/omleidingen veroorzaken onzekerheid en tijdverlies.
+- **Feedbackvoorkeur is contextgebonden**: In publieke context duidelijke voorkeur om gehoor vrij te houden → haptische feedback aantrekkelijk.
 
 > *"Plots werken op het pad... niemand in de buurt, dan zoek je lang."*
 
 **Korte conclusie:** De grootste pijn zit niet in "vooruit geraken", maar in keuzes maken aan knooppunten en omgaan met onbetrouwbare context.
 
-#### Benchmarking — key findings
+#### Benchmarking: key findings
 
 - Veel systemen steunen op **audio** (turn-by-turn), maar dat botst met de nood om het gehoor vrij te houden.
 - **Infrastructuurgebaseerde oplossingen** (beacons/codes) zijn bewezen, maar vragen inzet van gebouwbeheerders en zijn minder schaalbaar.
 - **Infra-vrije smartphone-only oplossingen** zijn schaalbaar, maar hebben trade-offs (mapping, kalibratie).
 - **Haptische feedback** is discreet en laat oren vrij, maar vraagt een duidelijke "taal". Combinatie haptiek + korte spraak is meest robuust.
-- **Form factor is cruciaal** — integratie in bestaande mobiliteitshulpmiddelen verlaagt drempel.
+- **Form factor is cruciaal**: integratie in bestaande mobiliteitshulpmiddelen verlaagt drempel.
 
 **Korte conclusie:** Duidelijke opportuniteit voor een hybride aanpak: haptisch eerst, handsfree, schaalbaar met minimale infrastructuur, doelgericht tot exacte bestemming.
 
@@ -140,7 +141,7 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 - Bepalen welke functies en feedbackvormen als logisch, betrouwbaar en aanvaardbaar worden ervaren.
 - De belangrijkste design requirements definiëren.
 
-### Wave 1 — Vroege conceptvalidatie
+### Wave 1: Vroege conceptvalidatie
 
 **Doel:** Nagaan of de conceptrichting (slimme handgreep op bestaande witte stok met discrete feedback) begrijpelijk, wenselijk en geloofwaardig aanvoelt.
 
@@ -156,12 +157,12 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 **Key findings:**
 
 - Alle respondenten wezen een **volledige slimme stok** af. Een **afneembaar handvat** werd unaniem aanvaard.
-- **Auditieve feedback** werd als storend ervaren — gehoor is cruciaal tijdens navigatie.
+- **Auditieve feedback** werd als storend ervaren; gehoor is cruciaal tijdens navigatie.
 - **Mechanische en bewegingsgebaseerde feedback** werd spontaan en correct geïnterpreteerd.
 - Abstracte/symbolische patronen werden als te complex ervaren tijdens het stappen.
 - **Vertrouwen** is cruciaal: zelfs kleine vormen van instabiliteit leiden tot onmiddellijke afwijzing.
 
-### Wave 2 — Verfijning en prioritering
+### Wave 2: Verfijning en prioritering
 
 **Doel:** Feedbackwijze optimaliseren, fysieke integratie evalueren, en design requirements prioriteren via MoSCoW-analyse.
 
@@ -176,7 +177,7 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 
 **Key findings:**
 
-- **Stabiliteit en "één geheel"-gevoel** zijn essentieel — zelfs kleine speling leidde tot afwijzing.
+- **Stabiliteit en "één geheel"-gevoel** zijn essentieel; zelfs kleine speling leidde tot afwijzing.
 - **Continue, rustige bewegingsfeedback** werd als geruststellend en betrouwbaar ervaren.
 - **Vibratie** werd enkel aanvaard als aanvullende feedback (bevestiging), niet continu.
 - Bij obstakeldetectie: **graduele toename** van het signaal werd als ondersteunend ervaren. Te snelle/dwingende waarschuwingen verhoogden stress.
@@ -365,7 +366,7 @@ Speaker wordt als experimentele variant binnen de MVP-test behandeld:
 ### Morfologische matrix
 
 <p align="center">
-  <img src="img/PGGO - SensePath - Morfologische matrix.jpg"
+  <img src="img/PGGO - SensePath - Morfologische matrix.jpg"/>
 </p>
 
 De morfologische matrix werd gebruikt om per functieblok een afweging te maken tussen wat vandaag het meest geschikt is voor het prototype, wat later het meest geschikt lijkt voor het eindproduct, en welke keuzes in beide fasen overeind blijven.
@@ -440,11 +441,11 @@ De wizard biedt continue feedback via het draaiende kompasbolletje in het handva
 > *"Ik denk dat het zelfs zou lukken om niet buiten het pad te gaan."*
 
 **Key findings:**
-- **Grip bepaalt interpretatie** — Verschillende grip = links/rechts omgekeerd. Handoriëntatie is cruciaal.
-- **Palmsensatie is zwak** — Meerdere deelnemers voelden het bolletje nauwelijks.
-- **Ergonomie onvoldoende** — Handvat past niet bij elke hand. Bolletje is verkeerd gepositioneerd.
-- **Rechtdoor lopen werkt** — Goede resultaten bij rechtdoor; bochten zijn moeilijker.
-- **Winter = probleem** — Handschoenen en dikke jassen blokkeren de sensatie.
+- **Grip bepaalt interpretatie**: Verschillende grip = links/rechts omgekeerd. Handoriëntatie is cruciaal.
+- **Palmsensatie is zwak**: Meerdere deelnemers voelden het bolletje nauwelijks.
+- **Ergonomie onvoldoende**: Handvat past niet bij elke hand. Bolletje is verkeerd gepositioneerd.
+- **Rechtdoor lopen werkt**: Goede resultaten bij rechtdoor; bochten zijn moeilijker.
+- **Winter = probleem**: Handschoenen en dikke jassen blokkeren de sensatie.
 
 **Benchmark vergelijking Test 1:**
 
@@ -465,12 +466,12 @@ De wizard stuurt trilsignalen op het juiste moment via de controller-app.
 > *"Het voelde beter, minder concentreren dan het balletje."*
 
 **Key findings:**
-- **Vingertoppen voelen het best** — "Daar zitten de voelers."
-- **Afslaan werkt goed** — Richtingssignalen worden snel begrepen en aangeleerd.
-- **Rechtdoor is moeilijker** — Zonder continu signaal drijven gebruikers af.
-- **Bevestigingssignaal nodig** — Gebruikers willen feedback dat ze rechtdoor lopen.
-- **Niet te veel signalen** — "Begin niet met zevenhonderdachtendertig verschillende signalen."
-- **Sensorpositie problematisch** — Links past goed = rechts past slecht, en omgekeerd. Handgrootte speelt een rol.
+- **Vingertoppen voelen het best**: "Daar zitten de voelers."
+- **Afslaan werkt goed**: Richtingssignalen worden snel begrepen en aangeleerd.
+- **Rechtdoor is moeilijker**: Zonder continu signaal drijven gebruikers af.
+- **Bevestigingssignaal nodig**: Gebruikers willen feedback dat ze rechtdoor lopen.
+- **Niet te veel signalen**: "Begin niet met zevenhonderdachtendertig verschillende signalen."
+- **Sensorpositie problematisch**: Links past goed = rechts past slecht, en omgekeerd. Handgrootte speelt een rol.
 
 **Benchmark vergelijking Test 2:**
 
@@ -491,12 +492,12 @@ Kompas (continue koersfeedback) + vibratie (afslagcue) samen op hetzelfde parcou
 > *"Het was beter dan ik had verwacht."*
 
 **Key findings:**
-- **Vibratie interfereert met kompas** — Twee systemen tegelijk aflezen op één hand is moeilijk.
-- **Ergonomie is de bottleneck** — Huidig prototype laat geen eerlijke evaluatie toe.
-- **Concept heeft potentieel** — Vibratie als aankondiging + kompas voor koerscorrectie is logisch.
-- **Hogere cognitieve belasting** — Scores dalen vergeleken met individuele tests.
-- **Herpositionering bolletje** — Suggestie: naar de knokkels of hiel van de hand i.p.v. de palm.
-- **Audio als back-up** — Speaker/bluetooth voor wanneer vibraties niet waarneembaar zijn.
+- **Vibratie interfereert met kompas**: Twee systemen tegelijk aflezen op één hand is moeilijk.
+- **Ergonomie is de bottleneck**: Huidig prototype laat geen eerlijke evaluatie toe.
+- **Concept heeft potentieel**: Vibratie als aankondiging + kompas voor koerscorrectie is logisch.
+- **Hogere cognitieve belasting**: Scores dalen vergeleken met individuele tests.
+- **Herpositionering bolletje**: Suggestie: naar de knokkels of hiel van de hand i.p.v. de palm.
+- **Audio als back-up**: Speaker/bluetooth voor wanneer vibraties niet waarneembaar zijn.
 
 **Benchmark vergelijking Test 3:**
 
@@ -514,9 +515,9 @@ Kompas (continue koersfeedback) + vibratie (afslagcue) samen op hetzelfde parcou
 - **Vibratie is intuïtiever** dan kompas voor discrete navigatie-events (afslagen).
 - **Kompas biedt superieure koersbewaking** maar lijdt onder perceptuele ambiguïteit.
 - De **gecombineerde conditie scoorde het hoogst op nauwkeurigheid** (97,52% SIZ) maar het laagst op subjectieve ervaring.
-- **Ergonomie is geen bijzaak** — het is de primaire confound in de data.
+- **Ergonomie is geen bijzaak**; het is de primaire confound in de data.
 - SensePath houdt stand tegen de **Tactile Compass benchmark** onder moeilijkere condities (met stok, video-observatie i.p.v. OptiTrack, Wizard-of-Oz i.p.v. automatisch).
-- **90% van alle fouten** is te wijten aan wizard-timing — bij automatisering worden minder fouten verwacht.
+- **90% van alle fouten** is te wijten aan wizard-timing; bij automatisering worden minder fouten verwacht.
 - Gebruikers memoriseren onbewust het pad over de drie tests heen, wat een confound vormt voor de SIZ-scores.
 
 ---
@@ -532,6 +533,7 @@ Een belangrijk inzicht is dat 90% van alle fouten te wijten is aan de timing van
 Ten slotte wijst de vergelijking tussen omgeving en cognitieve belasting erop dat de context waarin de test plaatsvindt een invloed kan hebben op de prestaties van de gebruiker. Een complexere of minder geschikte omgeving kan de cognitieve load verhogen, wat op zijn beurt het aantal fouten of de moeilijkheidsgraad van de taak kan beïnvloeden. 
 
 ---
+
 ## Develop 2
 
 ### Doelstellingen
@@ -595,53 +597,55 @@ De cognitieve en sensorische analyse vormt het theoretische hart van Develop 2. 
 
 In Develop 1 braken drie van Norman's zeven fasen: Perceive, Interpret en Compare.
 
-**Perceive (waarnemen)** — Het probleem was dat twee haptische kanalen (kompas en trilmotoren) tegelijk "gelezen" moesten worden op dezelfde hand. Het probleem was niet dat er te veel informatie was, maar dat de sensorische kanalen elkaar overlapten op dezelfde anatomische zone. Het ontwerpprincipe dat hieruit volgt is **ruimtelijke scheiding van feedbackkanalen**: kompas en trilmotoren moeten op anatomisch gescheiden zones zitten zodat ze niet interfereren. Concreet zijn de finger-mounted vibratiemotoren verwijderd ten gunste van één enkele in-handle motor, en is het kompas verplaatst naar de hypothenar (hiel van de hand).
+**Perceive (waarnemen)**: Het probleem was dat twee haptische kanalen (kompas en trilmotoren) tegelijk "gelezen" moesten worden op dezelfde hand. Het probleem was niet dat er te veel informatie was, maar dat de sensorische kanalen elkaar overlapten op dezelfde anatomische zone. Het ontwerpprincipe dat hieruit volgt is **ruimtelijke scheiding van feedbackkanalen**: kompas en trilmotoren moeten op anatomisch gescheiden zones zitten zodat ze niet interfereren. Concreet zijn de finger-mounted vibratiemotoren verwijderd ten gunste van één enkele in-handle motor, en is het kompas verplaatst naar de hypothenar (hiel van de hand).
 
-**Interpret (interpreteren)** — De mentale mapping "balletje naar beneden = rechts draaien" bleek grip-afhankelijk in Develop 1. Verschillende gebruikers hielden het handvat anders vast, waardoor dezelfde beweging tegengestelde betekenissen kreeg. Norman noemt dit een **system image mismatch**: het conceptuele model van de ontwerper klopt niet met het mentale model dat de gebruiker opbouwt op basis van wat het systeem hem laat zien. Het ontwerpprincipe is dat de mapping robuust moet zijn ongeacht gripvariatie. Voor Develop 2 wordt dit opgelost via een **onboarding tutorial** die de oriëntatie kalibreert op de natuurlijke grip van de gebruiker, en een **IMU-gebaseerde fallback** die waarschuwt wanneer de griporiëntatie de mapping breekt.
+**Interpret (interpreteren)**: De mentale mapping "balletje naar beneden = rechts draaien" bleek grip-afhankelijk in Develop 1. Verschillende gebruikers hielden het handvat anders vast, waardoor dezelfde beweging tegengestelde betekenissen kreeg. Norman noemt dit een **system image mismatch**: het conceptuele model van de ontwerper klopt niet met het mentale model dat de gebruiker opbouwt op basis van wat het systeem hem laat zien. Het ontwerpprincipe is dat de mapping robuust moet zijn ongeacht gripvariatie. Voor Develop 2 wordt dit opgelost via een **onboarding tutorial** die de oriëntatie kalibreert op de natuurlijke grip van de gebruiker, en een **IMU-gebaseerde fallback** die waarschuwt wanneer de griporiëntatie de mapping breekt.
 
-**Compare (vergelijken)** — De gebruiker wil evalueren "ben ik nog op koers?" maar krijgt daar in Develop 1 onvoldoende bevestiging van. Dit is wat Norman de **Gulf of Evaluation** noemt: de afstand tussen de feedback die het systeem geeft en wat de gebruiker nodig heeft om zijn doel te toetsen. Het ontwerpprincipe is dat het systeem expliciet en eerlijk moet communiceren over zijn eigen status.
+**Compare (vergelijken)**: De gebruiker wil evalueren "ben ik nog op koers?" maar krijgt daar in Develop 1 onvoldoende bevestiging van. Dit is wat Norman de **Gulf of Evaluation** noemt: de afstand tussen de feedback die het systeem geeft en wat de gebruiker nodig heeft om zijn doel te toetsen. Het ontwerpprincipe is dat het systeem expliciet en eerlijk moet communiceren over zijn eigen status.
 
 #### Gestalt-wetten
 
 De Gestalt-wetten zijn klassiek beschreven voor visuele perceptie, maar gelden evengoed voor tactiele perceptie. Mensen groeperen sensorische input automatisch volgens dezelfde principes.
 
-**Wet van figuur-grond** — Er moet altijd een duidelijk onderscheid zijn tussen wat de "figuur" is (opvallend, belangrijk) en wat de "grond" is (achtergrond, context). In Develop 1 was dit contrast te zwak: het kompas was te subtiel en de vibratie was niet duidelijk genoeg afgebakend van de continue koersfeedback. Het ontwerpprincipe is **versterk het intensiteitscontrast**: vibratie moet kort en krachtig zijn, kompas moet rustig en continu blijven, en beide moeten duidelijk onderscheidbaar zijn.
+**Wet van figuur-grond**: Er moet altijd een duidelijk onderscheid zijn tussen wat de "figuur" is (opvallend, belangrijk) en wat de "grond" is (achtergrond, context). In Develop 1 was dit contrast te zwak: het kompas was te subtiel en de vibratie was niet duidelijk genoeg afgebakend van de continue koersfeedback. Het ontwerpprincipe is **versterk het intensiteitscontrast**: vibratie moet kort en krachtig zijn, kompas moet rustig en continu blijven, en beide moeten duidelijk onderscheidbaar zijn.
 
-**Wet van continuïteit** — Mensen volgen liever een doorlopende sensorische stroom dan onderbroken brokstukken. Het kompas geeft continue feedback, vibratie is discreet. Wanneer beide tegelijk actief zijn, "wint" de continue stroom de aandacht en wordt de korte vibratiecue gemist. De ontwerpimplicatie is dat het **kompas kort pauzeert tijdens een vibratiecue**, zodat het korte event-signaal niet verdrinkt in de achtergrondstroom van de koersfeedback.
+**Wet van continuïteit**: Mensen volgen liever een doorlopende sensorische stroom dan onderbroken brokstukken. Het kompas geeft continue feedback, vibratie is discreet. Wanneer beide tegelijk actief zijn, "wint" de continue stroom de aandacht en wordt de korte vibratiecue gemist. De ontwerpimplicatie is dat het **kompas kort pauzeert tijdens een vibratiecue**, zodat het korte event-signaal niet verdrinkt in de achtergrondstroom van de koersfeedback.
 
-**Wet van proximity en common region** — Dingen die fysiek dicht bij elkaar zitten of in dezelfde anatomische zone, worden onbewust als één signaal gegroepeerd in plaats van als twee aparte informatiestromen. In Develop 1 zaten kompas en trilmotoren fysiek dicht bij elkaar op dezelfde hand, waardoor ze als één moeilijk te ontleden brij werden waargenomen. Door ze in verschillende anatomische zones te plaatsen creëer je twee aparte "common regions" die elk hun eigen informatie dragen.
+**Wet van proximity en common region**: Dingen die fysiek dicht bij elkaar zitten of in dezelfde anatomische zone, worden onbewust als één signaal gegroepeerd in plaats van als twee aparte informatiestromen. In Develop 1 zaten kompas en trilmotoren fysiek dicht bij elkaar op dezelfde hand, waardoor ze als één moeilijk te ontleden brij werden waargenomen. Door ze in verschillende anatomische zones te plaatsen creëer je twee aparte "common regions" die elk hun eigen informatie dragen.
 
 #### Signifiers
 
 Norman definieert signifiers als waarneembare aanwijzingen die de gebruiker vertellen wat er kan, gebeurt of fout is. Bij SensePath, een product zonder visuele interface, moeten signifiers volledig tactiel zijn. Uit Develop 1 bleken twee signifiers te ontbreken:
 
-- **Transitiesignaal tussen modi** — Wanneer het systeem schakelt van buiten naar binnen, of van een modus naar een andere, is er geen signifier voor die overgang. De gebruiker merkt de verandering pas wanneer iets onverwachts gebeurt. Voorstel: een uniek kort trilpatroon dat de moduswissel aankondigt.
-- **Fout-signifier** — Wanneer het systeem onzeker is over zijn eigen positie of de wizard-timing mist, is er geen feedback dat er iets onverwachts gebeurt. Dit ondergraaft het vertrouwen omdat de gebruiker een fout mental model opbouwt ("ik deed iets fout") terwijl het systeem zelf faalde. Voorstel: een specifiek "heroriënteer"-signaal dat duidelijk verschilt van navigatiecues.
+- **Transitiesignaal tussen modi**: Wanneer het systeem schakelt van buiten naar binnen, of van een modus naar een andere, is er geen signifier voor die overgang. De gebruiker merkt de verandering pas wanneer iets onverwachts gebeurt. Voorstel: een uniek kort trilpatroon dat de moduswissel aankondigt.
+- **Fout-signifier**: Wanneer het systeem onzeker is over zijn eigen positie of de wizard-timing mist, is er geen feedback dat er iets onverwachts gebeurt. Dit ondergraaft het vertrouwen omdat de gebruiker een fout mental model opbouwt ("ik deed iets fout") terwijl het systeem zelf faalde. Voorstel: een specifiek "heroriënteer"-signaal dat duidelijk verschilt van navigatiecues.
 
 #### Vertaling naar het prototype
 
 De theoretische analyse leidt tot vier concrete ontwerpkeuzes voor Develop 2:
 
-- **Ruimtelijke scheiding van kanalen** — finger-mounted vibratiemotoren verwijderd, één enkele in-handle motor met een beperkte set codes
-- **Mental mapping veiliggesteld** — onboarding tutorial die kalibreert op de natuurlijke grip van de gebruiker, IMU-fallback die waarschuwt bij gripverandering
-- **Figuur-grond contrast** — vibratie wordt kort en krachtig; kompas pauzeert tijdens een vibratiecue
-- **Twee nieuwe signifiers** — uniek patroon voor moduswisseling en eerlijk fout-signaal voor systeemonzekerheid
+- **Ruimtelijke scheiding van kanalen**: finger-mounted vibratiemotoren verwijderd, één enkele in-handle motor met een beperkte set codes
+- **Mental mapping veiliggesteld**: onboarding tutorial die kalibreert op de natuurlijke grip van de gebruiker, IMU-fallback die waarschuwt bij gripverandering
+- **Figuur-grond contrast**: vibratie wordt kort en krachtig; kompas pauzeert tijdens een vibratiecue
+- **Twee nieuwe signifiers**: uniek patroon voor moduswisseling en eerlijk fout-signaal voor systeemonzekerheid
 
 ### Prototypes
 
 Voor Develop 2 werden drie prototypedimensies gevarieerd via **variety prototyping**, een methode die expliciet meerdere fysieke varianten naast elkaar test om confirmation bias te vermijden.
 
-**Handle profile** — Drie verschillende handvatprofielen werden ontwikkeld om de algemene grip-ergonomie te onderzoeken. De vorm bepaalt hoe de hand zich rond het handvat sluit en beïnvloedt onbewust de handoriëntatie.
+**Handle profile**: Drie verschillende handvatprofielen werden ontwikkeld om de algemene grip-ergonomie te onderzoeken. De vorm bepaalt hoe de hand zich rond het handvat sluit en beïnvloedt onbewust de handoriëntatie.
 
 <p align="center">
   <img src="img/handle_profile.png" alt="Drie handvatprofielvarianten" width="700"/>
 </p>
-**Compass groove** — Het handvat werd voorzien van een verticale gleuf met **vijf posities** waarin het kompaselement geplaatst kon worden, van H1 (laagste, dicht bij de pols) tot H5 (hoogste, dicht bij de knokkels). Door dezelfde gleuf te gebruiken kon de positie systematisch gewisseld worden zonder andere variabelen te veranderen.
+
+**Compass groove**: Het handvat werd voorzien van een verticale gleuf met **vijf posities** waarin het kompaselement geplaatst kon worden, van H1 (laagste, dicht bij de pols) tot H5 (hoogste, dicht bij de knokkels). Door dezelfde gleuf te gebruiken kon de positie systematisch gewisseld worden zonder andere variabelen te veranderen.
 
 <p align="center">
   <img src="img/grooves_prototype.jpeg" alt="Handvat met kompasgleuf en 5 posities" width="300"/>
 </p>
-**Contact surface** — Vijf verschillende kompaselementen werden ontwikkeld die elk een combinatie zijn van **vorm én uitsteekselhoogte**. Drie afgeronde rechthoekige uitsteeksels op verschillende uitsteekselhoogtes (laag, midden, hoog), één sferisch element, en één schuin afgeronde overgangsvorm. Dat laatste element kwam voort uit een inzicht van Mario tijdens zijn sessie: een geleidelijke overgang van vlak naar verhoog vermindert het scherpe contactgevoel tegen de hand.
+
+**Contact surface**: Vijf verschillende kompaselementen werden ontwikkeld die elk een combinatie zijn van **vorm én uitsteekselhoogte**. Drie afgeronde rechthoekige uitsteeksels op verschillende uitsteekselhoogtes (laag, midden, hoog), één sferisch element, en één schuin afgeronde overgangsvorm. Dat laatste element kwam voort uit een inzicht van Mario tijdens zijn sessie: een geleidelijke overgang van vlak naar verhoog vermindert het scherpe contactgevoel tegen de hand.
 
 <p align="center">
   <img src="img/contact_surface_prototype.png" alt="Vijf kompaselementen met variërende vorm en uitsteekselhoogte" width="700"/>
@@ -676,10 +680,10 @@ In Test 1 werd onderzocht op welke gleufpositie het kompaselement het duidelijks
 
 **Key findings:**
 
-- **Laagste gleufpositie (H1) gewonnen** — Zowel Mario als Herman kozen onafhankelijk de positie het dichtst bij de hiel van de hand.
-- **Hypothenar als ankerpunt** — Op de laagste positie rust het element tegen het stevige vlezige deel van de handpalm bij de pols, waar de hand sowieso contact maakt ongeacht hoe ze het handvat vasthouden. Dit lost het Develop 1-probleem van handpalmcentrum (te zwak signaal) op.
-- **Hoogste positie problematisch** — Bij de bovenste gleuf raakte de huid bekneld tussen het element en de gleufrand. Dit was een mechanisch probleem dat alleen bij dynamisch grijpen naar boven kwam.
-- **Grip-onafhankelijkheid bevestigd** — De laagste gleufpositie werkt over verschillende grippatronen heen omdat het contactvlak anatomisch verankerd is, niet handpositie-afhankelijk. Dit is precies wat de Norman-analyse voorspelde over het belang van een grip-onafhankelijke mapping.
+- **Laagste gleufpositie (H1) gewonnen**: Zowel Mario als Herman kozen onafhankelijk de positie het dichtst bij de hiel van de hand.
+- **Hypothenar als ankerpunt**: Op de laagste positie rust het element tegen het stevige vlezige deel van de handpalm bij de pols, waar de hand sowieso contact maakt ongeacht hoe ze het handvat vasthouden. Dit lost het Develop 1-probleem van handpalmcentrum (te zwak signaal) op.
+- **Hoogste positie problematisch**: Bij de bovenste gleuf raakte de huid bekneld tussen het element en de gleufrand. Dit was een mechanisch probleem dat alleen bij dynamisch grijpen naar boven kwam.
+- **Grip-onafhankelijkheid bevestigd**: De laagste gleufpositie werkt over verschillende grippatronen heen omdat het contactvlak anatomisch verankerd is, niet handpositie-afhankelijk. Dit is precies wat de Norman-analyse voorspelde over het belang van een grip-onafhankelijke mapping.
 
 ### Test 2: Contact surface
 
@@ -697,10 +701,10 @@ In Test 2 werd op de voorkeursgleufpositie uit Test 1 gezocht naar de combinatie
 
 **Key findings:**
 
-- **Middelhoge uitsteekselhoogte gewonnen** — Lage uitsteeksels voelden te subtiel, hoge voelden scherp en oncomfortabel. De middelhoge gaf de beste balans tussen voelbaarheid en comfort.
-- **Sferisch element als voorkeursvorm** — Soepele overdracht van richtingsbeweging, geen scherpe randen tegen de huid, comfortabel over verschillende griprotaties. Dit komt rechtstreeks voort uit de Gestalt figuur-grond analyse: het sferische element levert een duidelijker afgebakend tactiel signaal.
-- **Schuin afgeronde overgangsvorm (C5) als sterke tweede** — Vooral gewaardeerd voor de geleidelijke overgang van vlak naar verhoog, een idee dat Mario tijdens zijn sessie aanbracht en dat Rory bevestigde.
-- **Glove-inzicht van Mario** — Mario merkte op dat in winterse omstandigheden met handschoenen het element nauwelijks voelbaar zou zijn. Dit triggerde het idee van een **uitwisselbare kompasmodule** met een robuustere wintervariant.
+- **Middelhoge uitsteekselhoogte gewonnen**: Lage uitsteeksels voelden te subtiel, hoge voelden scherp en oncomfortabel. De middelhoge gaf de beste balans tussen voelbaarheid en comfort.
+- **Sferisch element als voorkeursvorm**: Soepele overdracht van richtingsbeweging, geen scherpe randen tegen de huid, comfortabel over verschillende griprotaties. Dit komt rechtstreeks voort uit de Gestalt figuur-grond analyse: het sferische element levert een duidelijker afgebakend tactiel signaal.
+- **Schuin afgeronde overgangsvorm (C5) als sterke tweede**: Vooral gewaardeerd voor de geleidelijke overgang van vlak naar verhoog, een idee dat Mario tijdens zijn sessie aanbracht en dat Rory bevestigde.
+- **Glove-inzicht van Mario**: Mario merkte op dat in winterse omstandigheden met handschoenen het element nauwelijks voelbaar zou zijn. Dit triggerde het idee van een **uitwisselbare kompasmodule** met een robuustere wintervariant.
 
 ### Test 3: Turn via compass feedback
 
@@ -710,17 +714,17 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
   <img src="img/path_test_3_dev2.png" alt="Afgetaped benchmarkparcours Test 3" width="400"/>
 </p>
 
-> *"Ik ben wel onder de indruk, het is echt beter dan de vorige keer."* — Mario
+> *"Ik ben wel onder de indruk, het is echt beter dan de vorige keer."* (Mario)
 >
-> *"180 graden draaien is eigenlijk niet nodig, het stuurt continu bij."* — Rory
+> *"180 graden draaien is eigenlijk niet nodig, het stuurt continu bij."* (Rory)
 >
-> *"Het werkt, maar ik blijf voor mezelf liever met audio werken."* — Herman
+> *"Het werkt, maar ik blijf voor mezelf liever met audio werken."* (Herman)
 
 **Key findings:**
 
-- **Single focus point is een echte verlichting** — Gebruikers hoeven enkel op het kompas te letten, geen restrictie meer op handpositie om finger-mounted vibratiemotoren te voelen. De grip mag natuurlijk blijven, wat het belangrijkste ergonomische pluspunt is van de Develop 2 herontwerpkeuze.
-- **180° uitwijking is in de praktijk overbodig** — Mario merkte tijdens het lopen op dat het systeem nooit zo veel rotatie nodig heeft omdat het continu corrigeert, zelfs voor hij de hoek bereikte. Dit is een bevinding die alleen tijdens het werkelijk lopen aan het licht kwam.
-- **Hand-aandacht-bottleneck zichtbaar onder realistische condities** — Herman erkende dat het prototype in deze setting werkt, maar waarschuwde dat met een echte stok die de grond aftikt, een stoeprand die gevolgd wordt en omgevingsgeluiden waarop hij vertrouwt, de constante hand-aandacht zou concurreren met al die andere taken. Dit is geen kritiek op het prototype zelf maar een belangrijke nuance voor de doelgroepafbakening.
+- **Single focus point is een echte verlichting**: Gebruikers hoeven enkel op het kompas te letten, geen restrictie meer op handpositie om finger-mounted vibratiemotoren te voelen. De grip mag natuurlijk blijven, wat het belangrijkste ergonomische pluspunt is van de Develop 2 herontwerpkeuze.
+- **180° uitwijking is in de praktijk overbodig**: Mario merkte tijdens het lopen op dat het systeem nooit zo veel rotatie nodig heeft omdat het continu corrigeert, zelfs voor hij de hoek bereikte. Dit is een bevinding die alleen tijdens het werkelijk lopen aan het licht kwam.
+- **Hand-aandacht-bottleneck zichtbaar onder realistische condities**: Herman erkende dat het prototype in deze setting werkt, maar waarschuwde dat met een echte stok die de grond aftikt, een stoeprand die gevolgd wordt en omgevingsgeluiden waarop hij vertrouwt, de constante hand-aandacht zou concurreren met al die andere taken. Dit is geen kritiek op het prototype zelf maar een belangrijke nuance voor de doelgroepafbakening.
 
 **Benchmark vergelijking Develop 1 vs Develop 2:**
 
@@ -761,7 +765,7 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
 - **Cognitieve belasting daalt met 1,67 punten** op een 7-puntsschaal (van 3,00 naar 4,67), het sterkste bewijs dat ergonomische herontwerpkeuzes direct de mentale belasting verlagen. UG3 (≥4,50) is hiermee gehaald.
 - **Continue closed-loop kompasfeedback** (volledige uitwijking naar de doelrichting, geleidelijke terugkoppeling naar neutraal) sluit de Gulf of Evaluation die in Develop 1 de Compare-fase brak.
 - **Antropometrische verankering in NX (ANSUR II, P25–P75)** zorgt dat het handvat past bij het middelste 50% van de doelgroep en niet meer afhangt van individuele handgrootte.
-- **Bereidheid blijft het open vraagstuk** — Develop 2 bevestigt dat sommige gebruikers (audio-eerst navigators zoals Herman) buiten de kerndoelgroep van SensePath vallen, wat de gebruikerssegmentatie scherper maakt voor Develop 3.
+- **Bereidheid blijft het open vraagstuk**: Develop 2 bevestigt dat sommige gebruikers (audio-eerst navigators zoals Herman) buiten de kerndoelgroep van SensePath vallen, wat de gebruikerssegmentatie scherper maakt voor Develop 3.
 - **Een uitwisselbare kompasmodule** is de logische volgende stap, met ruimte voor persoonlijke voorkeur en een robuuste wintervariant voor handschoengebruik.
 
 ### Kritische reflectie Develop 2
@@ -778,14 +782,16 @@ Ten vierde was **Test 2 minder gestructureerd dan oorspronkelijk gepland**. De v
 
 Ten vijfde verdient **Herman's lage willingness-score (2/7)** een aparte kanttekening. Zijn lage score komt niet voort uit een tekortkoming van het prototype, maar uit zijn persoonlijke voorkeur voor audio-navigatie en zijn jarenlange ervaring met echolocalisatie. Dit zegt iets over de doelgroepafbakening van SensePath, niet over de kwaliteit van de huidige iteratie. Voor Develop 3 betekent dit dat de kerngebruiker scherper gedefinieerd moet worden: SensePath richt zich op gebruikers die haptische feedback prefereren boven audio en die hun gehoor willen vrijhouden voor omgevingswaarneming.
 
+---
+
 ## Noot inzake het gebruik van AI
 
 Binnen dit project werden meerdere AI-tools ingezet als ondersteunend hulpmiddel:
 
-- **Tekst en rapportage** — Claude (Anthropic) werd gebruikt om ruwe notities en onderzoeksdata te structureren tot leesbare paragrafen en om teksten taalkundig te verfijnen. De inhoudelijke keuzes, analyses en conclusies zijn steeds door het team zelf gemaakt.
-- **Benchmarking en analyse** — AI werd ingezet om publiek beschikbare informatie samen te vatten, vergelijkingscriteria te structureren en eerste analyses te genereren. Alle bevindingen werden handmatig geverifieerd.
-- **Storyboard** — Het script werd geschreven met Claude Code, image direction via ChatGPT (GPT-4o), en de uiteindelijke beeldgeneratie via NanoBanana (Gemini 3 Pro Image).
-- **Codering** — Claude en Gemini werden gebruikt voor ondersteuning bij de ESP32-firmware en de Wizard-of-Oz controller-app.
+- **Tekst en rapportage**: Claude (Anthropic) werd gebruikt om ruwe notities en onderzoeksdata te structureren tot leesbare paragrafen en om teksten taalkundig te verfijnen. De inhoudelijke keuzes, analyses en conclusies zijn steeds door het team zelf gemaakt.
+- **Benchmarking en analyse**: AI werd ingezet om publiek beschikbare informatie samen te vatten, vergelijkingscriteria te structureren en eerste analyses te genereren. Alle bevindingen werden handmatig geverifieerd.
+- **Storyboard**: Het script werd geschreven met Claude Code, image direction via ChatGPT (GPT-4o), en de uiteindelijke beeldgeneratie via NanoBanana (Gemini 3 Pro Image).
+- **Codering**: Claude en Gemini werden gebruikt voor ondersteuning bij de ESP32-firmware en de Wizard-of-Oz controller-app.
 
 AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, het nemen van ontwerpbeslissingen, of het formuleren van design requirements. Deze zijn volledig gebaseerd op eigen gebruikersonderzoek en teamreflectie.
 
