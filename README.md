@@ -583,7 +583,9 @@ De diameter van het handvat werd zo bepaald dat de grip natuurlijk blijft over h
 
 De antropometrische output werd rechtstreeks gevoed in de prototype-CAD en empirisch gevalideerd tijdens Test 1 en Test 2 met Mario, Herman en Rory.
 
-<insert afbeelding NX hand model>
+<p align="center">
+  <img src="img/NX_anthropometry_ANSUR_II.jpeg" alt="NX Human Hands dialoog met ANSUR II configuratie op P50" width="400"/>
+</p>
 
 ### Cognitieve & sensorische ergonomie
 
@@ -631,15 +633,19 @@ Voor Develop 2 werden drie prototypedimensies gevarieerd via **variety prototypi
 
 **Handle profile** — Drie verschillende handvatprofielen werden ontwikkeld om de algemene grip-ergonomie te onderzoeken. De vorm bepaalt hoe de hand zich rond het handvat sluit en beïnvloedt onbewust de handoriëntatie.
 
-<insert afbeelding handle profile>
-
+<p align="center">
+  <img src="img/handle_profile.png" alt="Drie handvatprofielvarianten" width="700"/>
+</p>
 **Compass groove** — Het handvat werd voorzien van een verticale gleuf met **vijf posities** waarin het kompaselement geplaatst kon worden, van H1 (laagste, dicht bij de pols) tot H5 (hoogste, dicht bij de knokkels). Door dezelfde gleuf te gebruiken kon de positie systematisch gewisseld worden zonder andere variabelen te veranderen.
 
-<insert afbeelding compass groove>
-
+<p align="center">
+  <img src="img/grooves_prototype.jpeg" alt="Handvat met kompasgleuf en 5 posities" width="300"/>
+</p>
 **Contact surface** — Vijf verschillende kompaselementen werden ontwikkeld die elk een combinatie zijn van **vorm én uitsteekselhoogte**. Drie afgeronde rechthoekige uitsteeksels op verschillende uitsteekselhoogtes (laag, midden, hoog), één sferisch element, en één schuin afgeronde overgangsvorm. Dat laatste element kwam voort uit een inzicht van Mario tijdens zijn sessie: een geleidelijke overgang van vlak naar verhoog vermindert het scherpe contactgevoel tegen de hand.
 
-<insert afbeelding contact surface>
+<p align="center">
+  <img src="img/contact_surface_prototype.png" alt="Vijf kompaselementen met variërende vorm en uitsteekselhoogte" width="700"/>
+</p>
 
 Belangrijk om te vermelden: deze tests werden uitgevoerd **zonder stok**. De focus lag puur op de ergonomie van het handvat zelf, los van de stok-feedback, om te vermijden dat één variabele de evaluatie van de andere zou vertroebelen. De stok werd parallel uitgewerkt door collega's binnen het maturity-spoor.
 
@@ -657,7 +663,9 @@ Belangrijk om te vermelden: deze tests werden uitgevoerd **zonder stok**. De foc
 
 **Protocol:** Introductie & feedback implementatie → Test 1 (gleufpositie) → Test 2 (kompaselement) → Test 3 (volledig benchmarkparcours) → interview & subjectieve scores → reflectie. De drie tests volgen een **getrapt within-subjects design**: de voorkeur uit Test 1 wordt constant gehouden in Test 2, en de voorkeurscombinatie uit Test 1 en Test 2 wordt meegenomen in Test 3 als benchmarkconfiguratie. Zo wordt confirmation bias vermeden zonder dat alle 25 combinaties getest moeten worden.
 
-<insert afbeelding tijdens de test>
+<p align="center">
+  <img src="img/test_sessions_dev2.png" alt="Testsessies met Mario en Herman in Licht en Liefde" width="700"/>
+</p>
 
 ### Test 1: Compass grooves
 
@@ -698,7 +706,9 @@ In Test 2 werd op de voorkeursgleufpositie uit Test 1 gezocht naar de combinatie
 
 In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie + middelhoge uitsteekselhoogte + sferisch element) gevalideerd op een volledig benchmarkparcours van 60 cm breed, gelijkaardig aan het Develop 1-parcours. De wizard biedt continue kompasfeedback waarbij het kompaselement volledig uitwijkt naar de doelrichting en geleidelijk terugkoppelt naar neutraal naarmate de deelnemer zich oriënteert.
 
-<insert afbeelding path test 3>
+<p align="center">
+  <img src="img/path_test_3_dev2.png" alt="Afgetaped benchmarkparcours Test 3" width="400"/>
+</p>
 
 > *"Ik ben wel onder de indruk, het is echt beter dan de vorige keer."* — Mario
 >
