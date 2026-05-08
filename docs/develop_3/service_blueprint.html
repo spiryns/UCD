@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>SensePath, Service Blueprint</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --border: #e5e5e0;
+    --phys: #84a98c;
+    --user: #2a5d7c;
+    --front: #3d8db8;
+    --back: #a07b3a;
+    --support: #6b7280;
+
+    --divider-bg: #1a1a1a;
+    --divider-ink: #f0e0b8;
+    --divider-accent: #8b6b3e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  h1 { text-align: center; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .subtitle { text-align: center; color: var(--ink-soft); margin-bottom: 30px; font-size: 14px; }
+  .container { max-width: 1600px; margin: 0 auto; overflow-x: auto; }
+
+  .bp {
+    display: grid;
+    grid-template-columns: 180px repeat(4, 1fr);
+    min-width: 1300px;
+    background: white;
+    border: 1px solid var(--border);
+  }
+  .head {
+    background: #1a1a1a;
+    color: white;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+  }
+  .head small { display: block; font-weight: 400; opacity: 0.85; margin-top: 3px; font-size: 11px; }
+  .row-label {
+    padding: 16px 14px;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  .rl-phys { background: var(--phys); }
+  .rl-user { background: var(--user); }
+  .rl-front { background: var(--front); }
+  .rl-back { background: var(--back); }
+  .rl-support { background: var(--support); }
+
+  .cell {
+    padding: 14px;
+    font-size: 12px;
+    line-height: 1.45;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .cell:last-child { border-right: none; }
+  .cell ul { list-style: none; padding: 0; margin: 0; }
+  .cell li {
+    padding: 3px 0 3px 14px;
+    position: relative;
+  }
+  .cell li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--user);
+    font-size: 10px;
+    top: 4px;
+  }
+
+  .line-row {
+    grid-column: 1 / -1;
+    background: var(--divider-bg);
+    color: var(--divider-ink);
+    padding: 10px 18px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-top: 2px solid var(--divider-accent);
+    border-bottom: 2px solid var(--divider-accent);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .line-row::before, .line-row::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--divider-accent);
+    opacity: 0.6;
+  }
+
+  .req {
+    display: inline-block;
+    background: #e5e5e0;
+    color: #333;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  .hypothetical {
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .legend {
+    max-width: 1600px;
+    margin: 30px auto 0;
+    padding: 22px 26px;
+    background: white;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .legend h3 { font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+  .legend p { margin: 0 0 8px 0; color: var(--ink-soft); }
+  .legend strong { color: var(--ink); }
+
+  .crit {
+    background: #1a1a1a;
+    color: #f0e0b8;
+    padding: 18px 20px;
+    border-radius: 8px;
+    border-left: 3px solid #c9a227;
+  }
+  .crit h3 { color: #f0e0b8; margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .crit p { color: #e9dcb5; margin: 0 0 7px 0; font-size: 11.5px; }
+  .crit strong { color: white; }
+</style>
+</head>
+<body>
+  <h1>SensePath, Service Blueprint</h1>
+  <div class="subtitle">5 rijen, 4 fases, 3 horizontale lijnen (interaction, visibility, internal) volgens Shostack (1984)</div>
+
+  <div class="container">
+    <div class="bp">
+      <!-- Header -->
+      <div class="head" style="text-align: left;">Fase  →</div>
+      <div class="head">B. Acquisition &amp; Onboarding</div>
+      <div class="head">C. Habit formation<br><small>Routinegebruik, in &amp; outdoor</small></div>
+      <div class="head">D. Mature use<br><small>Aanpassing &amp; personalisatie</small></div>
+      <div class="head">E. Support &amp; End of Life</div>
+
+      <!-- Row 1: Physical evidence -->
+      <div class="row-label rl-phys">Physical evidence</div>
+      <div class="cell">
+        <ul>
+          <li>Handvat met compass groove op positie H1 <span class="req">D6.1</span></li>
+          <li>Sferisch kompaselement, medium protrusie <span class="req">D6.2</span> <span class="req">D6.3</span></li>
+          <li>Eén in-handle vibratiemotor <span class="req">D6.10</span></li>
+          <li>Schroefverbinding naar bestaande witte stok</li>
+          <li>Smartphone-app (iOS, VoiceOver-compatibel)</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Haptische compass-feedback (volle deflectie, gradual return) <span class="req">D6.4</span></li>
+          <li>Vibratiecodes (korte, krachtige set) <span class="req">D6.6</span></li>
+          <li>Kompas pauzeert tijdens vibratiecue <span class="req">D6.5</span></li>
+          <li>Drie signifiers: directional pre-announcement, outside  →  inside, IMU grip-fallback <span class="req">D6.9</span></li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Verwisselbare compass module <span class="req">D6.7</span></li>
+          <li>Robuuste winter-variant voor handschoengebruik</li>
+          <li>Handvat binnen P25  tot  P75 ANSUR II (middle 50%) <span class="req">D6.8</span></li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Reserve compass modules</li>
+          <li>Handvat los te koppelen van stok (schroef)</li>
+        </ul>
+      </div>
+
+      <!-- Line of interaction -->
+      <div class="line-row">Line of interaction</div>
+
+      <!-- Row 2: User actions -->
+      <div class="row-label rl-user">User actions</div>
+      <div class="cell">
+        <ul>
+          <li>Ontvangt handvat</li>
+          <li>Schroeft SensePath op eigen witte stok</li>
+          <li>Opent gekoppelde app</li>
+          <li>Doorloopt onboarding tutorial die kalibreert op natuurlijke grip</li>
+          <li>Leert de beperkte vibratiecodeset</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Gebruikt stok en SensePath in &amp; outdoor</li>
+          <li>Volgt compass-richting tijdens stappen</li>
+          <li>Herkent vibratiecode als waarschuwing vóór een afslag</li>
+          <li>Ervaart IMU-fallback wanneer griprotatie de mapping breekt</li>
+          <li>Voelt outside  →  inside transitie bij betreden gebouw</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Wisselt compass module (bv. winter-variant bij handschoenen)</li>
+          <li>Past feedback-voorkeur aan in app-instellingen</li>
+          <li>Geeft feedback aan trainer of peers</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Vervangt compass module of handvat-onderdeel</li>
+          <li>Hercalibreert grip bij stokwissel</li>
+          <li>Geeft product door of retourneert bij end of life</li>
+        </ul>
+      </div>
+
+      <!-- Row 3: Frontstage -->
+      <div class="row-label rl-front">Frontstage<br>actors</div>
+      <div class="cell">
+        <ul>
+          <li>Mobiliteitstrainer of begeleider bij eerste kalibratie (zoals tijdens tests in Licht en Liefde)</li>
+          <li>App-stem of audio-onboarding</li>
+          <li>Schriftelijke of audio-handleiding</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Mobiliteitstrainer bespreekt patronen en ervaringen</li>
+          <li>Peers binnen blindenvereniging, bv. Licht en Liefde</li>
+          <li class="hypothetical">Audio-oortje voor optionele spraak, reflecterend op Test 3 feedback ("audio still works better", Rory)</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Trainer evalueert progressie</li>
+          <li>Peer-community deelt preference rankings (cfr. UG6/UG7-logica)</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Customer support bij defect</li>
+          <li>Trainer begeleidt doorgave of hercalibratie</li>
+        </ul>
+      </div>
+
+      <!-- Line of visibility -->
+      <div class="line-row">Line of visibility</div>
+
+      <!-- Row 4: Backstage -->
+      <div class="row-label rl-back">Backstage<br>actors</div>
+      <div class="cell">
+        <ul>
+          <li>Productie handvat (P25  tot  P75 dimensionering via Siemens NX en ANSUR II)</li>
+          <li>Firmware-check vóór levering</li>
+          <li class="hypothetical">Prototype-fase: wizard of oz, nog geen geïmplementeerde routing-engine</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>IMU detecteert griprotatie en triggert fallback-signaal <span class="req">D6.9</span></li>
+          <li>Motor-controller mapt richtingsdata naar beperkte vibratiecodes</li>
+          <li>Outside  →  inside-detectie triggert transitie-signifier</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Productie en logistiek voor verwisselbare modules</li>
+          <li>Aggregatie van preference feedback voor verdere iteraties</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Repair en refurbish van handvat en module</li>
+          <li>Reset van grip-kalibratie bij doorgave</li>
+        </ul>
+      </div>
+
+      <!-- Line of internal interaction -->
+      <div class="line-row">Line of internal interaction</div>
+
+      <!-- Row 5: Support processes -->
+      <div class="row-label rl-support">Support<br>processes</div>
+      <div class="cell">
+        <ul>
+          <li>Distributie via blindenverenigingen, zoals testpartner Licht en Liefde</li>
+          <li>Mobiliteitstrainer-netwerk in revalidatiecentra</li>
+          <li class="hypothetical">Terugbetalings- of vergoedingstraject (VAPH, mutualiteit) nog te valideren</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li class="hypothetical">Indoor routing-data van gebouwbeheerders, vereist voor outside  →  inside-signifier in realistische context</li>
+          <li class="hypothetical">Integratie met bestaande navigatie-apps nog te verkennen</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Module-productie (winter-variant, interchangeable) <span class="req">D6.7</span></li>
+          <li>Feedback-loop van trainer- en peer-input naar volgende iteratie</li>
+        </ul>
+      </div>
+      <div class="cell">
+        <ul>
+          <li>Supply-chain voor compass-modules en handvat-onderdelen</li>
+          <li>Take-back-logistiek via verenigingen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div>
+        <h3>Drie horizontale lijnen (Shostack, 1984)</h3>
+        <p><strong>Line of interaction</strong>. Waar de gebruiker SensePath fysiek of tactiel raakt: de handvat-oppervlakken, het kompaselement op H1, de vibratiecodes.</p>
+        <p><strong>Line of visibility</strong>. Scheidt wat voelbaar is van wat intern gebeurt. IMU-fallback-logica, motor-mapping en outside/inside-detectie zijn onzichtbaar voor de gebruiker maar bepalen de ervaring.</p>
+        <p><strong>Line of internal interaction</strong>. Scheidt eigen backstage van externe support-processen zoals trainer-netwerk, indoor-POI-data, distributiekanalen.</p>
+      </div>
+      <div class="crit">
+        <h3>Status van het prototype</h3>
+        <p><strong>Reeds gevalideerd</strong> in Dev 1 en Dev 2: handvat en kompas (H1-positie, sferisch element, medium protrusie, IMU-fallback, interchangeable module), requirements D6.1 tot D6.10.</p>
+        <p><strong>Testcontext</strong>: Licht en Liefde met Mario, Rory en Herman; wizard of oz als methodiek.</p>
+        <p><strong>Nog open</strong> (cursieve cellen hierboven): reële firmware en app, vergoedingstraject, indoor POI-integratie, audio-modus als optionele laag.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

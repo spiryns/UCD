@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>SensePath, Microinteractions</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --border: #e5e5e0;
+    --accent: #c9a227;
+
+    --kalmte: #4a8e7a;
+    --vertrouwen: #3d8db8;
+    --autonomie: #c9a227;
+    --discretie: #5b6471;
+    --signature: #c66e5d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  h1 { text-align: center; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.02em; font-size: 22px; }
+  .subtitle { text-align: center; color: var(--ink-soft); margin-bottom: 28px; font-size: 13px; }
+  .container { max-width: 1300px; margin: 0 auto; }
+
+  .timeline-wrap {
+    background: white;
+    border-radius: 12px;
+    padding: 22px 26px 26px 26px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    margin-bottom: 22px;
+  }
+  .timeline-wrap h2 {
+    font-size: 11px;
+    margin: 0 0 18px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+  .timeline {
+    position: relative;
+    height: 110px;
+  }
+  .track {
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #e5e5e0 0%, var(--accent) 50%, #e5e5e0 100%);
+    border-radius: 2px;
+  }
+  .marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .marker-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--vertrouwen);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .marker-dot.signature {
+    background: var(--signature);
+    border-color: var(--signature);
+    width: 22px; height: 22px;
+  }
+  .marker-id {
+    position: absolute;
+    bottom: 22px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .marker-label {
+    position: absolute;
+    top: 22px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    border-left: 4px solid var(--ink-soft);
+  }
+  .card.kalmte { border-left-color: var(--kalmte); }
+  .card.vertrouwen { border-left-color: var(--vertrouwen); }
+  .card.autonomie { border-left-color: var(--autonomie); }
+  .card.discretie { border-left-color: var(--discretie); }
+  .card.signature {
+    background: #1a1a1a;
+    color: #ede1bf;
+    border-left-color: var(--signature);
+  }
+  .card.signature .card-title { color: white; }
+  .card.signature .spec { background: #2a2a2a; color: #ede1bf; }
+  .card.signature .meta-row { color: rgba(237, 225, 191, 0.7); }
+  .card.signature .meta-row strong { color: white; }
+  .card.signature svg { background: #2a2a2a; }
+  .card.signature svg path.wave-bg { stroke: rgba(255,255,255,0.08); }
+  .card.signature svg path.wave-line { stroke: var(--signature); }
+  .card.signature .badge { background: var(--signature); color: white; }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .card-id {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .badge {
+    font-size: 8.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: var(--ink-soft);
+    color: white;
+  }
+
+  .wave {
+    width: 100%;
+    height: 64px;
+    background: #fafaf7;
+    border-radius: 6px;
+    margin: 8px 0 10px 0;
+    display: block;
+  }
+  .wave path.wave-bg {
+    fill: none;
+    stroke: rgba(0,0,0,0.07);
+    stroke-width: 1;
+  }
+  .wave path.wave-line {
+    fill: none;
+    stroke: var(--vertrouwen);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .card.kalmte .wave path.wave-line { stroke: var(--kalmte); }
+  .card.autonomie .wave path.wave-line { stroke: var(--autonomie); }
+  .card.discretie .wave path.wave-line { stroke: var(--discretie); }
+
+  .spec {
+    background: #f0f0ea;
+    border-radius: 5px;
+    padding: 5px 9px;
+    font-size: 10.5px;
+    color: var(--ink);
+    font-family: ui-monospace, SF Mono, Menlo, monospace;
+    margin-bottom: 8px;
+  }
+
+  .meta-row {
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    margin-bottom: 4px;
+  }
+  .meta-row strong { color: var(--ink); font-weight: 600; }
+
+  .micro-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    flex-wrap: wrap;
+  }
+  .micro-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 7px 3px 5px;
+    border-radius: 4px;
+    background: #f0f0ea;
+    color: var(--ink);
+  }
+  .micro-tag .mt-key {
+    font-size: 8.5px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .micro-tag.picard { background: #e3edf2; color: #2a5d7c; }
+  .micro-tag.picard .mt-key { color: #5a7a8a; }
+  .micro-tag.walter { background: #f0e6cc; color: #8a6a1f; }
+  .micro-tag.walter .mt-key { color: #a08540; }
+  .card.signature .micro-tags { border-top-color: rgba(255,255,255,0.15); }
+  .card.signature .micro-tag { background: rgba(255,255,255,0.08); color: #ede1bf; }
+  .card.signature .micro-tag .mt-key { color: rgba(237, 225, 191, 0.6); }
+
+  .legend {
+    max-width: 1300px;
+    margin: 24px auto 0;
+    background: white;
+    padding: 16px 22px;
+    border-radius: 10px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .legend strong { color: var(--ink); }
+  .legend .row {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .legend .key {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+  }
+  .legend .swatch {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+  <h1>SensePath, Microinteractions</h1>
+  <div class="subtitle">10 haptische patronen volgens Saffer (trigger, regels, feedback, loops). Twee signature-momenten in zwart/koraal.</div>
+
+  <div class="container">
+
+    <!-- ROUTE TIMELINE -->
+    <div class="timeline-wrap">
+      <h2>Route timeline, wanneer welk patroon afvuurt tijdens een typische wandeling</h2>
+      <div class="timeline">
+        <div class="track"></div>
+
+        <div class="marker" style="left: 5%;">
+          <div class="marker-id">M1</div>
+          <div class="marker-dot"></div>
+          <div class="marker-label">Route start</div>
+        </div>
+
+        <div class="marker" style="left: 22%;">
+          <div class="marker-id">M3</div>
+          <div class="marker-dot"></div>
+          <div class="marker-label">Stilte op pad</div>
+        </div>
+
+        <div class="marker" style="left: 38%;">
+          <div class="marker-id">M4</div>
+          <div class="marker-dot signature"></div>
+          <div class="marker-label">Bocht nadert</div>
+        </div>
+
+        <div class="marker" style="left: 51%;">
+          <div class="marker-id">M5</div>
+          <div class="marker-dot"></div>
+          <div class="marker-label">Bocht ok</div>
+        </div>
+
+        <div class="marker" style="left: 65%;">
+          <div class="marker-id">M6</div>
+          <div class="marker-dot"></div>
+          <div class="marker-label">Afwijking</div>
+        </div>
+
+        <div class="marker" style="left: 79%;">
+          <div class="marker-id">M7</div>
+          <div class="marker-dot"></div>
+          <div class="marker-label">Fail-safe</div>
+        </div>
+
+        <div class="marker" style="left: 95%;">
+          <div class="marker-id">M8</div>
+          <div class="marker-dot signature"></div>
+          <div class="marker-label">Bestemming</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="grid">
+
+      <!-- M1 -->
+      <div class="card vertrouwen">
+        <div class="card-head">
+          <span class="card-id">M1</span>
+          <span class="badge" style="background: var(--vertrouwen);">Vertrouwen</span>
+        </div>
+        <h3 class="card-title">Route gestart</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 50 50 Q 65 30 80 50 L 100 50 Q 115 30 130 50 L 200 50"/>
+        </svg>
+        <div class="spec">2 pulsen @ 180 Hz, 120 ms, 40% int</div>
+        <div class="meta-row"><strong>Trigger:</strong> bevestiging in app, mits BLE-link stabiel en IMU-kalibratie binnen 2 min.</div>
+        <div class="meta-row"><strong>Loop:</strong> eenmalig.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Reliable</span>
+        </div>
+      </div>
+
+      <!-- M2 (verwijderd: heartbeat. Vertrouwen wordt opgebouwd door stilte als baseline en vier ondubbelzinnige modi (M3, M5, M6, M7) niet door constante bevestiging.) -->
+
+      <!-- M3 -->
+      <div class="card kalmte">
+        <div class="card-head">
+          <span class="card-id">M3</span>
+          <span class="badge" style="background: var(--kalmte);">Kalmte</span>
+        </div>
+        <h3 class="card-title">Correcte koers</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 200 50"/>
+        </svg>
+        <div class="spec">stilte (geen feedback)</div>
+        <div class="meta-row"><strong>Trigger:</strong> default-toestand op pad.</div>
+        <div class="meta-row"><strong>Reden:</strong> bespaart aandacht en batterij, maakt event-signalen maximaal salient.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express (door afwezigheid)</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Usable</span>
+        </div>
+      </div>
+
+      <!-- M4 SIGNATURE -->
+      <div class="card signature">
+        <div class="card-head">
+          <span class="card-id">M4</span>
+          <span class="badge">Signature</span>
+        </div>
+        <h3 class="card-title">Bocht nadert (crescendo)</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 15 50 Q 22 40 30 50 L 55 50 Q 62 36 70 50 L 90 50 Q 97 32 105 50 L 120 50 Q 127 26 135 50 L 145 50 Q 152 18 160 50 L 200 50"/>
+        </svg>
+        <div class="spec">5 pulsen, 1 Hz naar 3 Hz, 35% naar 60% int</div>
+        <div class="meta-row"><strong>Trigger:</strong> default 5 m vóór keuzepunt, eindigt op 1 m. <strong>Afstand instelbaar</strong> via app verbosity-setting (3, 5 of 8 m).</div>
+        <div class="meta-row"><strong>Loop:</strong> eenmalig per keuzepunt. Kompas activeert tegelijk richting op hypothenar.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Change</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Usable</span>
+        </div>
+      </div>
+
+      <!-- M5 -->
+      <div class="card autonomie">
+        <div class="card-head">
+          <span class="card-id">M5</span>
+          <span class="badge" style="background: var(--autonomie);">Autonomie</span>
+        </div>
+        <h3 class="card-title">Bocht correct genomen</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 88 50 Q 92 28 96 50 L 102 50 Q 106 28 110 50 L 200 50"/>
+        </svg>
+        <div class="spec">2 ticks @ 200 Hz, 40 ms, 50% int, 80 ms apart</div>
+        <div class="meta-row"><strong>Trigger:</strong> IMU detecteert rotatie binnen 15° van verwacht pad, binnen 3 s na M4.</div>
+        <div class="meta-row"><strong>Reden:</strong> succesbevestiging zonder taal of toon.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Pleasurable</span>
+        </div>
+      </div>
+
+      <!-- M6 -->
+      <div class="card vertrouwen">
+        <div class="card-head">
+          <span class="card-id">M6</span>
+          <span class="badge" style="background: var(--vertrouwen);">Vertrouwen</span>
+        </div>
+        <h3 class="card-title">Afwijking, alarm met bijsturing</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 50 50 L 58 14 L 66 50 L 90 50 L 98 14 L 106 50 L 130 50 L 138 14 L 146 50 L 200 50"/>
+        </svg>
+        <div class="spec">3 staccato pulsen @ 200 Hz, 80 ms, 65% int, 150 ms apart</div>
+        <div class="meta-row"><strong>Trigger:</strong> off-path > 2 m gedurende meer dan 4 s (hysterese).</div>
+        <div class="meta-row"><strong>Loop:</strong> <strong>vuurt eenmalig af, herhaalt niet.</strong> Kompas wijst tegelijk naar terugkeer-richting. Komt gebruiker terug op pad: stilte. Gaat gebruiker bewust verder in andere richting: systeem herberekent stilletjes en handover naar M3 op nieuwe route.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Reliable</span>
+        </div>
+      </div>
+
+      <!-- M7 -->
+      <div class="card vertrouwen">
+        <div class="card-head">
+          <span class="card-id">M7</span>
+          <span class="badge" style="background: var(--vertrouwen);">Vertrouwen</span>
+        </div>
+        <h3 class="card-title">Fail-safe (heroriënteren)</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 30 50 Q 35 35 45 35 L 95 35 Q 105 35 110 50 L 200 50"/>
+        </svg>
+        <div class="spec">800 ms @ 120 Hz, 30% int, dan 1.5 s stilte</div>
+        <div class="meta-row"><strong>Trigger:</strong> IMU-verlies, GPS-gat of confidence onder 40%.</div>
+        <div class="meta-row"><strong>Loop:</strong> overschrijft M3 t/m M6. Heet altijd "heroriënteren", nooit "fout". <strong>Audio uitsluitend als gebruiker die zelf heeft geactiveerd</strong>, default puur haptisch.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express + Change</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Reliable</span>
+        </div>
+      </div>
+
+      <!-- M8 SIGNATURE -->
+      <div class="card signature">
+        <div class="card-head">
+          <span class="card-id">M8</span>
+          <span class="badge">Signature</span>
+        </div>
+        <h3 class="card-title">Bestemming bereikt (warme puls)</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 40 50 C 60 50, 70 14, 100 14 C 130 14, 140 50, 160 50 L 200 50"/>
+        </svg>
+        <div class="spec">1 puls @ 160 Hz, 600 ms, fade-in 200 / peak 70% / fade-out 300</div>
+        <div class="meta-row"><strong>Trigger:</strong> GPS- of beacon-match plus user-geometrie stabiel 3 s.</div>
+        <div class="meta-row"><strong>Loop:</strong> eenmalig. Enige patroon met 600 ms duur, herkenbaar als brand signature.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express + Change</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Significant</span>
+        </div>
+      </div>
+
+      <!-- M9 -->
+      <div class="card discretie">
+        <div class="card-head">
+          <span class="card-id">M9</span>
+          <span class="badge" style="background: var(--discretie);">Discretie</span>
+        </div>
+        <h3 class="card-title">Batterij low</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 55 50 Q 60 42 65 50 L 95 50 Q 100 42 105 50 L 135 50 Q 140 42 145 50 L 200 50"/>
+        </svg>
+        <div class="spec">3 ticks @ 220 Hz, 30 ms, 20% int, 300 ms apart</div>
+        <div class="meta-row"><strong>Trigger:</strong> batterij onder 15%.</div>
+        <div class="meta-row"><strong>Loop:</strong> elke 10 min tot opgeladen. Hoog-frequent patroon onderscheidt zich van route-cues.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Functional</span>
+        </div>
+      </div>
+
+      <!-- M10 -->
+      <div class="card discretie">
+        <div class="card-head">
+          <span class="card-id">M10</span>
+          <span class="badge" style="background: var(--discretie);">Discretie</span>
+        </div>
+        <h3 class="card-title">Clip-bevestiging op stok</h3>
+        <svg class="wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path class="wave-bg" d="M 0 50 L 200 50"/>
+          <path class="wave-line" d="M 0 50 L 200 50" stroke-dasharray="3 3"/>
+        </svg>
+        <div class="spec">geen motor-feedback, mechanische click + visuele app-bevestiging</div>
+        <div class="meta-row"><strong>Trigger:</strong> mechanisch contact + IMU detecteert stok-oriëntatie.</div>
+        <div class="meta-row"><strong>Loop:</strong> eenmalig per sessie. <strong>Indien audio geactiveerd</strong> (opt-in) bevestigt de app gesproken "klaar om te starten". Default enkel mechanische click + visuele app-bevestiging.</div>
+        <div class="micro-tags">
+          <span class="micro-tag picard"><span class="mt-key">Picard</span> Express</span>
+          <span class="micro-tag walter"><span class="mt-key">Walter</span> Functional</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <strong>Hoe lezen:</strong> de timeline bovenaan toont in welke volgorde de patronen afvuren tijdens een typische wandeling. De kaarten daaronder zijn per microinteractie: mini-waveform met de werkelijke pulsvorm (intensiteit op y-as), spec-line met Hz/ms/intensity, trigger en loop-logica. Kleuraccent links toont welke primaire emotie (kalmte, vertrouwen, autonomie, discretie) elk patroon ondersteunt.
+    <div class="row" style="margin-top: 10px;">
+      <div class="key"><div class="swatch" style="background: var(--kalmte);"></div>Kalmte</div>
+      <div class="key"><div class="swatch" style="background: var(--vertrouwen);"></div>Vertrouwen</div>
+      <div class="key"><div class="swatch" style="background: var(--autonomie);"></div>Autonomie</div>
+      <div class="key"><div class="swatch" style="background: var(--discretie);"></div>Discretie</div>
+      <div class="key"><div class="swatch" style="background: var(--signature);"></div>Signature moment</div>
+    </div>
+    <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 11px; color: var(--ink-soft); line-height: 1.55;">
+      Onderaan elke kaart twee theoretische tags. <strong style="color: #2a5d7c;">Picard</strong> (affective interfaces, 1997): hoe het systeem zich tot emotie verhoudt (Express = output, Change = beïnvloedt user-emotie, Understand = leest user-state, Control = laat user uitdrukken). <strong style="color: #8a6a1f;">Walter</strong> (Designing for Emotion, 2011): welk niveau van de pyramide het patroon bedient (Functional → Reliable → Usable → Pleasurable → Significant). Beide brengen academische verankering en helpen bij het schrijven van het finale testprotocol.
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>SensePath, Norman's drie lagen</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --border: #e5e5e0;
+
+    --visceral: #c66e5d;
+    --behavioral: #3d8db8;
+    --reflective: #5b4a7a;
+    --accent: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  h1 { text-align: center; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.02em; font-size: 22px; }
+  .subtitle { text-align: center; color: var(--ink-soft); margin-bottom: 28px; font-size: 13px; }
+
+  .container { max-width: 1300px; margin: 0 auto; }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0;
+    margin-bottom: 14px;
+  }
+  .time-axis {
+    padding: 14px 8px;
+    background: white;
+    border-radius: 10px 0 0 10px;
+    border-right: 2px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .time-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding: 8px 0;
+  }
+
+  .layer {
+    background: white;
+    border-radius: 0 10px 10px 0;
+    padding: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    display: grid;
+    grid-template-columns: 200px 1fr 220px 240px;
+    overflow: hidden;
+  }
+
+  .layer-head {
+    padding: 18px 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .layer-head .num {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+  .layer-head h2 {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .layer-head .when { font-size: 11.5px; opacity: 0.92; line-height: 1.4; }
+
+  .head-visceral { background: linear-gradient(135deg, #c66e5d 0%, #d8866f 100%); }
+  .head-behavioral { background: linear-gradient(135deg, #3d8db8 0%, #5fa9d0 100%); }
+  .head-reflective { background: linear-gradient(135deg, #5b4a7a 0%, #7a6798 100%); }
+
+  .impl {
+    padding: 16px 20px;
+    border-right: 1px solid var(--border);
+    background: #fafaf7;
+  }
+  .impl-tag, .test-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .impl ul, .test ul { list-style: none; padding: 0; margin: 0; }
+  .impl li, .test li {
+    padding: 4px 0 4px 14px;
+    position: relative;
+    font-size: 11.5px;
+    line-height: 1.45;
+  }
+  .impl li::before, .test li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    top: 4px;
+    font-size: 10px;
+  }
+  .impl li strong, .test li strong { color: var(--ink); }
+
+  .test {
+    padding: 16px 20px;
+    background: #1a1a1a;
+    color: #ede1bf;
+  }
+  .test-tag { color: var(--accent); }
+  .test li { color: #ede1bf; }
+
+  .theory {
+    margin-top: 10px;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    font-style: italic;
+    border-top: 1px dashed var(--border);
+    padding-top: 8px;
+  }
+  .test .theory { color: rgba(237, 225, 191, 0.6); border-top-color: rgba(201, 162, 39, 0.25); }
+
+  .gap {
+    padding: 16px 16px;
+    background: #f0e6cc;
+    border-right: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+  }
+  .gap-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a6a1f;
+    margin-bottom: 10px;
+  }
+  .gap-row {
+    margin-bottom: 8px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .gap-row .gap-label {
+    display: block;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #8a6a1f;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1px;
+  }
+  .gap-row .gap-text { color: var(--ink); }
+  .gap-bridge {
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(138, 106, 31, 0.35);
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .gap-bridge strong { color: #8a6a1f; }
+
+  /* Walter pyramid */
+  .walter {
+    max-width: 1300px;
+    margin: 18px auto 0;
+    background: white;
+    padding: 22px 26px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .walter-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .walter-head h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .walter-head .src {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .walter-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .walter-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr;
+    align-items: stretch;
+    gap: 0;
+  }
+  .walter-bar {
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+  }
+  .walter-num {
+    background: #1a1a1a;
+    color: var(--accent);
+    padding: 10px 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .walter-desc {
+    background: #fafaf7;
+    padding: 10px 16px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    border-left: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+  }
+  .walter-desc strong { color: var(--ink); }
+  .walter-1 { background: #6b7280; }
+  .walter-2 { background: #5b6b85; width: 88%; }
+  .walter-3 { background: #4a738e; width: 76%; }
+  .walter-4 { background: #3d8db8; width: 64%; }
+  .walter-5 { background: #c66e5d; width: 52%; }
+
+  .walter-row .walter-bar { width: var(--w, auto); }
+
+  .legend {
+    max-width: 1300px;
+    margin: 24px auto 0;
+    background: white;
+    padding: 16px 22px;
+    border-radius: 10px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .legend strong { color: var(--ink); }
+
+  @media (max-width: 1000px) {
+    .layer { grid-template-columns: 1fr; }
+    .impl { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+  <h1>SensePath, Norman's drie lagen</h1>
+  <div class="subtitle">Visceral, behavioral, reflective met de tijd waarop elke laag actief is, plus het meetbaar criterium voor de finale user test</div>
+
+  <div class="container">
+
+    <!-- VISCERAL -->
+    <div class="timeline">
+      <div class="time-axis">
+        <div class="time-tag">eerste 3 sec</div>
+      </div>
+      <div class="layer">
+        <div class="layer-head head-visceral">
+          <div class="num">Laag 1</div>
+          <h2>Visceral</h2>
+          <div class="when">Onmiddellijke zintuiglijke reactie. Voor SensePath niet visueel maar tactiel: gewicht, textuur, temperatuur, geluid bij eerste contact.</div>
+        </div>
+        <div class="impl">
+          <div class="impl-tag">SensePath implementatie</div>
+          <ul>
+            <li><strong>Gewicht</strong> 58 tot 62 g voor handvat plus clip</li>
+            <li><strong>Textuur</strong> soft-touch TPU shore 70A, micro-ruwheid Ra 3 tot 4 μm</li>
+            <li><strong>Temperatuur</strong> PA12 plus TPU voelt warmer dan metaal bij eerste aanraking</li>
+            <li><strong>Bevestigingsgeluid</strong> mechanische click bij vergrendeling op stok, korte lage resonantie</li>
+            <li><strong>Vormtaal</strong> antraciet mat, geen klinische glans</li>
+          </ul>
+          <div class="theory">Norman 2004: visceral is het preverbal "voelt het juist". Cursus Human Senses §11.2: matte rubberized grip wordt geassocieerd met controle en comfort.</div>
+        </div>
+        <div class="gap">
+          <div class="gap-tag">Mental model gap</div>
+          <div class="gap-row">
+            <span class="gap-label">User model</span>
+            <span class="gap-text">"Een hulpmiddel, dus medisch, lomp, klinisch."</span>
+          </div>
+          <div class="gap-row">
+            <span class="gap-label">System image vereist</span>
+            <span class="gap-text">"Een persoonlijk, premium, mainstream gadget."</span>
+          </div>
+          <div class="gap-bridge">
+            <strong>Bridge:</strong> tactiele cues (gewicht, warm polymeer, soft-touch) overschrijven het pre-existing model in de eerste 3 seconden, vóór de gebruiker tijd heeft om het verbaal te kaderen.
+          </div>
+        </div>
+        <div class="test">
+          <div class="test-tag">Meetbaar in finale test</div>
+          <ul>
+            <li>Pickup-test: respondent neemt handvat blind in hand, beoordeelt op semantic differentials (cheap/premium, koud/warm, medisch/lifestyle)</li>
+            <li>Vergelijking met 3 CMF-varianten zonder weten welke variant</li>
+            <li>Ranking op "voelt vertrouwd" en "lijkt op mainstream tech"</li>
+          </ul>
+          <div class="theory">Bron: Martiniello et al. (2020), aesthetics-stigma assessment.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEHAVIORAL -->
+    <div class="timeline">
+      <div class="time-axis">
+        <div class="time-tag">tijdens routine</div>
+      </div>
+      <div class="layer">
+        <div class="layer-head head-behavioral">
+          <div class="num">Laag 2</div>
+          <h2>Behavioral</h2>
+          <div class="when">Hoe het werkt tijdens dagelijks gebruik. Functionele responsiviteit, voorspelbaarheid, het verschil tussen "ik snap wat het systeem doet" en "ik moet erover nadenken".</div>
+        </div>
+        <div class="impl">
+          <div class="impl-tag">SensePath implementatie</div>
+          <ul>
+            <li><strong>Stilte als default</strong> correcte koers krijgt geen feedback, bespaart aandacht en batterij</li>
+            <li><strong>Microinteractions M1 tot M10</strong> elk haptisch patroon heeft een unieke handtekening (zie microinteractions.html)</li>
+            <li><strong>Confidence-heartbeat</strong> systeem signaleert eerlijk wanneer het twijfelt</li>
+            <li><strong>Kompas pauzeert tijdens vibratiecue</strong> (D6.5) zodat figuur-grond contrast bewaard blijft</li>
+            <li><strong>Drie signifiers</strong> directional pre-announcement, outside naar inside transitie, IMU grip-fallback (D6.9)</li>
+          </ul>
+          <div class="theory">Norman 7 stages of action. Develop 2-conclusie: cognitieve belasting daalde van 3.00 naar 4.67 op 7-puntsschaal door stages Perceive, Interpret en Compare te repareren.</div>
+        </div>
+        <div class="gap">
+          <div class="gap-tag">Mental model gap</div>
+          <div class="gap-row">
+            <span class="gap-label">User model</span>
+            <span class="gap-text">"Mapping balletje-naar-rechts moet altijd kloppen, ook als ik de stok herpak."</span>
+          </div>
+          <div class="gap-row">
+            <span class="gap-label">System image vereist</span>
+            <span class="gap-text">"Mapping is gebonden aan grip, dus systeem moet zelf detecteren."</span>
+          </div>
+          <div class="gap-bridge">
+            <strong>Bridge:</strong> IMU-fallback signaal (D6.9) communiceert eerlijk wanneer griprotatie de mapping breekt. Onboarding tutorial kalibreert op de natuurlijke grip van de gebruiker. Dit sluit Norman's Gulf of Evaluation.
+          </div>
+        </div>
+        <div class="test">
+          <div class="test-tag">Meetbaar in finale test</div>
+          <ul>
+            <li>Wandeltest op benchmark-pad (60 cm zone, zoals Dev 1 en Dev 2)</li>
+            <li>SIZ of TIZ moet minstens op Develop 2-niveau blijven (Dev 2: 100%)</li>
+            <li>Likert scores op cognitive load, smoothness, learnability, willingness</li>
+            <li>Aantal hesitation moments via video-observatie</li>
+          </ul>
+          <div class="theory">Bron: usability goals UG1 tot UG5 uit Develop 2.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFLECTIVE -->
+    <div class="timeline">
+      <div class="time-axis">
+        <div class="time-tag">na weken, identiteit</div>
+      </div>
+      <div class="layer">
+        <div class="layer-head head-reflective">
+          <div class="num">Laag 3</div>
+          <h2>Reflective</h2>
+          <div class="when">Hoe SensePath past in zelfbeeld en sociaal verhaal. "Ben ik iemand die dit gebruikt en draagt", "Wat zegt dit over mijn autonomie", "Zou ik dit aanraden of verstoppen".</div>
+        </div>
+        <div class="impl">
+          <div class="impl-tag">SensePath implementatie</div>
+          <ul>
+            <li><strong>Naamgeving</strong> product heet SensePath, niet "navigatie-hulpmiddel" of "blindenstok-add-on"</li>
+            <li><strong>Opt-in updates en lokale data</strong> gebruiker behoudt symbolische controle</li>
+            <li><strong>1-op-1 route-deling</strong> met trainer of familielid, geen publieke feed of likes</li>
+            <li><strong>Verwisselbare compass module</strong> (D6.7) maakt personalisatie mogelijk, winter-variant voor handschoenen</li>
+            <li><strong>Geen badges of streaks</strong> tenzij expliciet opgevraagd</li>
+          </ul>
+          <div class="theory">Norman: reflective is wat we erover vertellen. Martiniello (2020) factor 6: symbolic meaning of autonomy. Vaes (2014): reflective stigma bepaalt of een hulpmiddel uiteindelijk wordt gebruikt of opgeborgen.</div>
+        </div>
+        <div class="gap">
+          <div class="gap-tag">Mental model gap</div>
+          <div class="gap-row">
+            <span class="gap-label">User model</span>
+            <span class="gap-text">"Een hulpmiddel dragen toont mijn beperking. Dat wil ik niet zichtbaar maken."</span>
+          </div>
+          <div class="gap-row">
+            <span class="gap-label">System image vereist</span>
+            <span class="gap-text">"Mobility enhancer, mainstream tech, niet meer stigmatiserend dan een fitnesstracker."</span>
+          </div>
+          <div class="gap-bridge">
+            <strong>Bridge:</strong> naamgeving (SensePath, niet "blindenstok-add-on"), opt-in firmware, lokale data en discrete CMF schuiven het narratief van "patient" naar "user with agency".
+          </div>
+        </div>
+        <div class="test">
+          <div class="test-tag">Meetbaar in finale test</div>
+          <ul>
+            <li>Open vraag: "zou je dit aanraden aan een peer in je vereniging?"</li>
+            <li>Likert: "voelt SensePath als een medisch hulpmiddel of als een lifestyle-tool?"</li>
+            <li>Likert: "ik blijf controle houden over wanneer en hoe ik dit gebruik"</li>
+            <li>Ranking van 3 CMF-varianten op "ik zou dit in publiek dragen zonder me anders te voelen"</li>
+          </ul>
+          <div class="theory">Bron: stigma-perception items uit Martiniello et al. (2020), aangepast aan Belgische context.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="walter">
+    <div class="walter-head">
+      <h2>Walter's piramide van user needs, waar SensePath naar streeft</h2>
+      <div class="src">Bron: Aaron Walter, "Designing for Emotion" (2011). Cursus IxD §2.2 + Cognitive Models §4.2.</div>
+    </div>
+    <div class="walter-stack">
+      <div class="walter-row">
+        <div class="walter-num">1</div>
+        <div class="walter-bar walter-1">Functional</div>
+        <div class="walter-desc">Basis: het systeem geeft betrouwbare richting via één in-handle motor en compass-element op H1.</div>
+      </div>
+      <div class="walter-row">
+        <div class="walter-num">2</div>
+        <div class="walter-bar walter-2">Reliable</div>
+        <div class="walter-desc">Vier ondubbelzinnige modi (stilte op pad, succes-tick, alarm bij afwijking, fail-safe). IMU-fallback D6.9 maakt eerlijk wanneer het systeem twijfelt. Stilte zelf is het vertrouwenssignaal.</div>
+      </div>
+      <div class="walter-row">
+        <div class="walter-num">3</div>
+        <div class="walter-bar walter-3">Usable</div>
+        <div class="walter-desc">Develop 2 bewees usability: cognitieve belasting daalde, SIZ bleef 100%. Microinteractions M1 tot M10 zijn ondubbelzinnig.</div>
+      </div>
+      <div class="walter-row">
+        <div class="walter-num">4</div>
+        <div class="walter-bar walter-4">Pleasurable</div>
+        <div class="walter-desc">Tactiele kwaliteit, signature moments M4 en M8, warme materialen en het ritueel van de mechanical click.</div>
+      </div>
+      <div class="walter-row">
+        <div class="walter-num">5</div>
+        <div class="walter-bar walter-5">Significant</div>
+        <div class="walter-desc"><strong>Doel van SensePath</strong>: autonomie in publieke gebouwen, een product dat het zelfbeeld versterkt in plaats van te stigmatiseren. Significant = life-changing.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <strong>Hoe lezen:</strong> de drie lagen worden chronologisch actief. Visceral binnen 3 seconden bij eerste contact, behavioral tijdens routinegebruik, reflective pas na weken wanneer SensePath onderdeel wordt van het zelfbeeld. Per laag: hoe het zich vertaalt naar SensePath en hoe we het meten in de finale user test.
+  </div>
+</body>
+</html>

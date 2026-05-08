@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>SensePath, Emotion Map</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --border: #e5e5e0;
+
+    --pos: #4a8e7a;
+    --neg: #b04a3a;
+    --bridge: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  h1 { text-align: center; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.02em; font-size: 22px; }
+  .subtitle { text-align: center; color: var(--ink-soft); margin-bottom: 28px; font-size: 13px; }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .pair {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 22px;
+    align-items: stretch;
+  }
+
+  .pole {
+    padding: 14px 16px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pole.pos {
+    background: linear-gradient(135deg, #4a8e7a 0%, #6ba893 100%);
+    color: white;
+  }
+  .pole.neg {
+    background: linear-gradient(135deg, #b04a3a 0%, #c66e5d 100%);
+    color: white;
+  }
+  .pole-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 4px;
+  }
+  .pole-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .pole-def { font-size: 11.5px; opacity: 0.95; line-height: 1.4; }
+
+  .center {
+    background: #1a1a1a;
+    color: #f0e0b8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    border-left: 3px solid var(--bridge);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .center-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bridge);
+    margin-bottom: 8px;
+  }
+  .center ul { list-style: none; padding: 0; margin: 0 0 8px 0; }
+  .center li {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #ede1bf;
+    padding: 3px 0 3px 14px;
+    position: relative;
+  }
+  .center li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--bridge);
+    top: 3px;
+    font-size: 10px;
+  }
+  .center .src {
+    font-size: 10.5px;
+    color: rgba(240, 224, 184, 0.6);
+    border-top: 1px solid rgba(201, 162, 39, 0.25);
+    padding-top: 7px;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .arrow {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 0 0 0;
+    font-weight: 600;
+  }
+
+  .legend {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    background: white;
+    padding: 16px 22px;
+    border-radius: 10px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .legend strong { color: var(--ink); }
+
+  @media (max-width: 800px) {
+    .pair { grid-template-columns: 1fr; }
+    .russell-head { grid-template-columns: 1fr; }
+  }
+
+  /* Russell affect grid */
+  .russell-wrap {
+    background: white;
+    border-radius: 12px;
+    padding: 22px 26px 26px 26px;
+    margin-top: 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .russell-head {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
+    margin-bottom: 18px;
+    align-items: start;
+  }
+  .russell-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bridge);
+    margin-bottom: 4px;
+  }
+  .russell-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
+  }
+  .russell-sub {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .russell-meta {
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    background: #f6f6f0;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border-left: 3px solid var(--bridge);
+  }
+  .russell-grid {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    height: auto;
+  }
+  .russell-legend {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .rl-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 11.5px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .rl-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .rl-dash {
+    width: 22px; height: 0;
+    border-top: 2.5px dashed #c9a227;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+  <h1>SensePath, Emotion Map</h1>
+  <div class="subtitle">Vier emotionele polariteiten, elk met de concrete ingreep die SensePath van anti-emotie naar primaire emotie trekt</div>
+
+  <div class="container">
+
+    <!-- POLARITY 1: KALMTE ↔ PANIEK -->
+    <div class="pair">
+      <div class="pole pos">
+        <div class="pole-tag">Cultiveer</div>
+        <div class="pole-name">Kalmte</div>
+        <div class="pole-def">Niet overprikkelen, gehoor en aandacht beschermen.</div>
+      </div>
+      <div class="center">
+        <div class="center-tag">Ingreep in SensePath</div>
+        <ul>
+          <li>Default-toestand is stilte. Correcte koers krijgt geen bevestiging.</li>
+          <li>Fade-in van elke trilling over 80 ms, geen abrupte aanzet.</li>
+          <li>Crescendo voor afslag: 1 Hz naar 3 Hz lineair, geen exponentiële versnelling.</li>
+          <li>Maximale continue intensiteit gecapt op 60 procent van motor-peak.</li>
+        </ul>
+        <div class="src">Bron: cursus Attention §3.2 (sensorial compatibility, switching costs). Discovery interview: "in een station wil je niet overprikkeld worden, je bent al aan het zoeken met je oren".</div>
+      </div>
+      <div class="pole neg">
+        <div class="pole-tag">Vermijd</div>
+        <div class="pole-name">Paniek</div>
+        <div class="pole-def">Abrupte alerts dwingen reflective cognitie en verhogen foutkans.</div>
+      </div>
+      <div class="arrow">←  intensiteit, ritme en fade beheersen  →</div>
+    </div>
+
+    <!-- POLARITY 2: VERTROUWEN ↔ FAALGEVOEL -->
+    <div class="pair">
+      <div class="pole pos">
+        <div class="pole-tag">Cultiveer</div>
+        <div class="pole-name">Vertrouwen</div>
+        <div class="pole-def">Het is evident dat alles juist is. Geen ruis nodig om dat te bewijzen.</div>
+      </div>
+      <div class="center">
+        <div class="center-tag">Ingreep in SensePath</div>
+        <ul>
+          <li>Stilte = "het zit goed". Geen ambient bevestiging, geen heartbeat. Afwezigheid van feedback IS het vertrouwenssignaal.</li>
+          <li>Vier duidelijk onderscheidbare patronen voor de vier mogelijke systeemstaten: navigatie-cue, succesbevestiging na afslag, alarm bij afwijking, fail-safe bij systeem-onzekerheid. Andere intensiteit, ander ritme, andere duur.</li>
+          <li>Bij correcte afslag: korte dubbele tick (M5), enige actieve "goed gedaan"-feedback in het systeem.</li>
+          <li>Bij afwijking van koers: duidelijk alarm-patroon (sterker, scherper) gevolgd door bijstuur-richting via kompas. Niet straffend maar direct actiegericht.</li>
+          <li>Fail-safe heet "heroriënteren", niet "fout". Eigen patroon, herkenbaar als systeem-twijfel.</li>
+        </ul>
+        <div class="src">Bron: Norman, Gulf of Evaluation, eerlijke statuscommunicatie zonder valse geruststelling. Cursus Cognition §3.2: aandacht is eindig, ruis verlaagt vertrouwen. Vier-modi onderscheidbaarheid: cursus IxD §2.3, signifiers + consistency.</div>
+      </div>
+      <div class="pole neg">
+        <div class="pole-tag">Vermijd</div>
+        <div class="pole-name">Faalgevoel</div>
+        <div class="pole-def">Gebruiker schrijft fout aan zichzelf toe terwijl het systeem faalde of de route gewoon herberekend kan worden.</div>
+      </div>
+      <div class="arrow">←  vertrouwen wordt verdiend door ondubbelzinnige modi, niet door geruststelling  →</div>
+    </div>
+
+    <!-- POLARITY 3: AUTONOMIE ↔ INFANTILISERING -->
+    <div class="pair">
+      <div class="pole pos">
+        <div class="pole-tag">Cultiveer</div>
+        <div class="pole-name">Autonomie</div>
+        <div class="pole-def">Gebruiker stuurt SensePath, niet andersom. Het systeem ondersteunt waar gewenst en zwijgt waar niet.</div>
+      </div>
+      <div class="center">
+        <div class="center-tag">Ingreep in SensePath</div>
+        <ul>
+          <li>Eigen bookmarks van vertrouwde bestemmingen. De gebruiker slaat dagdagelijkse plekken op in de app (thuis, werk, supermarkt, dokter) en roept ze snel op zonder telkens te configureren.</li>
+          <li>Verbosity en intensiteit instelbaar. De gebruiker bepaalt zelf hoe vroeg waarschuwingen komen (3, 5 of 8 m vóór keuzepunt), hoe sterk trillingen voelen, en welke microinteractie-patronen actief zijn.</li>
+          <li>Bij afwijking: eerst informeren, dan respecteren. Het systeem geeft alarm-modus en wijst via kompas de bijsturing aan naar de oorspronkelijke route. Als de gebruiker bewust verder gaat in een andere richting, herberekent SensePath stilletjes een nieuwe route die past bij de gevolgde weg. Geen herhaalde drang, geen straffend signaal.</li>
+          <li>App-taal in tweede persoon, nooit imperatief: "wil je linksaf?" in plaats van "ga links".</li>
+          <li>Geen "goed gedaan"-toon, geen streaks, geen badges, geen "bestemmingen deze week"-statistieken tenzij expliciet opgevraagd.</li>
+          <li>Firmware-updates uitsluitend opt-in, ruwe routedata standaard lokaal opgeslagen.</li>
+        </ul>
+        <div class="src">Bron: Martiniello et al. (2020) factoren 3 en 6, user empowerment + symbolic meaning of autonomy. Ryan en Deci, self-determination theory: autonomie en competentie als drivers van intrinsieke motivatie. Eerst informeren dan herberekenen beschermt agency zonder de gebruiker uit het oog te verliezen.</div>
+      </div>
+      <div class="pole neg">
+        <div class="pole-tag">Vermijd</div>
+        <div class="pole-name">Infantilisering</div>
+        <div class="pole-def">Toon, defaults en alerts die de gebruiker positioneren als iemand die gestuurd of gecorrigeerd moet worden.</div>
+      </div>
+      <div class="arrow">←  systeem ondersteunt, gebruiker beslist  →</div>
+    </div>
+
+    <!-- POLARITY 4: DISCRETIE ↔ MEDICALITEIT -->
+    <div class="pair">
+      <div class="pole pos">
+        <div class="pole-tag">Cultiveer</div>
+        <div class="pole-name">Discretie</div>
+        <div class="pole-def">Niet stigmatiserend, lijkt op mainstream tech, sociaal aanvaardbaar in publiek.</div>
+      </div>
+      <div class="center">
+        <div class="center-tag">Ingreep in SensePath</div>
+        <ul>
+          <li>Audio kan via Bluetooth (oortje) of via geïntegreerde speaker. De speaker zit ingesloten in de handle-behuizing, niet zichtbaar van buitenaf, achter een weerbestendig membraan dat beschermt tegen regen en stof. De gebruiker kiest welk audio-kanaal hij wil.</li>
+          <li>Audio is opt-in default. Standaard zwijgt het systeem audiogewijs en gebruikt enkel haptiek. Activatie via app-instelling of fysieke knop wanneer de gebruiker dat zelf nuttig vindt (bv. drukke omgeving, vermoeidheid, leerfase).</li>
+          <li>Ook bij fail-safe geen automatische voice prompt tenzij audio aan staat.</li>
+          <li>Geen externe LED's op het handvat.</li>
+          <li>Trillingen onder 200 Hz, geluidslek onder 80 dB zodat zelfs het haptisch signaal niet hoorbaar is voor omstanders.</li>
+          <li>Antraciet matte behuizing, geen "medische wit".</li>
+          <li>Vormtaal verwijst naar outdoor en reizen, niet naar ziekenhuisinstrument.</li>
+        </ul>
+        <div class="src">Bron: Martiniello et al. (2020): visual analogy met mainstream tech vermindert stigma. Vaes (2014): perceived stigma volgt direct uit CMF-signalen. User control over audio-modaliteit en -kanaal is zowel autonomie- als discretie-versterker.</div>
+      </div>
+      <div class="pole neg">
+        <div class="pole-tag">Vermijd</div>
+        <div class="pole-name">Medicaliteit</div>
+        <div class="pole-def">Klinische CMF en symboliek doen het product op een ziekenhuishulpmiddel lijken.</div>
+      </div>
+      <div class="arrow">←  CMF en vormgeving naar mainstream tech trekken  →</div>
+    </div>
+
+    <!-- RUSSELL'S MODEL OF AFFECT -->
+    <div class="russell-wrap">
+      <div class="russell-head">
+        <div>
+          <div class="russell-tag">Theoretische verankering</div>
+          <h2 class="russell-title">Russell's Model of Affect (1980)</h2>
+          <p class="russell-sub">De acht emoties geplot op valence (aangenaam ↔ onaangenaam) en arousal (geactiveerd ↔ kalm). Maakt zichtbaar dat SensePath bewust naar het rechter-onder kwadrant stuurt en weg van linksboven.</p>
+        </div>
+        <div class="russell-meta">
+          Bron: Russell, J.A. (1980). A circumplex model of affect. Journal of Personality and Social Psychology. Wordt direct gebruikt om de bipolaire woordparen voor de finale user test te kiezen (semantic differential).
+        </div>
+      </div>
+
+      <svg class="russell-grid" viewBox="0 0 600 560" preserveAspectRatio="xMidYMid meet">
+        <!-- Quadrant backgrounds -->
+        <rect x="120" y="60" width="180" height="200" fill="#fbe9e3" opacity="0.55"/>
+        <rect x="300" y="60" width="180" height="200" fill="#fff6dc" opacity="0.55"/>
+        <rect x="120" y="260" width="180" height="200" fill="#eef0f2" opacity="0.55"/>
+        <rect x="300" y="260" width="180" height="200" fill="#e3efe9" opacity="0.55"/>
+
+        <!-- Quadrant labels -->
+        <text x="210" y="82" text-anchor="middle" font-size="10" font-weight="700" fill="#b04a3a" letter-spacing="0.1em">DISTRESSED</text>
+        <text x="390" y="82" text-anchor="middle" font-size="10" font-weight="700" fill="#a07b1f" letter-spacing="0.1em">EXCITED</text>
+        <text x="210" y="450" text-anchor="middle" font-size="10" font-weight="700" fill="#5b6471" letter-spacing="0.1em">DEPRESSED</text>
+        <text x="390" y="450" text-anchor="middle" font-size="10" font-weight="700" fill="#4a8e7a" letter-spacing="0.1em">RELAXED</text>
+
+        <!-- Axes -->
+        <line x1="120" y1="260" x2="480" y2="260" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="300" y1="60" x2="300" y2="460" stroke="#1a1a1a" stroke-width="1.5"/>
+
+        <!-- Axis arrowheads -->
+        <defs>
+          <marker id="ax-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 7 3, 0 6" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+        <line x1="475" y1="260" x2="490" y2="260" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ax-arrow)"/>
+        <line x1="300" y1="65" x2="300" y2="50" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ax-arrow)"/>
+
+        <!-- Axis pole labels (inside chart, near axis ends) -->
+        <text x="130" y="278" text-anchor="start" font-size="11" font-weight="600" fill="#1a1a1a">unpleasant</text>
+        <text x="470" y="278" text-anchor="end" font-size="11" font-weight="600" fill="#1a1a1a">pleasant</text>
+        <text x="312" y="73" text-anchor="start" font-size="11" font-weight="600" fill="#1a1a1a">activated</text>
+        <text x="312" y="455" text-anchor="start" font-size="11" font-weight="600" fill="#1a1a1a">deactivated</text>
+
+        <!-- Axis name labels (proper placement) -->
+        <text x="300" y="510" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1a1a1a" letter-spacing="0.1em">VALENCE</text>
+        <text x="300" y="528" text-anchor="middle" font-size="9.5" fill="#555" letter-spacing="0.04em">horizontale as, aangenaam tegenover onaangenaam</text>
+
+        <text x="60" y="260" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1a1a1a" letter-spacing="0.1em" transform="rotate(-90 60 260)">AROUSAL</text>
+        <text x="80" y="260" text-anchor="middle" font-size="9.5" fill="#555" letter-spacing="0.04em" transform="rotate(-90 80 260)">verticale as, geactiveerd tegenover kalm</text>
+
+        <!-- Anti-emotions (left side) -->
+        <g>
+          <circle cx="170" cy="115" r="11" fill="#b04a3a" stroke="white" stroke-width="2.5"/>
+          <text x="188" y="118" font-size="11.5" font-weight="700" fill="#b04a3a">Paniek</text>
+        </g>
+        <g>
+          <circle cx="205" cy="185" r="11" fill="#b04a3a" stroke="white" stroke-width="2.5"/>
+          <text x="222" y="188" font-size="11.5" font-weight="700" fill="#b04a3a">Faalgevoel</text>
+        </g>
+        <g>
+          <circle cx="225" cy="315" r="11" fill="#b04a3a" stroke="white" stroke-width="2.5"/>
+          <text x="138" y="318" font-size="11.5" font-weight="700" fill="#b04a3a" text-anchor="start">Infantilisering</text>
+        </g>
+        <g>
+          <circle cx="190" cy="395" r="11" fill="#b04a3a" stroke="white" stroke-width="2.5"/>
+          <text x="208" y="398" font-size="11.5" font-weight="700" fill="#b04a3a">Medicaliteit</text>
+        </g>
+
+        <!-- Primary emotions (right side) -->
+        <g>
+          <circle cx="425" cy="170" r="13" fill="#4a8e7a" stroke="white" stroke-width="2.5"/>
+          <text x="408" y="173" font-size="12" font-weight="700" fill="#4a8e7a" text-anchor="end">Autonomie</text>
+        </g>
+        <g>
+          <circle cx="410" cy="300" r="13" fill="#4a8e7a" stroke="white" stroke-width="2.5"/>
+          <text x="393" y="303" font-size="12" font-weight="700" fill="#4a8e7a" text-anchor="end">Vertrouwen</text>
+        </g>
+        <g>
+          <circle cx="385" cy="365" r="13" fill="#4a8e7a" stroke="white" stroke-width="2.5"/>
+          <text x="368" y="368" font-size="12" font-weight="700" fill="#4a8e7a" text-anchor="end">Discretie</text>
+        </g>
+        <g>
+          <circle cx="445" cy="415" r="13" fill="#4a8e7a" stroke="white" stroke-width="2.5"/>
+          <text x="428" y="418" font-size="12" font-weight="700" fill="#4a8e7a" text-anchor="end">Kalmte</text>
+        </g>
+
+        <!-- Diagonal arrow showing design direction -->
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 9 3, 0 6" fill="#c9a227"/>
+          </marker>
+        </defs>
+        <line x1="200" y1="155" x2="420" y2="395" stroke="#c9a227" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#arrowhead)" opacity="0.85"/>
+        <text x="312" y="282" text-anchor="middle" font-size="10.5" font-weight="700" fill="#a07b1f" transform="rotate(47 312 282)">SensePath design vector</text>
+      </svg>
+
+      <div class="russell-legend">
+        <div class="rl-row">
+          <div class="rl-dot" style="background: #4a8e7a;"></div>
+          <span>Primaire emoties (na te streven). Clusteren in pleasant/relaxed kwadrant.</span>
+        </div>
+        <div class="rl-row">
+          <div class="rl-dot" style="background: #b04a3a;"></div>
+          <span>Anti-emoties (te vermijden). Clusteren in unpleasant kwadrant, met paniek bovenaan.</span>
+        </div>
+        <div class="rl-row">
+          <div class="rl-dash"></div>
+          <span>Design-vector: SensePath stuurt elk patroon en elke CMF-keuze diagonaal van linksboven naar rechtsonder.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <strong>Hoe lezen:</strong> elke rij bovenaan is één emotionele polariteit. Links de na te streven primaire emotie, rechts de te vermijden anti-emotie, midden de concrete productingrepen die SensePath van rechts naar links trekken. De Russell-grid eronder verankert dezelfde acht emoties theoretisch en levert direct de bipolaire as-paren voor de semantic differential in de finale user test.
+  </div>
+</body>
+</html>

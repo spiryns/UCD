@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Protocol prototype test SensePath Develop 3</title>
+<style>
+  @page { size: A4; margin: 25mm 22mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    color: #000;
+    line-height: 1.30;
+    font-size: 11pt;
+    margin: 0;
+  }
+  h1.title {
+    font-size: 22pt;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 8px 0;
+  }
+  h2.subtitle {
+    font-size: 14pt;
+    font-style: italic;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 30px 0;
+  }
+  p.subsubtitle {
+    font-style: italic;
+    margin: 0 0 8px 0;
+  }
+  p.footer {
+    font-style: italic;
+    text-align: center;
+    margin-top: 60mm;
+  }
+  h2 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #000;
+    margin: 18px 0 10px 0;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #000;
+    margin: 14px 0 6px 0;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #000;
+    margin: 12px 0 4px 0;
+    page-break-after: avoid;
+  }
+  p { margin: 4px 0 8px 0; }
+  ul, ol { margin: 4px 0 10px 0; padding-left: 22px; }
+  li { margin-bottom: 3px; }
+  em.note {
+    font-style: italic;
+    color: #000;
+  }
+  .pagebreak { page-break-before: always; }
+  .titlepage { page-break-after: always; text-align: center; padding-top: 80mm; }
+</style>
+</head>
+<body>
+
+<div class="titlepage">
+  <h1 class="title">PROTOTYPE TEST SENSEPATH</h1>
+  <h2 class="subtitle">Develop 3 → Microinteracties, CMF &amp; real-life validatie</h2>
+  <p><em>protocol</em></p>
+  <p class="footer"><em>Protocol prototype test SensePath → Develop 3</em></p>
+</div>
+
+<h1 style="font-size:22pt; margin:0 0 16px 0;">PROTOTYPE TEST SENSEPATH</h1>
+
+<h2>OVERVIEW</h2>
+
+<h4>Achtergrond &amp; doel:</h4>
+<p>Dit onderzoek kadert binnen de derde develop-fase van het SensePath-project, een slimme handgreep die op een bestaande witte stok wordt bevestigd en gebruikers ondersteunt tijdens navigatie via haptische feedback. Na Develop 1 (Proof of Interaction) en Develop 2 (ergonomie van het handvat, kompashoogte en contactoppervlak), richt Develop 3 zich op drie complementaire lagen: de set <strong>microinteracties</strong> die met één trilmotor moet worden afgevuurd zonder cognitieve overload, de <strong>CMF-laag</strong> (materiaal, vorm, kleur) van het handvat, en een <strong>finale validatie in real-life context</strong> in plaats van de gecontroleerde labosetting van Develop 2.</p>
+
+<p>Uit Develop 2 is een voorkeurshoogte en een voorkeurs-contactoppervlak van het kompas geselecteerd. Die configuratie wordt overgenomen, maar de gleuf is verkleind zodat het kompas binnen de handpalm blijft draaien in plaats van eruit te wijken. Daarnaast brengen we voor het eerst een uitgewerkte set trilpatronen in, aangestuurd via een microcontroller in het handvat. Doordat het eindproduct uiteindelijk maar één trilmotor zal bevatten, willen we testen hoeveel signalen we kunnen doorgeven zonder dat de gebruiker moet stoppen om na te denken welk patroon welk betekent.</p>
+
+<p>De test wordt uitgevoerd met dezelfde eindgebruikers (blinde en slechtziende personen) als in Develop 2. De sessie start binnen voor de CMF-bevraging en de leerfase, en verschuift dan naar buiten voor een Wizard-of-Oz wandeling in een open omgeving (Citadelpark) en doorheen de stedelijke context tussen Licht en Liefde en Gent-Sint-Pieters. Op die manier kunnen we benchmarken tegen de Develop 2 binnen-resultaten en tegelijk de werkelijke gebruikssituatie aftoetsen.</p>
+
+<h4>Onderzoeksvragen</h4>
+<ul>
+  <li>Welke set trilpatronen (max. drie tot vier signalen via één trilmotor) is voldoende onderscheidbaar en intuïtief om obstakel, route-afwijking en aankondiging van een afslag te communiceren zonder cognitieve overload?</li>
+  <li>Op welk moment vóór een afslag wil de gebruiker een voorbereidende trilling ontvangen (uitgedrukt in stappen, meters of seconden)?</li>
+  <li>Wensen gebruikers één neutraal richtings-aankondigingssignaal in combinatie met het kompas, of expliciet onderscheid tussen links en rechts in het patroon?</li>
+  <li>Welk handvatmateriaal (harde standaardstok, zachter indrukbaar handvat, kurk-element) wordt geprefereerd qua tactiliteit en bruikbaarheid in weer en wind?</li>
+  <li>Welke kleurkeuze voor het handvat sluit aan bij de behoefte aan contrast voor slechtzienden en bij de externe zichtbaarheid in publieke ruimte?</li>
+  <li>Verschilt de ervaren cognitieve belasting en het vertrouwen in real-life context (verkeer, voetgangers, gidslijnen, niveauverschillen) significant van de labosetting in Develop 2?</li>
+  <li>Wensen gebruikers persoonlijke instelbaarheid van trilpatronen en aankondigingsafstanden, of volstaat een vaste default-instelling?</li>
+</ul>
+
+<h4>Usability goals</h4>
+<p>Elke doelstelling is specifiek, meetbaar en expliciet aangeduid als observed meting (geobserveerd tijdens de test) of perceived meting (bevraagd via Likert of open vraag). De Develop 2 resultaten dienen als referentie waar relevant.</p>
+
+<h4>Effectiveness</h4>
+<ul>
+  <li><strong>UG1 → Begrip van trilpatronen:</strong> minstens 80% van de aangeboden scenario's wordt door de deelnemer correct geïnterpreteerd binnen één seconde na het patroon. Observed: telling van juist/fout via audio en video tijdens de scenario-test.</li>
+  <li><strong>UG2 → Veilige real-life navigatie:</strong> 0 incidenten waarbij de deelnemer een obstakel raakt zonder voorafgaande tactiele perceptie via stok of waarschuwing. Observed: video-observatie van het volledige buitentraject.</li>
+</ul>
+
+<h4>Efficiency</h4>
+<ul>
+  <li><strong>UG3 → Reactietijd op aankondiging afslag:</strong> de deelnemer past het looptempo aan binnen twee stappen na het aankondigingssignaal. Observed: video-telling.</li>
+  <li><strong>UG4 → Twijfelmomenten in real-life context:</strong> aantal zichtbare pauzes of aarzelingen buiten een geplande bocht blijft gelijk of lager dan in Develop 2 binnen-context. Observed: telling via video.</li>
+</ul>
+
+<h4>Satisfaction</h4>
+<ul>
+  <li><strong>UG5 → Cognitieve belasting buiten:</strong> Likert 1-7 voor "De feedback vereiste weinig concentratie" daalt maximaal 1 punt t.o.v. Develop 2 (omdat de test nu in real-life buitencontext gebeurt met extra prikkels). Perceived.</li>
+  <li><strong>UG6 → Bereidheid tot gebruik in dagelijks leven:</strong> Likert 1-7 voor "Ik zou deze technologie willen gebruiken" blijft behouden of stijgt t.o.v. Develop 2. Perceived.</li>
+</ul>
+
+<h4>Voorkeursrangschikking (kwalitatief)</h4>
+<ul>
+  <li><strong>UG7 → Trilpatroon-koppelingen:</strong> elke deelnemer rangschikt voor de drie scenario's (obstakel, afslag-aankondiging, route-afwijking) welk van de aangeboden patronen er het best bij past.</li>
+  <li><strong>UG8 → Handvatmateriaal:</strong> elke deelnemer rangschikt de drie referenties (huidige stok, zachter handvat à la padelracket, kurk-element) van beste naar slechtste op tactiliteit en draagcomfort.</li>
+  <li><strong>UG9 → Kleurkeuze handvat:</strong> elke deelnemer geeft voorkeur aan tussen zwart, gekleurd contrast (rood, fluo) of geen voorkeur, en motiveert vanuit eigen restzicht of zichtbaarheid voor anderen.</li>
+</ul>
+
+<h4>Methode</h4>
+<p>5 deelnemers (3 blinde of slechtziende ervaren stokgebruikers met deelname in Develop 2 als referentie, 2 niet-blinde deelnemers die geblinddoekt worden om de eerste-confrontatie-ervaring te benaderen). Drie opeenvolgende testblokken: een <strong>binnenblok</strong> met CMF-bevraging en haptische leerfase, een <strong>buitenblok</strong> met Wizard-of-Oz wandeling in het Citadelpark, en een <strong>stedelijk blok</strong> vertrekkend vanuit Licht en Liefde naar het station Gent-Sint-Pieters. Tijdens de wandeling stuurt de testleider via een telefoon-app de microcontroller in het handvat, die op zijn beurt het kompas en de trilmotor aanstuurt. Think Aloud Protocol tijdens het stappen, video-observatie achter de deelnemer voor de observed metingen, en semi-gestructureerd interview tijdens kortere haltes. Na afloop van de drie testblokken volgt een aparte <strong>evaluatieronde</strong> met Likert-scoring voor de perceived metingen en een open reflectiegesprek over instelbaarheid, fallback en algemene indruk.</p>
+
+<h4>Practicalia</h4>
+<p><strong>Periode:</strong> 5 mei → 8 mei 2026</p>
+<p><strong>Locatie:</strong> Licht en Liefde Gent (binnen-deel + start buitentraject), Citadelpark (open omgeving), traject Citadelpark → Gent-Sint-Pieters (stedelijke context).</p>
+<p><strong>Opname:</strong> video (camera achter deelnemer, gericht op voeten en pad) + audio voor Think Aloud en interviewfragmenten.</p>
+<p><strong>Materiaal:</strong> 3D-geprint handvat met geïntegreerde microcontroller (ESP32) + één trilmotor + kompasmodule op de uit Develop 2 geselecteerde voorkeurshoogte met afgerond contactoppervlak. De gleuf is verkleind zodat het kompas binnen de handpalm blijft. Telefoon van de testleider met aangepaste app voor draadloze aansturing van zowel kompas als trilpatronen. Padelracket en kurk-cilinder als CMF-referentiemonsters. Eigen witte stok van de deelnemer (handvat wordt voor deze sessie nog niet permanent op de stok bevestigd, focus blijft op handvat en signalen). Scoreformulier, video- en audio-apparatuur.</p>
+
+<h4>Overzicht &amp; structuur protocol</h4>
+<p>Totale duur per deelnemer: ± 75 minuten</p>
+<ul>
+  <li><strong>DEEL 1:</strong> Introductie &amp; prototype-uitleg (10')</li>
+  <li><strong>DEEL 2:</strong> CMF-bevraging → materiaal, vorm en kleur (10')</li>
+  <li><strong>DEEL 3:</strong> Leerfase → verkenning kompas en trilpatronen (10')</li>
+  <li><strong>DEEL 4:</strong> Test 1 → Wizard-of-Oz wandeling Citadelpark (15')</li>
+  <li><strong>DEEL 5:</strong> Test 2 → stedelijk traject naar Gent-Sint-Pieters (20')</li>
+  <li><strong>DEEL 6:</strong> Reflectie, beoordeling &amp; afsluiting (10')</li>
+</ul>
+
+<div class="pagebreak"></div>
+
+<h2>TESTPROTOCOL</h2>
+
+<h3>DEEL 1: Introductie &amp; prototype-uitleg (10')</h3>
+
+<h4>Inleiding</h4>
+<p><em class="note">VOORAF: informed consent</em></p>
+<p><em class="note">VOORAF: start video-opname (camera richten op voeten en pad)</em></p>
+<p><em class="note">VOORAF: start audio-opname (Think Aloud)</em></p>
+<p><em class="note">VOORAF: koppel telefoon van testleider aan microcontroller in handvat en test alle trilpatronen één keer voor aanvang.</em></p>
+<p><em>Ik wil je eerst en vooral bedanken om opnieuw tijd vrij te maken voor dit onderzoek. We werken verder aan SensePath, het slimme handvat dat op een witte stok wordt bevestigd en je via haptische feedback helpt bij het navigeren.</em></p>
+<p><em>In de vorige test hebben we vooral op de hoogte en de vorm van het kompas in het handvat gewerkt. Op basis van jouw feedback hebben we de gleuf verkleind, zodat het kompas binnen je handpalm draait in plaats van eruit te wijken. Vandaag willen we drie dingen doen. Eerst kijken naar het materiaal en de kleur van het handvat. Daarna verkennen we een aantal korte trilpatronen die het systeem in de toekomst zou kunnen geven, bijvoorbeeld voor een obstakel of voor een afslag. En tenslotte gaan we ermee naar buiten, eerst naar het Citadelpark en dan zelfs richting station, zodat we kunnen voelen hoe dit werkt in een echte omgeving in plaats van binnen.</em></p>
+<p><em>Er zijn geen juiste of foute antwoorden. We testen de prototypes en de signalen, niet jou. Zeg gerust als iets onduidelijk is, als je iets niet voelt, of als je vindt dat een patroon nergens bij past. Ik ga je ook vragen om tijdens het lopen hardop te vertellen wat je voelt en denkt.</em></p>
+
+<h4>Korte refresh deelnemer</h4>
+<p><em class="note">[@testleider: hou dit bewust kort, respondent is bekend uit Develop 2]</em></p>
+<ul>
+  <li>Is er sinds de vorige test iets veranderd aan hoe je je verplaatst of welke hulpmiddelen je gebruikt?</li>
+  <li>Gebruik je nu nog dezelfde stok als toen?</li>
+  <li>Heb je sinds de vorige sessie nog over SensePath nagedacht of er bedenkingen bij gehad?</li>
+</ul>
+
+<h4>Prototype-uitleg</h4>
+<p><em class="note">[@testleider: toon en laat het handvat voelen, leg de microcontroller en trilmotor aan de zijkant uit]</em></p>
+<ul>
+  <li><strong>Het handvat:</strong> vasthouden zoals je een stok vasthoudt, met de wijsvinger op de platte zijde. De zijkant is in deze versie smaller dan vorige keer, omdat we hebben gemerkt dat de extra breedte niet nodig was.</li>
+  <li><strong>De microcontroller:</strong> aan de achterkant van het handvat zit een uitstekend chipje. Dat zit hier nog buiten de behuizing omdat we het op afstand willen kunnen aansturen. In de eindversie verdwijnt dit volledig in het handvat.</li>
+  <li><strong>De trilmotor:</strong> één motor in het handvat. Die zit in deze prototype-versie nog niet op de finale plek, maar geeft wel de patronen door zodat je ze kan voelen en evalueren.</li>
+  <li><strong>Het kompas:</strong> hetzelfde principe als vorige keer. Een element in een gleuf van het handvat dat naar links of rechts beweegt om aan te geven welke kant je op moet. Naarmate je in de juiste richting draait, koppelt het terug naar het midden. De gleuf is in deze versie kleiner zodat het element binnen je handpalm blijft.</li>
+  <li><strong>Geen vaste stok in deze sessie:</strong> het handvat is vandaag nog niet permanent op een stok bevestigd. We focussen op het handvat zelf, op de trilpatronen en op hoe één en ander voelt in de echte buitencontext. Je mag wel je eigen stok meenemen voor onderweg, dan kunnen we straks zien hoe handvat en stok samen aanvoelen.</li>
+</ul>
+
+<h4>Controleer:</h4>
+<ul>
+  <li>Zit het handvat goed in de hand?</li>
+  <li>Begrijpt de deelnemer het verschil tussen kompas en trilpatronen?</li>
+  <li>Is de microcontroller geconnecteerd en reageert de telefoon van de testleider?</li>
+</ul>
+
+<h3>DEEL 2: CMF-bevraging → materiaal, vorm en kleur (10')</h3>
+<p><em>Voor we naar de signalen en de wandeling gaan, willen we eerst even stilstaan bij hoe het handvat aanvoelt qua materiaal, en welke kleur ervoor in aanmerking komt. We hebben twee referenties meegebracht waarop je kan vergelijken.</em></p>
+
+<h4>Referentie 1 → zachter indrukbaar handvat</h4>
+<p><em class="note">[@testleider: geef het padelracket aan de deelnemer en laat in het handvat knijpen]</em></p>
+<ul>
+  <li>Voel je dat dit handvat iets meegeeft als je erop drukt, in vergelijking met je eigen stok?</li>
+  <li>Vind je dit aangenamer om vast te houden, of net minder stabiel?</li>
+  <li>Zou je een dergelijke zachtere afwerking op het handvat van SensePath waarderen?</li>
+  <li>Hoe denk je dat dit zich gedraagt na lang gebruik, als je hand zweet of als het regent?</li>
+</ul>
+
+<h4>Referentie 2 → kurk-element</h4>
+<p><em class="note">[@testleider: geef de kurk-cilinder aan de deelnemer en laat voelen]</em></p>
+<ul>
+  <li>Hoe voelt kurk in vergelijking met het rubber- of kunststofmateriaal van je gewone handvat?</li>
+  <li>Zou je delen van het SensePath-handvat in kurk willen, naar het voorbeeld van fietshandvatten?</li>
+  <li>Heb je bedenkingen over duurzaamheid van kurk in dagelijks straatgebruik (slijtage, vocht, vuil)?</li>
+</ul>
+
+<h4>Vraag over kleur</h4>
+<p><em class="note">[@testleider: vraag eerst of de deelnemer iets of wat zicht heeft op contrast, om te kunnen kaderen]</em></p>
+<ul>
+  <li>De stok zelf is wettelijk wit. Welke kleur zou jij voor het handvat kiezen?</li>
+  <li>Speelt contrast tussen handvat en stok een rol om het handvat terug te vinden als de stok ergens ligt?</li>
+  <li>Hoe denk je over een felle of fluo-kleur, met het oog op zichtbaarheid voor anderen in het verkeer?</li>
+  <li>Is een wit handvat denkbaar, of vrees je dat het te snel vuil wordt?</li>
+</ul>
+
+<p><em class="note">[@testleider: noteer de rangschikking en de motivatie per deelnemer voor materiaal en kleur, dit voedt UG8 en UG9]</em></p>
+
+<h3>DEEL 3: Leerfase → verkenning kompas en trilpatronen (10')</h3>
+<p><em>Voordat we naar buiten gaan, verkennen we eerst rustig het kompas en de trilpatronen in stilstand, zodat je weet wat je later in welke situatie kan verwachten.</em></p>
+
+<h4>Kompas verkennen</h4>
+<p><em class="note">[@wizard: stuur het kompas langzaam volledig naar links en naar rechts vanuit de middenpositie, en koppel terug]</em></p>
+<ul>
+  <li>Voel je dat het kompas binnen de handpalm beweegt?</li>
+  <li>Is de richting meteen duidelijk, of moet je nadenken?</li>
+  <li>De terugkoppeling naar het midden betekent: je staat juist. Voelt dit logisch, of zouden we dat duidelijker moeten maken?</li>
+</ul>
+
+<h4>Trilpatronen verkennen</h4>
+<p><em class="note">[@testleider: speel elk patroon één keer in stilstand, geef vooraf de betekenis aan zodat de deelnemer een associatie kan opbouwen, vraag dan om eigen woorden]</em></p>
+<ul>
+  <li><strong>Patroon A → Aankondiging afslag:</strong> één langere trilling als advies dat je binnenkort van richting moet veranderen.
+    <ul>
+      <li>Voel je dit duidelijk?</li>
+      <li>Vind je het patroon zelf passend voor "wees voorbereid"?</li>
+    </ul>
+  </li>
+  <li><strong>Patroon B → Obstakel-alarm:</strong> twee korte trillingen na elkaar, betekenis "stop, er staat iets voor je".
+    <ul>
+      <li>Voelt dit urgent genoeg?</li>
+      <li>Verschilt dit voldoende van patroon A?</li>
+    </ul>
+  </li>
+  <li><strong>Patroon C → Route-afwijking:</strong> een snelle reeks korte trillingen, betekenis "je loopt uit je geplande koers".
+    <ul>
+      <li>Voelt dit als een waarschuwing zonder paniek?</li>
+      <li>Verschilt dit voldoende van patronen A en B?</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>Korte bevraging na de drie patronen</h4>
+<ul>
+  <li>Welke twee patronen lijken volgens jou het meest op elkaar?</li>
+  <li>Mis je een patroon voor een situatie die we niet behandeld hebben?</li>
+  <li>Zou je liever één neutraal aankondigingssignaal hebben (zoals nu) en de richting via het kompas, of expliciet onderscheid in het patroon zelf tussen links en rechts (bv. één trilling voor rechts, twee voor links)?</li>
+</ul>
+
+<p><em class="note">[@testleider: deze laatste vraag is bewust open zodat de deelnemer zijn voorkeur motiveert, dit voedt onderzoeksvraag 3]</em></p>
+
+<div class="pagebreak"></div>
+
+<h3>DEEL 4: Test 1 → Wizard-of-Oz wandeling Citadelpark (15')</h3>
+<p><em>Nu gaan we naar buiten. We wandelen samen naar het Citadelpark en doen daar een open parcours, omdat een park een goede testomgeving is: brede paden, geen vaste gidslijnen, en open pleinen waar je je richting niet altijd uit de omgeving kan afleiden.</em></p>
+
+<h4>Voorbereiding</h4>
+<ul>
+  <li>Begeleid de deelnemer naar een rustig pleintje of breed pad in het Citadelpark.</li>
+  <li>Controleer of de microcontroller nog verbonden is met de telefoon van de testleider.</li>
+  <li>Geef het handvat opnieuw en vraag de deelnemer om de natuurlijke grip aan te nemen.</li>
+  <li>Start video-opname met camera achter de deelnemer, gericht op voeten en pad.</li>
+</ul>
+
+<h4>Uitvoering</h4>
+<p><em class="note">[@wizard: stuur het kompas continu in real time aan zoals een GPS dat in een eindversie zou doen → kleine correcties voor microbewegingen op het pad, volledige uitslag bij geplande bochten, terugkoppeling naar neutraal naarmate de deelnemer de bocht maakt]</em></p>
+<p><em class="note">[@wizard: trigger Patroon A enkele stappen vóór elke geplande afslag, Patroon B bij een fysiek aanwezig obstakel (vuilnisbak, paaltje, fietsstandaard), Patroon C wanneer de deelnemer significant van koers afwijkt zonder dat een afslag voorzien is]</em></p>
+<p><em class="note">[@camera: loop achter de deelnemer, hou voeten en pad in beeld]</em></p>
+<p><em class="note">[@testleider: loop naast de deelnemer, geef minimale verbale begeleiding, ingrijpen enkel bij echt veiligheidsrisico, communiceer wel kleine niveauverschillen ("kleine borduur naar beneden, één stap") omdat de stok in deze sessie niet permanent op het handvat zit]</em></p>
+<ul>
+  <li>De deelnemer wandelt vrij door het pleintje en aanpalende paden.</li>
+  <li>Triggers van Patronen A, B en C komen op natuurlijke momenten.</li>
+  <li>Tijdens het lopen: Think Aloud.</li>
+  <li>Indien aansluiting verloren gaat (microcontroller, USB-verbinding), pauzeren, terug verbinden, niet panikeren.</li>
+</ul>
+
+<h4>Korte nabespreking Test 1</h4>
+<ul>
+  <li>Hoe verschilt het wandelen hier buiten met de korte stroken van Develop 2 binnen?</li>
+  <li>Was er een patroon dat je in deze omgeving niet of slecht voelde door externe afleiding (geluid, verkeer, andere voetgangers)?</li>
+  <li>Was er een moment waarop je twijfelde welk patroon kwam? Welke twee verwarde je?</li>
+  <li>Vond je de aankondiging van een afslag op tijd komen? Te vroeg, te laat, of juist?</li>
+</ul>
+
+<p><em class="note">[@testleider: noteer specifiek de schatting van de deelnemer over hoeveel stappen of meters voor een afslag de aankondiging zou moeten komen → dit wordt input voor de defaults én de instelbaarheid]</em></p>
+
+<h3>DEEL 5: Test 2 → stedelijk traject naar Gent-Sint-Pieters (20')</h3>
+<p><em>Nu gaan we het systeem testen in een echte stedelijke context, met verkeer, voetgangers, oversteken, niveauverschillen en gidslijnen. We wandelen van het Citadelpark richting station Gent-Sint-Pieters.</em></p>
+
+<h4>Voorbereiding</h4>
+<ul>
+  <li>Begeleid de deelnemer naar de uitgang van het Citadelpark richting Charles de Kerchovelaan.</li>
+  <li>Controleer video-opname.</li>
+  <li>Vraag de deelnemer om dezelfde grip op het handvat aan te houden als in de leerfase.</li>
+</ul>
+
+<h4>Uitvoering</h4>
+<p><em class="note">[@wizard: stuur het kompas in real time, zoals in Test 1, maar nu in een dichtere context. Geef Patroon A vóór elke werkelijke straat-afslag, Patroon B bij obstakels op borst- of hoofdhoogte (verkeersborden, paaltjes, openstaande deuren) en bij vuilnisbakken op het voetpad, Patroon C bij significante koersafwijking]</em></p>
+<p><em class="note">[@testleider: communiceer borduren en niveauverschillen verbaal kort, omdat de stok niet permanent op het handvat zit, en wees attent voor verkeer]</em></p>
+<ul>
+  <li>De deelnemer wandelt het traject Citadelpark → Sint-Pieters.</li>
+  <li>Tijdens het lopen: Think Aloud.</li>
+  <li>De testleider triggert patronen telkens consequent op het juiste moment.</li>
+  <li>Bij oversteken: voorrang aan veiligheid, eerst stoppen en de situatie inschatten, dan opnieuw starten.</li>
+</ul>
+
+<h4>Korte nabespreking onderweg en aan eindbestemming</h4>
+<ul>
+  <li>Voelde je dat je door deze feedback de straat veiliger of net minder veilig oversteekt?</li>
+  <li>Zijn er specifieke situaties waarin je een extra patroon zou willen (bijvoorbeeld bij oversteken, bij trappen, bij overgang van buiten naar binnen)?</li>
+  <li>Was er een moment waarop het systeem je heeft "gestoord" in iets wat je intuïtief al deed met je stok?</li>
+  <li>Hoe zwaar voelde de cognitieve belasting in deze drukke context, op een schaal van 1 tot 7?</li>
+</ul>
+
+<div class="pagebreak"></div>
+
+<h3>DEEL 6: Reflectie, beoordeling &amp; afsluiting (10')</h3>
+<p><em>Ik zou nu graag horen wat je van het geheel vindt, en hoe je deze finale test ervaren hebt.</em></p>
+
+<h4>Subjectieve beoordeling (Likert-schaal 1-7)</h4>
+<p>Geef voor elke stelling een score van 1 (helemaal niet akkoord) tot 7 (helemaal akkoord). Scores worden gevraagd voor de volledige sessie inclusief het stedelijke traject (Test 2).</p>
+<ul>
+  <li><strong>Smoothness:</strong> "De feedback hielp mij vloeiend te lopen, ook in de stedelijke context."</li>
+  <li><strong>Learnability:</strong> "De drie trilpatronen waren makkelijk te leren en te onderscheiden."</li>
+  <li><strong>Ease of use:</strong> "Het systeem was gemakkelijk te gebruiken naast mijn normale staphouding."</li>
+  <li><strong>Cognitive load:</strong> "De feedback vereiste weinig concentratie." (hoog = weinig concentratie)</li>
+  <li><strong>Convenience:</strong> "Ik zou deze technologie handig vinden in het dagelijkse leven."</li>
+  <li><strong>Willingness:</strong> "Ik zou deze technologie willen gebruiken."</li>
+  <li><strong>Trust:</strong> "Ik had er vertrouwen in dat ik de bestemming zou bereiken."</li>
+</ul>
+<p><em class="note">[@testleider: noteer de scores en vergelijk waar mogelijk met de Develop 2 cijfers om UG5 en UG6 te verifiëren]</em></p>
+
+<h4>Polsen naar instelbaarheid</h4>
+<ul>
+  <li>Zou je het waardevol vinden om in een toekomstige app zelf de aankondigingsafstand voor afslagen in te stellen?</li>
+  <li>Zou je willen kiezen tussen één neutraal aankondigingssignaal of expliciet links/rechts in het patroon?</li>
+  <li>Vind je instelbare patronen op zich een goed idee, of geef je de voorkeur aan één duidelijke standaardinstelling die niet wijzigt?</li>
+  <li>Indien instelbaar: welke standaardinstelling zou volgens jou voor de meeste mensen werken?</li>
+</ul>
+
+<h4>Polsen naar fallback en ondersteuning</h4>
+<ul>
+  <li>Wat zou je doen als het systeem in de praktijk vastloopt of onverwacht stilvalt?</li>
+  <li>Vind je het zinvol dat het systeem in zo'n geval terugvalt op gesproken aanwijzingen via je telefoon, of liefst niet?</li>
+  <li>Zou je de stok zonder SensePath willen kunnen gebruiken voor routes die je goed kent?</li>
+</ul>
+
+<h4>Algemene evaluatie</h4>
+<ul>
+  <li>Wat is je algemene indruk van deze versie van SensePath in real-life context?</li>
+  <li>Wat vind je er goed aan?</li>
+  <li>Wat vind je er minder goed aan?</li>
+  <li>Wat zou je zelf nog aanpassen?</li>
+  <li>Zie je jezelf deze versie effectief gebruiken voor onbekende routes (bijvoorbeeld naar een nieuw treinperron, of een nieuwe wandeling)?</li>
+</ul>
+
+<h4>Vergelijking met Develop 2</h4>
+<ul>
+  <li>Wat voelt duidelijk beter dan in de vorige test binnen?</li>
+  <li>Was de verkleinde gleuf van het kompas een verbetering?</li>
+  <li>Voegen de trilpatronen écht waarde toe boven enkel het kompas, of zou enkel het kompas volstaan?</li>
+  <li>Mis je nog een type feedback dat we niet aangeboden hebben?</li>
+</ul>
+
+<h4>Afsluiting</h4>
+<p><em class="note">ACHTERAF → bedanken deelnemer</em></p>
+<p><em class="note">ACHTERAF → vragen of foto's van hand + prototype + handvat in real-life context genomen mogen worden voor rapportage</em></p>
+<p><em class="note">ACHTERAF → beschikbaarheid bespreken voor de eindtest met volledig geïntegreerd prototype (handvat + stok + interne motor + GPS-aansturing)</em></p>
+
+</body>
+</html>

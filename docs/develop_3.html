@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Develop 3 - UX & Service Design prototype</title>
+<style>
+  :root {
+    --bg: #f6f6f2;
+    --paper: #ffffff;
+    --ink: #171717;
+    --muted: #5d5d5d;
+    --line: #dcdcd5;
+    --ux: #1f6f78;
+    --service: #806000;
+    --source: #3f6b45;
+    --risk: #a33a2a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  header {
+    background: #202020;
+    color: white;
+    padding: 32px 24px 24px;
+  }
+
+  main {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 22px;
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.05;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.45rem;
+  }
+
+  p { margin: 0; }
+
+  .subtitle {
+    max-width: 920px;
+    color: #d8d8d2;
+    font-size: 1.02rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .links a {
+    color: white;
+    text-decoration: none;
+    border: 1px solid #666;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+
+  .scope {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .scope-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    padding: 15px;
+  }
+
+  .scope-card strong {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .scope-card p {
+    color: var(--muted);
+  }
+
+  section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+
+  .section-head {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-head p {
+    margin-top: 5px;
+    color: var(--muted);
+  }
+
+  .ux .section-head { border-top: 6px solid var(--ux); }
+  .service .section-head { border-top: 6px solid var(--service); }
+  .source .section-head { border-top: 6px solid var(--source); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 10px 11px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    text-align: left;
+    font-size: 0.94rem;
+  }
+
+  th {
+    background: #eeeeea;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.76rem;
+  }
+
+  tr:last-child td { border-bottom: 0; }
+
+  td:first-child {
+    width: 74px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  td:nth-child(2) { width: 145px; font-weight: 700; }
+  td:nth-child(3) { width: 34%; }
+  td:nth-child(4) { width: 32%; }
+  td:nth-child(5) { width: 130px; }
+
+  .code {
+    font-family: Consolas, "Courier New", monospace;
+    font-weight: 800;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #eef2f6;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .tag.ux { background: #e4f4f5; color: #145b62; }
+  .tag.service { background: #fff2cc; color: #735200; }
+  .tag.risk { background: #ffe6df; color: var(--risk); }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: #fbfbf8;
+  }
+
+  .card strong {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .card p {
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  .table-wrap { overflow-x: auto; }
+
+  footer {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 22px 34px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 980px) {
+    table { min-width: 980px; }
+    .scope, .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Develop 3 - UX & Service Design voor het prototype</h1>
+    <p class="subtitle">Gebaseerd op Deelopdracht 5. Deze pagina gaat enkel over wat in het huidige SensePath-prototype moet worden aangepast of getest om de UX en service-ervaring sterker te maken. Geen brede productroadmap.</p>
+    <nav class="links" aria-label="Navigatie">
+      <a href="#ux">UX in prototype</a>
+      <a href="#service">Service Design in prototype</a>
+      <a href="#wat">Concreet WAT</a>
+      <a href="#test">Wat testen</a>
+      <a href="#bron">Waar komt het vandaan</a>
+      <a href="develop_3.md">develop_3.md</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="scope">
+      <div class="scope-card">
+        <strong>Scope van deze pagina</strong>
+        <p>Concrete UX- en Service Design-ingrepen die je in of rond het prototype kan tonen, bouwen of testen voor Develop 3.</p>
+      </div>
+      <div class="scope-card">
+        <strong>Niet de scope</strong>
+        <p>Geen volledige commerciële app, geen volledige cloudservice, geen productieplanning, geen investor deck en geen algemene mooie visualisatie.</p>
+      </div>
+    </div>
+
+    <section class="ux" id="ux">
+      <div class="section-head">
+        <h2>1. UX - concreet in het prototype implementeren</h2>
+        <p>Dit zijn de tastbare of demonstreerbare UX-details voor het fysieke prototype en de demo-app.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Onderdeel</th>
+              <th>Concreet implementeren</th>
+              <th>Hoe tonen/testen in prototype</th>
+              <th>Herkomst</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>UX1</td>
+              <td><span class="tag ux">Default feedback</span></td>
+              <td>Correcte koers geeft geen continue trilling. Het prototype blijft stil zolang de gebruiker goed loopt.</td>
+              <td>Demo-route met rechte lijn: geen vibratie zolang er geen event is.</td>
+              <td class="code">B1, B5</td>
+            </tr>
+            <tr>
+              <td>UX2</td>
+              <td><span class="tag ux">Route start</span></td>
+              <td>Bij start route: 2 zachte pulsen in het handvat.</td>
+              <td>Demo-appknop "Start route" laat meteen het M1-patroon voelen.</td>
+              <td class="code">B4</td>
+            </tr>
+            <tr>
+              <td>UX3</td>
+              <td><span class="tag ux">Bocht nadert</span></td>
+              <td>Crescendo-patroon voor een bocht: pulsen worden sneller en iets sterker.</td>
+              <td>In demo-modus activeert "bocht links/rechts" het crescendo en het richtingselement.</td>
+              <td class="code">B4, B6</td>
+            </tr>
+            <tr>
+              <td>UX4</td>
+              <td><span class="tag ux">Afwijking</span></td>
+              <td>Afwijken van route geeft een rustige ademende puls, geen alarm.</td>
+              <td>Demo-knop "afwijking" speelt 3 ademende cycli af.</td>
+              <td class="code">B2, B4</td>
+            </tr>
+            <tr>
+              <td>UX5</td>
+              <td><span class="tag ux">Fail-safe</span></td>
+              <td>Bij onzekerheid gebruikt de app/het prototype de term "heroriënteren". Niet "fout".</td>
+              <td>Demo-app toont "Heroriënteren: hou je stok even stil" en handvat speelt zachte lange trilling.</td>
+              <td class="code">B2, B6</td>
+            </tr>
+            <tr>
+              <td>UX6</td>
+              <td><span class="tag ux">Aankomst</span></td>
+              <td>Bestemming bereikt krijgt één warme lange puls.</td>
+              <td>Demo-knop "aankomst" activeert alleen deze unieke 600 ms-puls.</td>
+              <td class="code">B4</td>
+            </tr>
+            <tr>
+              <td>UX7</td>
+              <td><span class="tag ux">Autonomie</span></td>
+              <td>Dubbele tap op handvat pauzeert begeleiding 5 seconden.</td>
+              <td>IMU of demo-knop registreert dubbele tap; app toont "SensePath wacht even".</td>
+              <td class="code">B3, B5</td>
+            </tr>
+            <tr>
+              <td>UX8</td>
+              <td><span class="tag ux">Discretie</span></td>
+              <td>Geen LED's en geen speaker op het handvat. Audio loopt alleen via telefoon/oortje.</td>
+              <td>Prototypebehuizing heeft geen zichtbare output behalve haptiek; demo-app kan optioneel spreken.</td>
+              <td class="code">B3</td>
+            </tr>
+            <tr>
+              <td>UX9</td>
+              <td><span class="tag ux">Tastbaarheid</span></td>
+              <td>Gripzone voelt mat/stroef; richtingselement zit op hypothenar-zone, niet op vingertoppen.</td>
+              <td>Gebruiker voelt blind welk deel grip is en waar richting binnenkomt.</td>
+              <td class="code">B1, B7</td>
+            </tr>
+            <tr>
+              <td>UX10</td>
+              <td><span class="tag ux">App-copy</span></td>
+              <td>Teksten zijn volwassen en niet bevelend: "wil je linksaf?" in plaats van "ga links".</td>
+              <td>Alle demo-schermen gebruiken deze copy; geen "goed gedaan", badges of kinderachtige feedback.</td>
+              <td class="code">B2, B3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="service" id="service">
+      <div class="section-head">
+        <h2>2. Service Design - concreet rond het prototype tonen</h2>
+        <p>Dit zijn geen volledige servicesystemen, maar service-interacties die je in Develop 3 moet kunnen uitleggen, simuleren of testen.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Moment</th>
+              <th>Concreet implementeren/voorbereiden</th>
+              <th>Hoe tonen/testen in prototype</th>
+              <th>Herkomst</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SD1</td>
+              <td><span class="tag service">Vóór gebruik</span></td>
+              <td>Onboardingkaart of demo-appflow die uitlegt hoe je het handvat op de stok clipt en start.</td>
+              <td>Laat respondent het prototype zelfstandig bevestigen en starten.</td>
+              <td class="code">B8, B9</td>
+            </tr>
+            <tr>
+              <td>SD2</td>
+              <td><span class="tag service">Vóór gebruik</span></td>
+              <td>Grip-kalibratie als eerste service-touchpoint.</td>
+              <td>Respondent doorloopt 10 seconden vasthouden; app bevestigt "kalibratie klaar".</td>
+              <td class="code">B1, B8</td>
+            </tr>
+            <tr>
+              <td>SD3</td>
+              <td><span class="tag service">Tijdens gebruik</span></td>
+              <td>Route-demo met minimaal drie events: bocht, afwijking, aankomst.</td>
+              <td>Test of respondent de patronen kan onderscheiden zonder visuele uitleg.</td>
+              <td class="code">B4, B8</td>
+            </tr>
+            <tr>
+              <td>SD4</td>
+              <td><span class="tag service">Tijdens gebruik</span></td>
+              <td>Fail-safe scenario als expliciet Moment of Truth.</td>
+              <td>Simuleer onzekerheid en vraag of "heroriënteren" geruststellend of verwarrend voelt.</td>
+              <td class="code">B2, B6, B8</td>
+            </tr>
+            <tr>
+              <td>SD5</td>
+              <td><span class="tag service">Na gebruik</span></td>
+              <td>Korte evaluatieflow na demo: welke cue was duidelijk, welke te sterk, welke te zwak?</td>
+              <td>Respondent geeft per cue score voor duidelijkheid, vertrouwen en irritatie.</td>
+              <td class="code">B9, B10</td>
+            </tr>
+            <tr>
+              <td>SD6</td>
+              <td><span class="tag service">Actor</span></td>
+              <td>Rol van mobiliteitstrainer tonen als begeleider bij eerste setup.</td>
+              <td>In stakeholder map aangeven: trainer helpt bij kalibratie en eerste route, niet bij dagelijks gebruik.</td>
+              <td class="code">B9</td>
+            </tr>
+            <tr>
+              <td>SD7</td>
+              <td><span class="tag service">Actor</span></td>
+              <td>Rol van familielid/partner beperken tot optionele back-up.</td>
+              <td>In journey tonen dat gebruiker autonoom blijft; delen is niet standaard verplicht.</td>
+              <td class="code">B3, B9</td>
+            </tr>
+            <tr>
+              <td>SD8</td>
+              <td><span class="tag service">Na gebruik</span></td>
+              <td>Onderhoudsmoment tonen: opladen via USB-C en batterijstatus checken.</td>
+              <td>Prototype heeft zichtbare USB-C of dummy-poort; app toont batterijstatus in demo.</td>
+              <td class="code">B8, B9</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ux" id="wat">
+      <div class="section-head">
+        <h2>3. Concreet: WAT moet geprototyped, geïmplementeerd en getest worden?</h2>
+        <p>Dit is de korte bouwlijst in de vorm "situatie -> concrete systeemreactie". Dit zijn de dingen die effectief in de demo moeten zitten.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Situatie</th>
+              <th>WAT implementeren in het prototype?</th>
+              <th>Waar zit het?</th>
+              <th>WAT testen?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>W1</td>
+              <td>Route starten</td>
+              <td><strong>Route gestart -> 2 korte zachte pulsen</strong>.</td>
+              <td>Demo-appknop + trilmotor in handvat.</td>
+              <td>Voelt de gebruiker dat de route gestart is zonder audio nodig te hebben?</td>
+            </tr>
+            <tr>
+              <td>W2</td>
+              <td>Correct lopen</td>
+              <td><strong>Correcte koers -> stilte</strong>. Geen permanente "alles is goed"-trilling.</td>
+              <td>Firmware/demo-logica: geen motoroutput zolang er geen event is.</td>
+              <td>Voelt stilte rustig, of maakt ze de gebruiker onzeker?</td>
+            </tr>
+            <tr>
+              <td>W3</td>
+              <td>Bocht nadert</td>
+              <td><strong>Bocht nadert -> crescendo-puls</strong>: pulsen worden sneller en iets sterker.</td>
+              <td>Trilmotor + eventueel richtingselement links/rechts.</td>
+              <td>Herkent gebruiker dat er een bocht aankomt? Is het niet te alarmerend?</td>
+            </tr>
+            <tr>
+              <td>W4</td>
+              <td>Links/rechts richting</td>
+              <td><strong>Richting -> voelbaar kompas/richtingselement</strong> in hypothenar-zone.</td>
+              <td>Mechanisch richtingselement of gesimuleerde stand in handvat.</td>
+              <td>Kan de gebruiker links/rechts afleiden via de handgreep zonder te kijken?</td>
+            </tr>
+            <tr>
+              <td>W5</td>
+              <td>Afwijken van route</td>
+              <td><strong>Afwijken van route -> rustige ademende puls</strong> via trilmotor.</td>
+              <td>Trilmotor in handvat, demo-knop "afwijking".</td>
+              <td>Voelt dit als bijsturing in plaats van paniek/alarm?</td>
+            </tr>
+            <tr>
+              <td>W6</td>
+              <td>Systeem onzeker</td>
+              <td><strong>GPS/IMU onzeker -> "heroriënteren" + zachte lange trilling</strong>.</td>
+              <td>Demo-apptekst + trilmotorpatroon.</td>
+              <td>Is "heroriënteren" duidelijker en minder negatief dan "fout"?</td>
+            </tr>
+            <tr>
+              <td>W7</td>
+              <td>Gebruiker wil controle</td>
+              <td><strong>Dubbele tap -> begeleiding pauzeert 5 seconden</strong>.</td>
+              <td>IMU-tapdetectie of demo-knop als simulatie.</td>
+              <td>Snapt gebruiker dat hij/zij zelf even controle terugneemt?</td>
+            </tr>
+            <tr>
+              <td>W8</td>
+              <td>Bestemming bereikt</td>
+              <td><strong>Aankomst -> één warme lange puls</strong>.</td>
+              <td>Trilmotor in handvat, demo-knop "aankomst".</td>
+              <td>Voelt dit als duidelijke afronding/succes zonder kinderachtig te zijn?</td>
+            </tr>
+            <tr>
+              <td>W9</td>
+              <td>Eerste setup</td>
+              <td><strong>Grip-kalibratie -> 10 seconden vasthouden</strong>, daarna bevestiging.</td>
+              <td>Demo-app + IMU of gesimuleerde kalibratie.</td>
+              <td>Kan gebruiker dit zelfstandig begrijpen en uitvoeren?</td>
+            </tr>
+            <tr>
+              <td>W10</td>
+              <td>Discreet gebruik</td>
+              <td><strong>Geen speaker, geen LED, geen opvallend signaal</strong>. Feedback is haptisch.</td>
+              <td>Fysieke behuizing + demo-uitleg.</td>
+              <td>Vindt gebruiker het discreet genoeg voor publieke context?</td>
+            </tr>
+            <tr>
+              <td>W11</td>
+              <td>Clip op stok</td>
+              <td><strong>Vastklikken op bestaande witte stok -> voelbare/hoorbare click</strong>.</td>
+              <td>Clipmechanisme of prototype-dummy met click-feedback.</td>
+              <td>Weet gebruiker zeker dat het handvat goed vastzit?</td>
+            </tr>
+            <tr>
+              <td>W12</td>
+              <td>Prototypevarianten</td>
+              <td><strong>Minstens twee varianten vergelijken</strong>: bijvoorbeeld zachte vs sterkere puls, of griptextuur A vs B.</td>
+              <td>Twee instellingen of twee fysieke/tactiele varianten.</td>
+              <td>Welke variant scoort beter op duidelijkheid, rust en vertrouwen?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ux" id="test">
+      <div class="section-head">
+        <h2>4. Wat moet de finale user test valideren?</h2>
+        <p>Volgens Deelopdracht 5 moet de analyse leiden tot tastbare varianten en een finale testwave. Dit zijn de concrete testvragen voor dit prototype.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <strong>Test 1 - Herkenning haptische cues</strong>
+          <p>Kan de gebruiker route-start, bocht, afwijking, fail-safe en aankomst uit elkaar houden zonder uitleg tijdens gebruik?</p>
+        </div>
+        <div class="card">
+          <strong>Test 2 - Emotioneel effect</strong>
+          <p>Voelen de cues rustig, betrouwbaar, autonoom en discreet? Of veroorzaken ze paniek, irritatie of faalgevoel?</p>
+        </div>
+        <div class="card">
+          <strong>Test 3 - Serviceflow</strong>
+          <p>Kan de gebruiker het prototype starten, kalibreren, een demo-route volgen en na afloop feedback geven?</p>
+        </div>
+        <div class="card">
+          <strong>Test 4 - Fail-safe Moment of Truth</strong>
+          <p>Is "heroriënteren" duidelijk genoeg en minder negatief dan "fout/signaal verloren"?</p>
+        </div>
+        <div class="card">
+          <strong>Test 5 - Prototypevariant</strong>
+          <p>Vergelijk minstens twee varianten, bijvoorbeeld intensiteit laag vs medium of griptextuur A vs B.</p>
+        </div>
+        <div class="card">
+          <strong>Test 6 - Actoren</strong>
+          <p>Vraag welke rol de gebruiker verwacht van trainer, partner/familie en app bij eerste gebruik.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="source" id="bron">
+      <div class="section-head">
+        <h2>5. Waar komt het vandaan?</h2>
+        <p>Dit staat apart van de implementatie, zodat de bouwlijst concreet blijft.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <strong class="code">B1 - Norman emotional design</strong>
+          <p>Visceral: eerste gevoel van grip, gewicht, textuur. Behavioral: duidelijke cues tijdens gebruik. Reflective: autonomie en waardigheid.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B2 - Gewenste/ongewenste emoties</strong>
+          <p>Gewenst: kalmte, vertrouwen, autonomie, discretie. Vermijden: paniek, infantilisering, medicaliteit, faalgevoel.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B3 - Autonomie en discretie</strong>
+          <p>Geen speaker/LED, niet bevelend formuleren, dubbele-tap override, delen alleen optioneel.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B4 - Microinteractions</strong>
+          <p>Concrete haptische patronen: M1 start, M4 bocht, M6 afwijking, M7 fail-safe, M8 aankomst.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B5 - Prototype uit Develop 2</strong>
+          <p>Handvat met LRA, IMU, hypothenar-kompasgleuf, clip op bestaande witte stok en gekoppelde demo-app.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B6 - Cognition / attention</strong>
+          <p>Geen overprikkeling, geen abrupte alarmsignalen, hysterese en rustige fail-safe.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B7 - CMF binnen UX</strong>
+          <p>Alleen relevant waar het prototypegevoel beïnvloedt: matte grip, textuur, kleur en richtingselement.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B8 - Customer journey</strong>
+          <p>Vóór gebruik: onboarding en kalibratie. Tijdens: route-events. Na gebruik: evaluatie en opladen.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B9 - Service Design</strong>
+          <p>Stakeholders en service blueprint: mobiliteitstrainer, partner/familie, app, onderhoud en value delivery.</p>
+        </div>
+        <div class="card">
+          <strong class="code">B10 - Deelopdracht 5</strong>
+          <p>UX & Service Design challenges moeten leiden tot prototypevarianten en finale user test.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Bestand: <strong>docs/develop_3.html</strong>. Scope: UX & Service Design voor het SensePath-prototype volgens Deelopdracht 5.
+  </footer>
+</body>
+</html>

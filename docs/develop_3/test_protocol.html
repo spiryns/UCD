@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>SensePath finale user test protocol</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.45;
+    font-size: 10.5pt;
+    margin: 0;
+  }
+  h1 {
+    font-size: 22pt;
+    color: #5a3a1a;
+    border-bottom: 3px solid #d4a574;
+    padding-bottom: 6px;
+    margin: 0 0 4px 0;
+  }
+  h2 {
+    font-size: 14pt;
+    color: #5a3a1a;
+    border-bottom: 1px solid #d4a574;
+    padding-bottom: 3px;
+    margin-top: 18px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 11.5pt;
+    color: #7a4a1a;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+  }
+  .subtitle {
+    color: #7a4a1a;
+    font-size: 11pt;
+    margin: 0 0 14px 0;
+  }
+  .meta {
+    background: #fdf6ec;
+    border-left: 4px solid #d4a574;
+    padding: 8px 12px;
+    margin: 10px 0 14px 0;
+    font-size: 9.5pt;
+  }
+  .meta strong { color: #5a3a1a; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 9.5pt;
+  }
+  th {
+    background: #5a3a1a;
+    color: #fdf6ec;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #e5d4b8;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fdf6ec; }
+  .scenario {
+    background: #fdf6ec;
+    border-left: 4px solid #d4a574;
+    padding: 8px 12px;
+    margin: 6px 0 8px 0;
+    page-break-inside: avoid;
+  }
+  .scenario .quote {
+    font-style: italic;
+    color: #5a3a1a;
+    margin-bottom: 4px;
+  }
+  .scenario .action {
+    color: #7a4a1a;
+    font-size: 9.5pt;
+    margin-bottom: 4px;
+  }
+  .scenario ul { margin: 4px 0 0 0; padding-left: 18px; }
+  .scenario li { margin-bottom: 2px; }
+  ul, ol { margin: 4px 0 8px 0; padding-left: 20px; }
+  li { margin-bottom: 3px; }
+  .pillrow { margin: 6px 0 10px 0; }
+  .pill {
+    display: inline-block;
+    background: #5a3a1a;
+    color: #fdf6ec;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 8.5pt;
+    margin-right: 4px;
+  }
+  .footer-note {
+    background: #f5e9d4;
+    border: 1px solid #d4a574;
+    padding: 8px 12px;
+    margin-top: 14px;
+    font-size: 9.5pt;
+  }
+  .pagebreak { page-break-before: always; }
+  .nowrap { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<h1>SensePath finale user test protocol</h1>
+<p class="subtitle">Develop 3 → variety prototyping &amp; validatie van microinteracties M1 → M9</p>
+
+<div class="meta">
+  <strong>Project:</strong> SensePath, haptische clip-on handgreep voor witte stok<br>
+  <strong>Team:</strong> Sam Piryns, Titus Impens, Han Deburchgraeve<br>
+  <strong>Methode:</strong> Wizard-of-Oz, semi-gestructureerd interview, comparatieve CMF-test<br>
+  <strong>Steekproef:</strong> minimaal 5 deelnemers (groepsgrootte + 2)<br>
+  <strong>Duur per sessie:</strong> ± 45 minuten<br>
+  <strong>Locatie:</strong> stille ruimte voor fase 1 → 3, korte buitenwandeling optioneel voor scenario-test
+</div>
+
+<h2>1. Doel van de test</h2>
+<p>Valideren of de 7 ontworpen haptische microinteracties (M1, M4, M5, M6, M7, M8, M9) door blinde en slechtziende gebruikers:</p>
+<ol>
+  <li>onderscheiden kunnen worden van elkaar (perceptie),</li>
+  <li>juist begrepen worden in hun context (cognitie),</li>
+  <li>als prettig of minstens neutraal ervaren worden (emotie),</li>
+  <li>en hoe de drie CMF-prototypevarianten van de handgreep scoren op vertrouwen, premium-gevoel en bruikbaarheid.</li>
+</ol>
+
+<h2>2. Materiaal &amp; setup</h2>
+<ul>
+  <li>3 CMF-prototypevarianten van de handgreep, allemaal voorzien van XIAO ESP32-S3 + DRV2605L + trilmotor.</li>
+  <li>Telefoon met webpagina <span class="nowrap">http://192.168.4.1</span> open, knoppen M1 → M9.</li>
+  <li>Audio-opname (toestemming gevraagd).</li>
+  <li>Notitieblad of laptop met scoringsformulier (zie bijlage achteraan).</li>
+  <li>Witte stok van de deelnemer (eigen stok wordt gebruikt voor authenticiteit).</li>
+  <li>Stille ruimte zodat trillingen voelbaar blijven zonder afleiding.</li>
+</ul>
+
+<h2>3. Mapping M → scenario</h2>
+<table>
+  <thead><tr><th style="width:8%">ID</th><th style="width:22%">Patroon</th><th>Scenario tijdens test</th></tr></thead>
+  <tbody>
+    <tr><td>M1</td><td>korte tik</td><td>Je loopt op de juiste koers, 1 tik elke 5 seconden</td></tr>
+    <tr><td>M4</td><td>scherp alarm</td><td>Obstakel op 1 m vooruit, paaltje of fietspaal</td></tr>
+    <tr><td>M5</td><td>dubbele klik</td><td>Bevestiging na actie, route gestart of bookmark gezet</td></tr>
+    <tr><td>M6</td><td>alarm afwijking</td><td>Je loopt 30° van koers, GPS-correctie nodig</td></tr>
+    <tr><td>M7</td><td>ramp up</td><td>Bestemming nadert, laatste 10 m</td></tr>
+    <tr><td>M8</td><td>zachte pulse</td><td>Lage batterij of niet-urgente notificatie</td></tr>
+    <tr><td>M9</td><td>ritmische tik</td><td>Richting aanwijzen, bv. naar links draaien</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Fase 0 → Intro (5 min)</h2>
+<ul>
+  <li>Stel jezelf voor en leg het doel uit: <em>"We testen of je de trillingen die deze handgreep geeft kan onderscheiden en begrijpen. Er zijn geen foute antwoorden, we testen het ontwerp, niet jou."</em></li>
+  <li>Vraag toestemming voor opname.</li>
+  <li>Korte uitleg SensePath in 2 zinnen, clip op witte stok die haptische navigatie geeft.</li>
+  <li>Demografische intake-vragen:
+    <ol>
+      <li>Hoe lang gebruik je al een witte stok?</li>
+      <li>Gebruik je nu navigatiehulp zoals BlindSquare, Soundscape of Lazarillo? Hoe?</li>
+      <li>Wat irriteert je het meest aan je huidige navigatie-oplossing?</li>
+    </ol>
+  </li>
+</ul>
+
+<h2>5. Fase 1 → Blind perception test (10 min)</h2>
+<p><strong>Doel:</strong> kan de deelnemer de patronen onderscheiden zonder context?</p>
+<ol>
+  <li>Geef de handgreep, laat hem of haar comfortabel vasthouden.</li>
+  <li>Speel <strong>elk patroon 1 keer in willekeurige volgorde</strong>, met 5 seconden stilte ertussen.</li>
+  <li>Per patroon vragen:
+    <ul>
+      <li>"Wat voel je? Beschrijf in eigen woorden."</li>
+      <li>"Op een schaal van 1 tot 7, hoe duidelijk voelde dat?" (1 = vaag, 7 = heel scherp)</li>
+      <li>"Is dit prettig, neutraal of vervelend?" (valence-check, Russell's Model of Affect)</li>
+    </ul>
+  </li>
+  <li>Speel <strong>elk patroon nogmaals 1 keer</strong> in andere volgorde:
+    <ul>
+      <li>"Voelde dit als hetzelfde patroon dat ik eerder speelde, of een ander?"</li>
+      <li><strong>Doel:</strong> test discriminatie, kan de gebruiker M1 van M9 onderscheiden, M4 van M6, enz.</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="pagebreak"></div>
+
+<h2>6. Fase 2 → Scenario test (20 min)</h2>
+<p><strong>Doel:</strong> begrijpt de deelnemer het patroon <em>in context</em>?</p>
+
+<h3>Scenario A → M1 koers oké</h3>
+<div class="scenario">
+  <div class="quote">"Je loopt op straat richting de bakker. Het systeem heeft je route ingesteld."</div>
+  <div class="action">Speel M1 → wacht 5 s → speel M1 → wacht 5 s → speel M1.</div>
+  <ul>
+    <li>"Wat denk je dat dit betekent?"</li>
+    <li>"Hoe vaak vind je dit prettig? Te vaak, te weinig, of juist?" (frequentie-check)</li>
+    <li><strong>Alternatief testen:</strong> vraag of constante stilte zonder M1 ook ok zou zijn (silence-as-default principe).</li>
+  </ul>
+</div>
+
+<h3>Scenario B → M4 obstakel</h3>
+<div class="scenario">
+  <div class="quote">"Je loopt verder. Plots detecteert SensePath een fietspaaltje 1 meter recht voor je."</div>
+  <div class="action">Speel M4.</div>
+  <ul>
+    <li>"Wat doe je nu?"</li>
+    <li>"Voelde dit urgent genoeg? Te zacht, te hard, of juist?"</li>
+    <li>"Zou je dit verwarren met M1 of M6? Waarom wel of niet?"</li>
+  </ul>
+</div>
+
+<h3>Scenario C → M5 bevestiging</h3>
+<div class="scenario">
+  <div class="quote">"Je tikt op de knop op de handgreep om een bookmark te zetten van deze locatie."</div>
+  <div class="action">Speel M5.</div>
+  <ul>
+    <li>"Wat denk je dat het systeem nu net deed?"</li>
+    <li>"Voelt dit als een bevestiging of als iets anders?"</li>
+  </ul>
+</div>
+
+<h3>Scenario D → M6 afwijking</h3>
+<div class="scenario">
+  <div class="quote">"Je loopt 30 graden naast je geplande route, GPS heeft dit net gedetecteerd."</div>
+  <div class="action">Speel M6.</div>
+  <ul>
+    <li>"Wat denk je dat dit betekent?"</li>
+    <li>"Hoe verschilt dit van het paaltje-alarm M4?"</li>
+    <li><strong>Critical test:</strong> noteer of deelnemer M4 en M6 verwart, dit zou een groot designprobleem zijn.</li>
+  </ul>
+</div>
+
+<h3>Scenario E → M7 ramp up bestemming</h3>
+<div class="scenario">
+  <div class="quote">"Je bent bijna bij de bakker, nog 10 meter."</div>
+  <div class="action">Speel M7.</div>
+  <ul>
+    <li>"Wat communiceert dit?"</li>
+    <li>"Voelt dit als iets dat <em>aankomt</em> of iets dat <em>vertrekt</em>?"</li>
+  </ul>
+</div>
+
+<h3>Scenario F → M8 zachte pulse</h3>
+<div class="scenario">
+  <div class="quote">"Je krijgt een melding. Niet urgent, gewoon ter info."</div>
+  <div class="action">Speel M8.</div>
+  <ul>
+    <li>"Stoort dit je tijdens het lopen?"</li>
+    <li>"Welk soort melding past hierbij volgens jou?"</li>
+  </ul>
+</div>
+
+<h3>Scenario G → M9 richting</h3>
+<div class="scenario">
+  <div class="quote">"Op de volgende kruising moet je linksaf."</div>
+  <div class="action">Speel M9.</div>
+  <ul>
+    <li>"Welke kant moet je op volgens dit patroon?"</li>
+    <li>"Hoe zou een 'rechts'-patroon volgens jou moeten voelen?"</li>
+  </ul>
+</div>
+
+<h2>7. Fase 3 → Comparatieve vragen (5 min)</h2>
+<ul>
+  <li>"Welke 2 patronen lijken voor jou het meest op elkaar?" (verwarringspaar)</li>
+  <li>"Welk patroon vond je het minst prettig om te voelen?"</li>
+  <li>"Welk patroon was meteen duidelijk in betekenis, zonder uitleg?"</li>
+  <li>"Als je 1 patroon mocht weghalen, welk?"</li>
+  <li>"Mis je een trilling voor een situatie die we niet getest hebben?"</li>
+</ul>
+
+<h2>8. Fase 4 → CMF &amp; handgreep (5 min)</h2>
+<p>Met 3 CMF-varianten van de handgreep:</p>
+<ul>
+  <li>Laat de 3 handgrepen voelen zonder zien (bij ziende deelnemers blinddoek of achter de rug).</li>
+  <li>"Welke voelt het meest <em>vertrouwd</em>? Welke <em>premium</em>? Welke <em>robuust</em>?"</li>
+  <li>"Welke zou je willen meenemen op straat?"</li>
+  <li>Vraag naar gewicht, grip, temperatuur, materiaalvoorkeur.</li>
+</ul>
+
+<div class="pagebreak"></div>
+
+<h2>9. Scoringsformulier per deelnemer</h2>
+
+<h3>9.1 Profiel</h3>
+<table>
+  <tbody>
+    <tr><td style="width:35%"><strong>Naam / code</strong></td><td></td></tr>
+    <tr><td><strong>Leeftijd</strong></td><td></td></tr>
+    <tr><td><strong>Jaren stok-gebruik</strong></td><td></td></tr>
+    <tr><td><strong>Huidige navigatiehulp</strong></td><td></td></tr>
+    <tr><td><strong>Grootste irritatie nu</strong></td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>9.2 Perceptie per microinteractie</h3>
+<table>
+  <thead>
+    <tr><th>ID</th><th>Eigen beschrijving</th><th>Duidelijkheid 1-7</th><th>Valence +/0/-</th><th>Discriminatie OK?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>M1</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>M4</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>M5</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>M6</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>M7</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>M8</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>M9</td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>9.3 Scenario-begrip</h3>
+<table>
+  <thead><tr><th>Scenario</th><th>Begrip juist / verkeerd / twijfel</th><th>Quote of opmerking</th></tr></thead>
+  <tbody>
+    <tr><td>A → M1</td><td></td><td></td></tr>
+    <tr><td>B → M4</td><td></td><td></td></tr>
+    <tr><td>C → M5</td><td></td><td></td></tr>
+    <tr><td>D → M6</td><td></td><td></td></tr>
+    <tr><td>E → M7</td><td></td><td></td></tr>
+    <tr><td>F → M8</td><td></td><td></td></tr>
+    <tr><td>G → M9</td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>9.4 CMF-keuze</h3>
+<table>
+  <tbody>
+    <tr><td style="width:35%"><strong>Vertrouwd</strong></td><td>variant ___ omdat …</td></tr>
+    <tr><td><strong>Premium</strong></td><td>variant ___ omdat …</td></tr>
+    <tr><td><strong>Robuust</strong></td><td>variant ___ omdat …</td></tr>
+    <tr><td><strong>Voorkeur straatgebruik</strong></td><td>variant ___ omdat …</td></tr>
+  </tbody>
+</table>
+
+<h3>9.5 Critical incidents</h3>
+<table>
+  <tbody>
+    <tr><td style="height:80px">Spontane uitspraken, frustraties, "aha"-momenten:</td></tr>
+  </tbody>
+</table>
+
+<h2>10. Analyse achteraf</h2>
+<ul>
+  <li><strong>Discriminatie-matrix:</strong> M × M tabel waarin per cel het aantal verwisselingen staat. M4 vs M6 minder dan 1 verwisseling = goed.</li>
+  <li><strong>Begrip-score per M:</strong> percentage deelnemers dat het scenario juist interpreteerde.</li>
+  <li><strong>Valence-gemiddelde per M.</strong></li>
+  <li><strong>Verbatim quotes</strong> per microinteractie als illustratie in het rapport.</li>
+  <li><strong>Conclusie:</strong> welke M's blijven, welke moeten herontworpen, welke verdwijnen.</li>
+</ul>
+
+<div class="footer-note">
+  <strong>Wizard-of-Oz tip:</strong> houd je telefoon uit het zicht (in zak of achter rug) zodat de deelnemer niet ziet dat jij de trillingen triggert. Oefen vooraf welke knop welk patroon is. Houd 5 seconden pauze tussen elk patroon om habituatie te vermijden.
+</div>
+
+</body>
+</html>

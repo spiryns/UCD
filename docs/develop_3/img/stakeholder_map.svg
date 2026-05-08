@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+  <style>
+    .ring-band { stroke: white; stroke-width: 2; }
+    .ring-label { font-weight: 700; fill: white; letter-spacing: 0.03em; text-anchor: middle; }
+    .ring-label-lg { font-size: 14px; }
+    .ring-label-sm { font-size: 12px; }
+    .actor-pill rect { fill: white; stroke-width: 1.4; }
+    .actor-pill text { font-size: 10.5px; font-weight: 600; fill: #1a1a1a; text-anchor: middle; dominant-baseline: middle; }
+    .center-label { font-size: 13px; font-weight: 700; fill: white; text-anchor: middle; }
+    .center-sublabel { font-size: 10px; fill: rgba(255,255,255,0.85); text-anchor: middle; }
+  </style>
+
+  <circle cx="300" cy="300" r="295" fill="#5b6471" class="ring-band"/>
+  <circle cx="300" cy="300" r="240" fill="#a0621f" class="ring-band"/>
+  <circle cx="300" cy="300" r="180" fill="#c9a227" class="ring-band"/>
+  <circle cx="300" cy="300" r="115" fill="#3d8db8" class="ring-band"/>
+  <circle cx="300" cy="300" r="55"  fill="#2a5d7c" class="ring-band"/>
+
+  <text x="300" y="24"  class="ring-label ring-label-lg">Platform</text>
+  <text x="300" y="80"  class="ring-label ring-label-lg">Institutioneel</text>
+  <text x="300" y="140" class="ring-label ring-label-lg">Infrastructuur</text>
+  <text x="300" y="205" class="ring-label ring-label-sm">Co-actoren</text>
+
+  <text x="300" y="293" class="center-label">Blinde of</text>
+  <text x="300" y="310" class="center-label">slechtziende</text>
+  <text x="300" y="327" class="center-sublabel">stokgebruiker</text>
+
+  <g class="actor-pill" transform="translate(379.9, 270.9)">
+    <rect x="-22" y="-12" width="44" height="24" rx="12" stroke="#3d8db8"/>
+    <text x="0" y="1">Peers</text>
+  </g>
+  <g class="actor-pill" transform="translate(314.8, 383.7)">
+    <rect x="-60" y="-12" width="120" height="24" rx="12" stroke="#3d8db8"/>
+    <text x="0" y="1">Mobiliteitstrainer</text>
+  </g>
+  <g class="actor-pill" transform="translate(234.9, 354.6)">
+    <rect x="-28" y="-12" width="56" height="24" rx="12" stroke="#3d8db8"/>
+    <text x="0" y="1">Familie</text>
+  </g>
+
+  <g class="actor-pill" transform="translate(413, 205.2)">
+    <rect x="-25" y="-12" width="50" height="24" rx="12" stroke="#c9a227"/>
+    <text x="0" y="1">Beheer</text>
+  </g>
+  <g class="actor-pill" transform="translate(338.2, 442.5)">
+    <rect x="-52" y="-12" width="104" height="24" rx="12" stroke="#c9a227"/>
+    <text x="0" y="1">Licht en Liefde</text>
+  </g>
+  <g class="actor-pill" transform="translate(172.3, 226.25)">
+    <rect x="-28" y="-12" width="56" height="24" rx="12" stroke="#c9a227"/>
+    <text x="0" y="1">Vervoer</text>
+  </g>
+
+  <g class="actor-pill" transform="translate(405, 481.9)">
+    <rect x="-36" y="-12" width="72" height="24" rx="12" stroke="#a0621f"/>
+    <text x="0" y="1">Brailleliga</text>
+  </g>
+  <g class="actor-pill" transform="translate(245.6, 502.9)">
+    <rect x="-38" y="-12" width="76" height="24" rx="12" stroke="#a0621f"/>
+    <text x="0" y="1">Revalidatie</text>
+  </g>
+  <g class="actor-pill" transform="translate(211.2, 109.7)">
+    <rect x="-36" y="-12" width="72" height="24" rx="12" stroke="#a0621f"/>
+    <text x="0" y="1">Mutualiteit</text>
+  </g>
+
+  <g class="actor-pill" transform="translate(472, 505)">
+    <rect x="-28" y="-12" width="56" height="24" rx="12" stroke="#5b6471"/>
+    <text x="0" y="1">Mapping</text>
+  </g>
+  <g class="actor-pill" transform="translate(146.6, 519.2)">
+    <rect x="-30" y="-12" width="60" height="24" rx="12" stroke="#5b6471"/>
+    <text x="0" y="1">Firmware</text>
+  </g>
+  <g class="actor-pill" transform="translate(166.25, 68.4)">
+    <rect x="-32" y="-12" width="64" height="24" rx="12" stroke="#5b6471"/>
+    <text x="0" y="1">Productie</text>
+  </g>
+</svg>
