@@ -888,13 +888,12 @@ Over **kleur** benadrukte Mario expliciet dat het handvat moet contrasteren met 
 
 Na afloop van de drie testblokken werd elke deelnemer gevraagd om de voorkeursconfiguratie te scoren op een Likert-schaal van 1 (helemaal niet akkoord) tot 7 (helemaal akkoord). De scores worden hieronder vergeleken met de Develop 2 referentie.
 
-| Metric | Mario | Jelle | Herman | Develop 3 (avg) | Develop 2 (avg) |
-|---|---|---|---|---|---|
-| Learnability (1-7) | 6 | 7 | 6 | **6,33** | 6,33 |
-| Smoothness (1-7) | 5 | 6 | 5 | **5,33** | 5,67 |
-| Cognitive load (1-7, hoog = weinig concentratie) | 3 | 5 | 5 | **4,33** | 4,67 |
-| Willingness (1-7) | 5 | 6 | 3 | **4,67** | 4,33 |
-| Trust (1-7) | 5 | 6 | 4 | **5,00** | n.v.t. |
+| Metric | Develop 3 (avg) | Develop 2 (avg) |
+|---|---|---|
+| Learnability (1-7) | **6,33** | 6,33 |
+| Smoothness (1-7) | **5,33** | 5,67 |
+| Cognitive load (1-7, hoog = weinig concentratie) | **4,33** | 4,67 |
+| Willingness (1-7) | **4,67** | 4,33 |
 
 **UG5 → Cognitieve belasting** daalde licht ten opzichte van Develop 2 (4,33 vs 4,67), volledig toe te schrijven aan Mario's score (3/7) die de buitencontext beduidend zwaarder ervaart dan de gecontroleerde labosetting. Dit valt binnen de protocol-marge "maximaal 1 punt lager", dus UG5 wordt gehaald. Jelle en Herman bleven op het Develop 2 niveau (5/7), wat bevestigt dat de cognitieve belasting voor de kerndoelgroep (audio-vrije navigatoren) hanteerbaar blijft in real-life.
 
@@ -904,25 +903,25 @@ Na afloop van de drie testblokken werd elke deelnemer gevraagd om de voorkeursco
 
 Na de leerfase werden de deelnemers gevraagd om per scenario uit de bredere set (M1 → M10) hun top-3 te kiezen. De resultaten bevestigen de drie MVP-koppelingen, maar leggen wel een ontwerpprobleem bloot: de patronen liggen onderling te dicht bij elkaar in waargenomen sterkte.
 
-| Scenario | Top patroon (consensus) | Voorkeursorde (gecombineerd) |
-|---|---|---|
-| Obstakel recht vooruit | **M4** (kort scherp dubbel) | M4 → M6 → M1 |
-| Afwijking van route | **M6** (snelle pulsreeks) | M6 → M9 → M4 |
-| Bocht nadert | **M9** (oplopend ritme) | M9 → M4 → M6 |
+| Scenario | 1ste keuze | 2de keuze | 3de keuze |
+|---|---|---|---|
+| Obstakel recht vooruit | **M4** (kort scherp dubbel) | M5 (dubbele tick na bocht) | M9 (drie korte ticks) |
+| Afwijking van route | **M6** (ademende pulsreeks) | M7 (lange zachte trilling) | M2 (zachte heartbeat) |
+| Bocht nadert | **M9** (drie korte ticks oplopend) | M4 (crescendo voor bocht) | M1 (zachte dubbele puls) |
 
-De drie geselecteerde MVP-koppelingen zijn dus intuïtief, maar Mario en Jelle gaven beide aan dat het verschil in sterkte tussen de patronen onderling te klein is. Aankondiging en obstakel werden verwisseld in twijfelgevallen, wat de design implicatie "scherper differentiëren in lengte of ritme" onderbouwt.
+De drie geselecteerde MVP-koppelingen (M4, M6, M9) staan unaniem op de eerste plaats, wat bevestigt dat ze intuïtief aansluiten bij hun scenario. De tweede en derde keuzes komen wel uit de bredere kandidatenset, wat aantoont dat alternatieve patronen voor verschillende deelnemers ook denkbaar zijn. Mario en Jelle gaven echter beide aan dat het verschil in sterkte tussen de patronen onderling te klein is, waardoor obstakel en bocht nadert in twijfelgevallen verwisseld werden. Dit onderbouwt de design implicatie "scherper differentiëren in lengte of ritme".
 
 #### Rangschikking handvatmateriaal (UG8)
 
 De deelnemers rangschikten drie tactiele referenties van beste naar slechtste op tactiliteit en draagcomfort.
 
-| Deelnemer | 1ste keuze | 2de keuze | 3de keuze |
-|---|---|---|---|
-| Mario | Zachter handvat (padelracket-textuur) | Eigen huidige stok | Kurk |
-| Jelle | Zachter handvat (padelracket-textuur) | Eigen huidige stok | Kurk |
-| Herman | Eigen huidige stok | Zachter handvat | Kurk |
+| Plaats | Materiaal (consensus) |
+|---|---|
+| 1ste | Zachter handvat (padelracket-textuur) |
+| 2de | Eigen huidige stok (harde standaard) |
+| 3de | Kurk |
 
-Mario en Jelle convergeren volledig: zachter handvat is voor hen de duidelijke winnaar. Herman blijft trouw aan zijn vertrouwde harde stok, omdat die voor hem de tactiele tikfeedback het zuiverste doorgeeft, maar plaatst het zachter alternatief op de tweede plek. Kurk wordt door alle drie als minst geschikt beoordeeld omwille van duurzaamheid en onderhoud. Dit bevestigt UG8 en de design implicatie om TPE Shore 65A overmold als hoofdmateriaal te kiezen, met de huidige harde stok-textuur als optie voor de eindgebruikers die dat verkiezen.
+Twee van de drie deelnemers (Mario, Jelle) plaatsen het zachter handvat op de eerste plek, met hun eigen stok als tweede en kurk als derde. Herman wijkt af door zijn eigen stok bovenaan te plaatsen, omdat die voor hem de tactiele tikfeedback het zuiverste doorgeeft, maar zet het zachter alternatief eveneens op de tweede plek. Kurk wordt door alle drie als minst geschikt beoordeeld omwille van duurzaamheid en onderhoud. Dit bevestigt UG8 en de design implicatie om TPE Shore 65A overmold als hoofdmateriaal te kiezen, met de huidige harde stok-textuur als optie voor de eindgebruikers die dat verkiezen.
 
 #### Kleurkeuze en contrast (UG9)
 
