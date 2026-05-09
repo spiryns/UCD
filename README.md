@@ -789,7 +789,7 @@ Ten vijfde verdient **Herman's lage willingness-score (2/7)** een aparte kanttek
 
 Develop 3 is de laatste iteratieve fase van het project en bouwt voort op de ergonomische winst uit Develop 2 (versmalde gleuf, voorkeurshoogte van het kompas, sferisch contactoppervlak). Waar Develop 1 de kerninteractie valideerde en Develop 2 de fysieke ergonomie aanscherpte, focust Develop 3 op drie complementaire lagen: de **emotionele en service-laag (UX)**, een **CMF-deepdive** per onderdeel, en een **finale validatie in real-life context** in plaats van de gecontroleerde labosetting van Develop 2.
 
-📄 [Develop 3 — UX & Service Design (uitgebreid document)](docs/develop_3.md)
+📄 [Develop 3 → UX & Service Design (uitgebreid document)](docs/develop_3.md)
 
 ### UX & Service Design Challenges
 
@@ -874,7 +874,7 @@ De volledige set van negen kandidaat-patronen die in de leerfase werd verkend (M
 
 **Mario** (52, blind sinds 30 jaar). De eerste obstakel-puls werd te kort en te zwak gevoeld om duidelijk op te merken; aankondiging en obstakel werden meermaals verward. Mario verwoordt expliciet de behoefte aan een richtingsindicatie in het patroon zelf: *"Ik ben er nog altijd niet mee akkoord dat je in je pulsen niet aangeeft welke kant je uit moet."* De aankondiging hoeft volgens hem maar twee stappen voor de bocht te komen. De buitencontext is merkbaar zwaarder qua concentratie dan de Develop 2 binnen-test.
 
-**Jelle** (22, blind van geboorte). Bevestigt dat de versmalde gleuf werkt: *"Op deze hoogte heb ik duidelijker contact."* Voor hem zou het contactelement nog 1 mm hoger mogen. Aankondiging op ± 2 meter vooraf is voldoende. Hij heeft geen behoefte aan apart links/rechts in het patroon — het kompas volstaat. De terugkoppel-logica (terugdraaien naar midden = je staat juist) was niet meteen intuïtief, maar oplosbaar via uitleg. Cognitieve belasting buiten viel hem mee. Hij vraagt expliciet om een audio-fallback voor wanneer haptiek vastloopt.
+**Jelle** (22, blind van geboorte). Bevestigt dat de versmalde gleuf werkt: *"Op deze hoogte heb ik duidelijker contact."* Voor hem zou het contactelement nog 1 mm hoger mogen. Aankondiging op ± 2 meter vooraf is voldoende. Hij heeft geen behoefte aan apart links/rechts in het patroon, het kompas volstaat voor hem. De terugkoppel-logica (terugdraaien naar midden = je staat juist) was niet meteen intuïtief, maar oplosbaar via uitleg. Cognitieve belasting buiten viel hem mee. Hij vraagt expliciet om een audio-fallback voor wanneer haptiek vastloopt.
 
 **Herman** (65, blind sinds 18 jaar). Het contactelement is volgens hem te klein, met name in winteromstandigheden met handschoenen. Bij langere wandelingen (één uur en meer) maakt hij zich zorgen over tactiele vermoeidheid en aandachtsverlies in de hand. Hij wenst een aankondigingsafstand rond ± 50 m, zoals zijn huidige GPS, en wil de richting al in het patroon zelf herkennen.
 
@@ -906,20 +906,20 @@ De **stok zelf** volgt de standaard ISO 9999:2016 (code 12 39 03 Tactile sticks)
 
 **UX**
 
-- **Aankondiging vs obstakel scherper differentiëren** in lengte of ritme — Mario's verwarring is een early warning die in een drukke straatcontext zal breken.
+- **Aankondiging vs obstakel scherper differentiëren** in lengte of ritme. Mario's verwarring is een early warning die in een drukke straatcontext zal breken.
 - **Richtingsinformatie (links/rechts) in het trilpatroon zelf** integreren als default, mét mogelijkheid om dit via app uit te schakelen voor power-users zoals Jelle die het kompas voldoende vinden.
-- **Aankondigingsafstand parametriseren** in software — de spread tussen 2 stappen (Mario), 2 meter (Jelle) en 50 meter (Herman) toont dat één universele default onhaalbaar is.
+- **Aankondigingsafstand parametriseren** in software. De spread tussen 2 stappen (Mario), 2 meter (Jelle) en 50 meter (Herman) toont dat één universele default onhaalbaar is.
 - **Stille default**: het systeem mag niet ingrijpen bij elke micro-correctie, alleen bij echte gebeurtenissen. Dit is consistent met het *kalmte*-principe uit het UX-document.
-- **Onboarding-flow** als verplicht productonderdeel — alle drie de testers benoemden onafhankelijk dat de kompas-terugkoppellogica niet self-evident is bij eerste gebruik. Korte training via Licht en Liefde of via app is noodzakelijk.
+- **Onboarding-flow** als verplicht productonderdeel. Alle drie de testers benoemden onafhankelijk dat de kompas-terugkoppellogica niet self-evident is bij eerste gebruik. Korte training via Licht en Liefde of via app is noodzakelijk.
 - **Audio-fallback** via gekoppelde app voor situaties waar haptiek vastloopt of bij overgang naar onbekende contexten (Jelle's expliciete vraag).
 
 **CMF**
 
-- **Zachter handvatmateriaal** (TPE Shore 65A overmold) als hoofdkeuze — afwijken van het standaard harde stokhandvat is gerechtvaardigd door unanieme positieve reactie op de padelracket-referentie.
-- **Kurk hoogstens als grip-accent**, niet als hoofdmateriaal — duurzaamheid in weer en straatgebruik weegt zwaarder dan tactiele appeal.
+- **Zachter handvatmateriaal** (TPE Shore 65A overmold) als hoofdkeuze. Afwijken van het standaard harde stokhandvat is gerechtvaardigd door de unanieme positieve reactie op de padelracket-referentie.
+- **Kurk hoogstens als grip-accent**, niet als hoofdmateriaal. Duurzaamheid in weer en straatgebruik weegt zwaarder dan tactiele appeal.
 - **Kleurregel**: contrasterend met de witte stok (zwart of rood handvat). Wit uitgesloten wegens vuilgevoeligheid en gebrek aan contrast.
 - **De stok blijft wit** conform wettelijke vereisten in de meeste landen (ISO 9999, nationale verkeerswetten).
-- **Vervangbare pin** is randvoorwaarde, niet een latere optimalisatie — Herman's winter-zorg combineert met Jelle's millimeter-finetuning tot één gedeelde noodzaak.
+- **Vervangbare pin** is randvoorwaarde, niet een latere optimalisatie. Herman's winter-zorg combineert met Jelle's millimeter-finetuning tot één gedeelde noodzaak.
 
 ### Develop 3 conclusies
 
@@ -927,7 +927,7 @@ De **stok zelf** volgt de standaard ISO 9999:2016 (code 12 39 03 Tactile sticks)
 - **De drie trilpatronen zijn principieel onderscheidbaar** maar de ruimte tussen aankondiging en obstakel is op de grens en moet aangescherpt worden voor de eindversie.
 - **Twee van de drie testers willen richtingsinformatie in het patroon zelf** → de Develop 1 hypothese dat het kompas alleen volstaat is door de meerderheid weerlegd.
 - **De optimale aankondigingsafstand bestaat niet als universele waarde** → personalisering via settings is geen luxe-extra maar een design requirement.
-- **Real-life cognitieve belasting blijft hanteerbaar** voor de kerndoelgroep (audio-vrije navigatoren) — de Develop 2 winst houdt stand in een complexere context.
+- **Real-life cognitieve belasting blijft hanteerbaar** voor de kerndoelgroep (audio-vrije navigatoren), de Develop 2 winst houdt stand in een complexere context.
 - **Zachter handvatmateriaal wint unaniem** → Develop 3 levert een eenduidige CMF-richting op voor het overmold (TPE Shore 65A), de grip-textuur (fijne radiale ribbels), de buttons (POM + TPE) en de pin-tip (TPE op aluminium).
 - **Kleur-keuze volgt een regel, geen voorkeur**: contrast met de witte stok is leidend (zwart of rood), niet esthetiek.
 - **Vervangbare pin** is noodzakelijk om winterse handschoen-condities te dekken en individuele tactiele drempels te accommoderen.
@@ -987,13 +987,13 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 
 | Document | Link |
 |---|---|
-| Develop 1 — Rapport | [Report_SensePath_Develop_1.pdf](reports%20and%20protocols/Report_SensePath_Devolop_1.pdf) |
-| Develop 1 — Protocol | [protocol_sensepath_develop1.docx](reports%20and%20protocols/protocol_sensepath_develop1.docx) |
-| Develop 2 — Protocol | [protocol_sensepath_develop2_PDF.pdf](reports%20and%20protocols/protocol_sensepath_develop2_PDF.pdf) |
-| Develop 2 — Rapport | [Rapport_Dev2_PDF.pdf](reports%20and%20protocols/Rapport_Dev2_PDF.pdf) |
-| Develop 3 — Protocol | [protocol_sensepath_develop3_PDF.pdf](reports%20and%20protocols/protocol_sensepath_develop3_PDF.pdf) |
-| Develop 3 — Rapport | [rapport_sensepath_develop3.pdf](reports%20and%20protocols/rapport_sensepath_develop3.pdf) |
-| Develop 3 — UX & Service Design uitwerking | [develop_3.md](docs/develop_3.md) |
+| Develop 1 → Rapport | [Report_SensePath_Develop_1.pdf](reports%20and%20protocols/Report_SensePath_Devolop_1.pdf) |
+| Develop 1 → Protocol | [protocol_sensepath_develop1.docx](reports%20and%20protocols/protocol_sensepath_develop1.docx) |
+| Develop 2 → Protocol | [protocol_sensepath_develop2_PDF.pdf](reports%20and%20protocols/protocol_sensepath_develop2_PDF.pdf) |
+| Develop 2 → Rapport | [Rapport_Dev2_PDF.pdf](reports%20and%20protocols/Rapport_Dev2_PDF.pdf) |
+| Develop 3 → Protocol | [protocol_sensepath_develop3_PDF.pdf](reports%20and%20protocols/protocol_sensepath_develop3_PDF.pdf) |
+| Develop 3 → Rapport | [rapport_sensepath_develop3.pdf](reports%20and%20protocols/rapport_sensepath_develop3.pdf) |
+| Develop 3 → UX & Service Design uitwerking | [develop_3.md](docs/develop_3.md) |
 
 ### Overige documenten
 
