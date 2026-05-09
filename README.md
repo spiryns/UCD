@@ -797,9 +797,9 @@ De UX-laag van Develop 3 is theoretisch onderbouwd in een afzonderlijk document 
 
 | Visualisatie | Doel | Centraal inzicht |
 |---|---|---|
-| **Stakeholder map** ([HTML](docs/develop_3/stakeholder_map.html) · [PNG](docs/develop_3/img/stakeholder_map.png)) | Vijf concentrische ringen, van kerngebruiker tot platform-actoren | Ring 3-4 (infrastructuur + institutioneel) levert ~40 % van de value delivery maar heeft nul fysiek contact met de gebruiker. De service moet werken zonder dat de gebruiker die backstage-actoren ooit ontmoet. |
-| **Customer Journey Map** ([HTML](docs/develop_3/customer_journey.html) · [PNG](docs/develop_3/img/customer_journey.png)) | Vijf fases (oriëntatie, onboarding, eerste gebruik, routine, hergebruik) × vier rijen (touchpoints, acties, emotie-curve, pains/opportunities) | Drie expliciete Moments of Truth: eerste 30 s na unboxing (visceral), eerste fail-safe in publiek (reflective), eerste zelfstandige routeafsluiting zonder hulp (autonomie). |
-| **Service Blueprint** ([HTML](docs/develop_3/service_blueprint.html) · [PNG](docs/develop_3/img/service_blueprint.png)) | Vijf rijen × vier fases met expliciete *line of interaction*, *line of visibility* en *line of internal interaction* | Indoor wayfinding kan niet zonder gebouwbeheerder-POI-data (B2G-afhankelijkheid), schaalbare onboarding hangt af van een mobiliteitstrainer-netwerk, en lange-termijn vertrouwen wordt bepaald door invisible firmware- en mapping-updates. |
+| **Stakeholder map** ([PNG](docs/develop_3/img/stakeholder_map.png)) | Vijf concentrische ringen, van kerngebruiker tot platform-actoren | Ring 3-4 (infrastructuur + institutioneel) levert ~40 % van de value delivery maar heeft nul fysiek contact met de gebruiker. De service moet werken zonder dat de gebruiker die backstage-actoren ooit ontmoet. |
+| **Customer Journey Map** ([PNG](docs/develop_3/img/customer_journey.png)) | Vijf fases (oriëntatie, onboarding, eerste gebruik, routine, hergebruik) × vier rijen (touchpoints, acties, emotie-curve, pains/opportunities) | Drie expliciete Moments of Truth: eerste 30 s na unboxing (visceral), eerste fail-safe in publiek (reflective), eerste zelfstandige routeafsluiting zonder hulp (autonomie). |
+| **Service Blueprint** ([PNG](docs/develop_3/img/service_blueprint.png)) | Vijf rijen × vier fases met expliciete *line of interaction*, *line of visibility* en *line of internal interaction* | Indoor wayfinding kan niet zonder gebouwbeheerder-POI-data (B2G-afhankelijkheid), schaalbare onboarding hangt af van een mobiliteitstrainer-netwerk, en lange-termijn vertrouwen wordt bepaald door invisible firmware- en mapping-updates. |
 
 <p align="center">
   <img src="docs/develop_3/img/stakeholder_map.png" alt="Stakeholder map SensePath" width="80%"/>
@@ -849,15 +849,15 @@ De test combineert drie opeenvolgende blokken in één sessie van ± 75 minuten 
   <br/><em>Geïntegreerde XIAO ESP32-S3 + DRV2605L + LRA in het handvat.</em>
 </p>
 
-**Trilpatronen.** Drie patronen werden via één trilmotor aangestuurd, met patroonnummers uit de DRV2605L effect library:
+**Trilpatronen.** Het uitgebreide microinteractie-overzicht in [docs/develop_3.md](docs/develop_3.md) documenteert tien kandidaat-momenten (M1 → M10) verspreid over de hele user journey (route gestart, koers oké, bocht nadert, bocht correct genomen, afwijking, fail-safe, bestemming bereikt, batterij low, clip-bevestiging). Voor de Develop 3 user-test werden de **drie meest kritieke MVP-signalen** geselecteerd, omdat zij de kern van de navigatie-interactie dragen:
 
-| ID | Functie | Effect | Pulslogica |
-|---|---|---|---|
-| Aankondiging afslag | Voorbereidend signaal "binnenkort van richting veranderen" | Buzz 1 (#47) | Eén langere trilling |
-| Obstakel-alarm | Stop, er staat iets recht voor je | Strong Click (#12) | Twee korte trillingen na elkaar |
-| Route-afwijking | Je loopt uit je geplande koers | Strong Buzz (#14) | Drie snelle trillingen achter elkaar |
+| MVP-signaal | Scenario | Pulslogica getest |
+|---|---|---|
+| **M4** | Obstakel recht vooruit | Twee korte scherpe trillingen na elkaar (Strong Click #12) |
+| **M6** | Route-afwijking, je loopt uit je geplande koers | Drie snelle trillingen achter elkaar (Strong Buzz #14) |
+| **M9** | Bocht nadert, voorbereidend signaal | Eén langere oplopende trilling (Buzz 1 #47) |
 
-De volledige set van negen kandidaat-patronen die in de leerfase werd verkend (M1 → M9, met onder meer Soft Bump, Double Click, Triple Click en Transition Ramp variantes) is gedocumenteerd in [docs/develop_3/microinteractions.html](docs/develop_3/microinteractions.html).
+Tijdens de leerfase kregen de deelnemers ook een aantal alternatieve patronen uit de bredere set te voelen (Soft Bump, Double Click, Triple Click, Transition Ramp variantes). Vervolgens werd hen gevraagd om per scenario een voorkeurspatroon te kiezen, om te valideren of de drie MVP-koppelingen voor blinde gebruikers ook intuïtief zijn (zie UG7 onder Resultaten).
 
 **Wizard-of-Oz aansturing via telefoon.** Een eenvoudige webpagina op de telefoon van de testleider biedt knoppen om elk patroon real-time te triggeren. De deelnemer ziet of hoort de telefoon niet en interpreteert de trilling als systeem-output, wat de illusie van een werkend GPS-systeem creëert.
 
@@ -884,9 +884,49 @@ Alle drie de blinde testers reageerden positief op een **zachter, lichtjes indru
 
 Over **kleur** benadrukte Mario expliciet dat het handvat moet contrasteren met de witte stok zodat slechtzienden de stok terugvinden als die ergens ligt: *"Het handvat hier is zwart, gewoon als de stok openligt, dat je het handvat kan zien."* Een wit handvat wordt afgewezen wegens vuilgevoeligheid en gebrek aan contrast. Fluo of rood is bespreekbaar voor externe zichtbaarheid in verkeer en publieke ruimte. Jelle (geboorte-blind) heeft geen kleurvoorkeur, Herman besprak kleur niet expliciet.
 
-#### Cognitieve belasting
+#### Subjectieve scores op Likert-schaal (1-7)
 
-De cognitieve belasting bleef voor twee van de drie deelnemers (Jelle, Herman) op het Develop 2-niveau ondanks de toevoeging van real-life prikkels (verkeer, voetgangers, oversteken). Mario rapporteerde een merkbare stijging, wat zijn power-user-profiel weerspiegelt eerder dan een tekortkoming van het systeem. Globaal blijft de bevinding dat het systeem ook in real-life bruikbaar is zonder dat de mentale belasting onaanvaardbaar oploopt.
+Na afloop van de drie testblokken werd elke deelnemer gevraagd om de voorkeursconfiguratie te scoren op een Likert-schaal van 1 (helemaal niet akkoord) tot 7 (helemaal akkoord). De scores worden hieronder vergeleken met de Develop 2 referentie.
+
+| Metric | Mario | Jelle | Herman | Develop 3 (avg) | Develop 2 (avg) |
+|---|---|---|---|---|---|
+| Learnability (1-7) | 6 | 7 | 6 | **6,33** | 6,33 |
+| Smoothness (1-7) | 5 | 6 | 5 | **5,33** | 5,67 |
+| Cognitive load (1-7, hoog = weinig concentratie) | 3 | 5 | 5 | **4,33** | 4,67 |
+| Willingness (1-7) | 5 | 6 | 3 | **4,67** | 4,33 |
+| Trust (1-7) | 5 | 6 | 4 | **5,00** | n.v.t. |
+
+**UG5 → Cognitieve belasting** daalde licht ten opzichte van Develop 2 (4,33 vs 4,67), volledig toe te schrijven aan Mario's score (3/7) die de buitencontext beduidend zwaarder ervaart dan de gecontroleerde labosetting. Dit valt binnen de protocol-marge "maximaal 1 punt lager", dus UG5 wordt gehaald. Jelle en Herman bleven op het Develop 2 niveau (5/7), wat bevestigt dat de cognitieve belasting voor de kerndoelgroep (audio-vrije navigatoren) hanteerbaar blijft in real-life.
+
+**UG6 → Bereidheid tot gebruik** stijgt van 4,33 (Develop 2) naar 4,67. De gemiddelde stijging is bescheiden door Herman's lage score (3/7), die consistent blijft met zijn Develop 2 willingness van 2/7 en zijn voorkeur voor audio-navigatie. Mario en Jelle scoren 5 en 6, wat een duidelijke stijging is en UG6 (behoud of stijging) bevestigt.
+
+#### Rangschikking trilpatronen (UG7)
+
+Na de leerfase werden de deelnemers gevraagd om per scenario uit de bredere set (M1 → M10) hun top-3 te kiezen. De resultaten bevestigen de drie MVP-koppelingen, maar leggen wel een ontwerpprobleem bloot: de patronen liggen onderling te dicht bij elkaar in waargenomen sterkte.
+
+| Scenario | Top patroon (consensus) | Voorkeursorde (gecombineerd) |
+|---|---|---|
+| Obstakel recht vooruit | **M4** (kort scherp dubbel) | M4 → M6 → M1 |
+| Afwijking van route | **M6** (snelle pulsreeks) | M6 → M9 → M4 |
+| Bocht nadert | **M9** (oplopend ritme) | M9 → M4 → M6 |
+
+De drie geselecteerde MVP-koppelingen zijn dus intuïtief, maar Mario en Jelle gaven beide aan dat het verschil in sterkte tussen de patronen onderling te klein is. Aankondiging en obstakel werden verwisseld in twijfelgevallen, wat de design implicatie "scherper differentiëren in lengte of ritme" onderbouwt.
+
+#### Rangschikking handvatmateriaal (UG8)
+
+De deelnemers rangschikten drie tactiele referenties van beste naar slechtste op tactiliteit en draagcomfort.
+
+| Deelnemer | 1ste keuze | 2de keuze | 3de keuze |
+|---|---|---|---|
+| Mario | Zachter handvat (padelracket-textuur) | Eigen huidige stok | Kurk |
+| Jelle | Zachter handvat (padelracket-textuur) | Eigen huidige stok | Kurk |
+| Herman | Eigen huidige stok | Zachter handvat | Kurk |
+
+Mario en Jelle convergeren volledig: zachter handvat is voor hen de duidelijke winnaar. Herman blijft trouw aan zijn vertrouwde harde stok, omdat die voor hem de tactiele tikfeedback het zuiverste doorgeeft, maar plaatst het zachter alternatief op de tweede plek. Kurk wordt door alle drie als minst geschikt beoordeeld omwille van duurzaamheid en onderhoud. Dit bevestigt UG8 en de design implicatie om TPE Shore 65A overmold als hoofdmateriaal te kiezen, met de huidige harde stok-textuur als optie voor de eindgebruikers die dat verkiezen.
+
+#### Kleurkeuze en contrast (UG9)
+
+Zoals in de CMF-feedback hierboven beschreven, wijst UG9 in dezelfde richting: contrast tussen handvat en de witte stok is leidend, niet één specifieke kleur. Zwart of rood worden door Mario expliciet aanvaard, wit wordt afgewezen wegens vuilgevoeligheid en gebrek aan contrast.
 
 ### CMF-Deepdive
 
