@@ -18,32 +18,67 @@ We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navi
 Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange witte stok wordt bevestigd en gekoppeld is aan een eenvoudige app-workflow. SensePath vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Optioneel biedt het systeem een fail-safe flow om te herstarten of hulp te vragen bij afwijkingen of blokkades. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
 
 <p align="center">
-  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="Hero render SensePath" width="600"/>
+  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="SensePath handvat geclipt op een witte stok, met het haptisch kompas zichtbaar in de handpalm" width="600"/>
+  <br/><em><strong>SensePath</strong> → ① modulair tech-handvat met geïntegreerde elektronica, ② sferisch kompaselement in de handpalm voor continue richtingsfeedback, ③ standaard lange witte stok, ④ clip-mechanisme voor dagelijks omwisselen tussen tech-grip en standaard-grip.</em>
 </p>
 
 ---
 
 ## Inhoudstafel
 
-1. [Methodologie](#methodologie)
-2. [Discovery](#discovery)
-3. [Definition](#definition)
-4. [Design Requirements](#design-requirements)
-5. [Develop 1](#develop-1)
-   - [Prototypes & User Testing](#user-testing)
-   - [Develop 1 conclusies](#develop-1-conclusies)
-6. [Kritische reflectie](#kritische-reflectie)
+1. [Conclusie](#conclusie)
+2. [Methodologie](#methodologie)
+3. [Discovery](#discovery)
+4. [Definition](#definition)
+5. [Design Requirements](#design-requirements)
+6. [Develop 1](#develop-1)
 7. [Develop 2](#develop-2)
 8. [Develop 3](#develop-3)
-9. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
-10. [Bijlagen](#bijlagen)
-11. [Bronnen](#bronnen)
+9. [Deliver](#deliver)
+10. [Kritische reflectie](#kritische-reflectie)
+11. [Noot inzake het gebruik van AI](#noot-inzake-het-gebruik-van-ai)
+12. [Bijlagen](#bijlagen)
+13. [Bronnen](#bronnen)
+
+---
+
+## Conclusie
+
+SensePath is een **slimme handgreep die op een standaard lange witte stok klikt** en routebeslissingen vertaalt naar discrete haptische signalen in de hand. Drie kerncomponenten dragen het concept: één LRA-trilmotor die drie onderscheidbare microinteracties (obstakel, koersafwijking, bocht-aankondiging) levert, een sferisch kompaselement in de laagste gleufpositie dat continue richting voelbaar maakt, en een modulair handvat dat dagelijks gewisseld kan worden tussen tech-grip (onbekende routes) en standaard-grip (gekende routes).
+
+Waarom dit het juiste antwoord is op het probleem uit Discovery, is geen kwestie van technologie maar van **positionering**. SensePath vervangt de witte stok niet ; ze versterken elkaar. De stok blijft de primaire obstakeldetector, SensePath levert wat de stok zelf niet kan: oriëntatie op keuzemomenten zonder dat het gehoor of de smartphone-aandacht ingezet moet worden. Daarmee adresseert het ontwerp de drie pijnpunten die de Discovery-interviews scherp maakten: onzekerheid aan knooppunten, de wens om het gehoor vrij te houden in publieke context, en de minimale-telefoon-eis tijdens het stappen.
+
+De keuzes die deze positionering dragen, zijn telkens empirisch onderbouwd: de evolutie van 3 motoren naar 1 LRA (Develop 2), de versmalde gleuf zodat het kompas in de handpalm blijft (Develop 2), de reductie van 9 naar 3 trilpatronen (Develop 3), de keuze voor TPE Shore 65A overmold (Develop 3 CMF-deepdive). Volledige onderbouwing in [docs/design_requirements.md](docs/design_requirements.md).
+
+Voor de status van de finale validatie ; GPS-precisie, autonoom systeem, batterijduur ; zie de [Deliver](#deliver)-sectie. Voor de open onderzoeksvragen en aanbevelingen voor vervolgwerk: zie [Kritische reflectie](#kritische-reflectie).
 
 ---
 
 ## Methodologie
 
-Dit project volgt de **Double Diamond** aanpak (Discover, Define, Develop, Deliver), met nadruk op gebruikersgericht ontwerpen en iteratieve validatie.
+Dit project volgt de **Double Diamond** aanpak (Discover, Define, Develop, Deliver), met nadruk op gebruikersgericht ontwerpen en iteratieve validatie. De tijdslijn hieronder toont de fasen, test-waves met sample-grootte (N) en de drie kritische pivots die het ontwerp stuurden.
+
+```mermaid
+timeline
+    title SensePath → Double Diamond met test-waves en pivots
+    section Discovery
+        Okt 2025  : User interviews (N=3)
+                  : Benchmarking 11 systemen
+    section Definition
+        Nov 2025  : Wave 1 conceptvalidatie (N=5)
+        Dec 2025  : Wave 2 verfijning + MoSCoW (N=5)
+                  : Pivot → volledige stok wordt afneembaar handvat
+    section Develop
+        Jan 2026  : Develop 1 functionele tests (N=5)
+        Feb 2026  : Develop 2 usability + ergonomie (N=5)
+                  : Pivot → 3 trilmotoren wordt 1 LRA + DRV2605L
+        Apr 2026  : Develop 3 microinteracties + CMF (N=5)
+                  : Pivot → 9 trilpatronen wordt 3 kernsignalen (M4 M6 M9)
+    section Deliver
+        Mei 2026  : Validatieplan GPS-precisie en autonome wandeling
+                  : Open vraag → Wizard-of-Oz wordt autonoom systeem
+```
+
 
 ### Discovery (problem space)
 
@@ -149,10 +184,11 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 **Aanpak:** Low-fidelity prototypes met verschillende haptische principes (mechanisch, vibratie, beweging, tactiel) werden getest via Wizard-of-Oz met ervaren stokgebruikers (N=5).
 
 <p align="center">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51.jpeg" width="180"/>
-  <img src="img/WhatsApp Image 2026-01-19 at 16.18.37 (1).jpeg" width="180"/>
-  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (2).jpeg" width="180"/>
-  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (3).jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51.jpeg" alt="Wave 1 prototype: ruwe handvat-mockup voor concepttest" width="180"/>
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.37 (1).jpeg" alt="Wave 1 prototype: handvat met haptisch element in handpalm" width="180"/>
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (2).jpeg" alt="Wave 1 prototype: bewegingsgebaseerde feedback-variant" width="180"/>
+  <img src="img/WhatsApp Image 2026-01-19 at 16.18.38 (3).jpeg" alt="Wave 1 prototype: vibratie-variant getest met stokgebruikers" width="180"/>
+  <br/><em>Wave 1 conceptvalidatie-prototypes (N=5). Gebruikt om de hoofdvraag te beantwoorden of een afneembaar handvat met discrete feedback geloofwaardig is.</em>
 </p>
 
 **Key findings:**
@@ -170,10 +206,11 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 **Aanpak:** Fitting-prototypes met klemmechanismes + verfijnde haptische varianten, getest met dezelfde respondenten (N=5). Inclusief obstakeldetectie-observatietest.
 
 <p align="center">
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.19.jpeg" width="180"/>
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.52.jpeg" width="180"/>
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" width="180"/>
-  <img src="img/WhatsApp Image 2025-12-28 at 19.39.50.jpeg" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.19.jpeg" alt="Wave 2 prototype: klemmechanisme voor montage op stok" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.52.jpeg" alt="Wave 2 prototype: verfijnde haptische variant met betere fitting" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.51 (1).jpeg" alt="Wave 2 prototype: stabiliteits-test van clip-bevestiging" width="180"/>
+  <img src="img/WhatsApp Image 2025-12-28 at 19.39.50.jpeg" alt="Wave 2 prototype: obstakeldetectie-observatietest setup" width="180"/>
+  <br/><em>Wave 2 verfijnings-prototypes (N=5). Focus op klem-stabiliteit en MoSCoW-prioritering van de design requirements.</em>
 </p>
 
 **Key findings:**
@@ -367,7 +404,8 @@ Speaker wordt als experimentele variant binnen de MVP-test behandeld:
 ### Morfologische matrix
 
 <p align="center">
-  <img src="img/PGGO - SensePath - Morfologische matrix.jpg"/>
+  <img src="img/PGGO - SensePath - Morfologische matrix.jpg" alt="Morfologische matrix met functionele deelaspecten en oplossingsvarianten" width="800"/>
+  <br/><em>Morfologische matrix → de deelfuncties (input, feedback, montage, voeding) en hun varianten waaruit het Develop 1 ontwerp gecombineerd is.</em>
 </p>
 
 De morfologische matrix werd gebruikt om per functieblok een afweging te maken tussen wat vandaag het meest geschikt is voor het prototype, wat later het meest geschikt lijkt voor het eindproduct, en welke keuzes in beide fasen overeind blijven.
@@ -415,10 +453,11 @@ Er werden twee prototypevarianten gebouwd op basis van de morfologische matrix:
 3D-geprint handvat met een draaiend bolletje in de handpalm dat continue richtingsfeedback geeft. De wizard stuurt de kompasrichting aan op basis van de gewenste looprichting.
 
 <p align="center">
-  <img src="img/WhatsApp Image 2026-03-08 at 19.57.35 (1).jpeg" width="200"/>
-  <img src="img/WhatsApp Image 2026-03-08 at 19.57.35.jpeg" width="200"/>
-  <img src="img/WhatsApp Image 2026-03-08 at 19.57.34 (1).jpeg" width="200"/>
-  <img src="img/WhatsApp Image 2026-03-08 at 19.57.34.jpeg" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.35 (1).jpeg" alt="Develop 1 prototype: trilmotor-handvat (afslagcue)" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.35.jpeg" alt="Develop 1 prototype: kompas-handvat met draaiend bolletje" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.34 (1).jpeg" alt="Develop 1 prototype: ESP32-controller en bedrading van trilmotoren" width="200"/>
+  <img src="img/WhatsApp Image 2026-03-08 at 19.57.34.jpeg" alt="Develop 1 prototype: testopstelling met handvat aan witte stok" width="200"/>
+  <br/><em>Develop 1 prototypes (N=5) → Prototype 1 (vibratie-afslagcue) en Prototype 2 (continu kompas). Beide via Wizard-of-Oz aangestuurd.</em>
 </p>
 
 ### User testing
@@ -521,17 +560,17 @@ Kompas (continue koersfeedback) + vibratie (afslagcue) samen op hetzelfde parcou
 - **90% van alle fouten** is te wijten aan wizard-timing; bij automatisering worden minder fouten verwacht.
 - Gebruikers memoriseren onbewust het pad over de drie tests heen, wat een confound vormt voor de SIZ-scores.
 
----
+### Kritische reflectie Develop 1
 
-## Kritische reflectie
+De drie test-runs leverden zowel signaal als ruis op, en de scheidslijn ertussen bepaalt welke conclusies dragend zijn voor het verdere ontwerp.
 
-Uit de vergelijking tussen test 1 en test 2 blijkt dat gebruikers fouten sneller corrigeren. Dat wijst erop dat ze het pad beter begrijpen naarmate ze er vaker mee in contact komen en dat hun reactie op fouten met de tijd efficiënter wordt. 
+Het sterkste signaal is de **convergentie tussen test 1 en test 2 op snellere foutcorrectie**: dat patroon bevestigt onze hypothese dat de gebruiker via herhaalde blootstelling een mentaal model opbouwt van de feedbacktaal. Implicatie voor Develop 2: de leerfase moet expliciet in de UX zitten (oefenmodus, kalibratie), niet impliciet via gebruik.
 
-Daarnaast toont de evolutie over test 1, test 2 en test 3 dat gebruikers het pad onbewust beginnen te onthouden. Door herhaling ontstaat er dus een vorm van path learning, waardoor de uitvoering vlotter en waarschijnlijk ook consistenter verloopt. 
+De **convergentie over test 1, 2 en 3 op path learning** is daarentegen een confound dat onze meetstrategie ondermijnt: deelnemers onthouden het parcours onbewust, waardoor SIZ-scores na test 2 niet meer de feedback meten maar het geheugen. Implicatie: Develop 2 en 3 moeten ofwel met verschillende parcours werken, ofwel het leereffect expliciet rapporteren.
 
-Een belangrijk inzicht is dat 90% van alle fouten te wijten is aan de timing van de wizard. Dat betekent dat een groot deel van de fouten niet noodzakelijk door de gebruiker zelf veroorzaakt wordt, maar eerder samenhangt met het moment waarop de begeleiding of tussenkomst plaatsvindt. Op basis daarvan kan verondersteld worden dat een geautomatiseerde aanpak minder fouten zou opleveren. 
+Het meest design-kritische inzicht is dat **90% van de fouten herleidbaar is tot wizard-timing**, niet tot gebruikersgedrag. Dat betekent dat het huidige fout-percentage geen ondergrens is van wat het systeem kan, maar een bovengrens van wat Wizard-of-Oz kan meten. Implicatie: voor de finale validatie hebben we een geautomatiseerd systeem nodig dat dezelfde test reproduceerbaar uitvoert ; deze open vraag draagt door naar de [Deliver](#deliver)-fase.
 
-Ten slotte wijst de vergelijking tussen omgeving en cognitieve belasting erop dat de context waarin de test plaatsvindt een invloed kan hebben op de prestaties van de gebruiker. Een complexere of minder geschikte omgeving kan de cognitieve load verhogen, wat op zijn beurt het aantal fouten of de moeilijkheidsgraad van de taak kan beïnvloeden. 
+Tot slot beïnvloedt **de testomgeving de cognitieve belasting** in een mate die we niet vooraf controleerden. Implicatie voor Develop 2: omgevingscontext meenemen als variabele in de test-opzet, niet als ruis.
 
 ---
 
@@ -723,9 +762,9 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
 
 **Key findings:**
 
-- **Single focus point is een echte verlichting**: Gebruikers hoeven enkel op het kompas te letten, geen restrictie meer op handpositie om finger-mounted vibratiemotoren te voelen. De grip mag natuurlijk blijven, wat het belangrijkste ergonomische pluspunt is van de Develop 2 herontwerpkeuze.
-- **180° uitwijking is in de praktijk overbodig**: Mario merkte tijdens het lopen op dat het systeem nooit zo veel rotatie nodig heeft omdat het continu corrigeert, zelfs voor hij de hoek bereikte. Dit is een bevinding die alleen tijdens het werkelijk lopen aan het licht kwam.
-- **Hand-aandacht-bottleneck zichtbaar onder realistische condities**: Herman erkende dat het prototype in deze setting werkt, maar waarschuwde dat met een echte stok die de grond aftikt, een stoeprand die gevolgd wordt en omgevingsgeluiden waarop hij vertrouwt, de constante hand-aandacht zou concurreren met al die andere taken. Dit is geen kritiek op het prototype zelf maar een belangrijke nuance voor de doelgroepafbakening.
+- **Single focus point bevestigt de keuze voor 1 LRA**: het loslaten van finger-mounted vibratiemotoren bevrijdt de gebruiker van een kunstmatige greep-restrictie. Design-implicatie: voor het Develop 3 ontwerp is dit een vergrendelende keuze ; geen terugkeer naar meerkanaals haptiek tenzij een nieuwe pijn dat afdwingt.
+- **180° kompas-uitwijking is overdimensionering**: Mario's observatie dat het systeem continu corrigeert vóór de gebruiker de extreme hoek bereikt, weerlegt onze initiële aanname dat volledig richtingbereik nodig is. Design-implicatie: in de finale firmware kan de uitwijking begrensd worden tot de werkelijke gebruiksrange, wat de mechaniek vereenvoudigt en motorbelasting verlaagt.
+- **Hand-aandacht is een bottleneck onder real-life parallelle taken**: Herman's waarschuwing dat stok-tikken, randvolging en omgevingsgeluid samen om aandacht concurreren, is geen kritiek op het prototype maar een doelgroep-afbakening. Design-implicatie: het systeem mag niet uitgaan van permanente hand-aandacht; het ontwerp moet werken op periodieke check-ins, niet op continue monitoring. Dit voedt de keuze voor scherp gelokaliseerde event-cues (M4/M6/M9) boven continue richtingsruis.
 
 **Benchmark vergelijking Develop 1 vs Develop 2:**
 
@@ -987,6 +1026,64 @@ Ten vijfde blijft **stations-navigatie als gerichte use-case** een open strategi
 
 ---
 
+## Deliver
+
+### Doelstelling
+
+De Deliver-fase sluit de Double Diamond door het Develop 3 prototype te valideren in een realistische context en de finale documentatie af te ronden. Drie sporen lopen parallel: **prototype-integratie**, **finale validatie** en **reproduceerbaarheid**.
+
+### Finaal prototype-overzicht
+
+Het Develop 3 handvat is de hardware-basis. De volledige stuklijst, het schakelschema en de bouwinstructies maken het prototype reproduceerbaar voor externe bouwers:
+
+| Document | Inhoud |
+|---|---|
+| [docs/bom.md](docs/bom.md) | Bill of Materials → XIAO ESP32-S3, DRV2605L, LRA, POM-knoppen, PA6 + TPE Shore 65A handvat |
+| [docs/wiring.md](docs/wiring.md) | Schakelschema (Mermaid), I2C-pinout, power budget |
+| [docs/build_guide.md](docs/build_guide.md) | Stap-voor-stap bouwinstructies (3D-print, soldeer, firmware, test) |
+| [cad/](cad/) | CAD-bestanden Siemens NX (.prt) → STL/STEP-exports in [cad/exports/](cad/exports/) |
+| [src/firmware/sensepath_esp32/](src/firmware/sensepath_esp32/) | Arduino firmware met Wizard-of-Oz webcontroller |
+
+### Validatieplan (open punten uit Develop 3)
+
+Drie aannames blijven onbewezen na Develop 3 en bepalen de Deliver-test:
+
+1. **GPS-precisie voor continu haptisch kompas**: smartphone-GPS levert 5 → 10 m foutmarge in stedelijke canyons. Onze kerninteractie vereist ~1 m precisie bij oversteekplaatsen en draaipunten. Vraag: kunnen we de huidige Wizard-of-Oz controller-aansturing 1-op-1 vervangen door automatische GPS-routing, of moeten we naar een opgenomen route met correctiemechanisme bij afwijking?
+2. **Indoor-validatie (Sint-Pieters station)**: alle drie de blinde testers wezen spontaan op stations als doel-context. De huidige tests gebeurden in residentiële omgevingen. Open: kan het systeem bij metro-style ruisniveau en zonder GPS-fix bruikbaar blijven?
+3. **Autonome wandeling met geïntegreerde motor**: tot nu toe stuurden wij signalen via de telefoon naast de gebruiker. Eindtest: gebruiker stapt zonder begeleider een onbekende route op natuurlijke wandelsnelheid, met de motor op finale plek (tegen de hypothenar) en in combinatie met stok-tikken.
+
+### Demonstreerbaar tijdens de verdediging
+
+- M4 (obstakel), M6 (koersafwijking) en M9 (bocht-aankondiging) live triggerbaar via de Wizard-of-Oz webpagina op `http://192.168.4.1/`.
+- Het modulaire handvat: tech-grip ↔ standaard-grip wisselen.
+- Het kompasmechanisme in de hand laten voelen, met sferisch contactoppervlak in de laagste gleufpositie.
+
+### Wat NIET in deze versie zit
+
+- **Geïntegreerde batterij**: huidig prototype draait op USB-voeding. Batterijintegratie is gespecificeerd in [docs/bom.md](docs/bom.md#6-geplande-batterijintegratie-deliver-fase-nog-niet-in-prototype) en gepland voor de volgende iteratie.
+- **Autonome GPS-aansturing**: zie validatieplan punt 1 hierboven.
+- **Stations-specifieke positionering**: zie [Kritische reflectie](#kritische-reflectie).
+
+---
+
+## Kritische reflectie
+
+Dit project levert een prototype af dat zijn kerninteractie heeft gevalideerd, maar laat tegelijk vijf open vragen achter die mee bepalen hoe SensePath zich vanaf hier verder kan ontwikkelen. Per-fase reflecties staan binnen [Develop 1](#kritische-reflectie-develop-1), [Develop 2](#kritische-reflectie-develop-2) en [Develop 3](#kritische-reflectie-develop-3) ; deze synthese trekt ze samen tot aanbevelingen voor vervolgwerk.
+
+**Sample-grootte en doelgroep-heterogeniteit**. De cumulatieve N over alle Develop-fasen blijft beperkt (Develop 1 N=5, Develop 2 N=5, Develop 3 N=3 blinde + N=2 geblinddoekte ziende controles). De convergentie tussen Mario en Herman op richtinginformatie-in-patroon is sterk, maar Jelle's tegengestelde voorkeur toont dat de doelgroep heterogeen is. Aanbeveling: een vervolgstudie met N=15 → 20 over verschillende leeftijdscategorieën en tech-affiniteitsniveaus om de instelbaarheids-vraag te kwantificeren.
+
+**De Wizard-of-Oz ↔ autonoom systeem vertaling**. 90% van de gemeten fouten in Develop 1 was herleidbaar tot wizard-timing, niet tot gebruikersgedrag of feedbackkwaliteit. Onze test-instrumentatie zit daarmee tussen het ontwerp en de waarheid. Aanbeveling: de finale validatie moet plaatsvinden met een autonoom systeem (GPS- of opgenomen-route-gestuurd) zodat het foutpercentage de feedbackkwaliteit reflecteert in plaats van de wizard-snelheid.
+
+**CMF-deepdive analytisch, niet empirisch**. De keuzes voor TPE Shore 65A overmold, fijne radiale ribbels, POM-knoppen en aluminium pin scoren hoog op weegtabellen onderbouwd met literatuur, maar werden niet als gecombineerd prototype getest met eindgebruikers. Aanbeveling: één-op-één fysieke variant 3D-printen in finale materialen en blind laten beoordelen door dezelfde testers, om de CMF-keuzes empirisch te bevestigen.
+
+**Indoor-focus vs outdoor-robuustheid**. De huidige use case is indoor wayfinding, maar GPS-precisie is buiten de scope van Develop 3 niet getoetst en regen/handschoenen evenmin. Herman's winter-zorg ("ik vrees dat ons pinnetje in de winter niet voelbaar zal zijn") en zijn vraag over uur-plus wandelingen zijn onbewezen aannames. Aanbeveling: outdoor field-test in wisselende weersomstandigheden met sessies van minstens 45 minuten, plus een vervangbare pin-tip uit verschillende materialen (TPE-soft, TPE-hard, rubber).
+
+**Stations als gerichte use-case**. Alle drie de blinde testers wezen spontaan op stations als doel-context. Dit suggereert dat een gerichte go-to-market (stations + ziekenhuizen + campussen) sterker is dan een algemene indoor-positionering. Deze pivot ligt buiten de academische scope van dit project maar verdient verkenning bij een eventuele product-vervolg-traject (VLAIO, RIZIV-terugbetaling, samenwerking NMBS-toegankelijkheid).
+
+Deze vijf punten zijn niet beperkingen van het ontwerp, maar van de manier waarop we het tot nu hebben kunnen valideren. Ze definiëren mee de onderzoeksagenda voor wie dit project zou verderzetten.
+
+---
+
 ## Noot inzake het gebruik van AI
 
 Binnen dit project werden meerdere AI-tools ingezet als ondersteunend hulpmiddel:
@@ -1011,16 +1108,16 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 | Interview protocol | [Interview - protocol - SensePath.docx](reports%20and%20protocols/Interview%20-%20protocol%20-%20SensePath.docx) |
 | Onderzoeksrapport interviews | [Onderzoeksrapport_user_interviews_SensePath.docx](reports%20and%20protocols/Onderzoeksrapport_user_interviews_SensePath.docx) |
 | Benchmarking protocol | [Benchmarkingprotocol_SensePath.docx](reports%20and%20protocols/Benchmarkingprotocol_SensePath.docx) |
-| Benchmarking rapport | [Benchmarkingrapport_SensePath.docx](reports%20and%20protocols/Benchmarkingrapport_SensePath.docx) |
+| Benchmarking rapport | [Benchmarkingrapport_SensePath.docx](reports%20and%20protocols/Benchmarkingrapport%20_SensePath.docx) |
 
 ### Definition
 
 | Document | Link |
 |---|---|
-| Wave 1 — Protocol | [Protocol](reports%20and%20protocols/) |
-| Wave 1 — Rapport | [Rapport](reports%20and%20protocols/) |
-| Wave 2 — Protocol | [Protocol](reports%20and%20protocols/) |
-| Wave 2 — Rapport | [Rapport](reports%20and%20protocols/) |
+| Wave 1 → Protocol | [testprotocol_define_WAVE1.pdf](reports%20and%20protocols/testprotocol_define_WAVE1.pdf) |
+| Wave 1 → Rapport | [Report_define_WAVE1.pdf](reports%20and%20protocols/Report_define_WAVE1.pdf) |
+| Wave 2 → Protocol | [testprotocol_define_WAVE2.pdf](reports%20and%20protocols/testprotocol_define_WAVE2.pdf) |
+| Wave 2 → Rapport | [Report wave 2.pdf](reports%20and%20protocols/Report%20wave%202.pdf) |
 
 ### Develop
 
@@ -1033,6 +1130,24 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 | Develop 3 → Protocol | [protocol_sensepath_develop3_PDF.pdf](reports%20and%20protocols/protocol_sensepath_develop3_PDF.pdf) |
 | Develop 3 → Rapport | [rapport_sensepath_develop3.pdf](reports%20and%20protocols/rapport_sensepath_develop3.pdf) |
 | Develop 3 → UX & Service Design uitwerking | [develop_3.md](docs/develop_3.md) |
+| Develop 3 → Service Blueprint | [service_blueprint.html](docs/develop_3/service_blueprint.html) |
+| Develop 3 → Customer Journey Map | [customer_journey.html](docs/develop_3/customer_journey.html) |
+| Develop 3 → Stakeholder Map | [stakeholder_map.html](docs/develop_3/stakeholder_map.html) |
+| Develop 3 → Norman's drie lagen | [norman_layers.html](docs/develop_3/norman_layers.html) |
+| Develop 3 → Emotion Map | [emotion_map.html](docs/develop_3/emotion_map.html) |
+| Develop 3 → Microinteractions overzicht | [microinteractions.html](docs/develop_3/microinteractions.html) |
+| Develop 3 → Implementatie-notes | [implementatie.md](docs/develop_3/implementatie.md) |
+
+### Deliver
+
+| Document | Link |
+|---|---|
+| Bill of Materials | [docs/bom.md](docs/bom.md) |
+| Schakelschema | [docs/wiring.md](docs/wiring.md) |
+| Build guide | [docs/build_guide.md](docs/build_guide.md) |
+| CAD-bestanden | [cad/](cad/) |
+| CAD-exports (STL/STEP) | [cad/exports/](cad/exports/) |
+| Firmware | [src/firmware/sensepath_esp32/](src/firmware/sensepath_esp32/) |
 
 ### Overige documenten
 
@@ -1040,7 +1155,6 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 - [Discovery](docs/discovery.md)
 - [Definition](docs/definition.md)
 - [Design Requirements](docs/design_requirements.md)
-- [Bill of Materials](docs/bom.md)
 
 ---
 
@@ -1052,9 +1166,9 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 - Norman, D. A. (2013). *The Design of Everyday Things: Revised and Expanded Edition.* Basic Books.
 - World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
 - Design Council. (2005). *The Double Diamond: A universally accepted depiction of the design process.* Geraadpleegd van https://www.designcouncil.org.uk/double-diamond
-- Anthropic. (2025). Claude (Claude Opus 4.6) [Groot taalmodel]. https://claude.ai
-- OpenAI. (2025). ChatGPT (GPT-4o) [Groot taalmodel]. https://chat.openai.com
-- Google DeepMind. (2025). Nano Banana Pro (Gemini 3 Pro Image) [AI-beeldgeneratiemodel].
+- Anthropic. (2026). Claude (Claude Opus 4.7) [Groot taalmodel]. https://claude.ai
+- OpenAI. (2026). ChatGPT (GPT-4o) [Groot taalmodel]. https://chat.openai.com
+- Google DeepMind. (2026). Nano Banana Pro (Gemini 3 Pro Image) [AI-beeldgeneratiemodel].
 
 ---
 
