@@ -52,32 +52,22 @@ CMF-onderbouwing: zie Develop 3 sectie in [README.md](../README.md).
 
 ---
 
-## 5. Voeding (huidig prototype)
+## 5. Voeding
 
 | Onderdeel | Specificatie | Aantal | Productlink |
 |---|---|---|---|
-| USB-C kabel | USB-C, lengte ~1.5 m | 1 | (commodity) |
+| Li-Po accu | 1S 1000 mAh, plat formaat | 1 | https://www.tinytronics.nl/shop/nl/batterijen/ |
+| Laadcircuit | TP4056 USB-C met overcharge en over-discharge protectie | 1 | https://www.tinytronics.nl/shop/nl/power/laders/tp4056-usb-c-li-ion-lader |
+| USB-C kabel | USB-C → USB-C, voor opladen en firmware-upload | 1 | (commodity) |
 
-Het huidige prototype draait op USB-voeding. Batterijintegratie staat gepland voor de Deliver-fase (zie sectie 6).
-
----
-
-## 6. Geplande batterijintegratie (Deliver-fase, nog niet in prototype)
-
-| Onderdeel | Specificatie | Aantal | Productlink |
-|---|---|---|---|
-| Li-ion accu | 18650, ~3000 mAh of 1S 1000 mAh LiPo | 1 | https://www.tinytronics.nl/shop/nl/batterijen/ |
-| Laadcircuit | TP4056 USB-C met overcharge/over-discharge protectie | 1 | https://www.tinytronics.nl/shop/nl/power/laders/tp4056-usb-c-li-ion-lader |
-| Batterijhouder | 18650-houder | 1 | https://www.tinytronics.nl/shop/nl/batterijen/batterijhouders/18650 |
-
-Theoretische schatting: ESP32-S3 in deep-sleep tussen pulses + LRA-pulses → 6 tot 8 uur autonomie op 1000 mAh. Empirisch nog niet gevalideerd (open punt voor Deliver-fase).
+Het handvat is **autonoom inzetbaar** dankzij de interne Li-Po accu. De USB-C poort dient voor opladen en voor firmware-flashen via de XIAO ; geen kabel-aan-de-hand tijdens gebruik. Theoretische schatting van de autonomie: ESP32-S3 in deep-sleep tussen pulses + LRA-pulses → 6 → 8 uur op 1000 mAh. Empirische meting onder real-life gebruiksprofiel staat op de planning voor de Deliver-fase.
 
 ---
 
-## 7. Overige prototyping-materialen
+## 6. Overige prototyping-materialen
 
 - Perfboard of mini-PCB (voor DRV2605L ↔ XIAO bedrading)
-- JST-PH connectoren (2-pin voor LRA, 3-pin voor knoppen)
+- JST-PH connectoren (2-pin voor LRA, 3-pin voor knoppen, 2-pin voor batterij)
 - AWG28 bedrading (intern handvat)
 - Krimpkous Ø2 mm
 - Soldeer (Sn60/Pb40 of loodvrij) + flux
@@ -86,19 +76,19 @@ Theoretische schatting: ESP32-S3 in deep-sleep tussen pulses + LRA-pulses → 6 
 
 ---
 
-## 8. Totale kost (indicatie, Develop 3 configuratie zonder batterij)
+## 7. Totale kost (indicatie, Develop 3 configuratie)
 
 | Categorie | Richtprijs |
 |---|---|
-| Elektronica (XIAO ESP32-S3 + DRV2605L + LRA + knoppen) | €25 → €35 |
+| Elektronica (XIAO ESP32-S3 + DRV2605L + LRA + knoppen + TP4056) | €30 → €45 |
+| Batterij (1000 mAh Li-Po) | €5 → €10 |
 | Print-/grondstoffen (PA6 + TPE-filament, ~80 g totaal) | €5 → €10 |
 | Hardware (inserts, pin, schroeven, connectoren) | €5 → €10 |
-| **Totaal basisprototype (USB-voeding)** | **€35 → €55** |
-| Batterijintegratie (Deliver-fase, additioneel) | +€10 → €15 |
+| **Totaal eindproduct** | **€45 → €75** |
 
 ---
 
-## 9. Vergelijking met voorgaande iteraties
+## 8. Vergelijking met voorgaande iteraties
 
 | Component | Semester 1 | Develop 1 | Develop 2 | Develop 3 (huidig) |
 |---|---|---|---|---|
@@ -107,6 +97,6 @@ Theoretische schatting: ESP32-S3 in deep-sleep tussen pulses + LRA-pulses → 6 
 | Mechanische feedback | Stepper 28BYJ-48 + ULN2003 | Mechanisch kompas | Mechanisch kompas | Mechanisch kompas (sferisch contact) |
 | Trilmotoren | 2× coin vibration | 3× LRA | 1× LRA + DRV2605L | 1× LRA + DRV2605L |
 | Audio | Speaker + MAX98357A | geen | geen | geen |
-| Voeding | 18650 + TP4056 + MT3608 | 18650 + TP4056 | USB | USB (batterij gepland) |
+| Voeding | 18650 + TP4056 + MT3608 | 18650 + TP4056 | Bench-USB | Interne Li-Po + USB-C oplaad |
 
-Reductie van complexiteit was doelbewust: elke iteratie schrapte componenten die in tests niet bijdroegen aan de kerninteractie (haptische richtingaanwijzing via één duidelijk signaal in de hand).
+Reductie van complexiteit was doelbewust: elke iteratie schrapte componenten die in tests niet bijdroegen aan de kerninteractie (haptische richtingaanwijzing via één duidelijk signaal in de hand). Wat is overgebleven, is precies wat een autonome dagelijkse gebruiker nodig heeft ; niets meer, niets minder.

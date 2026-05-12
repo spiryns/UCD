@@ -8,8 +8,9 @@ Dit document beschrijft hoe de elektronica in het Develop 3 handvat onderling ve
 
 ```mermaid
 flowchart LR
-    USB[USB-C voeding<br/>5V] -->|5V| XIAO
-    XIAO[XIAO ESP32-S3<br/>microcontroller]
+    USBC[USB-C poort<br/>opladen + flashen] -->|5V| TP[TP4056<br/>laadcircuit]
+    TP <-->|4.2V| BAT[Li-Po 1000 mAh]
+    TP -->|BAT+| XIAO[XIAO ESP32-S3<br/>microcontroller]
     XIAO -->|3V3| DRV[DRV2605L<br/>haptische driver]
     XIAO <-->|I2C SDA/SCL| DRV
     DRV -->|OUT+/OUT-| LRA[LRA<br/>trilmotor 200 Hz]
@@ -18,21 +19,24 @@ flowchart LR
     XIAO -.->|WiFi AP<br/>SensePath| PHONE[Testleider telefoon<br/>http://192.168.4.1/]
 ```
 
-De XIAO ESP32-S3 is de centrale knoop: voeding gaat in via USB-C, de DRV2605L hangt aan de I2C-bus, en de LRA hangt aan de DRV2605L-output. De twee POM-knoppen hangen direct aan GPIO-pinnen met de interne pull-up actief. WiFi is een access point ("SensePath") waarop de testleider tijdens Wizard-of-Oz sessies verbindt om patronen real-time te triggeren.
+De XIAO ESP32-S3 is de centrale knoop. Voeding komt uit een interne Li-Po accu (1000 mAh) die via een TP4056 USB-C laadcircuit wordt opgeladen ; tijdens normaal gebruik is er dus geen kabel aan de hand. De DRV2605L hangt aan de I2C-bus, de LRA aan de DRV2605L-output. De twee POM-knoppen hangen direct aan GPIO-pinnen met de interne pull-up actief. WiFi is een access point ("SensePath") waarop de testleider tijdens Wizard-of-Oz sessies verbindt om patronen real-time te triggeren.
 
 ---
 
 ## Pinout-tabel
 
-| Functie | XIAO ESP32-S3 pin | Naar | Opmerking |
+| Functie | Pin / Lijn | Naar | Opmerking |
 |---|---|---|---|
-| 5V in | 5V | USB-C +5V | Via XIAO USB-poort |
-| 3V3 uit | 3V3 | DRV2605L Vin | DRV werkt op 3.3V logic |
-| GND | GND | DRV2605L GND, knoppen GND, LRA via DRV | Gemeenschappelijke massa |
-| I2C SDA | D4 (GPIO 5) | DRV2605L SDA | I2C-pull-ups: meestal op breakout geïntegreerd |
-| I2C SCL | D5 (GPIO 6) | DRV2605L SCL | Idem |
-| Knop 1 | D2 (GPIO 3) | Start/Stop drukknop | Interne pull-up; sluit naar GND |
-| Knop 2 | D3 (GPIO 4) | Overzicht drukknop | Interne pull-up; sluit naar GND |
+| USB-C VBUS (5V) | TP4056 IN+ | USB-C connector | Voor opladen en firmware-flashen |
+| USB-C D+/D− | XIAO USB-D+/D− | USB-C connector | Doorgelust voor flashen |
+| TP4056 BAT+ | Li-Po + en XIAO BAT-pad | Batterij | Direct contact tussen BAT-circuit en MCU |
+| TP4056 BAT− | Li-Po − en gemeenschappelijke GND | Batterij | Gezamenlijke massa |
+| 3V3 uit | XIAO 3V3 | DRV2605L Vin | DRV werkt op 3.3V logic |
+| GND | XIAO GND | DRV2605L GND, knoppen GND, TP4056 GND | Gemeenschappelijke massa |
+| I2C SDA | XIAO D4 (GPIO 5) | DRV2605L SDA | I2C-pull-ups op breakout geïntegreerd |
+| I2C SCL | XIAO D5 (GPIO 6) | DRV2605L SCL | Idem |
+| Knop 1 | XIAO D2 (GPIO 3) | Start/Stop drukknop | Interne pull-up; sluit naar GND |
+| Knop 2 | XIAO D3 (GPIO 4) | Overzicht drukknop | Interne pull-up; sluit naar GND |
 | LRA + | DRV2605L OUT+ | LRA-pin 1 | Geen directe XIAO-verbinding |
 | LRA − | DRV2605L OUT− | LRA-pin 2 | Idem |
 
@@ -64,7 +68,7 @@ De DRV2605L heeft één vast I2C-adres dat niet via solder-jumpers wijzigbaar is
 | POM-knoppen | 0 mA (passief, interne pull-up) | → |
 | **Totaal actief** | **~150 mA** | **~390 mA piek** |
 
-USB levert ruim 500 mA op een standaardpoort, dus geen marge-probleem in het prototype. Voor een batterij-versie (Deliver-fase): 1000 mAh bij gemiddeld 80 mA effectief verbruik (met deep-sleep tussen pulses) → ~12 uur autonomie theoretisch, ~6 → 8 uur realistisch met WiFi AP altijd actief.
+Batterijbudget op 1000 mAh Li-Po: bij gemiddeld 80 mA effectief verbruik (met deep-sleep tussen pulses) → ~12 uur autonomie theoretisch, ~6 → 8 uur realistisch met WiFi AP altijd actief. Opladen via TP4056 op 500 mA charge-current → volle laad in ~2 uur. Een empirische meting van de autonomie onder real-life gebruiksprofiel staat gepland voor de Deliver-fase.
 
 ---
 

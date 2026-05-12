@@ -43,20 +43,28 @@ Open [cad/exports/](../cad/exports/) en download:
 
 1. **XIAO ESP32-S3** op een mini-perfboard solderen (header-strip aan onderzijde).
 2. **DRV2605L breakout** ernaast op hetzelfde perfboard.
-3. **I2C-bedrading** tussen XIAO en DRV2605L:
+3. **TP4056 USB-C laadcircuit** ernaast monteren. Dit module wordt later via een korte USB-C extender doorgekoppeld naar de USB-C poort van het handvat.
+4. **I2C-bedrading** tussen XIAO en DRV2605L:
    - XIAO D4 (SDA) → DRV2605L SDA
    - XIAO D5 (SCL) → DRV2605L SCL
    - XIAO 3V3 → DRV2605L Vin
    - XIAO GND → DRV2605L GND
-4. **LRA**: 2× AWG28 draad van DRV2605L OUT+ en OUT− naar JST-PH 2-pin connector. LRA-zijde idem.
-5. **Knoppen**: 2× JST-PH 3-pin connector (signaal + GND + reserve). Signaal-draad naar XIAO D2 (knop 1) en D3 (knop 2). GND-draden samen naar XIAO GND.
-6. **USB-C**: standaard XIAO USB-poort blijft toegankelijk voor voeding én flashen.
+5. **Batterij-circuit**:
+   - TP4056 BAT+ → Li-Po + (via JST-PH 2-pin connector)
+   - TP4056 BAT− → Li-Po − (via dezelfde connector)
+   - TP4056 BAT+ → XIAO BAT-pad (aan onderzijde van XIAO ESP32-S3)
+   - TP4056 GND → gemeenschappelijke GND-bus
+   - TP4056 IN+/IN− → USB-C poort 5V / GND (zie volgende stap)
+6. **USB-C poort**: gebruik een USB-C breakout-board dat zowel VBUS+GND naar het TP4056-circuit doorlust als de D+/D− datalijnen naar de XIAO USB-poort. Zo werkt één enkele USB-C poort voor zowel opladen als firmware-flashen.
+7. **LRA**: 2× AWG28 draad van DRV2605L OUT+ en OUT− naar JST-PH 2-pin connector. LRA-zijde idem.
+8. **Knoppen**: 2× JST-PH 3-pin connector (signaal + GND + reserve). Signaal-draad naar XIAO D2 (knop 1) en D3 (knop 2). GND-draden samen naar XIAO GND.
 
 ### Solder-tips
 
 - Gebruik flux op de XIAO-pads (klein formaat, makkelijk overspringen).
 - LRA-draden zijn dun (AWG30) ; krimpkous na elke soldeer voor trekontlasting.
 - I2C-bedrading kort houden (<10 cm) om ruis te vermijden.
+- Bij Li-Po: nooit batterij solderen onder spanning. Altijd via JST-connector aansluiten zodat de batterij later veilig losgekoppeld kan worden voor service.
 
 ---
 
@@ -97,11 +105,12 @@ constexpr uint8_t I2C_SCL_PIN = 6;  // was 22 voor ESP32 DevKit
 
 ## Sectie 4 → Assembleren
 
-1. Perfboard met XIAO + DRV2605L in de handvat-core schuiven, oriëntatie zo dat USB-C-poort toegankelijk blijft via achterkant-opening.
-2. LRA met dubbelzijdige 3M-VHB tape tegen de **hypothenar-zijde** van de handvat-wand fixeren (zo dicht mogelijk bij de muis-van-de-hand; dat is de meest gevoelige perceptiezone uit Develop 2).
-3. Knoppen door de cap-openingen schroeven (M3-bevestiging).
-4. JST-connectoren vastklikken.
-5. Cap met 2× M3-schroeven (8 mm) sluiten.
+1. Perfboard met XIAO + DRV2605L + TP4056 in de handvat-core schuiven, oriëntatie zo dat de USB-C poort toegankelijk blijft via de achterkant-opening.
+2. Li-Po batterij in zijn aparte cavity plaatsen, met dubbelzijdige tape gefixeerd. JST-connector aansluiten op het TP4056-circuit.
+3. LRA met dubbelzijdige 3M-VHB tape tegen de **hypothenar-zijde** van de handvat-wand fixeren (zo dicht mogelijk bij de muis-van-de-hand; dat is de meest gevoelige perceptiezone uit Develop 2).
+4. Knoppen door de cap-openingen schroeven (M3-bevestiging).
+5. JST-connectoren vastklikken (LRA, knoppen, batterij).
+6. Cap met 2× M3-schroeven (8 mm) sluiten.
 
 ---
 
@@ -121,6 +130,7 @@ constexpr uint8_t I2C_SCL_PIN = 6;  // was 22 voor ESP32 DevKit
 - Knoppen reageren binnen <50 ms (zo niet → debounce-time-out in firmware verhogen).
 - WiFi-AP bereikbaar binnen 5 s na boot.
 - DRV2605L wordt herkend → "DRV2605L gevonden" in Serial Monitor (zo niet → I2C-bedrading + pull-up-resistors checken).
+- TP4056 LED's: rode LED bij opladen, blauwe LED bij volle accu. USB-C kabel insteken en uitschakelen ; het handvat moet autonoom blijven werken op de Li-Po.
 
 ### Volgende stap
 
@@ -137,3 +147,5 @@ Wizard-of-Oz testsessie opzetten met een echte gebruiker. Zie [reports and proto
 | Knop registreert dubbel | Debounce te kort | `BUTTON_DEBOUNCE_MS` in firmware naar 50 ms verhogen |
 | WiFi AP niet zichtbaar | XIAO niet juist geboot | Serial Monitor checken, eventueel reset-knop |
 | Trilling vibrato/onstabiel | Power-supply ruis | USB-kabel met ferrite, of beter: aparte 3V3-LDO voor DRV2605L |
+| Handvat laadt niet op USB-C | TP4056 IN+/IN− niet correct doorgelust | USB-C breakout-board pinout checken, polariteit verifiëren |
+| Handvat schakelt uit kort na boot | Li-Po onder discharge-cutoff | Opladen ; TP4056 schakelt uit onder ~2.5V om de accu te beschermen |
