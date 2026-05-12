@@ -1189,13 +1189,12 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 | Develop 3 → Protocol | [protocol_sensepath_develop3_PDF.pdf](reports%20and%20protocols/protocol_sensepath_develop3_PDF.pdf) |
 | Develop 3 → Rapport | [rapport_sensepath_develop3.pdf](reports%20and%20protocols/rapport_sensepath_develop3.pdf) |
 | Develop 3 → UX & Service Design uitwerking | [develop_3.md](docs/develop_3.md) |
-| Develop 3 → Service Blueprint | [service_blueprint.html](docs/develop_3/service_blueprint.html) |
-| Develop 3 → Customer Journey Map | [customer_journey.html](docs/develop_3/customer_journey.html) |
-| Develop 3 → Stakeholder Map | [stakeholder_map.html](docs/develop_3/stakeholder_map.html) |
-| Develop 3 → Norman's drie lagen | [norman_layers.html](docs/develop_3/norman_layers.html) |
-| Develop 3 → Emotion Map | [emotion_map.html](docs/develop_3/emotion_map.html) |
-| Develop 3 → Microinteractions overzicht | [microinteractions.html](docs/develop_3/microinteractions.html) |
-| Develop 3 → Implementatie-notes | [implementatie.md](docs/develop_3/implementatie.md) |
+| Develop 3 → Service Blueprint | [service_blueprint.png](docs/develop_3/img/service_blueprint.png) |
+| Develop 3 → Customer Journey Map | [customer_journey.png](docs/develop_3/img/customer_journey.png) |
+| Develop 3 → Stakeholder Map | [stakeholder_map.png](docs/develop_3/img/stakeholder_map.png) |
+| Develop 3 → Norman's drie lagen | [norman_layers.png](docs/develop_3/norman_layers.png) |
+| Develop 3 → Emotion Map | [emotion_map.png](docs/develop_3/emotion_map.png) |
+| Develop 3 → Microinteractions overzicht | [microinteractions.png](docs/develop_3/microinteractions.png) |
 
 ### Deliver
 
