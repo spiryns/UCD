@@ -50,7 +50,7 @@ Waarom dit het juiste antwoord is op het probleem uit Discovery, is geen kwestie
 
 De keuzes die deze positionering dragen, zijn telkens empirisch onderbouwd: de evolutie van 3 motoren naar 1 trilmotor (Develop 2), de versmalde gleuf zodat het kompas in de handpalm blijft (Develop 2), de reductie van 9 naar 3 trilpatronen (Develop 3), de keuze voor TPE Shore 65A overmold (Develop 3 CMF-deepdive). Voor de eindvalidatie wordt het kompas via een mini-servo aangestuurd, met een roterende encoder als Wizard-of-Oz controller ; daarmee kan het geheel realistisch getest worden zonder dat eerst een autonoom GPS-systeem geïntegreerd moet zijn. Volledige onderbouwing in [docs/design_requirements.md](docs/design_requirements.md).
 
-Voor de status van de finale validatie ; geïntegreerde wandeling, indoor-test, vertaalstap naar GPS ; zie de [Deliver](#deliver)-sectie. Voor de open onderzoeksvragen en aanbevelingen voor vervolgwerk: zie [Kritische reflectie](#kritische-reflectie).
+Het rapport onderscheidt bewust **het beoogde eindproduct** (productie-vorm met hoog-nauwkeurige RTK GNSS via FLEPOS / WALCORS, smartphone-app, ToF-obstakeldetectie en productie-materialen) van **ons MVP-prototype** (academisch deliverable met PLA-print, KY-040 encoder als Wizard-of-Oz vervanger voor GPS, en bewust geen obstakeldetectie). Beide niveaus en de vertaalstap ertussen worden uiteengezet in de [Deliver](#deliver)-sectie. Voor de open onderzoeksvragen en aanbevelingen voor vervolgwerk: zie [Kritische reflectie](#kritische-reflectie).
 
 ---
 
@@ -1028,100 +1028,134 @@ Ten vijfde blijft **stations-navigatie als gerichte use-case** een open strategi
 
 ## Deliver
 
-De Deliver-fase sluit de Double Diamond door alle inzichten uit Discovery, Definition en Develop 1 → 3 te bundelen tot één coherent eindresultaat. Geen nieuwe ontdekkingen meer ; wel een definitieve vertaling van het cumulatieve onderzoek naar een **reproduceerbaar product** plus een **finale validatie** in real-life context.
+De Deliver-fase sluit de Double Diamond door alle inzichten uit Discovery, Definition en Develop 1 → 3 te bundelen tot een samenhangend ontwerp. Bewust onderscheiden we twee niveaus: **het beoogde eindproduct** (de definitieve vorm die SensePath in een real-world deployment zou hebben) en **ons prototype** (de MVP die we als academisch deliverable opleveren om de essentiële interacties te testen). De ontwerpredenen blijven dezelfde; wat verschilt is de scope van de implementatie.
 
-### Het eindresultaat → SensePath in definitieve vorm
+### Het beoogde eindproduct
 
-SensePath is een **clip-on tech-handvat** dat op een standaard lange witte stok geschoven wordt. In de hand zit een mechanisch kompaselement met sferisch contactoppervlak dat continue richting voelbaar maakt, aangedreven door een mini-servo. Via een geïntegreerde coin vibratiemotor levert het systeem drie haptische microsignalen op de cruciale beslismomenten (obstakel, koersafwijking, bocht-aankondiging). Een drukknop bedient start/stop en geef-overzicht, een schuifschakelaar zet de hele unit hard uit voor opslag. Een interne Li-Po accu maakt het systeem autonoom inzetbaar, met USB-C opladen via dezelfde poort die ook gebruikt wordt om de firmware te flashen. Een opt-in audio-fallback (speaker met I2S-versterker) staat default uit en kan via de webcontroller worden ingeschakeld als noodvariant. Het handvat is modulair: dagelijks omwisselbaar met een gewone grip voor gekende routes.
+#### Wat SensePath in productie zou zijn
 
-De brug tussen het Develop 3 Wizard-of-Oz prototype en een hypothetisch autonoom GPS-systeem is een **roterende encoder (KY-040)** waarmee de testleider tijdens de Deliver-validatie het kompas in de hand van de gebruiker fysiek kan sturen. De encoder leest de bedoelde richting in, de XIAO ESP32-S3 vertaalt dit naar een PWM-signaal voor de servo, en de servo draait het mechanisch kompas dat de blinde gebruiker in zijn handpalm voelt. Daarmee kan het volledige feedback-systeem realistisch getest worden zonder dat er eerst een GPS-pipeline geïntegreerd moet worden.
+SensePath in zijn definitieve vorm is een **clip-on tech-handvat** dat op een standaard lange witte stok geschoven wordt. In de hand zit een mechanisch kompaselement met sferisch contactoppervlak dat continue richting voelbaar maakt, aangedreven door een mini-servo en gestuurd door een hoog-nauwkeurige route-engine. Een geïntegreerde trilmotor levert drie haptische microsignalen op de cruciale beslismomenten (obstakel, koersafwijking, bocht-aankondiging). Een ingebouwde obstakeldetectie via ToF-sensoren op hoofd- en voethoogte vangt obstakels op die buiten het bereik van de stok vallen. Een smartphone-app via BLE verzorgt route-input en monitoring. Een interne accu met USB-C opladen maakt de unit autonoom inzetbaar, en een opt-in audio-fallback (speaker of Bluetooth-oortje) staat default uit voor reguliere gebruikers en kan worden ingeschakeld als noodvariant. Het handvat is modulair: dagelijks omwisselbaar met een gewone grip voor gekende routes.
 
-Drie principes dragen het ontwerp:
+#### Hoog-nauwkeurige positionering via FLEPOS / WALCORS
 
-1. **Versterken, niet vervangen** ; de witte stok blijft de primaire obstakeldetector. SensePath levert wat de stok zelf niet kan: oriëntatie op keuzemomenten.
-2. **Hands-free, heads-up, ear-by-default-free** ; geen smartphone-aandacht tijdens het stappen, geen audio in default-gebruik. De opt-in audio-fallback bestaat omdat gebruikers daar expliciet om vroegen (Develop 3 → Jelle), maar staat standaard uit zodat de "ear-free" filosofie de hoofdmodus blijft.
-3. **Minimale cognitive load** ; één tactiele aandachtspunt voor continue feedback, en drie maximaal onderscheidbare event-signalen.
+De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vereist een positionering binnen ~1 meter rond kruispunten en draaipunten. Standaard smartphone-GPS levert in stedelijke canyons 5 → 10 m foutmarge en is daarvoor onvoldoende. De productie-vorm gebruikt daarom **RTK GNSS-correcties** via de Belgische infrastructuur: **FLEPOS** (Flemish Positioning Service, beheerd door Digitaal Vlaanderen) in Vlaanderen en **WALCORS** in Wallonië. Beide netwerken leveren via NTRIP cm- tot sub-meter-precisie en worden vandaag al gebruikt voor surveying en autonoom rijden. Voor blinde mobiliteit zou een sociale-tarief-licentie (bv. via VLAIO of RIZIV-erkenning) de drempel kunnen wegnemen.
 
-### Hoe alle inzichten samenkomen in het eindontwerp
-
-Elke beslissing in het Develop 3 prototype is herleidbaar tot een specifieke fase-inzicht. De tabel hieronder maakt die ketting expliciet:
-
-| Ontwerpkeuze in eindproduct | Bronfase | Centraal inzicht dat de keuze afdwong |
-|---|---|---|
-| Modulair clip-on handvat (geen volledige slimme stok) | Wave 1 + Wave 2 | Volledige slimme stok werd unaniem afgewezen ; afneembaar handvat unaniem aanvaard |
-| Haptiek als primaire modaliteit, audio als opt-in fallback | Discovery + Wave 1 + Develop 3 | Gebruikers willen gehoor vrijhouden in publieke context, maar Jelle vroeg expliciet om een spraak-noodvariant ; vandaar default uit, met opt-in inschakeling |
-| Mechanisch kompaselement | Develop 1 | Continue koersfeedback in handpalm haalde 97.5% nauwkeurigheid, mechanisch slaat intuïtief over zonder leerfase |
-| Sferisch contactoppervlak | Develop 2 (Test 2) | Mario en Herman convergeerden op sferisch boven cilindrisch en conisch |
-| Laagste gleufpositie (kompas binnen handpalm) | Develop 2 (Test 2) | Kompas in handpalm, niet eruit wijkend ; voorkeurs-hoogte uit antropometrie + test |
-| Servo-aangedreven kompas (MG90S) | Develop 3 + Deliver | Voor de finale validatie moet het kompas autonoom kunnen draaien op basis van een richtingsinstructie ; servo-aandrijving overbrugt de stap van handmatig naar autonoom |
-| KY-040 roterende encoder als Wizard-of-Oz controller | Deliver | 90% van Develop 1 fouten kwam uit wizard-timing via telefoon ; een fysieke encoder geeft een nauwkeurigere, real-time aansturing van het kompas tijdens de eindtest |
-| 1 trilmotor + DRV2605L (geen 3 motoren) | Develop 2 (Test 3) | "Single focus point" wint van meervoudige motoren; meerdere motoren creëren bovendien een grip-restrictie |
-| 3 kernsignalen M4 / M6 / M9 | Develop 3 (UG7, UG8) | Reductie van 9 kandidaat-patronen naar 3; drie was de bovengrens voor herkenbaarheid zonder leerfase |
-| PA6 unfilled core + TPE Shore 65A overmold | Develop 3 CMF | Zachter materiaal werd unaniem geprefereerd; PA6 voor slijtvastheid van dragend gedeelte |
-| Fijne radiale ribbels in grip-zone | Develop 3 CMF | Tactiele oriëntatie zonder dat de grip nadrukkelijk voelbaar moet zijn |
-| Eén drukknop (start/stop + overzicht via double-press) | Develop 3 + Deliver | Minimaliseer aantal bedieningselementen op de grip-zone; één robuuste momentane knop dekt de twee primaire acties via context-onderscheid |
-| SS12F44 schuifschakelaar voor hard aan/uit | Deliver | Vermijden van quiescent battery drain wanneer het handvat niet gebruikt wordt ; aparte van de soft-sleep van de XIAO |
-| Vervangbare aluminium pin met optionele TPE-tip | Develop 3 | Herman's winter-zorg + Jelle's mm-finetuning convergeren op één gedeelde noodzaak |
-| Witte stok blijft wit, contrast-handvat in zwart of rood | Develop 3 | Conform ISO 9999 + nationale verkeerswetten; zichtbaarheid voor derden |
-| Interne Li-Po 900 mAh + USB-C oplaadcircuit (TP4056) | Develop 3 + Deliver | Autonomie vereist voor outdoor en onbekende routes; USB-C voor universeel opladen en firmware-flashen via dezelfde poort |
-| MT3608 boost converter voor 5 V audio-rail | Deliver | Alleen actief wanneer audio-fallback wordt ingeschakeld ; spaart batterij in de default-mode |
-
-Zie [docs/design_requirements.md](docs/design_requirements.md) voor de formele requirement-mapping die deze tabel onderbouwt.
-
-### Architectuur van het eindproduct
+#### Architectuur van het eindproduct
 
 **Hardware**
-
-- 1× Seeed XIAO ESP32-S3 als centrale microcontroller met onboard Li-Po laadondersteuning (WiFi voor configuratie en Wizard-of-Oz controller, BLE 5.0-ready voor toekomstige smartphone-koppeling)
-- 1× Adafruit DRV2605L haptische driver via I2C (ERM-modus)
-- 1× coin vibratiemotor (DC 3V, 80 mA, 11000 RPM, 10×2.7 mm) tegen de hypothenar-zijde van het handvat
-- 1× MG90S mini-servo voor aansturing van het mechanisch kompas
-- 1× sferisch kompaselement op de servo-as, in de laagste gleufpositie
-- 1× KY-040 roterende encoder als Wizard-of-Oz controller voor de testleider
-- 1× HOTUT IP67 metalen drukknop (12 mm) voor start/stop en overzicht
-- 1× SS12F44 SPDT schuifschakelaar voor harde aan/uit
-- 1× MAX98357A I2S audio-versterker en 2W 8Ω speaker (opt-in audio-fallback)
-- 1× interne Li-Po accu (3.7 V, 900 mAh) met TP4056 USB-C laadcircuit
-- 1× MT3608 boost converter voor de 5 V audio-rail (alleen actief bij audio-fallback)
-- 1× USB-C poort (gedeeld voor opladen en firmware-flashen)
+- 1× microcontroller met BLE 5.0 + WiFi (productie-equivalent van XIAO ESP32-S3)
+- 1× DRV2605L haptische driver
+- 1× LRA-trilmotor (200 Hz resonance, productie-grade)
+- 1× MG90S-equivalente servo voor mechanisch kompas
+- 1× sferisch kompaselement, laagste gleufpositie, vervangbare aluminium pin met optionele TPE-tip
+- 2× ToF-sensoren (VL53L0X of vergelijkbaar) voor obstakeldetectie op hoofd- en voethoogte
+- 1× drukknop + harde aan/uit-switch
+- 1× speaker + I2S-versterker voor opt-in audio
+- 1× Li-ion accu (1500-2500 mAh) met USB-C laadcircuit + battery management
 
 **Behuizing**
-
-- 3D-geprinte core in PA6 unfilled
+- 3D-geprinte of injectie-geperste core in PA6 unfilled
 - TPE Shore 65A overmold met fijne radiale ribbels
+- POM-knoppen met visueel-tactiele differentiatie
 - Heatset-inserts M3 voor stok-bevestiging
-- Schroefbare cap voor service-toegang
+- Antraciet of contrasterend rood, witte stok blijft wit (ISO 9999 + verkeerswetten)
 
 **Software**
-
-- Arduino-gebaseerde firmware op de XIAO ESP32-S3
-- Drie haptische micropatronen (M4, M6, M9) via DRV2605L preset effects en custom RTP-waveforms
-- Servo-aansturing op basis van encoder-positie (kwadratuur-decodering met interrupts op CLK/DT)
-- Wizard-of-Oz controller webpagina op WiFi-AP voor testleider-aansturing (parallel met de fysieke encoder)
-- Opt-in I2S audio-pipeline met MAX98357A in stand-by tot fallback geactiveerd wordt
+- BLE-app (iOS + Android) met VoiceOver / TalkBack voor route-input, monitoring, batterij-feedback
+- Route-engine met FLEPOS / WALCORS NTRIP-correcties
+- Drie haptische micropatronen (M4, M6, M9) via DRV2605L
+- Servo-aansturing op basis van GPS-route + heading
+- Battery feedback via M9-puls bij low-battery
+- Opt-in audio-pipeline (default uit)
 - Deep-sleep tussen pulses voor batterij-efficiëntie
 
-### Reproduceerbaarheid voor externe bouwers
+#### Waarom dit het juiste eindproduct is
 
-De documentatie is opgebouwd zodat een externe partij met 3D-printer, soldeerset en Arduino-toolchain het product zelfstandig kan nabouwen:
+Drie principes dragen de productie-vorm:
+
+1. **Versterken, niet vervangen** ; de witte stok blijft primaire obstakeldetector. SensePath voegt oriëntatie op keuzemomenten toe en vangt buiten-stok-bereik obstakels op.
+2. **Hands-free, heads-up, ear-by-default-free** ; geen smartphone-aandacht tijdens het stappen, geen audio in default-modus.
+3. **Minimale cognitive load** ; één tactiel aandachtspunt voor continue feedback, drie maximaal onderscheidbare event-signalen.
+
+Volledige onderbouwing in [docs/design_requirements.md](docs/design_requirements.md).
+
+### Ons prototype → MVP voor academische deliverable
+
+Wat we werkelijk gebouwd hebben, ligt bewust onder de productie-scope. Een academisch project van één semester moet de **essentiële design-hypothesen** kunnen testen, niet het volledige product realiseren. Onze prototype-keuzes weerspiegelen die scope-beperking, met telkens een verantwoording voor de versimpeling.
+
+#### Hardware-realisatie
+
+- **3D-print in PLA** in plaats van PA6 + TPE-overmold ; sneller iteratie en lagere kost. De vormfactor en grip-textuur zijn behouden, alleen de materiaal-feel verschilt. CMF-keuzes zijn onderbouwd in Develop 3 maar niet als gecombineerd prototype getest.
+- **Coin vibratiemotor** in plaats van LRA ; goedkoper en breder beschikbaar. Wordt aangedreven door dezelfde DRV2605L (in ERM-modus); de drie haptische microsignalen blijven herkenbaar.
+- **MG90S mini-servo** voor aansturing van het mechanisch kompas. Identiek aan de productie-vision.
+- **KY-040 roterende encoder** als Wizard-of-Oz controller voor de testleider. Vervangt voorlopig de GPS-pipeline + smartphone-app: de testleider draait de encoder, de XIAO leest de positie uit, de servo draait het kompas in de hand van de gebruiker. Daarmee kan het volledige feedback-circuit getest worden zonder eerst RTK GNSS + BLE-app te moeten bouwen.
+- **Geen obstakeldetectie** in het prototype. Methodische keuze: de stok blijft de primaire detector, en het toevoegen van ToF-sensors zou een confounding variabele introduceren in de haptische-navigatie-tests die we willen doen. Voor productie is obstakeldetectie volwaardig opgenomen (D2.5 + D2.6).
+- **Speaker + MAX98357A I2S-versterker** voor opt-in audio-fallback (default uit, MT3608 boost levert 5 V alleen wanneer geactiveerd).
+- **HOTUT IP67 metalen drukknop** + **SS12F44 SPDT schuifschakelaar** voor bediening en harde aan/uit.
+- **Interne Li-Po 900 mAh** + **TP4056 USB-C laadcircuit** ; opladen en firmware-flashen via dezelfde poort.
+
+#### Waarom dit voldoende is om de essentiële interacties te valideren
+
+Het prototype test wat het ontwerp daadwerkelijk uniek maakt: de combinatie van een mechanisch kompas in de handpalm met drie discrete haptische signalen op beslismomenten, in samenspel met de witte stok. De stappen die het prototype overslaat (RTK GNSS-pipeline, productie-materialen, obstakeldetectie, BLE-app) zijn onafhankelijke engineering-uitdagingen die het ontwerp niet veranderen ; alleen de implementatie ervan opschalen naar productie-niveau.
+
+#### Reproduceerbaarheid van het prototype
 
 | Document | Inhoud |
 |---|---|
-| [docs/bom.md](docs/bom.md) | Bill of Materials met productlinks, richtprijzen en materiaal-specs |
-| [docs/wiring.md](docs/wiring.md) | Schakelschema (Mermaid), pinout-tabel, power budget, batterij-circuit |
-| [docs/build_guide.md](docs/build_guide.md) | Stap-voor-stap bouwinstructies van 3D-print tot eerste haptische puls |
-| [cad/](cad/) | CAD-bronbestanden in Siemens NX, met [cad/exports/](cad/exports/) voor STL en STEP |
+| [docs/bom.md](docs/bom.md) | BOM van het MVP-prototype (componentenlijst, productlinks, prijs) |
+| [docs/wiring.md](docs/wiring.md) | Schakelschema, pinout, power budget |
+| [docs/build_guide.md](docs/build_guide.md) | Stap-voor-stap bouwinstructies |
+| [cad/](cad/) | CAD-bronbestanden Siemens NX + STL/STEP exports in [cad/exports/](cad/exports/) |
 | [src/firmware/sensepath_esp32/](src/firmware/sensepath_esp32/) | Arduino firmware met Wizard-of-Oz webcontroller |
 
-### Finale validatie ; wat de Deliver-test moet aantonen
+### Vertaalstap → prototype tegenover eindproduct
 
-Drie aannames blijven onbewezen na Develop 3 en bepalen de Deliver-test. De roterende encoder maakt het mogelijk om deze tests te draaien zonder eerst een volledig autonoom GPS-systeem te bouwen ; de testleider sluit het feedback-circuit door zelf de richting in te geven via de encoder, en de blinde gebruiker ervaart hetzelfde haptisch + kompas-feedback alsof het systeem zelf de route bepaalt.
+Voor elke ontwerpbeslissing maakt de tabel hieronder helder wat **design** is (blijft constant tussen prototype en eindproduct) en wat **scope-keuze** is (verschilt tussen beide).
 
-1. **Volledige stok-handvat-perceptie tijdens autonoom stappen.** Tot nu toe werden de signalen via de telefoon getriggerd terwijl de gebruiker enkel het handvat in de hand had, zonder echte witte stok. Eindtest: de gebruiker stapt een onbekende route met de stok-tikken én het haptisch kompas in de hand én de drie microsignalen via de coin motor, terwijl de testleider via de KY-040 encoder de richting bijstuurt. Vraag: kan de gebruiker alle drie de inputs parallel verwerken op natuurlijke wandelsnelheid?
+| Inzicht uit onderzoek | Keuze in eindproduct | Realisatie in ons prototype |
+|---|---|---|
+| Modulair clip-on handvat (geen volledige slimme stok) | Productie-handvat met certificeerde clip | PLA-handvat met schroef-clip, identiek concept |
+| Continue koersfeedback in handpalm | Mechanisch kompas, servo-aangedreven, gestuurd door RTK GNSS-route | Mechanisch kompas, servo-aangedreven, gestuurd door KY-040 encoder (Wizard-of-Oz vervanger van GPS) |
+| Sferisch contactoppervlak in laagste gleufpositie | Identiek | Identiek |
+| 1 trilmotor + DRV2605L met 3 microinteracties | LRA + DRV2605L (cleaner onset/offset) | Coin vibratiemotor + DRV2605L (zelfde driver, ERM-actuator om kost) |
+| 3 kernsignalen M4 / M6 / M9 | Identiek | Identiek |
+| PA6 unfilled core + TPE Shore 65A overmold + fijne radiale ribbels | Productie-materialen, injectie-geperst | PLA 3D-print zonder overmold (vorm + textuur identiek, materiaal-feel anders) |
+| Hoog-nauwkeurige positionering | RTK GNSS via FLEPOS / WALCORS infrastructuur | Niet aanwezig ; vervangen door encoder-aansturing |
+| Smartphone-app voor route-input | Native iOS / Android met VoiceOver / TalkBack | Niet aanwezig ; testleider neemt rol over via encoder |
+| Geïntegreerde obstakeldetectie (D2.5 + D2.6) | ToF-sensoren op hoofd- en voethoogte | Niet in prototype; methodische keuze om confounding te vermijden |
+| Battery management + low-power modes | Productie-firmware met deep-sleep, batterij-feedback via M9 | Basisuitvoering: deep-sleep tussen pulses; geen battery-feedback aan gebruiker |
+| BLE 5.0 link | Native gekoppeld aan smartphone-app | Hardware aanwezig (XIAO ESP32-S3), nog niet geïmplementeerd in firmware |
+| Opt-in audio-fallback | Speaker of Bluetooth-oortje | Speaker + MAX98357A in het handvat, default uit |
+| Bediening: 1 drukknop + harde aan/uit | Industrieel waterdichte knop + interne power-cut | HOTUT IP67 knop + SS12F44 SPDT schuifschakelaar |
+| Voeding | Li-ion (1500 → 2500 mAh) + custom PCB met USB-C | Li-Po 900 mAh + TP4056 USB-C breakout |
+| Vervangbare aluminium pin met optionele TPE-tip | Productie-pin + TPE-tip set | Aluminium pin (TPE-tip nog niet gefabriceerd) |
+| Witte stok blijft wit, contrast-handvat | Antraciet of contrasterend rood, ISO 9999 conform | PLA in beschikbare kleur, geen finale CMF |
+
+Zie [docs/design_requirements.md](docs/design_requirements.md) voor de formele requirement-mapping.
+
+### Finale validatie van het prototype
+
+Drie tests bepalen of het prototype zijn doel haalt: aantonen dat het feedback-circuit werkt onder real-life condities. De roterende encoder maakt deze tests mogelijk zonder eerst een GPS-pipeline te moeten bouwen.
+
+1. **Geïntegreerde wandeling met stok + handvat + microsignalen + kompas.** Tot nu toe werd het handvat los van de stok getest. Eindtest: de gebruiker stapt een onbekende route met de stok-tikken én het haptisch kompas in de handpalm én de drie microsignalen via de coin motor, terwijl de testleider via de KY-040 encoder de richting bijstuurt. Vraag: kan de gebruiker alle drie de inputs parallel verwerken op natuurlijke wandelsnelheid?
 2. **Indoor-validatie in een station.** Alle drie de blinde testers wezen spontaan op stations als doel-context. De huidige tests vonden plaats in residentiële omgevingen. Open: kan het systeem bij metro-style ruisniveau bruikbaar blijven, en blijft het haptisch kompas onderscheidbaar wanneer omgevingsgeluid de oren al belast?
-3. **Vertaalstap naar autonome GPS-aansturing.** De encoder-aansturing is een geldige Wizard-of-Oz vervanging om het feedback-circuit te valideren, maar laat één open vraag staan: kan de signaal-keten (richting → encoder → servo → kompas) 1-op-1 vervangen worden door (GPS-route → microcontroller → servo → kompas), of vereist de GPS-foutmarge (5 → 10 m in stedelijke canyons) een opgenomen-route-met-correctiemechanisme? Deze vraag valt buiten de scope van dit project en is genoteerd in de [Kritische reflectie](#kritische-reflectie).
+3. **Cognitive load over een volledige wandeling.** Onze huidige tests waren 5 → 15 minuten. Open: kan de gebruiker 45+ minuten lang de hand-aandacht volhouden zonder dat de microsignalen of het kompas in de achtergrond verdwijnen?
 
-Wat deze drie tests gemeen hebben, is dat ze niet het ontwerp meten maar de **integratie van alle inzichten samen onder real-life condities**. De ontwerpkeuzes zelf zijn empirisch onderbouwd in Develop 1 → 3; wat de Deliver-test toevoegt is de bevestiging dat het geïntegreerde systeem werkt als geheel, met servo-aangedreven kompas, haptiek én stok-tikken parallel. De vijf open onderzoeksvragen die buiten dit project nog beantwoord moeten worden, staan gebundeld in de [Kritische reflectie](#kritische-reflectie).
+Wat deze drie tests gemeen hebben, is dat ze de **integratie van alle inzichten samen onder real-life condities** meten, niet de individuele ontwerpkeuzes (die zijn al onderbouwd in Develop 1 → 3).
+
+### Wat open blijft voor het beoogde eindproduct
+
+Niet getest in dit project, vereist voor productie-deployment:
+
+- **RTK GNSS-pipeline**: subscription en NTRIP-koppeling met FLEPOS / WALCORS, route-engine in smartphone-app, fail-over wanneer correcties uitvallen.
+- **Obstakeldetectie**: keuze ToF vs ultrasoon, sensor-positionering, integratie met haptische taal (eventueel een nieuwe microinteractie M11/M12).
+- **Productie-materialen**: overstap PLA → PA6 + TPE-overmold, herhalen CMF-tests met finale materialen.
+- **BLE-app**: iOS / Android implementatie, koppeling met VoiceOver / TalkBack, route-input + monitoring.
+- **Battery management**: low-power modes, batterij-feedback aan gebruiker via M9, langere autonomie (1500 → 2500 mAh).
+- **Certificering**: ISO 9999 + nationale verkeerswetten + medische hulpmiddel-classificatie indien van toepassing.
+- **Business case**: subsidie-traject (VLAIO, RIZIV), distributiemodel via Licht en Liefde / Brailleliga, sociale tariefkans op FLEPOS / WALCORS-licentie.
+
+De vijf overkoepelende open onderzoeksvragen staan in de [Kritische reflectie](#kritische-reflectie).
 
 ---
 
