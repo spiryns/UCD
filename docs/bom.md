@@ -1,103 +1,112 @@
-# Bill of Materials (BOM)  
-## SensePath – Prototype
+# Bill of Materials (BOM)
+## SensePath → Develop 3 finaal prototype
+
+Deze BOM beschrijft de componenten van het **Develop 3 prototype**: een 3D-geprint handvat dat op een standaard lange witte stok geklikt wordt, met geïntegreerde haptische feedback. Dit is de configuratie waarmee de finale gebruikerstests werden uitgevoerd (N=5).
+
+> Voor de bredere technische context: zie [wiring.md](wiring.md) voor het schakelschema en [build_guide.md](build_guide.md) voor de bouwinstructies.
 
 ---
 
-## 📘 Projectomschrijving
-
-Dit document bevat een overzicht van alle onderdelen die nodig zijn voor de realisatie van het laatst bekomen prototype.
-
-Het prototype beschikt over:
-
-- 1× aan/uit-knop  
-- 1× knop om geluid aan/uit te schakelen  
-- 2× afstandssensoren (bereik ± 2 meter)  
-- 1× speaker voor auditieve feedback  
-- 1× stepper motor voor mechanische feedback  
-- 1× strap (polslus)  
-- 1× interne oplaadbare batterij  
-- 2× trillingsmotoren  
-
----
-
-## 1. ⚙️ Besturingselektronica
+## 1. Besturingselektronica
 
 | Onderdeel | Specificatie | Aantal | Productlink |
-|----------|---------------|--------|--------------|
-| Microcontroller | ESP32 DevKit | 1 | https://www.tinytronics.nl/shop/nl/ontwikkeling-boards/microcontroller-boards/esp32 |
-| Aan/uit knop | Waterdichte drukknop IP67 | 1 | https://www.tinytronics.nl/shop/nl/schakelaars/drukknoppen/waterdichte-drukknop |
-| Geluid aan/uit knop | Waterdichte drukknop IP67 | 1 | https://www.tinytronics.nl/shop/nl/schakelaars/drukknoppen/waterdichte-drukknop |
+|---|---|---|---|
+| Microcontroller | Seeed Studio XIAO ESP32-S3 | 1 | https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html |
+| Haptische driver | Adafruit DRV2605L (I2C breakout) | 1 | https://www.adafruit.com/product/2305 |
+
+Waarom deze componenten: de XIAO ESP32-S3 biedt WiFi (nodig voor de Wizard-of-Oz controller) en deep-sleep capaciteit in een compacte footprint die in het handvat past. De DRV2605L heeft een ingebouwde ROM met 123 effecten en kan een LRA aansturen zonder dat de microcontroller golfvormen real-time moet genereren.
 
 ---
 
-## 2. 📏 Afstandssensoren (± 2 meter)
+## 2. Haptische actuator
 
 | Onderdeel | Specificatie | Aantal | Productlink |
-|----------|---------------|--------|--------------|
-| Distance sensor | VL53L0X Time-of-Flight | 2 | https://www.tinytronics.nl/shop/nl/sensoren/afstand/vl53l0x-time-of-flight-afstandssensor |
+|---|---|---|---|
+| LRA-trilmotor | Linear Resonant Actuator, ~200 Hz, 3 mm dik | 1 | https://www.adafruit.com/product/1201 |
+
+De keuze voor één LRA (in plaats van de eerdere 3-motor opstelling uit Develop 1 of de coin vibration motors uit semester 1) gebeurde in Develop 2 op basis van gebruikersfeedback: één duidelijk gelokaliseerd signaal werkt beter dan meerdere overlappende motoren. Een LRA biedt scherpere onset/offset dan een ERM, wat de microinteractie M4/M6/M9 herkenbaarder maakt.
 
 ---
 
-## 3. 🔊 Audio
+## 3. Bedieningselementen
 
 | Onderdeel | Specificatie | Aantal | Productlink |
-|----------|---------------|--------|--------------|
-| Speaker | 4Ω – 3W (40 mm) | 1 | https://www.tinytronics.nl/shop/nl/audio/speakers/40mm-speaker-4ohm-3w |
-| Audio versterker | MAX98357A I2S | 1 | https://www.tinytronics.nl/shop/nl/audio/versterkers/max98357a-i2s-audio-versterker |
+|---|---|---|---|
+| POM-knop | Mechanische drukknop, POM-kop voor tactiele herkenbaarheid | 2 | https://www.tinytronics.nl/shop/nl/schakelaars/drukknoppen/ |
+
+Eén knop = start/stop route, één knop = "geef volledig overzicht" (zie design requirement D3.4). POM is gekozen omdat het glad en kleurvast is, en visueel duidelijk verschilt van de TPE-grip.
 
 ---
 
-## 4. ⚡ Mechanische feedback
+## 4. Behuizing en grip
+
+| Onderdeel | Specificatie | Aantal | Toelichting |
+|---|---|---|---|
+| Handvat-core | 3D-print in PA6 (unfilled) of PETG-fallback | 1 | Draagt de elektronica en het kompasmechanisme. PA6 voor slag- en slijtvastheid. |
+| Overmold-grip | TPE Shore 65A | 1 | Zachte buitenlaag voor comfortabele grip. Bij prototype: geprint of giet-overmold. |
+| Kompaselement | Sferisch contactoppervlak, laagste gleufpositie | 1 | Voorkeurconfiguratie uit Develop 2 (zie design requirements D6.1–D6.4). |
+| Aluminium pin | M3 doorgaande as voor kompas-rotatie | 1 | Laag-frictie draaipunt. |
+| Heatset insert | M3, messing | 2 | Voor montage op de witte stok. |
+
+CMF-onderbouwing: zie Develop 3 sectie in [README.md](../README.md).
+
+---
+
+## 5. Voeding (huidig prototype)
 
 | Onderdeel | Specificatie | Aantal | Productlink |
-|----------|---------------|--------|--------------|
-| Stepper motor | 28BYJ-48 – 5V | 1 | https://www.tinytronics.nl/shop/nl/motoren/stepper-motoren/28byj-48-stepper-motor |
-| Stepper driver | ULN2003 | 1 | https://www.tinytronics.nl/shop/nl/motoren/drivers/uln2003-stepper-motor-driver |
-| Trillingsmotor | Coin vibration motor 3–5V | 2 | https://www.tinytronics.nl/shop/nl/motoren/trillingsmotoren/coin-vibration-motor |
+|---|---|---|---|
+| USB-C kabel | USB-C, lengte ~1.5 m | 1 | (commodity) |
+
+Het huidige prototype draait op USB-voeding. Batterijintegratie staat gepland voor de Deliver-fase (zie sectie 6).
 
 ---
 
-## 5. 🔋 Voeding
+## 6. Geplande batterijintegratie (Deliver-fase, nog niet in prototype)
 
 | Onderdeel | Specificatie | Aantal | Productlink |
-|----------|---------------|--------|--------------|
-| Batterij | 18650 Li-ion ±3000 mAh | 1 | https://www.tinytronics.nl/shop/nl/batterijen/18650-li-ion |
-| Batterijlader | TP4056 USB-C met protectie | 1 | https://www.tinytronics.nl/shop/nl/power/laders/tp4056-usb-c-li-ion-lader |
-| Boost converter | MT3608 Step-up | 1 | https://www.tinytronics.nl/shop/nl/power/step-up-converters/mt3608-step-up-converter |
-| Batterijhouder | 18650 houder | 1 | https://www.tinytronics.nl/shop/nl/batterijen/batterijhouders/18650 |
+|---|---|---|---|
+| Li-ion accu | 18650, ~3000 mAh of 1S 1000 mAh LiPo | 1 | https://www.tinytronics.nl/shop/nl/batterijen/ |
+| Laadcircuit | TP4056 USB-C met overcharge/over-discharge protectie | 1 | https://www.tinytronics.nl/shop/nl/power/laders/tp4056-usb-c-li-ion-lader |
+| Batterijhouder | 18650-houder | 1 | https://www.tinytronics.nl/shop/nl/batterijen/batterijhouders/18650 |
+
+Theoretische schatting: ESP32-S3 in deep-sleep tussen pulses + LRA-pulses → 6 tot 8 uur autonomie op 1000 mAh. Empirisch nog niet gevalideerd (open punt voor Deliver-fase).
 
 ---
 
-## 6. 🧩 Mechanische onderdelen
+## 7. Overige prototyping-materialen
 
-| Onderdeel | Specificatie | Aantal | Productlink |
-|----------|---------------|--------|--------------|
-| Strap | Polslus / lanyard | 1 | https://www.amazon.nl/dp/B08L7Z6D3S |
-| Schroeven | M2 / M3 set | meerdere | https://www.tinytronics.nl/shop/nl/mechanica/schroeven |
-| Heat-set inserts | M2 / M3 | meerdere | https://www.tinytronics.nl/shop/nl/mechanica/inserts |
-
----
-
-## 7. 🛠️ Overige prototyping-materialen
-
-- PCB of perfboard  
-- JST-connectoren  
-- Elektrische bedrading (AWG26–30)  
-- Krimpkous  
-- Soldeer + flux  
-- Kabelbinders  
-- Dubbelzijdige tape of epoxy  
-- Speaker-mesh of schuim  
+- Perfboard of mini-PCB (voor DRV2605L ↔ XIAO bedrading)
+- JST-PH connectoren (2-pin voor LRA, 3-pin voor knoppen)
+- AWG28 bedrading (intern handvat)
+- Krimpkous Ø2 mm
+- Soldeer (Sn60/Pb40 of loodvrij) + flux
+- Schroeven M2/M3 set
+- Dubbelzijdige tape of epoxy (voor LRA-fixatie tegen handvatwand)
 
 ---
 
-## 8. 💰 Totale kost (indicatie)
+## 8. Totale kost (indicatie, Develop 3 configuratie zonder batterij)
 
-| Type prototype | Richtprijs |
-|----------------|------------|
-| Basisprototype | €40 – €60 |
-| Net afgewerkt prototype | €70 – €120 |
+| Categorie | Richtprijs |
+|---|---|
+| Elektronica (XIAO ESP32-S3 + DRV2605L + LRA + knoppen) | €25 → €35 |
+| Print-/grondstoffen (PA6 + TPE-filament, ~80 g totaal) | €5 → €10 |
+| Hardware (inserts, pin, schroeven, connectoren) | €5 → €10 |
+| **Totaal basisprototype (USB-voeding)** | **€35 → €55** |
+| Batterijintegratie (Deliver-fase, additioneel) | +€10 → €15 |
 
 ---
 
+## 9. Vergelijking met voorgaande iteraties
 
+| Component | Semester 1 | Develop 1 | Develop 2 | Develop 3 (huidig) |
+|---|---|---|---|---|
+| Microcontroller | ESP32 DevKit | ESP32 DevKit | XIAO ESP32-S3 | XIAO ESP32-S3 |
+| Afstandssensoren | 2× VL53L0X | 2× VL53L0X | geen | geen |
+| Mechanische feedback | Stepper 28BYJ-48 + ULN2003 | Mechanisch kompas | Mechanisch kompas | Mechanisch kompas (sferisch contact) |
+| Trilmotoren | 2× coin vibration | 3× LRA | 1× LRA + DRV2605L | 1× LRA + DRV2605L |
+| Audio | Speaker + MAX98357A | geen | geen | geen |
+| Voeding | 18650 + TP4056 + MT3608 | 18650 + TP4056 | USB | USB (batterij gepland) |
+
+Reductie van complexiteit was doelbewust: elke iteratie schrapte componenten die in tests niet bijdroegen aan de kerninteractie (haptische richtingaanwijzing via één duidelijk signaal in de hand).
