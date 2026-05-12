@@ -132,8 +132,8 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 
 | Methode | Type | N | Periode | Doel |
 |---|---|---|---|---|
-| User interviews | Semigestructureerde diepte-interviews (15–20 min) | 3 | 18/10 – 25/10/2025 | Contextuele inzichten over routines, frustraties en voorkeuren |
-| Benchmarking | Systematische vergelijking bestaande oplossingen | 11 | — | Sterktes → best practices, zwaktes → design opportuniteiten |
+| User interviews | Semigestructureerde diepte-interviews (15-20 min) | 3 | 18/10 - 25/10/2025 | Contextuele inzichten over routines, frustraties en voorkeuren |
+| Benchmarking | Systematische vergelijking bestaande oplossingen | 11 | n.v.t. | Sterktes → best practices, zwaktes → design opportuniteiten |
 
 ### Resultaten
 
@@ -243,7 +243,7 @@ Gebruikers verwachten eerst en vooral **betrouwbaarheid, controle en mentale rus
 >
 > | ID | Requirement |
 > |---|---|
-> | D1.1 | SensePath wordt ontworpen als **volledige slimme stok** (geen universeel afneembaar handvat) |
+> | D1.1 | SensePath wordt ontworpen als **tweedelig systeem** met conventioneel stok-onderstuk en verwisselbaar tech-handvat (geen volledige slimme stok ; afneembaar via schroefverbinding) |
 > | D1.2 | De stok moet beschikbaar zijn in **meerdere lengtes** |
 > | D1.3 | De gebruiker moet **kunnen switchen tussen lengtes** (modulair systeem) |
 > | D1.4 | De lengte-verbinding(en) moeten **mechanisch stabiel** zijn (geen speling/rotatie) |
@@ -492,11 +492,11 @@ De wizard biedt continue feedback via het draaiende kompasbolletje in het handva
 | Metric | Tactile Compass (Liu et al.) | SensePath |
 |---|---|---|
 | SIZ (% stappen in zone) | 92,6% | 83,78% |
-| Leerbaarheid (1–7) | 6,67 | 5,67 |
-| Soepelheid (1–7) | 6,06 | 5,50 |
-| Cognitieve belasting (1–7) | 5,22 | 3,67 |
-| Bereidheid (1–7) | 6,39 | 5,33 |
-| Vertrouwen (1–7) | n.v.t. | 5,33 |
+| Leerbaarheid (1-7) | 6,67 | 5,67 |
+| Soepelheid (1-7) | 6,06 | 5,50 |
+| Cognitieve belasting (1-7) | 5,22 | 3,67 |
+| Bereidheid (1-7) | 6,39 | 5,33 |
+| Vertrouwen (1-7) | n.v.t. | 5,33 |
 
 ### Test 2: Afslag via trilsignaal
 
@@ -518,11 +518,11 @@ De wizard stuurt trilsignalen op het juiste moment via de controller-app.
 | Metric | Tactile Compass (Liu et al.) | SensePath |
 |---|---|---|
 | SIZ (% stappen in zone) | 92,6% | 79,85% |
-| Leerbaarheid (1–7) | 6,67 | 6,50 |
-| Soepelheid (1–7) | 6,06 | 6,33 |
-| Cognitieve belasting (1–7) | 5,22 | 4,67 |
-| Bereidheid (1–7) | 6,39 | 6,33 |
-| Vertrouwen (1–7) | n.v.t. | 6,00 |
+| Leerbaarheid (1-7) | 6,67 | 6,50 |
+| Soepelheid (1-7) | 6,06 | 6,33 |
+| Cognitieve belasting (1-7) | 5,22 | 4,67 |
+| Bereidheid (1-7) | 6,39 | 6,33 |
+| Vertrouwen (1-7) | n.v.t. | 6,00 |
 
 ### Test 3: Gecombineerd parcours
 
@@ -544,11 +544,11 @@ Kompas (continue koersfeedback) + vibratie (afslagcue) samen op hetzelfde parcou
 | Metric | Tactile Compass (Liu et al.) | SensePath |
 |---|---|---|
 | SIZ (% stappen in zone) | 92,6% | **97,52%** |
-| Leerbaarheid (1–7) | 6,67 | 6,00 |
-| Soepelheid (1–7) | 6,06 | 4,67 |
-| Cognitieve belasting (1–7) | 5,22 | 3,00 |
-| Bereidheid (1–7) | 6,39 | 4,33 |
-| Vertrouwen (1–7) | n.v.t. | 3,00 |
+| Leerbaarheid (1-7) | 6,67 | 6,00 |
+| Soepelheid (1-7) | 6,06 | 4,67 |
+| Cognitieve belasting (1-7) | 5,22 | 3,00 |
+| Bereidheid (1-7) | 6,39 | 4,33 |
+| Vertrouwen (1-7) | n.v.t. | 3,00 |
 
 ### Develop 1 conclusies
 
@@ -773,11 +773,11 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
 | Walking zone width | 60 cm | 60 cm |
 | SIZ (% Steps in zone) | **100%** | 97,52% |
 | Apprenticeship | Av. 4 min | Av. 4 min |
-| Learnability (1–7) | 6,33 | 6,00 |
-| Smoothness (1–7) | 5,67 | 4,67 |
-| Cognitive load (1–7) | **4,67** | 3,00 |
-| Willingness (1–7) | 4,33 | 4,33 |
-| Trust (1–7) | n.v.t. | n.v.t. |
+| Learnability (1-7) | 6,33 | 6,00 |
+| Smoothness (1-7) | 5,67 | 4,67 |
+| Cognitive load (1-7) | **4,67** | 3,00 |
+| Willingness (1-7) | 4,33 | 4,33 |
+| Trust (1-7) | n.v.t. | n.v.t. |
 | Positioning system | Video + observation | Video + observation |
 | Stick used? | No (loose handle) | Yes |
 | Context | Interior space Licht en Liefde | Interior space Licht en Liefde |
@@ -793,7 +793,7 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
 | D6.5 | Het kompas pauzeert kort tijdens een vibratiecue om de figuur-grond scheiding tussen de twee haptische kanalen te bewaren |
 | D6.6 | De vibratieset blijft beperkt tot een klein aantal korte, krachtige codes (richtingsaankondiging, buiten-naar-binnen transitie, fallback) |
 | D6.7 | De kompasmodule is uitwisselbaar zodat gebruikers kunnen wisselen naar een robuustere variant voor handschoengebruik in koude omstandigheden |
-| D6.8 | De handvatdimensies accommoderen het middelste 50% van de doelgroep (ANSUR II, P25–P75) zoals gevalideerd in NX |
+| D6.8 | De handvatdimensies accommoderen het middelste 50% van de doelgroep (ANSUR II, P25-P75) zoals gevalideerd in NX |
 | D6.9 | Het systeem voorziet een IMU-gebaseerd fallbacksignaal wanneer de griporiëntatie van de gebruiker de kompas-mapping breekt, gecommuniceerd via een onderscheidend trilpatroon |
 | D6.10 | Er worden geen vibratiemotoren geplaatst op individuele vingerposities, om afhankelijkheid van gripvariatie weg te nemen |
 
@@ -804,7 +804,7 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
 - **Sferisch contactoppervlak met middelhoge uitsteekselhoogte** levert de duidelijkste richtingsperceptie zonder oncomfortabel of scherp aan te voelen.
 - **Cognitieve belasting daalt met 1,67 punten** op een 7-puntsschaal (van 3,00 naar 4,67), het sterkste bewijs dat ergonomische herontwerpkeuzes direct de mentale belasting verlagen. UG3 (≥4,50) is hiermee gehaald.
 - **Continue closed-loop kompasfeedback** (volledige uitwijking naar de doelrichting, geleidelijke terugkoppeling naar neutraal) sluit de Gulf of Evaluation die in Develop 1 de Compare-fase brak.
-- **Antropometrische verankering in NX (ANSUR II, P25–P75)** zorgt dat het handvat past bij het middelste 50% van de doelgroep en niet meer afhangt van individuele handgrootte.
+- **Antropometrische verankering in NX (ANSUR II, P25-P75)** zorgt dat het handvat past bij het middelste 50% van de doelgroep en niet meer afhangt van individuele handgrootte.
 - **Bereidheid blijft het open vraagstuk**: Develop 2 bevestigt dat sommige gebruikers (audio-eerst navigators zoals Herman) buiten de kerndoelgroep van SensePath vallen, wat de gebruikerssegmentatie scherper maakt voor Develop 3.
 - **Een uitwisselbare kompasmodule** is de logische volgende stap, met ruimte voor persoonlijke voorkeur en een robuuste wintervariant voor handschoengebruik.
 
@@ -1135,7 +1135,7 @@ Voor elke ontwerpbeslissing maakt de tabel hieronder helder wat **design** is (b
 | Battery management + low-power modes | Productie-firmware met deep-sleep, batterij-feedback via M9 | Basisuitvoering: deep-sleep tussen pulses; geen battery-feedback aan gebruiker |
 | BLE 5.0 link | Native gekoppeld aan smartphone-app | Hardware aanwezig (XIAO ESP32-S3), nog niet geïmplementeerd in firmware |
 | Opt-in audio-fallback | Speaker of Bluetooth-oortje | Speaker + MAX98357A in het handvat, default uit |
-| Bediening: 1 drukknop + harde aan/uit | Industrieel waterdichte knop + interne power-cut | HOTUT IP67 knop + SS12F44 SPDT schuifschakelaar |
+| Bediening: 1 drukknop + harde aan/uit | POM-knop met visueel-tactiele differentiatie (CMF Develop 3) + interne power-cut | HOTUT IP67 metalen drukknop + SS12F44 SPDT schuifschakelaar (robuuster voor testen, geen finale CMF) |
 | Voeding | Li-ion (1500 → 2500 mAh) + custom PCB met USB-C | Li-Po 900 mAh + TP4056 USB-C breakout |
 | Vervangbare aluminium pin met optionele TPE-tip | Productie-pin + TPE-tip set | Aluminium pin (TPE-tip nog niet gefabriceerd) |
 | Witte stok blijft wit, contrast-handvat | Antraciet of contrasterend rood, ISO 9999 conform | PLA in beschikbare kleur, geen finale CMF |
@@ -1262,7 +1262,7 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 ## Bronnen
 
 - Liu, G., Yu, T., Yu, C., Xu, H., Xu, S., Yang, C., Wang, F., Mi, H., & Shi, Y. (2021). Tactile Compass: Enabling visually impaired people to follow a path with continuous directional feedback. *Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems*. ACM. https://doi.org/10.1145/3411764.3445644
-- Guerreiro, J., Ahmetovic, D., Sato, D., Kitani, K., & Asakawa, C. (2019). Airport accessibility and navigation assistance for people with visual impairments. *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems*, 1–14.
+- Guerreiro, J., Ahmetovic, D., Sato, D., Kitani, K., & Asakawa, C. (2019). Airport accessibility and navigation assistance for people with visual impairments. *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems*, 1-14.
 - Slade, P., Tambe, A., & Kochenderfer, M. J. (2021). Multimodal sensing and intuitive steering assistance improve navigation and mobility for people with impaired vision. *Science Robotics, 6*(59), eabg6594.
 - Norman, D. A. (2013). *The Design of Everyday Things: Revised and Expanded Edition.* Basic Books.
 - World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment

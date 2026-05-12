@@ -13,7 +13,7 @@ Concreet wil deze fase:
 - de belangrijkste design requirements definiëren die richting geven aan verdere ontwikkeling.
 
 ### Materiaal & methoden
-#### Wave 1 – Concept testing in een gecontroleerde omgeving
+#### Wave 1 - Concept testing in een gecontroleerde omgeving
 
 In Wave 1 werd vertrokken vanuit een eerste conceptueel kader voor SensePath: een slimme, afneembare handgreep voor de witte stok die via haptische feedback ondersteuning biedt bij navigatie.
 
@@ -53,7 +53,7 @@ De prototypes werden getest via semigestructureerde interviews en think-aloud te
 
 De inzichten uit deze sessies vormden de basis voor een eerste set richtinggevende design requirements.
 
-#### Wave 2 – Gerichte prototype-testing (verdieping)
+#### Wave 2 - Gerichte prototype-testing (verdieping)
 
 In Wave 2 werd voortgebouwd op de inzichten uit Wave 1. Op basis van duidelijke voorkeuren en afwijzingen werd het aantal concepten bewust beperkt.
 
@@ -137,7 +137,7 @@ Gebruikers verwachten eerst en vooral betrouwbaarheid, controle en mentale rust.
 Deze conclusies vormen de basis voor verdere ontwikkeling in volgende fases, waarin de focus zal verschuiven naar verfijning, realistischere contexten en mogelijke technische implementatie.
 > [!IMPORTANT]
 > Design Requirements:
-> - D1.1 SensePath wordt ontworpen als **volledige slimme stok** (geen universeel afneembaar handvat)
+> - D1.1 SensePath wordt ontworpen als **tweedelig systeem** met conventioneel stok-onderstuk en verwisselbaar tech-handvat (geen volledige slimme stok ; afneembaar via schroefverbinding)
 > - D1.2 De stok moet beschikbaar zijn in **meerdere lengtes**
 > - D1.3 De gebruiker moet **kunnen switchen tussen lengtes** (modulair systeem)
 > - D1.4 De lengte-verbinding(en) moeten **mechanisch stabiel** zijn (geen speling/rotatie)
