@@ -25,14 +25,16 @@ Deze map bevat de CAD-bestanden van de SensePath handvat-iteraties. De primaire 
 - Inwendige uitsparingen voor:
   - XIAO ESP32-S3 microcontroller
   - Adafruit DRV2605L breakout
-  - LRA-trilmotor tegen hypothenar-zijde
-  - 2× POM-knoppen aan de achterkant
+  - Trilmotor tegen hypothenar-zijde (LRA in productie-vorm, coin vibratiemotor 10 × 2.7 mm in MVP-prototype)
+  - MG90S servo voor mechanisch kompas
+  - Bedieningselementen aan de achterkant (POM-knoppen volgens CMF-deepdive in productie-vorm; HOTUT IP67 metalen drukknop + SS12F44 schuifschakelaar in MVP-prototype voor robuust testen)
+  - Onderaan: heatset M3-insert voor schroefverbinding met het stok-onderstuk
 
-CMF-specs (uit Develop 3 CMF-deepdive):
-- Core: **PA6 unfilled** ; slag- en slijtvast voor dragend gedeelte
-- Overmold (gepland): **TPE Shore 65A** ; zacht-tactiel comfort
+CMF-specs (uit Develop 3 CMF-deepdive, productie-doel):
+- Core: **PA6 unfilled** ; slag- en slijtvast voor dragend gedeelte (in MVP-prototype 3D-geprint in PLA voor snelheid)
+- Overmold (gepland): **TPE Shore 65A** ; zacht-tactiel comfort (niet aanwezig in MVP-print)
 - Grip-textuur: fijne radiale ribbels
-- Knoppen: POM (glad, kleurvast)
+- Knoppen: POM (glad, kleurvast) ; in MVP-prototype vervangen door HOTUT IP67 voor robuust testen
 - Kompas-pin: aluminium met optionele TPE-tip (vervangbaar)
 
 ---
