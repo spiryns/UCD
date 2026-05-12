@@ -845,7 +845,7 @@ De test combineert drie opeenvolgende blokken in één sessie van ± 75 minuten 
 **Handvat met geïntegreerde elektronica.** Het Develop 3 prototype is een 3D-geprint handvat met de uit Develop 2 geselecteerde voorkeurshoogte en sferisch contactoppervlak van het kompas. De gleuf is verkleind zodat het kompas binnen de handpalm blijft draaien in plaats van eruit te wijken. In het handvat zit een **XIAO ESP32-S3 microcontroller** gekoppeld aan een **DRV2605L haptische driver** die de **trilmotor (LRA)** aanstuurt. De microcontroller maakt een eigen WiFi-acces point ("SensePath") aan, waardoor de testleider via een webpagina op zijn telefoon (`http://192.168.4.1`) de trilpatronen kan aansturen tijdens de Wizard-of-Oz sessie.
 
 <p align="center">
-  <img src="img/Haptische tril" alt="Trilmotor en microcontroller in handvat" width="40%"/>
+  <img src="img/test-opstelling-dev3.png" alt="Trilmotor en microcontroller in handvat" width="40%"/>
   <br/><em>Geïntegreerde XIAO ESP32-S3 + DRV2605L + LRA in het handvat.</em>
 </p>
 
@@ -864,7 +864,7 @@ Tijdens de leerfase kregen de deelnemers ook een aantal alternatieve patronen ui
 **CMF-referentiemonsters voor de bevraging.** Naast het functionele handvat werden twee fysieke referenties meegebracht ter vergelijking: een **padel-racket** als voorbeeld van een zachter indrukbaar handvat met soft-touch overmold, en een **kurk-cilinder** als voorbeeld van een natuurlijk grip-materiaal zoals dat bij hedendaagse fietsstuurlinten wordt gebruikt.
 
 <p align="center">
-  <img src="img/contact_surface_prototype.png" alt="Handvat-prototype met contactoppervlak" width="50%"/>
+  <img src="img/prototype-dev3.png" alt="Handvat-prototype met contactoppervlak" width="50%"/>
   <br/><em>Handvat-prototype met sferisch contactoppervlak, voorkeursconfiguratie uit Develop 2.</em>
 </p>
 
