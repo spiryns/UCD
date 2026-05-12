@@ -3,7 +3,7 @@
 
 > Documentatie van **ons MVP-prototype**, niet van het beoogde eindproduct. Voor het verschil tussen beide en de productie-vision (RTK GNSS, smartphone-app, ToF-obstakeldetectie, PA6 + TPE-materialen): zie de [Deliver-sectie in de hoofdrapportage](../README.md#deliver).
 
-Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. Het ontwerp omvat:
+Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. SensePath is **tweedelig**: een **conventioneel witte-stok-onderstuk** met een ingebedde M3-schroef bovenaan, en een **tech-handvat** met een matching M3-insert dat erop geschroefd wordt. Het ontwerp omvat verder:
 
 - Haptisch kanaal → coin vibratiemotor aangestuurd via DRV2605L
 - Mechanisch kompas → MG90S servo draait het sferisch kompaselement
@@ -11,6 +11,7 @@ Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn bestel
 - Opt-in audio-fallback → speaker + I2S-versterker, default uit
 - Autonoom inzetbaar → 900 mAh Li-Po met USB-C opladen
 - Stevige bediening → metalen drukknop, schuifschakelaar voor aan/uit
+- Modulaire stok-handvat-verbinding → tech-handvat verwisselbaar met een standaard handgreep via dezelfde M3-schroefverbinding
 
 > Voor de bredere technische context: zie [wiring.md](wiring.md) voor het schakelschema en [build_guide.md](build_guide.md) voor de bouwinstructies.
 
@@ -92,21 +93,29 @@ De Li-Po levert 3.7 V direct aan de XIAO en de coin motor. De MAX98357A audio-ve
 
 ---
 
-## 8. Behuizing en grip
+## 8. Behuizing en grip (tech-handvat)
 
 | Onderdeel | Specificatie | Aantal | Toelichting |
 |---|---|---|---|
-| Handvat-core | 3D-print in PA6 (unfilled) of PETG-fallback | 1 | Draagt de elektronica, het kompasmechanisme en de servo. PA6 voor slag- en slijtvastheid. |
-| Overmold-grip | TPE Shore 65A | 1 | Zachte buitenlaag, fijne radiale ribbels voor grip. |
+| Handvat-core | 3D-print in PLA (productie-doel: PA6 unfilled) | 1 | Draagt de elektronica, het kompasmechanisme en de servo. PLA voor prototype-snelheid. |
+| Overmold-grip | (productie-doel: TPE Shore 65A; in prototype niet aanwezig) | 0 | CMF-keuze gevalideerd in Develop 3, niet geïntegreerd in MVP-print. |
 | Kompaselement | Sferisch contactoppervlak, laagste gleufpositie | 1 | Voorkeurconfiguratie uit Develop 2. |
 | Aluminium pin | M3 doorgaande as voor kompas-rotatie, gekoppeld aan servo-as | 1 | Vervangbare TPE-tip optioneel (winter / handschoenen). |
-| Heatset-insert | M3, messing | 2 | Voor montage op de witte stok. |
+| Heatset-insert | M3, messing | 1 | In de bodem van het tech-handvat, voor de schroefverbinding met het stok-onderstuk. |
+
+## 9. Stok-onderstuk
+
+| Onderdeel | Specificatie | Aantal | Toelichting |
+|---|---|---|---|
+| Witte stok-onderstuk | Conventionele lange witte stok met verwisselbare pin-tip (productie-doel: aluminium of glasvezel; in prototype gemodificeerd standaardmodel) | 1 | Het onderstuk volgt de bestaande witte-stok-conventie. Wij integreren bovenaan een M3-stud (epoxy-vast in het uiteinde) waarop het tech-handvat geschroefd wordt. |
+| M3-stud | Roestvrij staal, ~15 mm | 1 | Ingebed in het top-uiteinde van de stok. Schroeft in de heatset-insert van het tech-handvat. |
+| Verwisselbare pin-tip | Conventionele tip (rolling ball, ceramic, of glide tip) | 1 | Aan het loop-uiteinde, exact zoals bij commerciële witte stokken. |
 
 CMF-onderbouwing: zie Develop 3 in [README.md](../README.md).
 
 ---
 
-## 9. Overige prototyping-materialen
+## 10. Overige prototyping-materialen
 
 | Onderdeel | Specificatie | Aantal |
 |---|---|---|
@@ -116,11 +125,12 @@ CMF-onderbouwing: zie Develop 3 in [README.md](../README.md).
 | Krimpkous Ø2 mm | Voor trekontlasting LRA / servo / batterij-bedrading | enkele mm |
 | Soldeer + flux | Sn60/Pb40 of loodvrij | naar wens |
 | Schroeven | M2 / M3 set | enkele |
-| Dubbelzijdige tape of epoxy | Fixatie van motor, servo en batterij tegen handvat-wand | naar wens |
+| Epoxy of permanente fix | Voor M3-stud in stok-uiteinde, en voor fixatie motor / servo / batterij | naar wens |
+| Dubbelzijdige tape | Bijkomende fixatie van elektronica tegen handvat-wand | naar wens |
 
 ---
 
-## 10. Totale kost (indicatie, finaal eindproduct)
+## 11. Totale kost (indicatie, MVP-prototype als geheel)
 
 | Categorie | Richtprijs |
 |---|---|
@@ -129,13 +139,14 @@ CMF-onderbouwing: zie Develop 3 in [README.md](../README.md).
 | MG90S servo + KY-040 encoder | €10 → €15 |
 | HOTUT knop + SS12F44 switch + USB-C connector | €10 → €15 |
 | TP4056 + MT3608 + Li-Po 900 mAh | €10 → €15 |
-| Print-/grondstoffen (PA6 + TPE-filament, ~80 g totaal) | €5 → €10 |
-| Hardware (inserts, pin, schroeven, connectoren, jumpers) | €5 → €10 |
-| **Totaal eindproduct (één gebouwde unit)** | **€75 → €115** |
+| Witte stok-onderstuk + M3-stud + epoxy | €15 → €30 |
+| 3D-print (PLA, ~80 g totaal) | €3 → €5 |
+| Hardware (insert, pin, schroeven, connectoren, jumpers) | €5 → €10 |
+| **Totaal MVP-prototype (één gebouwde unit)** | **€90 → €145** |
 
 ---
 
-## 11. Vergelijking met voorgaande iteraties
+## 12. Vergelijking met voorgaande iteraties
 
 | Component | Semester 1 | Develop 1 | Develop 2 | Develop 3 → finale integratie |
 |---|---|---|---|---|

@@ -15,11 +15,11 @@ Mensen die blind of slechtziend zijn navigeren buitenshuis relatief goed met GPS
 
 We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navigatieoplossingen, en via user interviews en feedbackmomenten met gebruikers en organisaties uit de blinden- en mobiliteitswereld. Daaruit kwamen duidelijke noden naar voren: betrouwbare "decision support" op keuzemomenten, zo weinig mogelijk telefoongebruik tijdens het stappen, en discrete feedback die ook in publieke context bruikbaar is.
 
-Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange witte stok wordt bevestigd en gekoppeld is aan een eenvoudige app-workflow. SensePath vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Optioneel biedt het systeem een fail-safe flow om te herstarten of hulp te vragen bij afwijkingen of blokkades. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
+Onze oplossing is **SensePath**: een **tweedelige witte stok** die wij volledig als systeem leveren. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte, verwisselbare pin-tip), maar heeft bovenaan een **ingebedde M3-schroef** in het uiteinde. Daarop wordt ofwel een **tech-handvat** geschroefd dat de elektronica voor haptische navigatiebegeleiding bevat, ofwel een **gewone handgreep** voor wanneer de route gekend is. Op die manier behoudt de gebruiker volledig zijn bestaande stok-ervaring en voegt SensePath alleen toe wat nodig is op onbekende trajecten. Het tech-handvat is gekoppeld aan een eenvoudige app-workflow en vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
 
 <p align="center">
-  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="SensePath handvat geclipt op een witte stok, met het haptisch kompas zichtbaar in de handpalm" width="600"/>
-  <br/><em><strong>SensePath</strong> → ① modulair tech-handvat met geïntegreerde elektronica, ② sferisch kompaselement in de handpalm voor continue richtingsfeedback, ③ standaard lange witte stok, ④ clip-mechanisme voor dagelijks omwisselen tussen tech-grip en standaard-grip.</em>
+  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="SensePath tech-handvat geschroefd op een conventionele witte stok, met het haptisch kompas zichtbaar in de handpalm" width="600"/>
+  <br/><em><strong>SensePath</strong> → ① tech-handvat met geïntegreerde elektronica en M3-insert, ② sferisch kompaselement in de handpalm voor continue richtingsfeedback, ③ conventionele witte stok met verwisselbare pin-tip, ④ ingebedde M3-schroef in het stok-uiteinde, koppelt het tech-handvat aan de stok en is dagelijks omwisselbaar voor een standaard handgreep.</em>
 </p>
 
 ---
@@ -44,9 +44,9 @@ Onze oplossing is **SensePath**: een slimme handgreep die op een bestaande lange
 
 ## Conclusie
 
-SensePath is een **slimme handgreep die op een standaard lange witte stok klikt** en routebeslissingen vertaalt naar discrete haptische signalen in de hand. Drie kerncomponenten dragen het concept: één trilmotor die drie onderscheidbare microinteracties (obstakel, koersafwijking, bocht-aankondiging) levert, een sferisch kompaselement in de laagste gleufpositie dat continue richting voelbaar maakt via een servo-aandrijving, en een modulair handvat dat dagelijks gewisseld kan worden tussen tech-grip (onbekende routes) en standaard-grip (gekende routes).
+SensePath is een **tweedelige witte stok**: een conventioneel onderstuk met verwisselbare pin-tip en een **tech-handvat dat erop schroeft** via een M3-insert. Dezelfde schroefverbinding accepteert ook een gewone handgreep, zodat de gebruiker dagelijks kan kiezen tussen tech-grip (onbekende routes) en standaard-grip (gekende routes) zonder dat hij van stok hoeft te wisselen. Het tech-handvat vertaalt routebeslissingen naar discrete haptische signalen in de hand. Drie kerncomponenten dragen het concept: één trilmotor die drie onderscheidbare microinteracties (obstakel, koersafwijking, bocht-aankondiging) levert, een sferisch kompaselement in de laagste gleufpositie dat continue richting voelbaar maakt via een servo-aandrijving, en de modulaire schroefverbinding die het hele systeem omkeerbaar maakt.
 
-Waarom dit het juiste antwoord is op het probleem uit Discovery, is geen kwestie van technologie maar van **positionering**. SensePath vervangt de witte stok niet ; ze versterken elkaar. De stok blijft de primaire obstakeldetector, SensePath levert wat de stok zelf niet kan: oriëntatie op keuzemomenten zonder dat het gehoor of de smartphone-aandacht ingezet moet worden in het default-gebruik. Een opt-in spraak-fallback (default uit) bestaat als noodvariant. Daarmee adresseert het ontwerp de drie pijnpunten die de Discovery-interviews scherp maakten: onzekerheid aan knooppunten, de wens om het gehoor vrij te houden in publieke context, en de minimale-telefoon-eis tijdens het stappen.
+Waarom dit het juiste antwoord is op het probleem uit Discovery, is geen kwestie van technologie maar van **positionering**. SensePath vervangt het stok-gebruik niet ; we behouden de conventionele stok-opbouw en voegen alleen toe wat nodig is. Het onderstuk blijft de primaire obstakeldetector, het tech-handvat levert wat de stok zelf niet kan: oriëntatie op keuzemomenten zonder dat het gehoor of de smartphone-aandacht ingezet moet worden in het default-gebruik. Een opt-in spraak-fallback (default uit) bestaat als noodvariant. Daarmee adresseert het ontwerp de drie pijnpunten die de Discovery-interviews scherp maakten: onzekerheid aan knooppunten, de wens om het gehoor vrij te houden in publieke context, en de minimale-telefoon-eis tijdens het stappen.
 
 De keuzes die deze positionering dragen, zijn telkens empirisch onderbouwd: de evolutie van 3 motoren naar 1 trilmotor (Develop 2), de versmalde gleuf zodat het kompas in de handpalm blijft (Develop 2), de reductie van 9 naar 3 trilpatronen (Develop 3), de keuze voor TPE Shore 65A overmold (Develop 3 CMF-deepdive). Voor de eindvalidatie wordt het kompas via een mini-servo aangestuurd, met een roterende encoder als Wizard-of-Oz controller ; daarmee kan het geheel realistisch getest worden zonder dat eerst een autonoom GPS-systeem geïntegreerd moet zijn. Volledige onderbouwing in [docs/design_requirements.md](docs/design_requirements.md).
 
@@ -1034,7 +1034,9 @@ De Deliver-fase sluit de Double Diamond door alle inzichten uit Discovery, Defin
 
 #### Wat SensePath in productie zou zijn
 
-SensePath in zijn definitieve vorm is een **clip-on tech-handvat** dat op een standaard lange witte stok geschoven wordt. In de hand zit een mechanisch kompaselement met sferisch contactoppervlak dat continue richting voelbaar maakt, aangedreven door een mini-servo en gestuurd door een hoog-nauwkeurige route-engine. Een geïntegreerde trilmotor levert drie haptische microsignalen op de cruciale beslismomenten (obstakel, koersafwijking, bocht-aankondiging). Een ingebouwde obstakeldetectie via ToF-sensoren op hoofd- en voethoogte vangt obstakels op die buiten het bereik van de stok vallen. Een smartphone-app via BLE verzorgt route-input en monitoring. Een interne accu met USB-C opladen maakt de unit autonoom inzetbaar, en een opt-in audio-fallback (speaker of Bluetooth-oortje) staat default uit voor reguliere gebruikers en kan worden ingeschakeld als noodvariant. Het handvat is modulair: dagelijks omwisselbaar met een gewone grip voor gekende routes.
+SensePath in zijn definitieve vorm is een **tweedelige witte stok**. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte-opties, verwisselbare pin-tip), maar heeft bovenaan een **ingebedde M3-schroef** in het uiteinde. Het **tech-handvat** heeft een matching M3-insert en wordt erop geschroefd. Dezelfde schroefverbinding accepteert ook een conventionele handgreep zonder elektronica, zodat de gebruiker dagelijks kan kiezen tussen tech-grip (onbekende routes) en standaard-grip (gekende routes) zonder dat hij van stok hoeft te wisselen.
+
+In het tech-handvat zit een mechanisch kompaselement met sferisch contactoppervlak dat continue richting voelbaar maakt, aangedreven door een mini-servo en gestuurd door een hoog-nauwkeurige route-engine. Een geïntegreerde trilmotor levert drie haptische microsignalen op de cruciale beslismomenten (obstakel, koersafwijking, bocht-aankondiging). Een ingebouwde obstakeldetectie via ToF-sensoren op hoofd- en voethoogte vangt obstakels op die buiten het bereik van de stok vallen. Een smartphone-app via BLE verzorgt route-input en monitoring. Een interne accu met USB-C opladen maakt de unit autonoom inzetbaar, en een opt-in audio-fallback (speaker of Bluetooth-oortje) staat default uit voor reguliere gebruikers en kan worden ingeschakeld als noodvariant.
 
 #### Hoog-nauwkeurige positionering via FLEPOS / WALCORS
 
@@ -1054,11 +1056,17 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 - 1× Li-ion accu (1500-2500 mAh) met USB-C laadcircuit + battery management
 
 **Behuizing**
-- 3D-geprinte of injectie-geperste core in PA6 unfilled
+- 3D-geprinte of injectie-geperste tech-handvat-core in PA6 unfilled
 - TPE Shore 65A overmold met fijne radiale ribbels
 - POM-knoppen met visueel-tactiele differentiatie
-- Heatset-inserts M3 voor stok-bevestiging
-- Antraciet of contrasterend rood, witte stok blijft wit (ISO 9999 + verkeerswetten)
+- Heatset-insert M3 in het tech-handvat voor de schroefverbinding met de stok
+- Antraciet of contrasterend rood tech-handvat, witte stok blijft wit (ISO 9999 + verkeerswetten)
+
+**Stok-onderstuk**
+- Conventioneel ontworpen lange witte stok in productie-grade aluminium of glasvezel
+- Ingebedde M3-schroef in het top-uiteinde, conform M3-insert in het tech-handvat
+- Verwisselbare pin-tip aan het loop-uiteinde, exact zoals bij conventionele witte stokken
+- Lengte-opties volgens antropometrie (D1.2)
 
 **Software**
 - BLE-app (iOS + Android) met VoiceOver / TalkBack voor route-input, monitoring, batterij-feedback
@@ -1073,7 +1081,7 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 
 Drie principes dragen de productie-vorm:
 
-1. **Versterken, niet vervangen** ; de witte stok blijft primaire obstakeldetector. SensePath voegt oriëntatie op keuzemomenten toe en vangt buiten-stok-bereik obstakels op.
+1. **Conventionele stok-ervaring blijft de basis** ; het onderstuk volgt de bestaande witte-stok-conventie (gewicht, lengte, verwisselbare tip) en blijft primaire obstakeldetector. SensePath voegt via de schroef-modulariteit alleen toe wat nodig is op onbekende routes en vangt via ToF-sensoren obstakels op die buiten het stok-bereik vallen.
 2. **Hands-free, heads-up, ear-by-default-free** ; geen smartphone-aandacht tijdens het stappen, geen audio in default-modus.
 3. **Minimale cognitive load** ; één tactiel aandachtspunt voor continue feedback, drie maximaal onderscheidbare event-signalen.
 
@@ -1085,18 +1093,19 @@ Wat we werkelijk gebouwd hebben, ligt bewust onder de productie-scope. Een acade
 
 #### Hardware-realisatie
 
-- **3D-print in PLA** in plaats van PA6 + TPE-overmold ; sneller iteratie en lagere kost. De vormfactor en grip-textuur zijn behouden, alleen de materiaal-feel verschilt. CMF-keuzes zijn onderbouwd in Develop 3 maar niet als gecombineerd prototype getest.
+- **Tweedelige opbouw behouden**: het tech-handvat schroeft via een M3 heatset-insert op de stok. Voor het prototype gebruiken we een conventionele lange witte stok waarin we een **M3-stud bovenaan epoxy-vast hebben geïntegreerd**, dezelfde mechanische werking als in de productie-vision.
+- **3D-print in PLA** voor het tech-handvat in plaats van PA6 + TPE-overmold ; sneller iteratie en lagere kost. De vormfactor en grip-textuur zijn behouden, alleen de materiaal-feel verschilt. CMF-keuzes zijn onderbouwd in Develop 3 maar niet als gecombineerd prototype getest.
 - **Coin vibratiemotor** in plaats van LRA ; goedkoper en breder beschikbaar. Wordt aangedreven door dezelfde DRV2605L (in ERM-modus); de drie haptische microsignalen blijven herkenbaar.
 - **MG90S mini-servo** voor aansturing van het mechanisch kompas. Identiek aan de productie-vision.
 - **KY-040 roterende encoder** als Wizard-of-Oz controller voor de testleider. Vervangt voorlopig de GPS-pipeline + smartphone-app: de testleider draait de encoder, de XIAO leest de positie uit, de servo draait het kompas in de hand van de gebruiker. Daarmee kan het volledige feedback-circuit getest worden zonder eerst RTK GNSS + BLE-app te moeten bouwen.
-- **Geen obstakeldetectie** in het prototype. Methodische keuze: de stok blijft de primaire detector, en het toevoegen van ToF-sensors zou een confounding variabele introduceren in de haptische-navigatie-tests die we willen doen. Voor productie is obstakeldetectie volwaardig opgenomen (D2.5 + D2.6).
+- **Geen obstakeldetectie** in het prototype. Methodische keuze: het stok-onderstuk blijft de primaire detector, en het toevoegen van ToF-sensors zou een confounding variabele introduceren in de haptische-navigatie-tests die we willen doen. Voor productie is obstakeldetectie volwaardig opgenomen (D2.5 + D2.6).
 - **Speaker + MAX98357A I2S-versterker** voor opt-in audio-fallback (default uit, MT3608 boost levert 5 V alleen wanneer geactiveerd).
 - **HOTUT IP67 metalen drukknop** + **SS12F44 SPDT schuifschakelaar** voor bediening en harde aan/uit.
 - **Interne Li-Po 900 mAh** + **TP4056 USB-C laadcircuit** ; opladen en firmware-flashen via dezelfde poort.
 
 #### Waarom dit voldoende is om de essentiële interacties te valideren
 
-Het prototype test wat het ontwerp daadwerkelijk uniek maakt: de combinatie van een mechanisch kompas in de handpalm met drie discrete haptische signalen op beslismomenten, in samenspel met de witte stok. De stappen die het prototype overslaat (RTK GNSS-pipeline, productie-materialen, obstakeldetectie, BLE-app) zijn onafhankelijke engineering-uitdagingen die het ontwerp niet veranderen ; alleen de implementatie ervan opschalen naar productie-niveau.
+Het prototype test wat het ontwerp daadwerkelijk uniek maakt: de combinatie van een mechanisch kompas in de handpalm met drie discrete haptische signalen op beslismomenten, in samenspel met het stok-onderstuk via de modulaire schroefverbinding. De stappen die het prototype overslaat (RTK GNSS-pipeline, productie-materialen, obstakeldetectie, BLE-app) zijn onafhankelijke engineering-uitdagingen die het ontwerp niet veranderen ; alleen de implementatie ervan opschalen naar productie-niveau.
 
 #### Reproduceerbaarheid van het prototype
 
@@ -1114,7 +1123,7 @@ Voor elke ontwerpbeslissing maakt de tabel hieronder helder wat **design** is (b
 
 | Inzicht uit onderzoek | Keuze in eindproduct | Realisatie in ons prototype |
 |---|---|---|
-| Modulair clip-on handvat (geen volledige slimme stok) | Productie-handvat met certificeerde clip | PLA-handvat met schroef-clip, identiek concept |
+| Modulariteit zonder afstand te doen van conventionele stok-ervaring | Tweedelige witte stok: conventioneel onderstuk + ingebedde M3-schroef + tech-handvat (of standaard handgreep) met M3-insert | Conventionele witte stok met epoxy-vast geïntegreerde M3-stud + PLA tech-handvat met heatset M3-insert (zelfde mechanisch principe) |
 | Continue koersfeedback in handpalm | Mechanisch kompas, servo-aangedreven, gestuurd door RTK GNSS-route | Mechanisch kompas, servo-aangedreven, gestuurd door KY-040 encoder (Wizard-of-Oz vervanger van GPS) |
 | Sferisch contactoppervlak in laagste gleufpositie | Identiek | Identiek |
 | 1 trilmotor + DRV2605L met 3 microinteracties | LRA + DRV2605L (cleaner onset/offset) | Coin vibratiemotor + DRV2605L (zelfde driver, ERM-actuator om kost) |

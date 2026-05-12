@@ -34,8 +34,15 @@ Open [cad/exports/](../cad/exports/) en download:
 ### Post-processing
 
 1. Supports verwijderen en gleuf-rand met fijn schuurpapier (P800) gladstrijken.
-2. Heatset-inserts (M3) in de 2 montagegaten plaatsen met soldeerbout-tip op 220 °C ; verticaal indrukken tot oppervlakte gelijk.
+2. Heatset-insert M3 onderaan het tech-handvat plaatsen met soldeerbout-tip op 220 °C ; verticaal indrukken tot oppervlakte gelijk. Dit is de schroefverbinding met het stok-onderstuk.
 3. Sferisch kompaselement op de servo-as schuiven (kruisbout meegeleverd met MG90S) en testen op vrije rotatie binnen de gleuf.
+
+### Stok-onderstuk voorbereiden
+
+1. Conventionele lange witte stok nemen (aluminium of glasvezel) ; we behouden de bestaande pin-tip aan het loop-uiteinde, exact zoals bij commerciële witte stokken.
+2. Standaard handgreep van de stok verwijderen (meestal vastgelijmd of geklemd).
+3. M3-stud (~15 mm) **epoxy-vast integreren** in het top-uiteinde van de stok, zorgvuldig gecentreerd en met voldoende uithardingstijd. Dit is het mannelijke deel van de schroefverbinding.
+4. Na uitharding: het tech-handvat op de stud schroeven. Bij goed alignement is het tech-handvat dagelijks omwisselbaar met een standaard handgreep met M3-insert.
 
 ---
 
