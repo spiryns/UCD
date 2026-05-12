@@ -1,6 +1,8 @@
-# Build guide → SensePath finale integratie
+# Build guide → SensePath MVP-prototype
 
-Stap-voor-stap instructies om het SensePath-handvat zelf te bouwen. Lees eerst [bom.md](bom.md) voor de onderdelen en [wiring.md](wiring.md) voor het schakelschema. Geschatte bouwtijd: 5 → 8 uur (exclusief 3D-print).
+> Bouwinstructies voor **ons MVP-prototype**, niet voor het beoogde eindproduct. Zie de [Deliver-sectie in de hoofdrapportage](../README.md#deliver) voor wat in een productie-versie nog toegevoegd zou worden (RTK GNSS-ontvangst, BLE-app, ToF-obstakeldetectie, PA6 + TPE-materialen).
+
+Stap-voor-stap instructies om het SensePath MVP-handvat zelf te bouwen. Lees eerst [bom.md](bom.md) voor de onderdelen en [wiring.md](wiring.md) voor het schakelschema. Geschatte bouwtijd: 5 → 8 uur (exclusief 3D-print).
 
 > Dit is een **werkversie**: voldoende om de bouwvolgorde te volgen, maar enkele detail-keuzes (firmware-pinout, audio-volume defaults) worden tijdens de eindintegratie nog gefinetuned.
 

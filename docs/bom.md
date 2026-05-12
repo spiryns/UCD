@@ -1,7 +1,9 @@
 # Bill of Materials (BOM)
-## SensePath → finale integratie voor Deliver-validatie
+## SensePath → MVP-prototype voor Deliver-validatie
 
-Deze BOM beschrijft de exacte componenten die voor het finale SensePath-prototype zijn besteld en geïntegreerd. Het ontwerp omvat:
+> Documentatie van **ons MVP-prototype**, niet van het beoogde eindproduct. Voor het verschil tussen beide en de productie-vision (RTK GNSS, smartphone-app, ToF-obstakeldetectie, PA6 + TPE-materialen): zie de [Deliver-sectie in de hoofdrapportage](../README.md#deliver).
+
+Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. Het ontwerp omvat:
 
 - Haptisch kanaal → coin vibratiemotor aangestuurd via DRV2605L
 - Mechanisch kompas → MG90S servo draait het sferisch kompaselement
