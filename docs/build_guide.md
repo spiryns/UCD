@@ -4,7 +4,7 @@
 
 Stap-voor-stap instructies om het SensePath MVP zelf te bouwen. Het systeem bestaat uit **drie modules** die elk afzonderlijk gebouwd worden:
 
-- **Module A → Tech-handvat** (XIAO ESP32-S3 + servo + motor + audio + knop + batterij) → secties 1 tot 5
+- **Module A → Tech-handvat** (XIAO ESP32-S3 + servo + motor + audio + HOTUT-knop met dubbele rol + batterij; geen rocker-switch, power via deep-sleep) → secties 1 tot 5
 - **Module B → Wizard-of-Oz controller** (XIAO ESP32-C3 + KY-040 encoder + eigen batterij) → sectie 6
 - **Module C → Stok-onderstuk** (conventionele witte stok met M3-stud) → sectie 1.5 (samen met de print-stappen)
 
@@ -83,10 +83,11 @@ Open [cad/exports/](../cad/exports/) en download:
    - Rood (V+) → **5 V rail** uit MT3608 boost (zelfde rail als MAX98357A Vin) ; **niet** rechtstreeks aan Li-Po, want MG90S-datasheet vraagt 4.8-6 V
    - Oranje (signaal) → XIAO D9 (GPIO 8). 3.3 V PWM is voldoende voor de MG90S, geen level shifter nodig. Een 1 kΩ serie-weerstand is optioneel als defensieve GPIO-bescherming maar niet vereist
    - **Decoupling**: zet een **220-470 µF elco** tussen V+ en GND vlak bij de servo-stekker ; vangt stroompieken op zodat de XIAO niet reset
-10. **HOTUT drukknop** ; 2-pins JST-PH connector:
-    - Pin 1 (signaal) → XIAO D3
+10. **HOTUT drukknop** (dubbele rol → functie + power-control via deep-sleep) ; 2-pins JST-PH connector:
+    - Pin 1 (signaal) → XIAO D3 (= GPIO 4, RTC-GPIO ; vereist voor EXT0 wake-up uit deep-sleep)
     - Pin 2 → GND
-11. **Rocker switch** ; in serie met de positieve rail tussen TP4056 OUT+ en XIAO 5V-pad / MT3608 input.
+    - Geen externe pull-up nodig (XIAO interne pull-up wordt in firmware geactiveerd)
+11. **Geen rocker switch** in deze configuratie. TP4056 OUT+ gaat **direct** naar XIAO 5V-pad én MT3608 input. Power-control zit in de firmware (zie sectie 3 → long-press triggert deep-sleep, druk uit deep-sleep wekt opnieuw via EXT0 op D3).
 12. **Speaker** ; 2-pins JST-PH connector vanaf MAX98357A speaker-output naar de mini-speaker.
 13. **Batterij** ; Li-Po via JST-PH 2-pin connector aan TP4056 BAT+ / BAT−.
 14. **USB-C laad-poort** ; KUOQIY 2-draads breakout (VBUS + GND) doorgelust naar TP4056 IN+ / IN−. Deze externe USB-C is **alleen voor opladen** ; firmware-flashen gebeurt via de USB-C poort op de XIAO ESP32-S3 zelf.
@@ -125,7 +126,15 @@ Open [../src/firmware/sensepath_esp32/sensepath_esp32.ino](../src/firmware/sense
 - I2C-pinnen aanpassen naar XIAO (SDA = 5, SCL = 6).
 - Een ESP-NOW-ontvanger toevoegen die encoder-updates leest van de controller-module (zie sectie 6) en de servo-doelhoek bijwerkt.
 - Een servo-aansturing via ESP32Servo aansluiten op D9.
-- Een I2S-audio-pipeline opzetten op D6/D7/D8 met SD-pin van MAX98357A enabled wanneer audio-fallback actief.
+- Een I2S-audio-pipeline opzetten op D6/D7/D8 met **D10 als SD-pin gate** (HIGH = amp aan, LOW = stand-by).
+- **HOTUT-knop press-detector** (D3, RTC-GPIO 4) met onderscheid tussen short-press, double-press en long-press (≥3 s). Long-press triggert de power-down sequence:
+  1. Speel een korte vibratie-cue (1 puls van 100 ms via DRV2605L) als acknowledgement
+  2. `digitalWrite(AUDIO_SD_PIN, LOW)` → audio-amp in stand-by
+  3. Servo naar neutraalpositie (90°), dan `servo.detach()` om PWM uit te zetten
+  4. `esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 0)` → wake op falling edge van HOTUT
+  5. `esp_deep_sleep_start()` → XIAO gaat slapen, ~14 µA draw
+
+  Bij wake-up boot de XIAO opnieuw vanaf `setup()` ; geen "resume from sleep" gedrag.
 
 De **controller-firmware** (apart project, draait op de XIAO ESP32-C3) moet de KY-040 uitlezen en via ESP-NOW de positie versturen naar het MAC-adres van de handvat-S3. Beide firmware-projecten worden los geflasht.
 
@@ -148,7 +157,7 @@ De **controller-firmware** (apart project, draait op de XIAO ESP32-C3) moet de K
 
 ## Sectie 4 → Assembleren
 
-1. Perfboard met XIAO + DRV2605L + TP4056 + MT3608 + MAX98357A in de handvat-core schuiven, oriëntatie zo dat de USB-C laad-poort, de rocker-switch en de HOTUT drukknop toegankelijk blijven via hun respectievelijke openingen in de cap.
+1. Perfboard met XIAO + DRV2605L + TP4056 + MT3608 + MAX98357A in de handvat-core schuiven, oriëntatie zo dat de USB-C laad-poort en de HOTUT drukknop toegankelijk blijven via hun respectievelijke openingen in de cap. Geen rocker-opening meer nodig.
 2. **MG90S servo** in zijn aparte cavity plaatsen, servo-as in lijn met de kompasbol-rotatie-as. Servo vastschroeven met de 2× M2-meegeleverde schroefjes.
 3. **Kompasbol** op de servo-as schuiven (kruisarm-adapter), uitlijning controleren door de servo handmatig te draaien.
 4. **Li-Po batterij** in zijn aparte cavity plaatsen, dubbelzijdige tape voor fixatie, JST-connector aansluiten op TP4056.
@@ -162,21 +171,25 @@ De **controller-firmware** (apart project, draait op de XIAO ESP32-C3) moet de K
 
 ### Functionele check (zonder controller, via WiFi-fallback)
 
-1. Rocker-switch op AAN zetten ; de XIAO ESP32-S3 moet booten (LED op de XIAO knippert).
+1. Li-Po-stekker aansluiten op TP4056 ; de XIAO ESP32-S3 moet binnen ~1 s booten (LED op de XIAO knippert). Bij eerste aansluiting boot het handvat altijd op (geen latching aan/uit-mechaniek).
 2. Voor losse handvat-test: smartphone WiFi → verbinden met SSID `SensePath`, wachtwoord `sensepath`. Browser → `http://192.168.4.1/`. (Voor de echte sessie: zie sectie 7 → integratie.)
 3. **Coin motor test**: trigger M4 (obstakel) → twee korte trillingen voelbaar.
 4. **Coin motor test**: trigger M6 (koersafwijking) → drie snelle trillingen.
 5. **Coin motor test**: trigger M9 (bocht-aankondiging) → één langere oplopende trilling.
-6. **Drukknop test**: HOTUT-knop indrukken ; status-melding in Serial Monitor.
-7. **Audio test (opt-in)**: via webcontroller audio-fallback inschakelen → boost converter activeert → kort testbericht "audio actief" hoorbaar via speaker.
-8. **Laadtest**: USB-C kabel in de handvat-USB-C laad-poort steken → rode LED op TP4056 (laden) brandt; volle laad → blauwe LED.
+6. **Drukknop short-press test**: HOTUT-knop kort indrukken ; status-melding in Serial Monitor (start/stop route).
+7. **Drukknop long-press test**: HOTUT-knop ≥3 s ingedrukt houden ; korte vibratie-cue als acknowledgement, dan stilte (XIAO in deep-sleep). Stroommeting via USB-C inline meter moet ~10 mA draw tonen i.p.v. ~40 mA.
+8. **Wake-up test**: HOTUT kort indrukken vanuit deep-sleep ; XIAO boot opnieuw, "SensePath start" verschijnt in Serial Monitor.
+9. **Audio test (opt-in)**: via webcontroller audio-fallback inschakelen → MAX98357A SD-pin gaat HIGH → kort testbericht "audio actief" hoorbaar via speaker.
+10. **Laadtest**: USB-C kabel in de handvat-USB-C laad-poort steken → rode LED op TP4056 (laden) brandt; volle laad → blauwe LED.
 
 ### Acceptatiecriteria handvat
 
 - Coin motor voelbaar in de hand zonder bijgeluiden (zo niet → motor niet stevig genoeg tegen handvat-wand).
-- Knop reageert binnen <50 ms (zo niet → debounce-time-out in firmware verhogen).
+- Knop reageert binnen <50 ms voor short-press (zo niet → debounce-time-out in firmware verhogen).
+- Long-press detecteerbaar bij precies 3 s ingedrukt houden ; geen accidentele triggers bij langere short-press (>500 ms maar <3 s).
 - DRV2605L wordt herkend → "DRV2605L gevonden" in Serial Monitor.
-- TP4056 LED's: rood bij laden, blauw bij volle accu. Rocker uitschakelen en USB-C uitsteken ; handvat moet autonoom blijven werken op de Li-Po wanneer rocker op AAN.
+- TP4056 LED's: rood bij laden, blauw bij volle accu. Handvat moet autonoom werken op Li-Po na unplug van USB-C.
+- Deep-sleep current draw ~10 mA bij stroommeting (XIAO in slaap, andere componenten quiescent).
 
 ---
 
@@ -261,4 +274,6 @@ Wizard-of-Oz testsessie opzetten met een echte gebruiker. Zie [reports and proto
 | Trilling vibrato/onstabiel | Power-supply ruis | Decoupling cap op DRV2605L Vin (10 µF) |
 | Handvat laadt niet op USB-C | TP4056 IN+/IN− niet correct doorgelust | USB-C breakout-board pinout checken, polariteit verifiëren |
 | Handvat schakelt uit kort na boot | Li-Po onder discharge-cutoff | Opladen ; TP4056 schakelt uit onder ~2.5 V om de accu te beschermen |
-| Handvat blijft draaien wanneer SS12F44 op UIT | Schakelaar niet in serie met hoofdrail | Verifieer dat de SS12F44 inderdaad de positieve rail naar XIAO 5V-pad onderbreekt |
+| Handvat gaat niet in deep-sleep bij long-press | Long-press detectie niet ingebouwd, of `esp_sleep_enable_ext0_wakeup` niet correct geconfigureerd | Firmware long-press timer checken (≥3 s), `esp_deep_sleep_start()` aanroep verifiëren, RTC-GPIO 4 als wake-pin bevestigen |
+| Handvat wakkert niet uit deep-sleep | EXT0 wake-up trigger niet armed of HOTUT niet correct bedraad | `esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 0)` aanroepen vóór `esp_deep_sleep_start()`, HOTUT pin-bedrading naar D3 verifiëren |
+| Hoge stroom in "uit"-stand (>20 mA) | XIAO niet in echte deep-sleep, of MT3608 trekt te veel quiescent | Serial Monitor uitlezen tijdens transitie, MT3608 quiescent meten met multimeter (verwacht ~1-3 mA) |

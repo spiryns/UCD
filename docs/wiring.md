@@ -11,7 +11,7 @@ Dit document beschrijft hoe de elektronica in het MVP-prototype onderling verbon
 Het systeem bestaat uit **drie fysieke onderdelen** die elk een afzonderlijke rol hebben:
 
 1. **Stok-onderstuk** (passief) → conventionele witte stok met ingebedde M3-schroef bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
-2. **Tech-handvat** (eindgebruiker) → bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in audio (MAX98357A + speaker), HOTUT drukknop, Li-Po batterij + TP4056 USB-C oplaad, MT3608 boost voor audio, rocker-switch voor harde aan/uit. Schroeft op het stok-onderstuk.
+2. **Tech-handvat** (eindgebruiker) → bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in audio (MAX98357A + speaker), HOTUT drukknop (dubbele rol: functie + power-control via deep-sleep), Li-Po batterij + TP4056 USB-C oplaad, MT3608 boost voor 5V rail. Schroeft op het stok-onderstuk.
 3. **Wizard-of-Oz controller** (testleider) → een **fysiek aparte module** met een **XIAO ESP32-C3**, een KY-040 roterende encoder, eigen Li-Po batterij + TP4056 USB-C oplaad en eigen rocker-switch. **Draadloos** (ESP-NOW peer-to-peer) verbonden met het tech-handvat.
 
 ```mermaid
@@ -30,28 +30,27 @@ flowchart LR
     end
 
     subgraph HANDLE["Tech-handvat → eindgebruiker"]
-        S3[XIAO ESP32-S3]
+        S3[XIAO ESP32-S3<br/>deep-sleep capable]
         SERVO[MG90S servo<br/>kompas-aansturing]
         DRV[DRV2605L]
         COIN[Coin vibratiemotor]
         AMP[MAX98357A]
         SPK[Speaker]
-        BTN[HOTUT drukknop]
+        BTN[HOTUT drukknop<br/>functie + wake/sleep]
         BAT1[Li-Po 1000 mAh]
         TP1[TP4056 USB-C]
-        SW1[Rocker switch]
         BOOST[MT3608 boost]
         USBC1[USB-C laad-poort]
         USBC1 --> TP1
         TP1 <--> BAT1
-        BAT1 --> SW1
-        SW1 --> S3
-        SW1 --> SERVO
-        SW1 --> BOOST --> AMP
+        BAT1 --> S3
+        BAT1 --> BOOST
+        BOOST --> SERVO
+        BOOST --> AMP
         S3 <-->|I2C| DRV --> COIN
         S3 -->|PWM| SERVO
-        S3 -->|I2S| AMP --> SPK
-        BTN -->|GPIO| S3
+        S3 -->|I2S + SD-gate| AMP --> SPK
+        BTN -->|D3 wake/short/long| S3
     end
 
     C3 -.->|ESP-NOW draadloos<br/>2.4 GHz| S3
@@ -69,12 +68,12 @@ De keten **testleider → KY-040 → ESP32-C3 → ESP-NOW → ESP32-S3 → servo
 
 | Functie | XIAO ESP32-S3 pin | Naar | Opmerking |
 |---|---|---|---|
-| 5V in | 5V-pad onderzijde | TP4056 OUT+ via rocker-switch | Voeding na schakelaar |
+| 5V in | 5V-pad onderzijde | TP4056 OUT+ direct (geen rocker meer) | Continu gevoed; XIAO regelt aan/uit via deep-sleep |
 | 3V3 uit | 3V3 | DRV2605L Vin | Voor 3.3 V logic peripherals |
 | GND | GND | Gemeenschappelijke massa | Alle modules delen één GND-bus binnen het handvat |
 | I2C SDA | D4 (GPIO 5) | DRV2605L SDA | I2C-pull-ups geïntegreerd op breakout |
 | I2C SCL | D5 (GPIO 6) | DRV2605L SCL | Idem |
-| Drukknop | D3 (GPIO 4) | HOTUT knop signaal | Interne pull-up, sluit naar GND |
+| Drukknop / wake | D3 (GPIO 4, RTC-GPIO) | HOTUT knop signaal | Interne pull-up, sluit naar GND. Korte druk = functie; lange druk = deep-sleep; druk uit deep-sleep = wake (EXT0 low-level wake) |
 | Servo PWM | D9 (GPIO 8) | MG90S signaal-pin (oranje) | 50 Hz PWM, 1-2 ms duty. 3.3 V logic-level volstaat (MG90S triggert al boven ~2.5 V) |
 | I2S BCLK | D6 (GPIO 43) | MAX98357A BCLK | Bit clock voor audio |
 | I2S LRC | D7 (GPIO 44) | MAX98357A LRC | Left-right clock |
@@ -92,24 +91,33 @@ De keten **testleider → KY-040 → ESP32-C3 → ESP-NOW → ESP32-S3 → servo
 flowchart LR
     USBC1[USB-C laad-poort] --> TP1[TP4056]
     TP1 <--> BAT1[Li-Po 3.7V 1000mAh]
-    BAT1 --> SW1[Rocker switch]
-    SW1 --> RAIL37[3.7V rail]
-    RAIL37 --> XIAOPWR[XIAO ESP32-S3]
+    BAT1 --> RAIL37[3.7V rail<br/>continu gevoed]
+    RAIL37 --> XIAOPWR[XIAO ESP32-S3<br/>deep-sleep capable]
     RAIL37 --> BOOST[MT3608 boost<br/>altijd aan]
     BOOST --> RAIL5[5V rail]
     RAIL5 --> SERVO[MG90S servo<br/>+ 220-470µF elco]
     RAIL5 --> AMP[MAX98357A<br/>SD-pin gates audio]
     XIAOPWR -->|3V3| DRV[DRV2605L Vin]
     DRV -->|OUT± drive| COIN[Coin vibratiemotor]
+    HOTUT[HOTUT knop] -->|D3 / EXT0 wake| XIAOPWR
 ```
 
 Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po die de XIAO voedt; één **5 V rail** uit de MT3608 boost converter die zowel de MG90S servo als de MAX98357A audio-amp voedt; en het **USB-C laadkanaal** via de TP4056. De MT3608 staat **altijd aan** (de servo heeft volgens datasheet 4.8-6 V nodig om aan spec te draaien); de audio-amp wordt apart in stand-by gezet via zijn SD-pin wanneer audio-fallback niet actief is, zodat de speaker geen stroom trekt.
 
+> **Geen aparte rocker-switch**. De HOTUT-drukknop vervult een dubbele rol: korte druk = functie (start/stop, overzicht), **lange druk (~3 s) = XIAO gaat in deep-sleep**, druk uit deep-sleep = wake via EXT0. In "uit"-stand (deep-sleep) blijft de MT3608, MG90S en DRV2605L wel onder spanning ; totaal ~10 mA quiescent draw. Op 1000 mAh = ~4 dagen voor het handvat zichzelf leeg trekt. Voor langere opslag: USB-C aangesloten laten of de Li-Po-stekker fysiek loskoppelen.
+
 ### Peripherals binnen het handvat
 
-**HOTUT drukknop** ; momentane drukknop, één pool naar XIAO D3, één pool naar GND. Interne pull-up actief; software detecteert neergaande flank met 20 ms debounce. Onderscheid single-press / double-press in firmware voor "start/stop" vs "geef overzicht".
+**HOTUT drukknop (dubbele rol → functie + power-control)** ; momentane drukknop, één pool naar XIAO D3 (RTC-GPIO 4), één pool naar GND. Interne pull-up actief; software detecteert verschillende press-types met 20 ms debounce:
 
-**Rocker switch (master power)** ; SPST in de hoofd-positieve rail tussen Li-Po+ en XIAO 5V-pad. Wanneer uit: alle systemen in het handvat volledig spanningsloos. De TP4056 blijft wel actief via VBUS wanneer USB-C aangesloten.
+| Press-type | Detectie | Actie |
+|---|---|---|
+| Korte druk (<500 ms) | Pulse op D3 | Functie: start/stop route |
+| Dubbel-druk (binnen 400 ms) | Twee pulses op D3 | Functie: "geef overzicht" |
+| Lange druk (≥3 s) | D3 LOW gedurende 3 s | XIAO sluit MAX98357A SD af, zet alle outputs neutraal, roept `esp_deep_sleep_start()` aan |
+| Druk uit deep-sleep | EXT0 wake-up trigger | XIAO boot opnieuw, hervat normale werking |
+
+> Geen rocker-switch in deze configuratie. De HOTUT is de enige user-facing power-control; de Li-Po blijft fysiek aangesloten.
 
 **DRV2605L → coin vibratiemotor** ; ERM-modus, I2C-adres 0x5A, motor hangt aan OUT+/OUT-.
 
@@ -256,18 +264,22 @@ De MG90S verbruikt ~150-300 mA tijdens snelle beweging; in stilstand 5-10 mA.
 
 ### Handvat-module
 
-| Component | Idle | Actief | Piek |
-|---|---|---|---|
-| XIAO ESP32-S3 (ESP-NOW actief) | ~30 mA | ~50 mA | 240 mA tijdens transmit |
-| XIAO ESP32-S3 (deep sleep) | ~14 µA | → | → |
-| DRV2605L (idle) | ~2 mA | ~6 mA | → |
-| Coin vibration motor | 0 mA | ~80 mA (continu) | ~120 mA piek |
-| MG90S servo (op 5 V uit MT3608) | ~5 mA | ~150 mA (bewegend) | ~300 mA piek |
-| MT3608 boost (altijd aan, quiescent) | ~1 mA | ~3 mA (met servo-load) | → |
-| MAX98357A + speaker (audio uit, SD low) | ~0 mA | → | → |
-| MAX98357A + speaker (audio aan) | ~50 mA | ~250 mA | ~500 mA piek |
-| HOTUT knop | 0 mA (passief) | → | → |
-| **Totaal Wizard-of-Oz sessie (audio uit)** | **~40 mA** | **~250 mA** | **~550 mA piek** |
+| Component | Idle (sessie) | Actief | Piek | Deep-sleep ("uit") |
+|---|---|---|---|---|
+| XIAO ESP32-S3 (ESP-NOW actief) | ~30 mA | ~50 mA | 240 mA tijdens transmit | ~14 µA (deep-sleep, EXT0 wake armed) |
+| DRV2605L | ~2 mA | ~6 mA | → | ~2 mA (Vin nog gevoed via XIAO 3V3 LDO) |
+| Coin vibration motor | 0 mA | ~80 mA (continu) | ~120 mA piek | 0 mA |
+| MG90S servo (op 5 V uit MT3608) | ~5 mA | ~150 mA (bewegend) | ~300 mA piek | ~5 mA (idle, geen shutdown-pin) |
+| MT3608 boost (altijd aan, quiescent) | ~1 mA | ~3 mA (met servo-load) | → | ~1 mA quiescent |
+| MAX98357A + speaker (audio uit, SD low) | ~0 mA | → | → | ~0 mA |
+| MAX98357A + speaker (audio aan) | ~50 mA | ~250 mA | ~500 mA piek | n.v.t. (SD low in deep-sleep) |
+| HOTUT knop | 0 mA (passief) | → | → | 0 mA |
+| **Totaal handvat (audio uit, in sessie)** | **~40 mA** | **~250 mA** | **~550 mA piek** | **~10 mA in deep-sleep** |
+
+**Autonomie-impact**:
+- In sessie (idle): ~25 u theoretisch / ~5-7 u realistisch met regelmatige servo-beweging
+- In "uit"-stand (deep-sleep): ~100 u = ~4 dagen op volle 1000 mAh Li-Po
+- Conclusie: **na elke testdag opladen via USB-C**, of de USB-C aangesloten laten tijdens opslag tussen sessies. Voor weken-langdurige opslag de Li-Po-stekker fysiek loskoppelen.
 
 Handvat op 1000 mAh Li-Po → ~9 uur theoretisch, ~5 → 7 uur realistisch met regelmatige servo-beweging.
 

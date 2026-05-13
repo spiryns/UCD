@@ -6,7 +6,7 @@
 Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. SensePath bestaat uit **drie fysieke modules**:
 
 1. **Stok-onderstuk** ; conventionele lange witte stok met ingebedde M3-schroef bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
-2. **Tech-handvat** ; schroeft op het stok-onderstuk via M3-insert. Bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in MAX98357A + speaker, HOTUT drukknop, eigen Li-Po + TP4056 USB-C + rocker-switch.
+2. **Tech-handvat** ; schroeft op het stok-onderstuk via M3-insert. Bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in MAX98357A + speaker, HOTUT drukknop (dubbele rol: functie + power-control via XIAO deep-sleep), eigen Li-Po + TP4056 USB-C. **Geen rocker-switch** ; physical-design constraint, power wordt softwarematig geregeld.
 3. **Wizard-of-Oz controller** ; **fysiek aparte module** voor de testleider. Bevat een XIAO ESP32-C3, KY-040 roterende encoder, eigen Li-Po + TP4056 USB-C + rocker-switch. **Draadloos** (ESP-NOW) verbonden met het tech-handvat ; geen kabel tussen testleider en gebruiker.
 
 Modules 2 en 3 hebben elk hun eigen voeding en kunnen onafhankelijk aan- en uitgezet worden. Het tech-handvat is dagelijks omwisselbaar met een gewone handgreep via dezelfde M3-schroefverbinding op het stok-onderstuk.
@@ -74,9 +74,14 @@ Standaard staat de audio-output **uit**. Op gebruikersverzoek (zie Develop 3 →
 | Onderdeel | Specificatie | Aantal | Productlink |
 |---|---|---|---|
 | Drukknop | HOTUT IP67 waterdichte momentary drukknop, 12 mm hoge kop, metaal (variant: zwarte 32 mm momentary) | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B099YJZ8DJ/ |
-| Rocker switch | Mini rocker-switch SPST voor harde aan/uit | 1 | https://www.amazon.nl/dp/B07ZP6BHKT/ |
 
-Eén drukknop = start/stop route + "geef overzicht" (double-press onderscheid). De rocker-switch = harde aan/uit voor wanneer het handvat opgeborgen wordt, zodat de XIAO niet in stand-by blijft drainen.
+Eén knop, drie functies via press-type onderscheid in firmware:
+- **Short-press** (<500 ms) → start/stop route
+- **Double-press** (binnen 400 ms) → "geef overzicht"
+- **Long-press** (≥3 s) → XIAO gaat in deep-sleep (functioneel "uit")
+- **Druk uit deep-sleep** → wake via EXT0 op RTC-GPIO 4
+
+> **Geen rocker-switch op het handvat** ; physical-design constraint (geen plek in de huidige cap-geometrie). Power-control is volledig softwarematig via deep-sleep. Trade-off: het handvat trekt nog ~10 mA quiescent in deep-sleep (MT3608, MG90S idle, DRV2605L blijven onder spanning), wat neerkomt op ~4 dagen autonomie in opslag op een volle Li-Po. Voor langere opslag: USB-C aangesloten laten of de Li-Po-stekker fysiek loskoppelen via de JST-PH connector op de TP4056.
 
 ---
 
@@ -186,10 +191,10 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 | XIAO ESP32-S3 + Adafruit DRV2605L | €25 → €35 |
 | Coin vibration motor + speaker + MAX98357A | €10 → €15 |
 | MG90S servo | €5 → €10 |
-| HOTUT knop + rocker switch + USB-C laad-poort | €10 → €15 |
+| HOTUT knop + USB-C laad-poort | €8 → €12 |
 | TP4056 + MT3608 + Li-Po 1000 mAh | €10 → €15 |
 | 3D-print (PLA, ~80 g) + insert + pin + hardware | €8 → €15 |
-| **Subtotaal handvat** | **€68 → €105** |
+| **Subtotaal handvat** | **€66 → €102** |
 
 **Module B → Wizard-of-Oz controller**
 
@@ -209,7 +214,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 | Witte stok-onderstuk + M3-stud + epoxy | €15 → €30 |
 | **Subtotaal stok** | **€15 → €30** |
 
-| **Totaal MVP-prototype (alle drie modules)** | **€110 → €179** |
+| **Totaal MVP-prototype (alle drie modules)** | **€108 → €176** |
 
 ---
 
@@ -223,7 +228,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 | Mechanisch kompas | geen | mechanisch (handmatig) | sferisch, statisch | sferisch, aangedreven door MG90S servo |
 | Trilmotoren | 2× coin vibration | 3× LRA | 1× LRA + DRV2605L | 1× coin vibration + DRV2605L |
 | Audio | Speaker + MAX98357A altijd-aan | geen | geen | Opt-in spraak-fallback (default uit) |
-| Bediening handvat | 2× drukknop | knop + telefoon | knop + telefoon | 1× drukknop + rocker-switch |
+| Bediening handvat | 2× drukknop | knop + telefoon | knop + telefoon | 1× drukknop met dubbele rol (functie + power-control via deep-sleep) |
 | Voeding | 18650 + TP4056 + MT3608 | 18650 + TP4056 | Bench-USB | Per module: interne Li-Po 1000 mAh + USB-C oplaad |
 
 De componenten-reductie ten opzichte van semester 1 blijft staan ; wat is teruggekeerd in de finale integratie (audio, MT3608) is doelbewust opt-in en niet altijd-aan, om de "ear-free, minimal-electronics" filosofie te bewaren waar dat kan, en alleen functionaliteit toe te voegen waar gebruikers er expliciet om vroegen. De grootste architecturale stap is dat de Wizard-of-Oz controller niet langer een telefoon-webpagina is maar een aparte fysieke module ; daarmee voelt de testleider mechanische rotatie alsof hij een echte stuurinterface in handen heeft, en is de bridge naar een toekomstig autonoom GPS-systeem cleaner gedefinieerd.

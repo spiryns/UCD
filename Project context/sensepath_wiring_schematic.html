@@ -168,29 +168,31 @@
 <rect x="540" y="172" width="50" height="20" class="pin-bg"/>
 <text x="565" y="186" text-anchor="middle" class="pin">-</text>
 
-<!-- Rocker switch handvat -->
-<rect x="800" y="80" width="180" height="120" rx="6" class="comp"/>
-<text x="890" y="105" text-anchor="middle" class="comp-title">Rocker switch</text>
-<text x="890" y="122" text-anchor="middle" class="comp-spec">SPST master power</text>
-<rect x="800" y="148" width="60" height="20" class="pin-bg"/>
-<text x="830" y="162" text-anchor="middle" class="pin">IN</text>
-<rect x="920" y="148" width="60" height="20" class="pin-bg"/>
-<text x="950" y="162" text-anchor="middle" class="pin">OUT</text>
+<!-- Geen rocker switch ; HOTUT lange-druk = deep-sleep -->
+<rect x="800" y="80" width="180" height="120" rx="6" class="comp" stroke-dasharray="6,4"/>
+<text x="890" y="105" text-anchor="middle" class="comp-title">GEEN switch</text>
+<text x="890" y="122" text-anchor="middle" class="comp-spec">power-control via</text>
+<text x="890" y="138" text-anchor="middle" class="comp-spec">HOTUT long-press</text>
+<text x="890" y="156" text-anchor="middle" class="comp-spec">→ XIAO deep-sleep</text>
+<rect x="800" y="170" width="60" height="20" class="pin-bg"/>
+<text x="830" y="184" text-anchor="middle" class="pin">IN</text>
+<rect x="920" y="170" width="60" height="20" class="pin-bg"/>
+<text x="950" y="184" text-anchor="middle" class="pin">OUT</text>
 
 <!-- MT3608 -->
 <rect x="800" y="220" width="180" height="60" rx="6" class="comp"/>
 <text x="890" y="245" text-anchor="middle" class="comp-title">MT3608 boost</text>
-<text x="890" y="263" text-anchor="middle" class="comp-spec">3.7 → 5 V (audio)</text>
+<text x="890" y="263" text-anchor="middle" class="comp-spec">3.7 → 5 V (altijd aan)</text>
 
 <!-- Power chain wires handvat -->
 <path class="wire-pwr5" d="M 90,158 L 240,158 L 240,158 L 270,158" marker-end="url(#arrow)"/>
 <path class="wire-gnd" d="M 90,182 L 240,182 L 240,182 L 270,182" marker-end="url(#arrow)"/>
 <path class="wire-pwr37" d="M 490,158 L 540,158"/>
 <path class="wire-gnd" d="M 490,182 L 540,182"/>
-<path class="wire-pwr37" d="M 490,218 L 510,218 L 510,260 L 760,260 L 760,158 L 800,158" marker-end="url(#arrow)"/>
-<path class="wire-gnd" d="M 490,242 L 530,242 L 530,290 L 1080,290"/>
-<path class="wire-pwr37" d="M 980,158 L 1080,158"/>
-<path class="wire-pwr37" d="M 980,165 L 1000,165 L 1000,250 L 980,250" marker-end="url(#arrow)"/>
+<path class="wire-pwr37" d="M 490,218 L 510,218 L 510,290 L 760,290 L 760,180 L 800,180" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 490,242 L 530,242 L 530,310 L 1080,310"/>
+<path class="wire-pwr37" d="M 980,180 L 1040,180 L 1040,165 L 1080,165"/>
+<path class="wire-pwr37" d="M 980,180 L 1000,180 L 1000,250 L 980,250" marker-end="url(#arrow)"/>
 
 <!-- XIAO ESP32-S3 -->
 <rect x="900" y="380" width="380" height="540" rx="8" class="comp"/>
@@ -497,8 +499,7 @@
 <tr><td>USB-C GND</td><td>USB-C female GND</td><td>TP4056 IN-</td><td>GND (zwart)</td></tr>
 <tr><td>Battery +</td><td>TP4056 BAT+</td><td>Li-Po + via JST-PH</td><td>3.7V (oranje)</td></tr>
 <tr><td>Battery -</td><td>TP4056 BAT-</td><td>Li-Po - via JST-PH</td><td>GND (zwart)</td></tr>
-<tr><td>3.7V switch in</td><td>TP4056 OUT+</td><td>Rocker switch IN</td><td>3.7V (oranje)</td></tr>
-<tr><td>3.7V rail</td><td>Rocker switch OUT</td><td>XIAO ESP32-S3 5V, MT3608 IN+</td><td>3.7V (oranje)</td></tr>
+<tr><td>3.7V rail (handvat)</td><td>TP4056 OUT+ direct</td><td>XIAO ESP32-S3 5V-pad + MT3608 IN+ (geen switch tussenin ; deep-sleep regelt power)</td><td>3.7V (oranje)</td></tr>
 <tr><td>GND backbone</td><td>TP4056 OUT-</td><td>XIAO GND, alle modules GND</td><td>GND (zwart)</td></tr>
 <tr><td>Boost out 5V</td><td>MT3608 OUT+ (altijd aan)</td><td>MG90S V+ (rood) + MAX98357A Vin</td><td>5V (rood)</td></tr>
 <tr><td>Servo decoupling</td><td>5V rail bij servo-stekker</td><td>220-470 µF elco naar GND</td><td>cap (geel)</td></tr>
@@ -516,7 +517,7 @@
 <tr><td>Speaker out -</td><td>MAX98357A SP-</td><td>Speaker terminal 2</td><td>Output (bruin)</td></tr>
 <tr><td>Coin motor +</td><td>DRV2605L OUT+</td><td>Coin motor terminal 1</td><td>Output (bruin)</td></tr>
 <tr><td>Coin motor -</td><td>DRV2605L OUT-</td><td>Coin motor terminal 2</td><td>Output (bruin)</td></tr>
-<tr><td>Push button SIG</td><td>HOTUT terminal 1</td><td>XIAO D3 (GPIO 4) interne pull-up</td><td>GPIO (groen)</td></tr>
+<tr><td>Push button SIG</td><td>HOTUT terminal 1</td><td>XIAO D3 (RTC-GPIO 4) interne pull-up ; short = functie, long ≥3s = deep-sleep, druk uit deep-sleep = EXT0 wake</td><td>GPIO (groen)</td></tr>
 <tr><td>Push button GND</td><td>HOTUT terminal 2</td><td>GND-bus</td><td>GND (zwart)</td></tr>
 </tbody>
 </table>
@@ -557,7 +558,8 @@
   <b>Belangrijke notes</b>
   <ul>
     <li>De KY-040 encoder zit <span class="pill">NIET</span> in het handvat. Hij hangt aan de aparte controller-module (XIAO ESP32-C3). De handvat-XIAO ontvangt enkel de encoder-data draadloos via ESP-NOW.</li>
-    <li>Beide modules hebben hun eigen USB-C laad-poort, hun eigen Li-Po, hun eigen rocker-switch. Ze worden onafhankelijk opgeladen en aan/uit gezet.</li>
+    <li>Beide modules hebben hun eigen USB-C laad-poort en eigen Li-Po. <span class="pill">Handvat heeft géén rocker-switch</span> ; aan/uit via HOTUT long-press (XIAO deep-sleep). Controller heeft wél een rocker-switch (geen physical-design constraint daar).</li>
+    <li><span class="pill">Deep-sleep "off"-stand</span> trekt nog ~10 mA quiescent (MT3608 + servo idle + DRV2605L blijven onder spanning). Op 1000 mAh = ~4 dagen autonomie in opslag. Voor langere opslag: USB-C aangesloten laten, of Li-Po-stekker fysiek loskoppelen via JST-PH op TP4056.</li>
     <li>De externe USB-C poorten (zowel handvat als controller) zijn <span class="pill">2-draads</span> ; alleen voor opladen via TP4056. Firmware-flashen gebeurt via de USB-C poort op de XIAO zelf (ESP32-S3 voor handvat, ESP32-C3 voor controller).</li>
     <li>MT3608 boost staat alleen op het handvat en is <span class="pill">altijd aan</span> ; voedt zowel de MG90S servo (5 V volgens datasheet) als de MAX98357A audio-amp (5 V vereist). De controller-module heeft géén MT3608 ; één enkele 3.7 V rail volstaat daar.</li>
     <li>MAX98357A SD-pin = 4-staats input (shutdown / stereo-mix / right / left). Aangestuurd door XIAO D10 ; LOW = shutdown (default), HIGH = amp aan. 100 kΩ pull-down naar GND houdt de pin gedefinieerd LOW tijdens boot/reset.</li>
