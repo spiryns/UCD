@@ -1106,7 +1106,7 @@ Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
 - **Coin vibratiemotor** in plaats van LRA ; goedkoper en breder beschikbaar. Wordt aangedreven door dezelfde DRV2605L (in ERM-modus); de drie haptische microsignalen blijven herkenbaar.
 - **MG90S mini-servo** voor aansturing van het mechanisch kompas. Identiek aan de productie-vision.
 - **Geen obstakeldetectie** in het prototype. Methodische keuze: het stok-onderstuk blijft de primaire detector, en het toevoegen van ToF-sensors zou een confounding variabele introduceren in de haptische-navigatie-tests die we willen doen. Voor productie is obstakeldetectie volwaardig opgenomen (D2.5 + D2.6).
-- **Speaker + MAX98357A I2S-versterker** voor opt-in audio-fallback (default uit, MT3608 boost levert 5 V alleen wanneer geactiveerd).
+- **Speaker + MAX98357A I2S-versterker** voor opt-in audio-fallback (default uit via SD-pin door XIAO D10 gegated; MT3608 boost staat altijd aan voor de servo, en SD-pin laag houdt enkel de audio-amp in stand-by).
 - **HOTUT IP67 metalen drukknop** + **rocker-switch** voor bediening en harde aan/uit.
 - **Interne Li-Po 1000 mAh** + **TP4056 USB-C laadcircuit** ; aparte USB-C laad-poort, firmware-flashen via de eigen USB-C poort van de XIAO.
 

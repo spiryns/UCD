@@ -11,7 +11,7 @@ Firmware voor de handvat-module. De Wizard-of-Oz controller heeft eigen firmware
 - Coin vibratiemotor 10 × 2.7 mm op de DRV2605L OUT-pinnen
 - MG90S servo voor mechanisch kompas (PWM via D9)
 - HOTUT drukknop op D3
-- Optioneel: MAX98357A I2S audio-versterker + speaker (BCLK = D6, LRC = D7, DIN = D8)
+- Optioneel: MAX98357A I2S audio-versterker + speaker (BCLK = D6, LRC = D7, DIN = D8, SD = D10 als software-gated power-gate, GAIN naar GND voor 15 dB)
 
 > De KY-040 roterende encoder zit **niet** op het handvat. Die hangt aan een aparte controller-module (XIAO ESP32-C3) die via ESP-NOW de encoder-positie naar deze ESP32-S3 verstuurt. De handvat-firmware ontvangt de richtings-updates en stuurt op basis daarvan de MG90S servo aan.
 

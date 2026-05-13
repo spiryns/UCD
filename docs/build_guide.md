@@ -60,18 +60,23 @@ Open [cad/exports/](../cad/exports/) en download:
 2. **DRV2605L breakout** ernaast monteren.
 3. **TP4056 USB-C laadcircuit** op het perfboard plaatsen.
 4. **MT3608 boost converter** ernaast ; output afregelen op 5 V vóór montage. Voedt zowel de MG90S servo (altijd actief) als de MAX98357A audio-amp (opt-in, via SD-pin gegated).
-5. **MAX98357A I2S versterker** kunt u nu ook plaatsen, maar laat SD-pin open / naar GND in default-config om hem in stand-by te houden.
+5. **MAX98357A I2S versterker** plaatsen. Belangrijk: SD-pin **niet floating laten** (onbepaald gedrag). Default-stand = stand-by via 100 kΩ pull-down naar GND, met software-override via XIAO D10 (zie stap 7). GAIN-pin direct aan GND voor 15 dB max gain.
 6. **I2C-bedrading** tussen XIAO en DRV2605L:
    - XIAO D4 (SDA) → DRV2605L SDA
    - XIAO D5 (SCL) → DRV2605L SCL
    - XIAO 3V3 → DRV2605L Vin
    - XIAO GND → DRV2605L GND
-7. **I2S-bedrading** tussen XIAO en MAX98357A:
+7. **I2S-bedrading + SD-control + GAIN** tussen XIAO en MAX98357A:
    - XIAO D6 (GPIO 43) → MAX98357A BCLK
    - XIAO D7 (GPIO 44) → MAX98357A LRC
    - XIAO D8 (GPIO 7) → MAX98357A DIN
+   - **XIAO D10 (GPIO 9) → MAX98357A SD** (software gate; LOW = shutdown, HIGH = amp aan)
+   - **100 kΩ weerstand** tussen MAX98357A SD-pin en GND (pull-down voor gedefinieerde boot-state)
+   - **MAX98357A GAIN → direct aan GND** (één jumperdraadje, geen weerstand) voor 15 dB max gain
    - MT3608 5V → MAX98357A Vin
    - GND gemeenschappelijk
+
+   > **Niet floating laten**: SD-pin zonder verbinding leidt tot pseudo-random kanaal-selectie (4-staats input) en pop-geluiden. De pull-down + GPIO-aansturing is essentieel.
 8. **Coin vibration motor** ; 2× AWG28 draad van DRV2605L OUT+ en OUT− naar JST-PH 2-pin connector. Motor-zijde idem; polariteit is niet kritisch voor een ERM-coin motor.
 9. **MG90S servo** ; standaard 3-pins JR-stekker:
    - Bruin (GND) → gemeenschappelijke GND

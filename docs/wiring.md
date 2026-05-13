@@ -79,8 +79,12 @@ De keten **testleider → KY-040 → ESP32-C3 → ESP-NOW → ESP32-S3 → servo
 | I2S BCLK | D6 (GPIO 43) | MAX98357A BCLK | Bit clock voor audio |
 | I2S LRC | D7 (GPIO 44) | MAX98357A LRC | Left-right clock |
 | I2S DIN | D8 (GPIO 7) | MAX98357A DIN | Data input |
+| Audio amp SD | D10 (GPIO 9) | MAX98357A SD | Software-gated power gate. LOW = shutdown (~0 mA), HIGH = mono-mix actief. 100 kΩ pull-down naar GND voor gedefinieerde boot-state |
 | Servo + | 5V rail (uit MT3608) | MG90S V+ (rood) | Datasheet specificeert 4.8-6V; deelt rail met audio-amp |
-| Audio amp + | 5V rail (uit MT3608) | MAX98357A Vin | Zelfde rail als servo; SD-pin laag → stand-by tot audio-fallback geactiveerd |
+| Audio amp + | 5V rail (uit MT3608) | MAX98357A Vin | Zelfde rail als servo; SD-pin gates het audio-pad |
+| Audio amp GAIN | GND | MAX98357A GAIN | Direct naar GND = 15 dB max gain (kleine speaker, spraak-fallback in handvat) |
+| Coin motor + | DRV2605L OUT+ | Coin vibratiemotor terminal 1 | Door DRV2605L gegenereerde ERM-drive (geen rechtstreekse XIAO-pin) |
+| Coin motor − | DRV2605L OUT− | Coin vibratiemotor terminal 2 | Polariteit niet kritisch voor ERM-coin motor |
 
 ### Voeding
 
@@ -93,8 +97,10 @@ flowchart LR
     RAIL37 --> XIAOPWR[XIAO ESP32-S3]
     RAIL37 --> BOOST[MT3608 boost<br/>altijd aan]
     BOOST --> RAIL5[5V rail]
-    RAIL5 --> SERVO[MG90S servo]
+    RAIL5 --> SERVO[MG90S servo<br/>+ 220-470µF elco]
     RAIL5 --> AMP[MAX98357A<br/>SD-pin gates audio]
+    XIAOPWR -->|3V3| DRV[DRV2605L Vin]
+    DRV -->|OUT± drive| COIN[Coin vibratiemotor]
 ```
 
 Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po die de XIAO voedt; één **5 V rail** uit de MT3608 boost converter die zowel de MG90S servo als de MAX98357A audio-amp voedt; en het **USB-C laadkanaal** via de TP4056. De MT3608 staat **altijd aan** (de servo heeft volgens datasheet 4.8-6 V nodig om aan spec te draaien); de audio-amp wordt apart in stand-by gezet via zijn SD-pin wanneer audio-fallback niet actief is, zodat de speaker geen stroom trekt.
@@ -109,7 +115,25 @@ Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po di
 
 **MG90S servo → mechanisch kompas** ; PWM-signaal op D9 (3.3 V logic werkt direct, geen level shifter nodig). V+ op de 5 V rail uit de MT3608 boost, GND op de gemeenschappelijke massa. **Belangrijk**: plaats een **220-470 µF elco** tussen V+ en GND vlak bij de servo-stekker. De MG90S kan tot ~300 mA pieken trekken bij snelle beweging ; zonder buffercap zakt de 5 V rail kortstondig in en kan de XIAO resetten. Klassieke valkuil bij servo + microcontroller op één Li-Po. De servo ontvangt zijn doelhoek van de XIAO, die op zijn beurt het signaal krijgt **van de controller-module via ESP-NOW**, niet van een lokaal aangesloten encoder.
 
-**MAX98357A + speaker** ; I2S audio (opt-in fallback). SD-pin via 100 kΩ pull-down naar GND voor default-standby.
+**MAX98357A + speaker** ; I2S audio (opt-in fallback). De SD-pin op de MAX98357A is **geen simpele on/off**: hij is een 4-staats input die zowel shutdown als kanaal-selectie regelt. Onze configuratie:
+
+| SD-spanning | Effect | Hoe wij hem aansturen |
+|---|---|---|
+| 0 → 0.16 V | Shutdown (~0 mA) | XIAO D10 LOW = default |
+| 0.16 → 0.77 V | Stereo-mix (L+R)/2 | XIAO D10 HIGH (3.3 V) **valt buiten dit bereik**, zie noot |
+| 0.77 → 1.4 V | Right channel | n.v.t. |
+| 1.4 V → Vdd | Left channel | XIAO D10 HIGH valt hierin → wij krijgen left channel |
+
+Daarom: **D10 LOW = amp uit; D10 HIGH = amp aan in left-channel mode** (bij ons functioneel identiek aan mono omdat de speaker een mono-bron is). De **100 kΩ pull-down** tussen SD en GND houdt de pin LOW tijdens boot en reset (XIAO GPIOs zijn floating high-impedance tot `pinMode` aanroep). De **GAIN-pin** is direct aan GND voor 15 dB versterking.
+
+Software in firmware:
+```cpp
+const uint8_t AUDIO_SD_PIN = 10;  // XIAO D10
+pinMode(AUDIO_SD_PIN, OUTPUT);
+digitalWrite(AUDIO_SD_PIN, LOW);   // default: amp in shutdown
+// Bij audio-fallback activatie:
+digitalWrite(AUDIO_SD_PIN, HIGH);  // amp wakker, klaar om I2S te spelen
+```
 
 ---
 
@@ -202,13 +226,15 @@ Geen multiplexing nodig: DRV2605L is het enige I2C-device op de bus.
 
 | Signaal | Functie |
 |---|---|
-| BCLK | Bit clock, gegenereerd door XIAO ESP32-S3 |
-| LRC (WS) | Word select / Left-Right clock |
-| DIN | Data input naar amplifier |
+| BCLK | Bit clock, gegenereerd door XIAO ESP32-S3 (D6) |
+| LRC (WS) | Word select / Left-Right clock (D7) |
+| DIN | Data input naar amplifier (D8) |
+| SD | Power gate, aangestuurd door XIAO D10 + 100 kΩ pull-down |
+| GAIN | Direct aan GND voor 15 dB versterking |
 | GND | Gemeenschappelijke massa |
-| Vin (5V) | Via MT3608 boost |
+| Vin (5V) | Via MT3608 boost (zelfde rail als servo) |
 
-De MAX98357A heeft geen master-volume input; volume wordt softwarematig geregeld op de XIAO. Standby-modus (SD-pin naar GND via 100 kΩ pull-down) zet de versterker uit ; standaard-stand om stroom te besparen wanneer audio-fallback niet actief is.
+De MAX98357A heeft geen master-volume input; volume wordt softwarematig geregeld op de XIAO. Stand-by gebeurt via de SD-pin (XIAO D10 LOW) ; default-stand om de ~50 mA idle-draw van de versterker te vermijden zolang audio-fallback niet actief is. Op een 1000 mAh Li-Po geeft dat ongeveer een verdubbeling van de actief-autonomie ten opzichte van een altijd-aan amp.
 
 ---
 

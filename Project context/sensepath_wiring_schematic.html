@@ -214,6 +214,8 @@
 <text x="1240" y="577" text-anchor="middle" class="pin">D7 (LRC)</text>
 <rect x="1200" y="590" width="80" height="22" class="pin-bg"/>
 <text x="1240" y="605" text-anchor="middle" class="pin">D8 (DIN)</text>
+<rect x="1200" y="618" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="633" text-anchor="middle" class="pin">D10 (SD)</text>
 <rect x="1130" y="900" width="80" height="22" class="pin-bg"/>
 <text x="1170" y="915" text-anchor="middle" class="pin">D3 (BTN)</text>
 <rect x="1080" y="380" width="60" height="20" class="pin-bg"/>
@@ -222,10 +224,10 @@
 <path class="wire-pwr37" d="M 1080,165 L 1080,440 L 940,440 L 940,450" marker-end="url(#arrow)"/>
 <path class="wire-gnd" d="M 1080,290 L 1080,395 L 880,395 L 880,517 L 900,517" marker-end="url(#arrow)"/>
 
-<!-- MT3608 -> MAX rail -->
+<!-- MT3608 -> 5V rail (servo + audio) -->
 <rect x="1340" y="220" width="220" height="60" rx="6" class="comp"/>
-<text x="1450" y="245" text-anchor="middle" class="comp-title">→ 5V audio rail</text>
-<text x="1450" y="263" text-anchor="middle" class="comp-spec">enkel actief bij audio</text>
+<text x="1450" y="245" text-anchor="middle" class="comp-title">→ 5V rail</text>
+<text x="1450" y="263" text-anchor="middle" class="comp-spec">altijd aan, voedt servo + audio</text>
 <path class="wire-pwr5" d="M 980,250 L 1340,250" marker-end="url(#arrow)"/>
 
 <!-- DRV2605L -->
@@ -272,17 +274,16 @@
 <rect x="1520" y="720" width="80" height="22" class="pin-bg"/>
 <text x="1560" y="735" text-anchor="middle" class="pin">SIG</text>
 
-<path class="wire-pwr37" d="M 1080,165 L 1080,360 L 1410,360 L 1410,720" marker-end="url(#arrow)"/>
+<path class="wire-pwr5" d="M 1340,665 L 1410,665 L 1410,720" marker-end="url(#arrow)"/>
 <path class="wire-gnd" d="M 980,517 L 1100,517 L 1100,820 L 1480,820 L 1480,742" marker-end="url(#arrow)"/>
+<path class="wire-gpio" d="M 1280,517 L 1560,517 L 1560,720" marker-end="url(#arrow)"/>
 <g>
-  <rect x="1290" y="525" width="50" height="20" rx="2" fill="#fffde7" stroke="#666"/>
-  <text x="1315" y="539" text-anchor="middle" class="pin">1 kΩ</text>
+  <rect x="1370" y="650" width="80" height="22" rx="2" fill="#fffde7" stroke="#666"/>
+  <text x="1410" y="665" text-anchor="middle" class="pin">220-470 µF</text>
 </g>
-<path class="wire-gpio" d="M 1280,517 L 1290,535"/>
-<path class="wire-gpio" d="M 1340,535 L 1560,535 L 1560,720" marker-end="url(#arrow)"/>
 
 <!-- MAX98357A + speaker -->
-<rect x="1380" y="820" width="220" height="180" rx="6" class="comp"/>
+<rect x="1380" y="820" width="220" height="210" rx="6" class="comp"/>
 <text x="1490" y="848" text-anchor="middle" class="comp-title">MAX98357A</text>
 <text x="1490" y="865" text-anchor="middle" class="comp-spec">I2S amp (opt-in)</text>
 <rect x="1380" y="885" width="80" height="22" class="pin-bg"/>
@@ -293,6 +294,8 @@
 <text x="1420" y="952" text-anchor="middle" class="pin">BCLK</text>
 <rect x="1380" y="963" width="80" height="22" class="pin-bg"/>
 <text x="1420" y="978" text-anchor="middle" class="pin">LRC</text>
+<rect x="1380" y="993" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="1008" text-anchor="middle" class="pin">GAIN</text>
 <rect x="1490" y="885" width="80" height="22" class="pin-bg"/>
 <text x="1530" y="900" text-anchor="middle" class="pin">DIN</text>
 <rect x="1490" y="911" width="80" height="22" class="pin-bg"/>
@@ -321,6 +324,10 @@
 </g>
 <path class="wire-gnd" d="M 1570,922 L 1602,922"/>
 <path class="wire-gnd" d="M 1642,922 L 1660,922 L 1660,1020 L 1100,1020 L 1100,820"/>
+<!-- D10 → SD GPIO control -->
+<path class="wire-gpio" d="M 1280,629 L 1310,629 L 1310,800 L 1680,800 L 1680,922 L 1642,922" marker-end="url(#arrow)"/>
+<!-- GAIN → GND for 15 dB max gain -->
+<path class="wire-gnd" d="M 1380,1004 L 1360,1004 L 1360,1020"/>
 <path class="wire-out" d="M 1570,948 L 1700,956" marker-end="url(#arrow)"/>
 <path class="wire-out" d="M 1570,974 L 1700,981" marker-end="url(#arrow)"/>
 
@@ -491,17 +498,20 @@
 <tr><td>Battery +</td><td>TP4056 BAT+</td><td>Li-Po + via JST-PH</td><td>3.7V (oranje)</td></tr>
 <tr><td>Battery -</td><td>TP4056 BAT-</td><td>Li-Po - via JST-PH</td><td>GND (zwart)</td></tr>
 <tr><td>3.7V switch in</td><td>TP4056 OUT+</td><td>Rocker switch IN</td><td>3.7V (oranje)</td></tr>
-<tr><td>3.7V rail</td><td>Rocker switch OUT</td><td>XIAO ESP32-S3 5V, MT3608 IN+, MG90S V+ rood</td><td>3.7V (oranje)</td></tr>
+<tr><td>3.7V rail</td><td>Rocker switch OUT</td><td>XIAO ESP32-S3 5V, MT3608 IN+</td><td>3.7V (oranje)</td></tr>
 <tr><td>GND backbone</td><td>TP4056 OUT-</td><td>XIAO GND, alle modules GND</td><td>GND (zwart)</td></tr>
-<tr><td>Boost out 5V</td><td>MT3608 OUT+</td><td>MAX98357A Vin</td><td>5V (rood)</td></tr>
+<tr><td>Boost out 5V</td><td>MT3608 OUT+ (altijd aan)</td><td>MG90S V+ (rood) + MAX98357A Vin</td><td>5V (rood)</td></tr>
+<tr><td>Servo decoupling</td><td>5V rail bij servo-stekker</td><td>220-470 µF elco naar GND</td><td>cap (geel)</td></tr>
 <tr><td>3V3 logic rail</td><td>XIAO 3V3 pin</td><td>DRV2605L Vin</td><td>3V3 (geel)</td></tr>
 <tr><td>I2C SDA</td><td>XIAO D4 (GPIO 5)</td><td>DRV2605L SDA</td><td>I2C (blauw)</td></tr>
 <tr><td>I2C SCL</td><td>XIAO D5 (GPIO 6)</td><td>DRV2605L SCL</td><td>I2C (blauw)</td></tr>
-<tr><td>Servo PWM</td><td>XIAO D9 (GPIO 8)</td><td>1 kΩ serie → MG90S oranje (signaal)</td><td>GPIO (groen)</td></tr>
+<tr><td>Servo PWM</td><td>XIAO D9 (GPIO 8)</td><td>MG90S oranje (signaal) ; geen serieweerstand nodig</td><td>GPIO (groen)</td></tr>
 <tr><td>I2S BCLK</td><td>XIAO D6 (GPIO 43)</td><td>MAX98357A BCLK</td><td>I2S (paars)</td></tr>
 <tr><td>I2S LRC</td><td>XIAO D7 (GPIO 44)</td><td>MAX98357A LRC</td><td>I2S (paars)</td></tr>
 <tr><td>I2S DIN</td><td>XIAO D8 (GPIO 7)</td><td>MAX98357A DIN</td><td>I2S (paars)</td></tr>
-<tr><td>MAX98357A SD</td><td>MAX98357A SD-pin</td><td>100 kΩ pull-down naar GND</td><td>GND (zwart)</td></tr>
+<tr><td>Audio amp SD ctrl</td><td>XIAO D10 (GPIO 9)</td><td>MAX98357A SD-pin (LOW = shutdown, HIGH = aan)</td><td>GPIO (groen)</td></tr>
+<tr><td>SD pull-down</td><td>MAX98357A SD-pin</td><td>100 kΩ → GND (gedefinieerde boot-state)</td><td>GND (zwart)</td></tr>
+<tr><td>GAIN select</td><td>MAX98357A GAIN-pin</td><td>Direct aan GND (15 dB max gain)</td><td>GND (zwart)</td></tr>
 <tr><td>Speaker out +</td><td>MAX98357A SP+</td><td>Speaker terminal 1</td><td>Output (bruin)</td></tr>
 <tr><td>Speaker out -</td><td>MAX98357A SP-</td><td>Speaker terminal 2</td><td>Output (bruin)</td></tr>
 <tr><td>Coin motor +</td><td>DRV2605L OUT+</td><td>Coin motor terminal 1</td><td>Output (bruin)</td></tr>
@@ -549,9 +559,10 @@
     <li>De KY-040 encoder zit <span class="pill">NIET</span> in het handvat. Hij hangt aan de aparte controller-module (XIAO ESP32-C3). De handvat-XIAO ontvangt enkel de encoder-data draadloos via ESP-NOW.</li>
     <li>Beide modules hebben hun eigen USB-C laad-poort, hun eigen Li-Po, hun eigen rocker-switch. Ze worden onafhankelijk opgeladen en aan/uit gezet.</li>
     <li>De externe USB-C poorten (zowel handvat als controller) zijn <span class="pill">2-draads</span> ; alleen voor opladen via TP4056. Firmware-flashen gebeurt via de USB-C poort op de XIAO zelf (ESP32-S3 voor handvat, ESP32-C3 voor controller).</li>
-    <li>MT3608 boost staat alleen op het handvat (voor de 5 V audio-rail). De controller heeft géén MT3608 ; één enkele 3.7 V rail volstaat.</li>
-    <li>MAX98357A SD-pin via 100 kΩ pull-down naar GND houdt de versterker default in standby (audio off).</li>
-    <li>1 kΩ serieweerstand op de servo-signaal beschermt de XIAO GPIO bij eventuele short.</li>
+    <li>MT3608 boost staat alleen op het handvat en is <span class="pill">altijd aan</span> ; voedt zowel de MG90S servo (5 V volgens datasheet) als de MAX98357A audio-amp (5 V vereist). De controller-module heeft géén MT3608 ; één enkele 3.7 V rail volstaat daar.</li>
+    <li>MAX98357A SD-pin = 4-staats input (shutdown / stereo-mix / right / left). Aangestuurd door XIAO D10 ; LOW = shutdown (default), HIGH = amp aan. 100 kΩ pull-down naar GND houdt de pin gedefinieerd LOW tijdens boot/reset.</li>
+    <li>MAX98357A GAIN-pin direct aan GND voor 15 dB max gain (geschikt voor kleine 2 W mono spraak-fallback in handvat).</li>
+    <li>MG90S servo-signaal gaat direct van XIAO D9 naar SIG (3.3 V PWM, geen serieweerstand of level shifter nodig). 220-470 µF elco tussen V+ en GND vlak bij de servo-stekker tegen stroompieken (~300 mA piek).</li>
     <li>Module C (stok-onderstuk) is een conventionele witte stok zonder elektronica ; bovenaan zit een epoxy-vast geïntegreerde M3-stud die in de heatset-insert van het tech-handvat schroeft. Onderaan: standaard verwisselbare pin-tip.</li>
   </ul>
 </div>

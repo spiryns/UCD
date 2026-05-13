@@ -166,6 +166,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 |---|---|---|
 | JST-PH 2.0 mm connectoren | Mix van 2-pin, 3-pin, 5-pin connectoren met dopjes | Kit |
 | Decoupling-elco servo | 220-470 µF / 10 V elektrolytisch, low-ESR | 1 (handvat) |
+| Pull-down weerstand SD-pin | 100 kΩ / 1/4 W (1 % of 5 % tolerantie volstaat) | 1 (handvat, MAX98357A SD → GND) |
 | Dupont jumper wires | ZDE 10 cm, Female-Female, Male-Female, Male-Male, 120 stuks | Kit |
 | Perfboard of mini-PCB | Voor DRV2605L ↔ XIAO bedrading (handvat) en ESP32-C3 ↔ encoder (controller) | 2 |
 | Krimpkous Ø2 mm | Voor trekontlasting bedrading | enkele mm |
