@@ -3,28 +3,32 @@
 
 > Documentatie van **ons MVP-prototype**, niet van het beoogde eindproduct. Voor het verschil tussen beide en de productie-vision (RTK GNSS, smartphone-app, ToF-obstakeldetectie, PA6 + TPE-materialen): zie de [Deliver-sectie in de hoofdrapportage](../README.md#deliver).
 
-Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. SensePath is **tweedelig**: een **conventioneel witte-stok-onderstuk** met een ingebedde M3-schroef bovenaan, en een **tech-handvat** met een matching M3-insert dat erop geschroefd wordt. Het ontwerp omvat verder:
+Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. SensePath bestaat uit **drie fysieke modules**:
 
-- Haptisch kanaal → coin vibratiemotor aangestuurd via DRV2605L
-- Mechanisch kompas → MG90S servo draait het sferisch kompaselement
-- **Wizard-of-Oz controller via roterende encoder** → de testleider stuurt het kompas aan via een KY-040 encoder; dit overbrugt de Develop-fase (Wizard-of-Oz via telefoon) naar de Deliver-validatie zonder eerst een volledig autonoom GPS-systeem te moeten bouwen
-- Opt-in audio-fallback → speaker + I2S-versterker, default uit
-- Autonoom inzetbaar → 900 mAh Li-Po met USB-C opladen
-- Stevige bediening → metalen drukknop, schuifschakelaar voor aan/uit
-- Modulaire stok-handvat-verbinding → tech-handvat verwisselbaar met een standaard handgreep via dezelfde M3-schroefverbinding
+1. **Stok-onderstuk** ; conventionele lange witte stok met ingebedde M3-schroef bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
+2. **Tech-handvat** ; schroeft op het stok-onderstuk via M3-insert. Bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in MAX98357A + speaker, HOTUT drukknop, eigen Li-Po + TP4056 USB-C + rocker-switch.
+3. **Wizard-of-Oz controller** ; **fysiek aparte module** voor de testleider. Bevat een XIAO ESP32-C3, KY-040 roterende encoder, eigen Li-Po + TP4056 USB-C + rocker-switch. **Draadloos** (ESP-NOW) verbonden met het tech-handvat ; geen kabel tussen testleider en gebruiker.
+
+Modules 2 en 3 hebben elk hun eigen voeding en kunnen onafhankelijk aan- en uitgezet worden. Het tech-handvat is dagelijks omwisselbaar met een gewone handgreep via dezelfde M3-schroefverbinding op het stok-onderstuk.
 
 > Voor de bredere technische context: zie [wiring.md](wiring.md) voor het schakelschema en [build_guide.md](build_guide.md) voor de bouwinstructies.
 
 ---
 
-## 1. Besturingselektronica
+# MODULE A → Tech-handvat (op de stok geschroefd)
+
+Alle onderdelen in secties 1 tot en met 8 zitten in de **tech-handvat module** die de gebruiker in de hand heeft. Voor de Wizard-of-Oz controller-module zie sectie 9.
+
+---
+
+## 1. Besturingselektronica handvat
 
 | Onderdeel | Specificatie | Aantal | Productlink |
 |---|---|---|---|
 | Microcontroller | Seeed Studio XIAO ESP32-S3 (2.4 GHz WiFi + BLE 5.0, dual-core, met onboard Li-Po batterijlading) | 1 | https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html |
 | Haptische driver | Adafruit DRV2605L Haptic Motor Controller [ADA2305] | 1 | https://www.adafruit.com/product/2305 |
 
-De XIAO ESP32-S3 is gekozen omwille van de compacte footprint (21 × 17.5 mm) en de ingebouwde Li-Po laad-ondersteuning ; minder externe componenten in het handvat. De DRV2605L bevat een ROM met 123 haptische effecten en kan zowel ERM- als LRA-motoren aansturen.
+De XIAO ESP32-S3 is gekozen omwille van de compacte footprint (21 × 17.5 mm) en de ingebouwde Li-Po laad-ondersteuning ; minder externe componenten in het handvat. Hij ontvangt **draadloos via ESP-NOW** richting-updates van de controller-module en stuurt op basis daarvan de servo aan. De DRV2605L bevat een ROM met 123 haptische effecten en kan zowel ERM- als LRA-motoren aansturen.
 
 ---
 
@@ -48,13 +52,9 @@ De MG90S stuurt het sferisch kompaselement aan. De assenpositie volgt de doelric
 
 ---
 
-## 4. Wizard-of-Oz controller
+## 4. Wizard-of-Oz interface ; ontvangstkant
 
-| Onderdeel | Specificatie | Aantal | Productlink |
-|---|---|---|---|
-| Roterende encoder | QWORK KY-040, 360° met geïntegreerde drukknop | 1 (uit pakket van 5) | https://www.amazon.nl/dp/B07F26GMSC/ |
-
-De KY-040 maakt het mogelijk om de finale validatie te doen zonder een GPS-systeem te moeten bouwen. De testleider draait de encoder; de XIAO leest CLK/DT/SW en stuurt de MG90S-servo aan. Daarmee voelt de blinde gebruiker een continu, mensgestuurd kompasspoor in de hand ; identiek aan wat een autonoom systeem later zou moeten leveren, maar met de testleider als "GPS-vervanger".
+De KY-040 encoder zelf zit **niet** in het handvat ; die zit in een aparte controller-module (sectie 9). Het handvat ontvangt enkel de richtingsdata draadloos en stuurt daarmee de servo aan. Er is dus geen encoder-bedrading in het handvat zelf.
 
 ---
 
@@ -69,31 +69,31 @@ Standaard staat de audio-output **uit**. Op gebruikersverzoek (zie Develop 3 →
 
 ---
 
-## 6. Bedieningselementen
+## 6. Bedieningselementen handvat
 
 | Onderdeel | Specificatie | Aantal | Productlink |
 |---|---|---|---|
-| Drukknop | HOTUT IP67 waterdichte momentary drukknop, 12 mm hoge kop, metaal | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B099YJZ8DJ/ |
-| Schuifschakelaar | Youmile SS12F44 SPDT 1P2T mini-verticaal, 3-pins, 0.5 A | 1 (uit pakket van 20) | https://www.amazon.nl/dp/B07ZP6BHKT/ |
+| Drukknop | HOTUT IP67 waterdichte momentary drukknop, 12 mm hoge kop, metaal (variant: zwarte 32 mm momentary) | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B099YJZ8DJ/ |
+| Rocker switch | Mini rocker-switch SPST voor harde aan/uit | 1 | https://www.amazon.nl/dp/B07ZP6BHKT/ |
 
-Eén drukknop = start/stop route + "geef overzicht" (double-press onderscheid). De schuifschakelaar = harde aan/uit voor wanneer het handvat opgeborgen wordt, zodat de XIAO niet in stand-by blijft drainen.
+Eén drukknop = start/stop route + "geef overzicht" (double-press onderscheid). De rocker-switch = harde aan/uit voor wanneer het handvat opgeborgen wordt, zodat de XIAO niet in stand-by blijft drainen.
 
 ---
 
-## 7. Voeding
+## 7. Voeding handvat
 
 | Onderdeel | Specificatie | Aantal | Productlink |
 |---|---|---|---|
-| Li-Po accu | EEMB 3.7 V 900 mAh, model 603048LC, met JST-connector | 1 | https://www.amazon.nl/dp/B07PNBT6VC/ |
+| Li-Po accu | EEMB 3.7 V 1000 mAh met JST-PH connector | 1 | https://www.amazon.nl/dp/B07PNBT6VC/ |
 | Laadcircuit | Aideepen TC4056 USB-C 5 V 1 A Li-Ion laadbord met overcharge en over-discharge protectie | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B0BXQ24F7T/ |
-| Boost converter | MT3608 step-up DC-DC 2-24 V → 5-28 V verstelbaar | 1 (uit pakket van 3) | https://www.amazon.nl/dp/B07R8C56DK/ |
-| USB-C connector | KUOQIY 3 A 4-pins USB-C vrouwelijk, Type-C 4-draads, 150 mm 24 AWG | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B0CRTPQF6K/ |
+| Boost converter | MT3608 step-up DC-DC 2-24 V → 5-28 V verstelbaar (afgeregeld op 5 V voor audio-rail) | 1 (uit pakket van 3) | https://www.amazon.nl/dp/B07R8C56DK/ |
+| USB-C laad-poort | KUOQIY USB-C female 2-draads (VBUS + GND, alleen laden) | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B0CRTPQF6K/ |
 
-De Li-Po levert 3.7 V direct aan de XIAO en de coin motor. De MAX98357A audio-versterker heeft 5 V nodig; daarvoor is de MT3608 ingezet die de 3.7 V opwaardeert naar een stabiele 5 V rail (alleen ingeschakeld wanneer audio-fallback actief is, om batterij te sparen). De TP4056 USB-C poort dient voor opladen én voor firmware-flashen via de XIAO USB-data lijnen.
+De Li-Po levert 3.7 V direct aan de XIAO en de coin motor. De MAX98357A audio-versterker heeft 5 V nodig; daarvoor is de MT3608 ingezet die de 3.7 V opwaardeert naar een stabiele 5 V rail (alleen ingeschakeld wanneer audio-fallback actief is, om batterij te sparen). De externe USB-C female-breakout (2-draads) dient enkel voor opladen via TP4056; firmware-flashen gebeurt via de USB-C poort op de XIAO ESP32-S3 zelf.
 
 ---
 
-## 8. Behuizing en grip (tech-handvat)
+## 8. Behuizing en grip handvat
 
 | Onderdeel | Specificatie | Aantal | Toelichting |
 |---|---|---|---|
@@ -103,7 +103,52 @@ De Li-Po levert 3.7 V direct aan de XIAO en de coin motor. De MAX98357A audio-ve
 | Aluminium pin | M3 doorgaande as voor kompas-rotatie, gekoppeld aan servo-as | 1 | Vervangbare TPE-tip optioneel (winter / handschoenen). |
 | Heatset-insert | M3, messing | 1 | In de bodem van het tech-handvat, voor de schroefverbinding met het stok-onderstuk. |
 
-## 9. Stok-onderstuk
+CMF-onderbouwing: zie Develop 3 in [README.md](../README.md).
+
+---
+
+# MODULE B → Wizard-of-Oz controller (fysiek apart, draadloos)
+
+De controller is een **op zichzelf staande module** voor de testleider. Hij bevat zijn eigen microcontroller, encoder, batterij, oplaadcircuit en aan/uit-schakelaar. De data gaat draadloos via ESP-NOW naar het handvat ; er is geen kabel tussen beide modules.
+
+## 9. Besturingselektronica controller
+
+| Onderdeel | Specificatie | Aantal | Productlink |
+|---|---|---|---|
+| Microcontroller | Seeed Studio XIAO ESP32-C3 (BLE 5.0 + WiFi, RISC-V, 21 × 17.5 mm, onboard Li-Po laad) | 1 | https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html |
+
+De C3 is kleiner en zuiniger dan de S3 ; voor de controller hoeven we alleen encoder-deltas te verzenden, geen audio of servo aan te sturen. Dezelfde fysieke footprint en pinout-stijl als de S3, zodat dezelfde XIAO-ecosystem-bibliotheken hergebruikt kunnen worden.
+
+## 10. Wizard-of-Oz input (controller)
+
+| Onderdeel | Specificatie | Aantal | Productlink |
+|---|---|---|---|
+| Roterende encoder | QWORK KY-040, 360° met geïntegreerde drukknop | 1 (uit pakket van 5) | https://www.amazon.nl/dp/B07F26GMSC/ |
+
+De testleider draait de KY-040 om de gewenste route-richting in te stellen. De ESP32-C3 leest CLK/DT/SW uit en verstuurt elke positie-update via ESP-NOW naar de ESP32-S3 in het handvat, die op zijn beurt de MG90S servo aanstuurt. De drukknop op de encoder dient als bevestiging of mode-wissel.
+
+## 11. Voeding controller
+
+| Onderdeel | Specificatie | Aantal | Productlink |
+|---|---|---|---|
+| Li-Po accu | EEMB 3.7 V 1000 mAh met JST-PH connector | 1 | https://www.amazon.nl/dp/B07PNBT6VC/ |
+| Laadcircuit | Aideepen TC4056 USB-C 5 V 1 A Li-Ion laadbord met overcharge en over-discharge protectie | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B0BXQ24F7T/ |
+| Rocker switch | Mini rocker-switch SPST voor harde aan/uit | 1 | https://www.amazon.nl/dp/B07ZP6BHKT/ |
+| USB-C laad-poort | KUOQIY USB-C female 2-draads (VBUS + GND, alleen laden) | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B0CRTPQF6K/ |
+
+Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch → 3.7 V rail) maar zonder MT3608 (geen 5 V rail nodig, geen audio).
+
+## 12. Behuizing controller
+
+| Onderdeel | Specificatie | Aantal | Toelichting |
+|---|---|---|---|
+| Controller-case | 3D-print in PLA, klein doosje (~60 × 40 × 25 mm) | 1 | Bevat ESP32-C3, batterij, TP4056, switch, en heeft een opening bovenaan voor de KY-040 encoder-as. |
+
+---
+
+# MODULE C → Stok-onderstuk (passief, geen elektronica)
+
+## 13. Stok-onderstuk
 
 | Onderdeel | Specificatie | Aantal | Toelichting |
 |---|---|---|---|
@@ -111,51 +156,72 @@ De Li-Po levert 3.7 V direct aan de XIAO en de coin motor. De MAX98357A audio-ve
 | M3-stud | Roestvrij staal, ~15 mm | 1 | Ingebed in het top-uiteinde van de stok. Schroeft in de heatset-insert van het tech-handvat. |
 | Verwisselbare pin-tip | Conventionele tip (rolling ball, ceramic, of glide tip) | 1 | Aan het loop-uiteinde, exact zoals bij commerciële witte stokken. |
 
-CMF-onderbouwing: zie Develop 3 in [README.md](../README.md).
-
 ---
 
-## 10. Overige prototyping-materialen
+# PROJECT-WIDE
+
+## 14. Overige prototyping-materialen
 
 | Onderdeel | Specificatie | Aantal |
 |---|---|---|
 | JST-PH 2.0 mm connectoren | Mix van 2-pin, 3-pin, 5-pin connectoren met dopjes | Kit |
 | Dupont jumper wires | ZDE 10 cm, Female-Female, Male-Female, Male-Male, 120 stuks | Kit |
-| Perfboard of mini-PCB | Voor DRV2605L ↔ XIAO bedrading | 1 |
-| Krimpkous Ø2 mm | Voor trekontlasting LRA / servo / batterij-bedrading | enkele mm |
+| Perfboard of mini-PCB | Voor DRV2605L ↔ XIAO bedrading (handvat) en ESP32-C3 ↔ encoder (controller) | 2 |
+| Krimpkous Ø2 mm | Voor trekontlasting bedrading | enkele mm |
 | Soldeer + flux | Sn60/Pb40 of loodvrij | naar wens |
 | Schroeven | M2 / M3 set | enkele |
 | Epoxy of permanente fix | Voor M3-stud in stok-uiteinde, en voor fixatie motor / servo / batterij | naar wens |
-| Dubbelzijdige tape | Bijkomende fixatie van elektronica tegen handvat-wand | naar wens |
+| Dubbelzijdige tape | Bijkomende fixatie van elektronica tegen module-wanden | naar wens |
 
 ---
 
-## 11. Totale kost (indicatie, MVP-prototype als geheel)
+## 15. Totale kost (indicatie, MVP-prototype als geheel)
+
+**Module A → tech-handvat**
 
 | Categorie | Richtprijs |
 |---|---|
 | XIAO ESP32-S3 + Adafruit DRV2605L | €25 → €35 |
 | Coin vibration motor + speaker + MAX98357A | €10 → €15 |
-| MG90S servo + KY-040 encoder | €10 → €15 |
-| HOTUT knop + SS12F44 switch + USB-C connector | €10 → €15 |
-| TP4056 + MT3608 + Li-Po 900 mAh | €10 → €15 |
+| MG90S servo | €5 → €10 |
+| HOTUT knop + rocker switch + USB-C laad-poort | €10 → €15 |
+| TP4056 + MT3608 + Li-Po 1000 mAh | €10 → €15 |
+| 3D-print (PLA, ~80 g) + insert + pin + hardware | €8 → €15 |
+| **Subtotaal handvat** | **€68 → €105** |
+
+**Module B → Wizard-of-Oz controller**
+
+| Categorie | Richtprijs |
+|---|---|
+| XIAO ESP32-C3 | €8 → €12 |
+| KY-040 encoder | €2 → €4 |
+| TP4056 + Li-Po 1000 mAh | €8 → €12 |
+| Rocker switch + USB-C laad-poort | €5 → €8 |
+| 3D-print case + hardware | €4 → €8 |
+| **Subtotaal controller** | **€27 → €44** |
+
+**Module C → Stok-onderstuk**
+
+| Categorie | Richtprijs |
+|---|---|
 | Witte stok-onderstuk + M3-stud + epoxy | €15 → €30 |
-| 3D-print (PLA, ~80 g totaal) | €3 → €5 |
-| Hardware (insert, pin, schroeven, connectoren, jumpers) | €5 → €10 |
-| **Totaal MVP-prototype (één gebouwde unit)** | **€90 → €145** |
+| **Subtotaal stok** | **€15 → €30** |
+
+| **Totaal MVP-prototype (alle drie modules)** | **€110 → €179** |
 
 ---
 
-## 12. Vergelijking met voorgaande iteraties
+## 16. Vergelijking met voorgaande iteraties
 
 | Component | Semester 1 | Develop 1 | Develop 2 | Develop 3 → finale integratie |
 |---|---|---|---|---|
-| Microcontroller | ESP32 DevKit | ESP32 DevKit | XIAO ESP32-S3 | XIAO ESP32-S3 |
+| Microcontroller handvat | ESP32 DevKit | ESP32 DevKit | XIAO ESP32-S3 | XIAO ESP32-S3 |
+| Wizard-of-Oz controller | telefoon (extern) | telefoon | telefoon | aparte module met XIAO ESP32-C3 + KY-040 via ESP-NOW |
 | Afstandssensoren | 2× VL53L0X | 2× VL53L0X | geen | geen |
 | Mechanisch kompas | geen | mechanisch (handmatig) | sferisch, statisch | sferisch, aangedreven door MG90S servo |
 | Trilmotoren | 2× coin vibration | 3× LRA | 1× LRA + DRV2605L | 1× coin vibration + DRV2605L |
 | Audio | Speaker + MAX98357A altijd-aan | geen | geen | Opt-in spraak-fallback (default uit) |
-| Bediening | 2× drukknop | knop + telefoon (Wizard-of-Oz) | knop + telefoon | 1× drukknop + KY-040 encoder (Wizard-of-Oz) + schuifschakelaar |
-| Voeding | 18650 + TP4056 + MT3608 | 18650 + TP4056 | Bench-USB | Interne Li-Po 900 mAh + USB-C oplaad + MT3608 boost voor audio |
+| Bediening handvat | 2× drukknop | knop + telefoon | knop + telefoon | 1× drukknop + rocker-switch |
+| Voeding | 18650 + TP4056 + MT3608 | 18650 + TP4056 | Bench-USB | Per module: interne Li-Po 1000 mAh + USB-C oplaad |
 
-De componenten-reductie ten opzichte van semester 1 blijft staan ; wat is teruggekeerd in de finale integratie (audio, MT3608) is doelbewust opt-in en niet altijd-aan, om de "ear-free, minimal-electronics" filosofie te bewaren waar dat kan, en alleen functionaliteit toe te voegen waar gebruikers er expliciet om vroegen.
+De componenten-reductie ten opzichte van semester 1 blijft staan ; wat is teruggekeerd in de finale integratie (audio, MT3608) is doelbewust opt-in en niet altijd-aan, om de "ear-free, minimal-electronics" filosofie te bewaren waar dat kan, en alleen functionaliteit toe te voegen waar gebruikers er expliciet om vroegen. De grootste architecturale stap is dat de Wizard-of-Oz controller niet langer een telefoon-webpagina is maar een aparte fysieke module ; daarmee voelt de testleider mechanische rotatie alsof hij een echte stuurinterface in handen heeft, en is de bridge naar een toekomstig autonoom GPS-systeem cleaner gedefinieerd.

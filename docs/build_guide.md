@@ -2,9 +2,15 @@
 
 > Bouwinstructies voor **ons MVP-prototype**, niet voor het beoogde eindproduct. Zie de [Deliver-sectie in de hoofdrapportage](../README.md#deliver) voor wat in een productie-versie nog toegevoegd zou worden (RTK GNSS-ontvangst, BLE-app, ToF-obstakeldetectie, PA6 + TPE-materialen).
 
-Stap-voor-stap instructies om het SensePath MVP-handvat zelf te bouwen. Lees eerst [bom.md](bom.md) voor de onderdelen en [wiring.md](wiring.md) voor het schakelschema. Geschatte bouwtijd: 5 → 8 uur (exclusief 3D-print).
+Stap-voor-stap instructies om het SensePath MVP zelf te bouwen. Het systeem bestaat uit **drie modules** die elk afzonderlijk gebouwd worden:
 
-> Dit is een **werkversie**: voldoende om de bouwvolgorde te volgen, maar enkele detail-keuzes (firmware-pinout, audio-volume defaults) worden tijdens de eindintegratie nog gefinetuned.
+- **Module A → Tech-handvat** (XIAO ESP32-S3 + servo + motor + audio + knop + batterij) → secties 1 tot 5
+- **Module B → Wizard-of-Oz controller** (XIAO ESP32-C3 + KY-040 encoder + eigen batterij) → sectie 6
+- **Module C → Stok-onderstuk** (conventionele witte stok met M3-stud) → sectie 1.5 (samen met de print-stappen)
+
+Lees eerst [bom.md](bom.md) voor de onderdelen en [wiring.md](wiring.md) voor het schakelschema. Geschatte bouwtijd: 6 → 10 uur (exclusief 3D-print). De controller-module voegt ongeveer 1.5 uur toe op de handvat-bouwtijd.
+
+> Dit is een **werkversie**: voldoende om de bouwvolgorde te volgen, maar enkele detail-keuzes (firmware-pinout, ESP-NOW pairing, audio-volume defaults) worden tijdens de eindintegratie nog gefinetuned.
 
 ---
 
@@ -71,21 +77,15 @@ Open [cad/exports/](../cad/exports/) en download:
    - Bruin (GND) → gemeenschappelijke GND
    - Rood (V+) → 3.7 V rail (Li-Po direct)
    - Oranje (signaal) → XIAO D9 (GPIO 8) via 1 kΩ serie-weerstand (beschermt GPIO bij short)
-10. **KY-040 roterende encoder** ; 5-pins:
-    - GND → GND
-    - + (Vcc) → XIAO 3V3
-    - CLK → XIAO D0
-    - DT → XIAO D1
-    - SW → XIAO D2
-11. **HOTUT drukknop** ; 2-pins JST-PH connector:
+10. **HOTUT drukknop** ; 2-pins JST-PH connector:
     - Pin 1 (signaal) → XIAO D3
     - Pin 2 → GND
-12. **SS12F44 schuifschakelaar** ; in serie met de positieve rail tussen Li-Po+ en XIAO 5V-pad / boost converter input.
-13. **Speaker** ; 2-pins JST-PH connector vanaf MAX98357A speaker-output naar de mini-speaker.
-14. **Batterij** ; Li-Po via JST-PH 2-pin connector aan TP4056 BAT+ / BAT−.
-15. **USB-C connector** ; KUOQIY 4-pins breakout doorgelust:
-    - VBUS + GND → TP4056 IN+ / IN−
-    - D+ en D− → XIAO USB-data lijnen (voor firmware-flashen via dezelfde poort)
+11. **Rocker switch** ; in serie met de positieve rail tussen TP4056 OUT+ en XIAO 5V-pad / MT3608 input.
+12. **Speaker** ; 2-pins JST-PH connector vanaf MAX98357A speaker-output naar de mini-speaker.
+13. **Batterij** ; Li-Po via JST-PH 2-pin connector aan TP4056 BAT+ / BAT−.
+14. **USB-C laad-poort** ; KUOQIY 2-draads breakout (VBUS + GND) doorgelust naar TP4056 IN+ / IN−. Deze externe USB-C is **alleen voor opladen** ; firmware-flashen gebeurt via de USB-C poort op de XIAO ESP32-S3 zelf.
+
+> De KY-040 encoder zit **niet** in het handvat. Die hangt aan de aparte controller-module ; zie [Sectie 6 → Controller-module bouwen](#sectie-6--controller-module-bouwen).
 
 ### Solder-tips
 
@@ -115,11 +115,13 @@ Open [cad/exports/](../cad/exports/) en download:
 
 Open [../src/firmware/sensepath_esp32/sensepath_esp32.ino](../src/firmware/sensepath_esp32/sensepath_esp32.ino).
 
-**Belangrijk**: de huidige firmware in de repo dateert van vóór de finale integratie en is geschreven voor de ESP32 DevKit. Bij de finale build moet de code:
+**Belangrijk**: de huidige firmware in de repo dateert van vóór de finale integratie en is geschreven voor de ESP32 DevKit. Bij de finale build moet de **handvat-firmware** code:
 - I2C-pinnen aanpassen naar XIAO (SDA = 5, SCL = 6).
-- Een encoder-handler toevoegen die CLK/DT polt op D0/D1 en SW op D2.
+- Een ESP-NOW-ontvanger toevoegen die encoder-updates leest van de controller-module (zie sectie 6) en de servo-doelhoek bijwerkt.
 - Een servo-aansturing via ESP32Servo aansluiten op D9.
 - Een I2S-audio-pipeline opzetten op D6/D7/D8 met SD-pin van MAX98357A enabled wanneer audio-fallback actief.
+
+De **controller-firmware** (apart project, draait op de XIAO ESP32-C3) moet de KY-040 uitlezen en via ESP-NOW de positie versturen naar het MAC-adres van de handvat-S3. Beide firmware-projecten worden los geflasht.
 
 ### Flash
 
@@ -140,44 +142,101 @@ Open [../src/firmware/sensepath_esp32/sensepath_esp32.ino](../src/firmware/sense
 
 ## Sectie 4 → Assembleren
 
-1. Perfboard met XIAO + DRV2605L + TP4056 + MT3608 + MAX98357A in de handvat-core schuiven, oriëntatie zo dat de USB-C poort, de SS12F44 schuifschakelaar en de HOTUT drukknop toegankelijk blijven via hun respectievelijke openingen in de cap.
+1. Perfboard met XIAO + DRV2605L + TP4056 + MT3608 + MAX98357A in de handvat-core schuiven, oriëntatie zo dat de USB-C laad-poort, de rocker-switch en de HOTUT drukknop toegankelijk blijven via hun respectievelijke openingen in de cap.
 2. **MG90S servo** in zijn aparte cavity plaatsen, servo-as in lijn met de kompasbol-rotatie-as. Servo vastschroeven met de 2× M2-meegeleverde schroefjes.
 3. **Kompasbol** op de servo-as schuiven (kruisarm-adapter), uitlijning controleren door de servo handmatig te draaien.
 4. **Li-Po batterij** in zijn aparte cavity plaatsen, dubbelzijdige tape voor fixatie, JST-connector aansluiten op TP4056.
 5. **Coin vibration motor** met dubbelzijdige 3M-VHB tape tegen de hypothenar-zijde van de handvat-wand fixeren (zo dicht mogelijk bij de muis-van-de-hand; dat is de meest gevoelige perceptiezone uit Develop 2).
 6. **Speaker** in de cap-opening klikken, JST-connector aansluiten op MAX98357A.
-7. **KY-040 encoder** in zijn opening in de cap monteren, 5-pins kabel naar het perfboard leiden. Bij wireless-variant: encoder in apart extern doosje monteren met eigen XIAO of ESP-NOW koppeling.
-8. **Cap** met 2× M3-schroeven (8 mm) sluiten.
+7. **Cap** met 2× M3-schroeven (8 mm) sluiten.
 
 ---
 
-## Sectie 5 → Testen
+## Sectie 5 → Handvat testen (los van controller)
 
-### Functionele check
+### Functionele check (zonder controller, via WiFi-fallback)
 
-1. SS12F44 op AAN zetten ; de XIAO moet booten (LED op de XIAO knippert).
-2. Smartphone WiFi → verbinden met SSID `SensePath`, wachtwoord `sensepath`.
-3. Browser → `http://192.168.4.1/`.
-4. **Coin motor test**: trigger M4 (obstakel) → twee korte trillingen voelbaar.
-5. **Coin motor test**: trigger M6 (koersafwijking) → drie snelle trillingen.
-6. **Coin motor test**: trigger M9 (bocht-aankondiging) → één langere oplopende trilling.
-7. **Servo test**: draai de KY-040 encoder ; de kompasbol moet meedraaien in de handpalm.
-8. **Drukknop test**: HOTUT-knop indrukken ; status-melding in Serial Monitor.
-9. **Audio test (opt-in)**: via webcontroller audio-fallback inschakelen → boost converter activeert → kort testbericht "audio actief" hoorbaar via speaker.
-10. **Laadtest**: USB-C kabel insteken → rode LED op TP4056 (laden) brandt; volle laad → blauwe LED.
+1. Rocker-switch op AAN zetten ; de XIAO ESP32-S3 moet booten (LED op de XIAO knippert).
+2. Voor losse handvat-test: smartphone WiFi → verbinden met SSID `SensePath`, wachtwoord `sensepath`. Browser → `http://192.168.4.1/`. (Voor de echte sessie: zie sectie 7 → integratie.)
+3. **Coin motor test**: trigger M4 (obstakel) → twee korte trillingen voelbaar.
+4. **Coin motor test**: trigger M6 (koersafwijking) → drie snelle trillingen.
+5. **Coin motor test**: trigger M9 (bocht-aankondiging) → één langere oplopende trilling.
+6. **Drukknop test**: HOTUT-knop indrukken ; status-melding in Serial Monitor.
+7. **Audio test (opt-in)**: via webcontroller audio-fallback inschakelen → boost converter activeert → kort testbericht "audio actief" hoorbaar via speaker.
+8. **Laadtest**: USB-C kabel in de handvat-USB-C laad-poort steken → rode LED op TP4056 (laden) brandt; volle laad → blauwe LED.
 
-### Acceptatiecriteria
+### Acceptatiecriteria handvat
 
 - Coin motor voelbaar in de hand zonder bijgeluiden (zo niet → motor niet stevig genoeg tegen handvat-wand).
 - Knop reageert binnen <50 ms (zo niet → debounce-time-out in firmware verhogen).
-- Encoder-rotatie geeft 1-op-1 servo-respons binnen 100 ms.
-- WiFi-AP bereikbaar binnen 5 s na boot.
 - DRV2605L wordt herkend → "DRV2605L gevonden" in Serial Monitor.
-- TP4056 LED's: rood bij laden, blauw bij volle accu. USB-C kabel insteken en uitschakelen ; handvat moet autonoom blijven werken op de Li-Po.
+- TP4056 LED's: rood bij laden, blauw bij volle accu. Rocker uitschakelen en USB-C uitsteken ; handvat moet autonoom blijven werken op de Li-Po wanneer rocker op AAN.
 
-### Volgende stap
+---
 
-Wizard-of-Oz testsessie opzetten met een echte gebruiker. Zie [reports and protocols/protocol_sensepath_develop3_PDF.pdf](../reports%20and%20protocols/protocol_sensepath_develop3_PDF.pdf) voor het testprotocol dat we eerder gebruikten. Voor de Deliver-validatie: testleider draait de KY-040 encoder terwijl hij of zij achter de gebruiker loopt, en de blinde gebruiker volgt het mechanisch kompas + de drie haptische cues op een onbekende route.
+## Sectie 6 → Controller-module bouwen
+
+De controller is een **fysiek aparte unit** die de testleider in de hand houdt. Klein 3D-geprint doosje (~60 × 40 × 25 mm) met de KY-040 encoder bovenaan, een rocker-switch en USB-C poort op de zijkant.
+
+### Componenten
+
+Zie [bom.md sectie 9 → 12](bom.md). Kort: XIAO ESP32-C3, KY-040 encoder, Li-Po 1000 mAh, TP4056 USB-C, rocker switch, USB-C laad-poort, mini perfboard.
+
+### Soldeerstappen controller
+
+1. **XIAO ESP32-C3** op een klein perfboard solderen met header-strip aan onderzijde.
+2. **TP4056 USB-C laadcircuit** ernaast plaatsen.
+3. **Voeding**:
+   - TP4056 BAT+ ↔ Li-Po + (via JST-PH)
+   - TP4056 BAT- ↔ Li-Po - (via JST-PH)
+   - TP4056 OUT+ → rocker-switch → XIAO 5V-pad
+   - TP4056 GND → gemeenschappelijke GND-bus
+   - USB-C female VBUS / GND → TP4056 IN+ / IN-
+4. **KY-040 encoder bedrading** (5-pins, korte draadjes):
+   - Encoder + (Vcc) → XIAO 3V3
+   - Encoder GND → gemeenschappelijke GND
+   - Encoder CLK → XIAO D0
+   - Encoder DT → XIAO D1
+   - Encoder SW → XIAO D2
+
+### Firmware controller
+
+Aparte sketch voor de ESP32-C3. Pseudocode:
+
+```
+1. Init WiFi in station mode (geen AP) for ESP-NOW
+2. Init ESP-NOW with handvat-S3 MAC-adres als peer
+3. Init KY-040 pins als input met interne pull-up
+4. Hardware-interrupt op encoder CLK → update absolute positie
+5. Hoofdlus: elke 20 ms (~50 Hz) een EncoderUpdate-pakket versturen
+```
+
+De MAC-adres van de handvat-S3 wordt eenmalig hardcoded in de controller-sketch (of via een pairing-procedure bij eerste boot).
+
+### Test controller los
+
+1. Rocker AAN → XIAO C3 boot.
+2. Serial Monitor (via USB-C op de C3) toont encoder-deltas terwijl je draait.
+3. Controleer dat ESP-NOW pakketten verstuurd worden (success-callback prints in Serial).
+
+### Behuizing controller
+
+3D-geprint doosje, twee helften die met M2 of M3-schroefjes sluiten. Openingen: KY-040 encoder bovenaan (knop en knurled wiel), rocker-switch zijkant, USB-C poort zijkant.
+
+---
+
+## Sectie 7 → Integratie + Deliver-test
+
+### Pairing controller ↔ handvat
+
+1. Beide modules op AAN zetten.
+2. Handvat-firmware moet "ESP-NOW receiver actief" tonen in Serial Monitor.
+3. Controller-firmware moet "ESP-NOW peer geconfigureerd" tonen.
+4. Encoder draaien op de controller → de servo in het handvat moet 1-op-1 meedraaien binnen ~100 ms.
+
+### Volgende stap → echte testsessie
+
+Wizard-of-Oz testsessie opzetten met een echte gebruiker. Zie [reports and protocols/protocol_sensepath_develop3_PDF.pdf](../reports%20and%20protocols/protocol_sensepath_develop3_PDF.pdf) voor het testprotocol dat we eerder gebruikten. Voor de Deliver-validatie: testleider houdt de controller-module vast en draait de KY-040 encoder terwijl hij of zij achter de gebruiker loopt, en de blinde gebruiker volgt het mechanisch kompas + de drie haptische cues op een onbekende route. De controller-module zorgt dat de testleider niet langer een telefoon-webpagina hoeft te bedienen ; rotatie is fysiek, direct, met haptische klik per stap.
 
 ---
 

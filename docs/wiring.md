@@ -6,74 +6,90 @@ Dit document beschrijft hoe de elektronica in het MVP-prototype onderling verbon
 
 ---
 
-## Architectuur
+## Architectuur ; drie fysieke modules
+
+Het systeem bestaat uit **drie fysieke onderdelen** die elk een afzonderlijke rol hebben:
+
+1. **Stok-onderstuk** (passief) → conventionele witte stok met ingebedde M3-schroef bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
+2. **Tech-handvat** (eindgebruiker) → bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in audio (MAX98357A + speaker), HOTUT drukknop, Li-Po batterij + TP4056 USB-C oplaad, MT3608 boost voor audio, rocker-switch voor harde aan/uit. Schroeft op het stok-onderstuk.
+3. **Wizard-of-Oz controller** (testleider) → een **fysiek aparte module** met een **XIAO ESP32-C3**, een KY-040 roterende encoder, eigen Li-Po batterij + TP4056 USB-C oplaad en eigen rocker-switch. **Draadloos** (ESP-NOW peer-to-peer) verbonden met het tech-handvat.
 
 ```mermaid
 flowchart LR
-    USBC[USB-C poort]
-    TP[TP4056<br/>USB-C laadcircuit]
-    BAT[Li-Po 900 mAh<br/>3.7V]
-    SW[SS12F44<br/>aan-uit schakelaar]
-    BOOST[MT3608<br/>3.7V → 5V boost]
-    XIAO[XIAO ESP32-S3]
-    DRV[DRV2605L<br/>haptische driver]
-    COIN[Coin motor<br/>3V 80mA]
-    AMP[MAX98357A<br/>I2S audio amp]
-    SPK[Speaker 2W 8Ω]
-    SERVO[MG90S servo<br/>kompas-aansturing]
-    ENC[KY-040 encoder<br/>Wizard-of-Oz input]
-    BTN[HOTUT knop<br/>start-stop-overzicht]
+    subgraph CTRL["Controller-module → testleider"]
+        ENC[KY-040 encoder<br/>+ drukknop]
+        C3[XIAO ESP32-C3]
+        BAT2[Li-Po 1000 mAh]
+        TP2[TP4056 USB-C]
+        SW2[Rocker switch]
+        USBC2[USB-C laad-poort]
+        USBC2 --> TP2
+        TP2 <--> BAT2
+        BAT2 --> SW2 --> C3
+        ENC -->|CLK / DT / SW| C3
+    end
 
-    USBC -->|5V| TP
-    TP <-->|charge| BAT
-    BAT -->|3.7V| SW
-    SW -->|3.7V| XIAO
-    SW -->|3.7V| BOOST
-    SW -->|5V via servo-rail| SERVO
-    BOOST -->|5V| AMP
-    XIAO <-->|I2C SDA-SCL| DRV
-    DRV -->|OUT± ERM-modus| COIN
-    XIAO -->|I2S BCLK-LRC-DIN| AMP
-    AMP -->|speaker output| SPK
-    XIAO -->|PWM signaal| SERVO
-    ENC -->|CLK-DT-SW| XIAO
-    BTN -->|GPIO| XIAO
+    subgraph HANDLE["Tech-handvat → eindgebruiker"]
+        S3[XIAO ESP32-S3]
+        SERVO[MG90S servo<br/>kompas-aansturing]
+        DRV[DRV2605L]
+        COIN[Coin vibratiemotor]
+        AMP[MAX98357A]
+        SPK[Speaker]
+        BTN[HOTUT drukknop]
+        BAT1[Li-Po 1000 mAh]
+        TP1[TP4056 USB-C]
+        SW1[Rocker switch]
+        BOOST[MT3608 boost]
+        USBC1[USB-C laad-poort]
+        USBC1 --> TP1
+        TP1 <--> BAT1
+        BAT1 --> SW1
+        SW1 --> S3
+        SW1 --> SERVO
+        SW1 --> BOOST --> AMP
+        S3 <-->|I2C| DRV --> COIN
+        S3 -->|PWM| SERVO
+        S3 -->|I2S| AMP --> SPK
+        BTN -->|GPIO| S3
+    end
+
+    C3 -.->|ESP-NOW draadloos<br/>2.4 GHz| S3
 ```
 
-De XIAO ESP32-S3 is de centrale knoop. Drie subsystemen hangen eraan: het **haptische kanaal** (DRV2605L → coin vibration motor), het **mechanisch kompas** (servo, aangestuurd via PWM) en de **opt-in audio-fallback** (I2S → MAX98357A → speaker, alleen actief op gebruikersverzoek). De **KY-040 roterende encoder** is de Wizard-of-Oz controller: de testleider draait de encoder; de XIAO leest dit uit en stuurt de servo aan, die op zijn beurt het mechanische kompas in de hand van de gebruiker draait. De hele keten testleider → encoder → XIAO → servo → kompasbol staat in voor de bridge-functionaliteit tussen het Wizard-of-Oz prototype en een toekomstig autonoom GPS-systeem.
+De keten **testleider → KY-040 → ESP32-C3 → ESP-NOW → ESP32-S3 → servo → mechanisch kompas → blinde gebruiker** is de Wizard-of-Oz bridge tussen het Develop 3 prototype en een toekomstig autonoom GPS-systeem. Voor de gebruiker maakt het niet uit wie de signalen genereert; voor de testleider werkt het exact zoals een gewone fysieke knop.
+
+> **Communicatieprotocol** ; ESP-NOW is de default (peer-to-peer WiFi, ~2 ms latency, geen router nodig). BLE 5.0 is een gelijkwaardig alternatief; beide chips ondersteunen het.
 
 ---
 
-## Pinout-tabel (XIAO ESP32-S3)
+## Module 1 → tech-handvat (XIAO ESP32-S3)
 
-| Functie | XIAO pin | Naar | Opmerking |
+### Pinout-tabel
+
+| Functie | XIAO ESP32-S3 pin | Naar | Opmerking |
 |---|---|---|---|
-| 5V in | 5V-pad onderzijde | TP4056 BAT+ via SS12F44 | Voeding na schakelaar |
-| 3V3 uit | 3V3 | DRV2605L Vin, KY-040 Vcc, HOTUT pull-up | Voor 3.3 V logic peripherals |
-| GND | GND | Gemeenschappelijke massa | Alle modules delen één GND-bus |
+| 5V in | 5V-pad onderzijde | TP4056 OUT+ via rocker-switch | Voeding na schakelaar |
+| 3V3 uit | 3V3 | DRV2605L Vin | Voor 3.3 V logic peripherals |
+| GND | GND | Gemeenschappelijke massa | Alle modules delen één GND-bus binnen het handvat |
 | I2C SDA | D4 (GPIO 5) | DRV2605L SDA | I2C-pull-ups geïntegreerd op breakout |
 | I2C SCL | D5 (GPIO 6) | DRV2605L SCL | Idem |
-| Encoder CLK | D0 (GPIO 1) | KY-040 CLK (A) | Interrupt-capable input |
-| Encoder DT | D1 (GPIO 2) | KY-040 DT (B) | Tweede kanaal voor rotatie-richting |
-| Encoder SW | D2 (GPIO 3) | KY-040 SW (drukknop) | Push-bevestiging, interne pull-up |
 | Drukknop | D3 (GPIO 4) | HOTUT knop signaal | Interne pull-up, sluit naar GND |
-| Servo PWM | D9 (GPIO 8) | MG90S signaal-pin (oranje) | 50 Hz PWM, 1-2 ms duty |
+| Servo PWM | D9 (GPIO 8) | MG90S signaal-pin (oranje), via 1 kΩ serie | 50 Hz PWM, 1-2 ms duty |
 | I2S BCLK | D6 (GPIO 43) | MAX98357A BCLK | Bit clock voor audio |
 | I2S LRC | D7 (GPIO 44) | MAX98357A LRC | Left-right clock |
 | I2S DIN | D8 (GPIO 7) | MAX98357A DIN | Data input |
-| Servo + | 5V rail | MG90S V+ (rood) | Direct van Li-Po via SS12F44 (servo verdraagt 3.7-6V) |
-| Audio amp + | 5V rail (uit boost) | MAX98357A Vin | Boost wordt ingeschakeld bij audio-fallback actief |
+| Servo + | 3.7V rail | MG90S V+ (rood) | Direct van Li-Po via switch (servo verdraagt 3.7-6V) |
+| Audio amp + | 5V rail (uit MT3608) | MAX98357A Vin | Alleen actief bij audio-fallback |
 
----
-
-## Voeding-architectuur
+### Voeding
 
 ```mermaid
 flowchart LR
-    USB[USB-C 5V] --> TP[TP4056]
-    TP <--> LIPO[Li-Po 3.7V 900mAh]
-    LIPO --> SW[SS12F44 aan-uit]
-    SW --> RAIL37[3.7V rail]
+    USBC1[USB-C laad-poort] --> TP1[TP4056]
+    TP1 <--> BAT1[Li-Po 3.7V 1000mAh]
+    BAT1 --> SW1[Rocker switch]
+    SW1 --> RAIL37[3.7V rail]
     RAIL37 --> XIAOPWR[XIAO ESP32-S3]
     RAIL37 --> SERVO[MG90S servo]
     RAIL37 --> BOOST[MT3608 boost]
@@ -81,11 +97,95 @@ flowchart LR
     RAIL5 --> AMP[MAX98357A]
 ```
 
-Drie rails: één **3.7 V rail** rechtstreeks van de Li-Po die de XIAO en de servo voedt; één **5 V rail** uit de MT3608 boost converter die alleen actief is wanneer de audio-fallback wordt ingeschakeld (de boost converter kan via een GPIO-enable signal of via een tweede SS-schakelaar bestuurd worden); en het **USB-C laadkanaal** via de TP4056. De XIAO ESP32-S3 heeft een onboard Li-Po laadcircuit met BAT-pads aan de onderzijde, wat een redundante laadweg geeft via de USB-data poort.
+Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po die de XIAO en de servo voedt; één **5 V rail** uit de MT3608 boost converter die alleen actief is wanneer de audio-fallback wordt ingeschakeld; en het **USB-C laadkanaal** via de TP4056.
+
+### Peripherals binnen het handvat
+
+**HOTUT drukknop** ; momentane drukknop, één pool naar XIAO D3, één pool naar GND. Interne pull-up actief; software detecteert neergaande flank met 20 ms debounce. Onderscheid single-press / double-press in firmware voor "start/stop" vs "geef overzicht".
+
+**Rocker switch (master power)** ; SPST in de hoofd-positieve rail tussen Li-Po+ en XIAO 5V-pad. Wanneer uit: alle systemen in het handvat volledig spanningsloos. De TP4056 blijft wel actief via VBUS wanneer USB-C aangesloten.
+
+**DRV2605L → coin vibratiemotor** ; ERM-modus, I2C-adres 0x5A, motor hangt aan OUT+/OUT-.
+
+**MG90S servo → mechanisch kompas** ; via PWM op D9 met 1 kΩ serieweerstand voor GPIO-bescherming. De servo ontvangt zijn doelhoek van de XIAO, die op zijn beurt het signaal krijgt **van de controller-module via ESP-NOW**, niet van een lokaal aangesloten encoder.
+
+**MAX98357A + speaker** ; I2S audio (opt-in fallback). SD-pin via 100 kΩ pull-down naar GND voor default-standby.
 
 ---
 
-## I2C-bus
+## Module 2 → Wizard-of-Oz controller (XIAO ESP32-C3)
+
+De controller is een **fysiek aparte module** die de testleider in de hand houdt of aan de gordel draagt. Hij stuurt via draadloos signaal de servo in het handvat aan ; voor de gebruiker is het verschil tussen "wizard met fysieke knop" en "autonoom GPS-systeem" niet voelbaar.
+
+### Componenten in deze module
+
+- 1× Seeed XIAO ESP32-C3 (kleinere variant van de S3, dezelfde formfactor en pinning maar met BLE 5.0 + WiFi, geen camera-interface ; voldoende voor encoder-uitlezen en draadloze verzending)
+- 1× KY-040 roterende encoder met geïntegreerde drukknop
+- 1× Li-Po 3.7 V 1000 mAh
+- 1× TP4056 USB-C laadcircuit
+- 1× rocker switch voor harde aan/uit
+- 1× USB-C female laad-poort
+
+### Pinout-tabel
+
+| Functie | XIAO ESP32-C3 pin | Naar | Opmerking |
+|---|---|---|---|
+| 5V in | 5V-pad | TP4056 OUT+ via rocker-switch | Voeding na switch |
+| 3V3 uit | 3V3 | KY-040 + (Vcc) | Voor encoder logic |
+| GND | GND | Encoder GND, batterij GND, TP4056 GND | Gemeenschappelijke massa binnen de controller |
+| Encoder CLK | D0 (GPIO 2) | KY-040 CLK (A) | Interrupt-capable input |
+| Encoder DT | D1 (GPIO 3) | KY-040 DT (B) | Tweede kanaal voor rotatierichting |
+| Encoder SW | D2 (GPIO 4) | KY-040 SW (drukknop) | Push-bevestiging, interne pull-up |
+
+> Pin-mapping op de ESP32-C3 verschilt licht van de S3 (kleinere GPIO-range). De `Dx`-labels op het XIAO-board komen overeen met andere onderliggende GPIO-nummers. Werk altijd met de fysieke `Dx`-aanduiding.
+
+### Voeding (identiek principe als het handvat, simpeler omdat geen servo of audio)
+
+```mermaid
+flowchart LR
+    USBC2[USB-C laad-poort] --> TP2[TP4056]
+    TP2 <--> BAT2[Li-Po 3.7V 1000mAh]
+    BAT2 --> SW2[Rocker switch]
+    SW2 --> C3[XIAO ESP32-C3]
+    C3 --> ENC[KY-040 encoder]
+```
+
+Eén enkele 3.7 V rail volstaat ; geen boost converter, geen audio. Verbruik laag (~30 mA gemiddeld) → autonomie ruim 24 uur op 1000 mAh.
+
+---
+
+## Draadloze link tussen modules
+
+**Default: ESP-NOW** (peer-to-peer protocol op de 2.4 GHz WiFi-radio):
+
+| Eigenschap | Waarde |
+|---|---|
+| Latency | ~2 ms typisch, <5 ms piek |
+| Bereik | 50 → 100 m line-of-sight, ~10 m door muren |
+| Bandbreedte | ruim voldoende voor encoder-deltas (enkele bytes per update) |
+| Pairing | MAC-adres van de S3 in C3-firmware hardcoded; geen WiFi-AP nodig |
+| Encryptie | optioneel via AES-128 |
+
+**Alternatief: BLE 5.0** ; iets hogere latency maar geschikt voor de toekomst wanneer ook een smartphone-app meekoppelt op het handvat.
+
+### Verzonden data-formaat (ontwerp)
+
+De controller verstuurt periodiek (~50 Hz) een kort pakket:
+
+```
+struct EncoderUpdate {
+    int16_t  delta;     // rotatie sinds vorige update
+    int16_t  absolute;  // absolute encoder-positie (0-360°)
+    uint8_t  buttons;   // bitfield: bit 0 = SW ingedrukt
+    uint8_t  sequence;  // wraparound counter
+}
+```
+
+In het handvat vertaalt de S3-firmware de `absolute` waarde naar een servo-hoek (0-180°) met een lineaire mapping. De `delta` is voor responsiviteit; `buttons` triggert eventueel een mode-wissel.
+
+---
+
+## I2C-bus (binnen het handvat)
 
 | Eigenschap | Waarde |
 |---|---|
@@ -98,21 +198,21 @@ Geen multiplexing nodig: DRV2605L is het enige I2C-device op de bus.
 
 ---
 
-## I2S audio-bus (opt-in)
+## I2S audio-bus (opt-in, binnen het handvat)
 
 | Signaal | Functie |
 |---|---|
-| BCLK | Bit clock, gegenereerd door XIAO |
+| BCLK | Bit clock, gegenereerd door XIAO ESP32-S3 |
 | LRC (WS) | Word select / Left-Right clock |
 | DIN | Data input naar amplifier |
 | GND | Gemeenschappelijke massa |
 | Vin (5V) | Via MT3608 boost |
 
-De MAX98357A heeft geen master-volume input; volume wordt softwarematig geregeld op de XIAO. Standby-modus (SD-pin naar GND) zet de versterker uit ; gebruikt om stroom te besparen wanneer audio-fallback niet actief is.
+De MAX98357A heeft geen master-volume input; volume wordt softwarematig geregeld op de XIAO. Standby-modus (SD-pin naar GND via 100 kΩ pull-down) zet de versterker uit ; standaard-stand om stroom te besparen wanneer audio-fallback niet actief is.
 
 ---
 
-## PWM-signaal voor servo
+## PWM-signaal voor servo (binnen het handvat)
 
 | Eigenschap | Waarde |
 |---|---|
@@ -120,41 +220,42 @@ De MAX98357A heeft geen master-volume input; volume wordt softwarematig geregeld
 | Pulsduur 0° | ~1 ms |
 | Pulsduur 90° | ~1.5 ms |
 | Pulsduur 180° | ~2 ms |
-| Mapping in code | encoder-positie 0-127 → servo-hoek 0-180° |
+| Mapping in code | controller-encoder absolute (0-360°) → servo-hoek (0-180°) via lineaire mapping |
 
-De MG90S verbruikt ~150-300 mA tijdens snelle beweging; in stilstand 5-10 mA. Bij intensief gebruik kan dit een merkbare batterijbelasting zijn ; in de power budget hieronder is dat verrekend.
+De MG90S verbruikt ~150-300 mA tijdens snelle beweging; in stilstand 5-10 mA.
 
 ---
 
 ## Power budget
 
+### Handvat-module
+
 | Component | Idle | Actief | Piek |
 |---|---|---|---|
-| XIAO ESP32-S3 (WiFi AP actief) | ~30 mA | ~80 mA | 240 mA tijdens transmit |
+| XIAO ESP32-S3 (ESP-NOW actief) | ~30 mA | ~50 mA | 240 mA tijdens transmit |
 | XIAO ESP32-S3 (deep sleep) | ~14 µA | → | → |
 | DRV2605L (idle) | ~2 mA | ~6 mA | → |
 | Coin vibration motor | 0 mA | ~80 mA (continu) | ~120 mA piek |
 | MG90S servo | ~5 mA | ~150 mA (bewegend) | ~300 mA piek |
-| MAX98357A + speaker (idle) | ~0 mA (SD low) | → | → |
-| MAX98357A + speaker (audio actief) | ~50 mA | ~250 mA | ~500 mA piek bij 3 W |
+| MAX98357A + speaker (audio uit) | ~0 mA (SD low) | → | → |
+| MAX98357A + speaker (audio aan) | ~50 mA | ~250 mA | ~500 mA piek |
+| HOTUT knop | 0 mA (passief) | → | → |
+| **Totaal Wizard-of-Oz sessie (audio uit)** | **~40 mA** | **~250 mA** | **~550 mA piek** |
+
+Handvat op 1000 mAh Li-Po → ~9 uur theoretisch, ~5 → 7 uur realistisch met regelmatige servo-beweging.
+
+### Controller-module
+
+| Component | Idle | Actief | Piek |
+|---|---|---|---|
+| XIAO ESP32-C3 (ESP-NOW actief) | ~20 mA | ~30 mA | ~80 mA tijdens transmit |
 | KY-040 encoder | 0 mA (passief) | → | → |
-| HOTUT knop | 0 mA (passief, interne pull-up) | → | → |
-| **Totaal in typische Wizard-of-Oz sessie (audio uit)** | **~40 mA** | **~270 mA** | **~550 mA piek** |
+| **Totaal** | **~20 mA** | **~30 mA** | **~80 mA piek** |
 
-Batterijbudget op 900 mAh Li-Po: bij gemiddeld 100 mA effectief verbruik (servo + XIAO + occasional vibration) → ~9 uur autonomie theoretisch, ~5 → 7 uur realistisch met WiFi-AP actief en regelmatige servo-beweging. Opladen via TP4056 op 500 mA → volle laad in ~2 uur. Audio-fallback ingeschakeld halveert de autonomie ; vandaar de opt-in default. Empirische meting onder real-life gebruiksprofiel staat gepland voor de Deliver-fase.
-
----
-
-## Knoppen, encoder en switch ; bedrading
-
-**HOTUT drukknop** ; momentane drukknop, één pool naar XIAO D3, één pool naar GND. Interne pull-up actief; software detecteert neergaande flank met 20 ms debounce. Onderscheid single-press / double-press in firmware voor "start/stop" vs "geef overzicht".
-
-**KY-040 roterende encoder** ; vijf pinnen: Vcc → 3V3, GND → GND, CLK → D0, DT → D1, SW → D2. Rotatie wordt gedetecteerd via beide kanalen (kwadratuur-encoding). Push-knop dient als bevestiging tijdens kalibratie of mode-wissel.
-
-**SS12F44 schuifschakelaar** ; SPDT in de hoofd-positieve rail tussen Li-Po+ en XIAO 5V-pad. Wanneer uit: alle systemen volledig spanningsloos (geen quiescent draining). De TP4056 blijft wel actief via VBUS wanneer USB-C aangesloten, zodat opladen ook in uitgeschakelde toestand mogelijk is.
+Controller op 1000 mAh Li-Po → ruim 30+ uur autonomie, in praktijk een hele test-dag op één lading.
 
 ---
 
-## Visualisatie als foto (toe te voegen)
+## Visualisatie
 
-Het hierboven beschreven schema staat ook visueel in [../img/wiring_diagram.png](../img/wiring_diagram.png) (TODO: foto of render van het geassembleerde prototype met annotaties van I2C, I2S, voeding, servo-aansturing en encoder-bedrading).
+Een volledig geannoteerd visueel schema (met beide modules en de RF-link) staat in [../Project context/sensepath_wiring_schematic.html](../Project%20context/sensepath_wiring_schematic.html). Open in browser.

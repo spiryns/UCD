@@ -1,18 +1,19 @@
-# SensePath firmware (XIAO ESP32-S3)
+# SensePath handvat-firmware (XIAO ESP32-S3)
 
-Prototypefirmware voor de XIAO ESP32-S3 + DRV2605L haptiekcontroller.
+Firmware voor de handvat-module. De Wizard-of-Oz controller heeft eigen firmware op een XIAO ESP32-C3 (aparte sketch, draadloos via ESP-NOW gekoppeld).
 
-> De `.ino`-broncode in deze map dateert van vóór de migratie naar XIAO en gebruikt nog de oorspronkelijke ESP32 DevKit-pinout (SDA = 21, SCL = 22). Bij compilatie voor de finale MVP-build moeten de I2C-pinconstanten aangepast worden naar de XIAO-mapping (SDA = D4 = GPIO 5, SCL = D5 = GPIO 6). Zie [docs/wiring.md](../../../docs/wiring.md) en [docs/build_guide.md](../../../docs/build_guide.md) voor de volledige pinout en build-procedure.
+> De `.ino`-broncode in deze map dateert van vóór de migratie naar XIAO en gebruikt nog de oorspronkelijke ESP32 DevKit-pinout (SDA = 21, SCL = 22). Bij compilatie voor de finale MVP-build moeten de I2C-pinconstanten aangepast worden naar de XIAO-mapping (SDA = D4 = GPIO 5, SCL = D5 = GPIO 6) en moet een ESP-NOW receiver toegevoegd worden. Zie [docs/wiring.md](../../../docs/wiring.md) en [docs/build_guide.md](../../../docs/build_guide.md) voor de volledige pinout en build-procedure.
 
-## Hardware
+## Hardware (alleen het handvat)
 
 - Seeed Studio XIAO ESP32-S3 (WiFi + BLE 5.0, onboard Li-Po laadondersteuning)
 - Adafruit DRV2605L via I2C (ERM-modus voor coin vibratiemotor)
 - Coin vibratiemotor 10 × 2.7 mm op de DRV2605L OUT-pinnen
 - MG90S servo voor mechanisch kompas (PWM via D9)
-- KY-040 roterende encoder als Wizard-of-Oz controller (CLK = D0, DT = D1, SW = D2)
-- HOTUT IP67 drukknop op D3
+- HOTUT drukknop op D3
 - Optioneel: MAX98357A I2S audio-versterker + speaker (BCLK = D6, LRC = D7, DIN = D8)
+
+> De KY-040 roterende encoder zit **niet** op het handvat. Die hangt aan een aparte controller-module (XIAO ESP32-C3) die via ESP-NOW de encoder-positie naar deze ESP32-S3 verstuurt. De handvat-firmware ontvangt de richtings-updates en stuurt op basis daarvan de MG90S servo aan.
 
 ## I2C-pinout (finale XIAO-build)
 
@@ -30,7 +31,7 @@ Prototypefirmware voor de XIAO ESP32-S3 + DRV2605L haptiekcontroller.
 3. Installeer libraries:
    - `Adafruit DRV2605 Library`
    - `ESP32Servo` (voor MG90S aansturing)
-   - Optioneel `Encoder` (Paul Stoffregen) voor KY-040, of zelf interrupt-handler
+   - `esp_now.h` (intern in ESP-IDF / Arduino-ESP32 core) voor het ontvangen van richtingsdata van de controller-module
 4. Open `sensepath_esp32.ino`.
 5. Pas de I2C-pinconstanten aan (zie note hierboven).
 6. Kies Tools → Board → ESP32 Arduino → XIAO_ESP32S3.

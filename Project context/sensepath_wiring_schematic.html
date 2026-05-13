@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>SensePath wiring schematic ; drie-module-architectuur</title>
+<style>
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 24px;
+    background: #f5f5f7;
+    color: #111;
+  }
+  h1 { font-size: 22px; margin: 0 0 4px 0; }
+  h2 { font-size: 16px; margin: 24px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  h3 { font-size: 14px; margin: 14px 0 6px 0; color: #444; }
+  .subtitle { color: #555; margin: 0 0 18px 0; font-size: 13px; }
+  .schematic {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: auto;
+    padding: 8px;
+  }
+  table.connections {
+    border-collapse: collapse;
+    font-family: ui-monospace, "Cascadia Mono", Menlo, monospace;
+    font-size: 12px;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  table.connections th, table.connections td {
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  table.connections th { background: #f0f0f0; font-weight: 600; }
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 8px 0 14px 0;
+    font-size: 12px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 22px; height: 4px; display: inline-block; }
+  .notes {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 13px;
+    border-radius: 4px;
+  }
+  .notes ul { margin: 6px 0 0 0; padding-left: 20px; }
+  .pill {
+    display: inline-block;
+    padding: 1px 6px;
+    background: #eef;
+    border-radius: 3px;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+  }
+  .modulebox {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    margin-right: 6px;
+  }
+  .mod-handle { background: #1565c0; }
+  .mod-ctrl { background: #6a1b9a; }
+  .mod-stok { background: #2e7d32; }
+</style>
+</head>
+<body>
+
+<h1>SensePath → volledig wiring-schema (drie-module-architectuur)</h1>
+<p class="subtitle">MVP-prototype hardware. Drie fysieke modules: stok-onderstuk (passief), tech-handvat (XIAO ESP32-S3), Wizard-of-Oz controller (XIAO ESP32-C3, draadloos via ESP-NOW). Open in browser, zoom met Ctrl+scroll, print desnoods op A2.</p>
+
+<h2>Kleurcodering</h2>
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="background:#d32f2f"></span>+5 V (USB / boost)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#e65100"></span>+3.7 V (Li-Po rail)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#fbc02d"></span>+3.3 V (XIAO logic)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#000"></span>GND</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#1565c0"></span>I2C</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#6a1b9a"></span>I2S</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#2e7d32"></span>GPIO (knop / encoder / PWM)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#5d4037"></span>Motor / luidspreker</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#00838f; border:1px dashed #00838f"></span>Draadloos ESP-NOW</div>
+</div>
+
+<h2>Schema (beide modules + draadloze link)</h2>
+<div class="schematic">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2600 1700" font-family="-apple-system, Segoe UI, sans-serif" font-size="13" style="width:100%;height:auto;min-width:1600px">
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+  </marker>
+  <style>
+    .comp { fill: #fafafa; stroke: #333; stroke-width: 1.5; }
+    .comp-title { font-weight: 700; font-size: 13px; fill: #111; }
+    .comp-spec { font-size: 11px; fill: #555; }
+    .pin { font-size: 11px; font-family: ui-monospace, Menlo, monospace; fill: #111; }
+    .pin-bg { fill: #fff; stroke: #999; stroke-width: 0.8; }
+    .wire-pwr5 { stroke: #d32f2f; stroke-width: 2.6; fill: none; }
+    .wire-pwr37 { stroke: #e65100; stroke-width: 2.6; fill: none; }
+    .wire-pwr33 { stroke: #fbc02d; stroke-width: 2.6; fill: none; }
+    .wire-gnd { stroke: #000; stroke-width: 2.2; fill: none; }
+    .wire-i2c { stroke: #1565c0; stroke-width: 2.2; fill: none; }
+    .wire-i2s { stroke: #6a1b9a; stroke-width: 2.2; fill: none; }
+    .wire-gpio { stroke: #2e7d32; stroke-width: 2.2; fill: none; }
+    .wire-out { stroke: #5d4037; stroke-width: 2.2; fill: none; }
+    .wire-rf { stroke: #00838f; stroke-width: 3; stroke-dasharray: 10 6; fill: none; }
+    .wirelabel { font-size: 10px; fill: #333; font-family: ui-monospace, Menlo, monospace; }
+    .wirelabel-bg { fill: #fff; opacity: 0.92; }
+    .module-handle { fill: rgba(21,101,192,0.04); stroke: #1565c0; stroke-width: 2; stroke-dasharray: 6 4; }
+    .module-ctrl { fill: rgba(106,27,154,0.04); stroke: #6a1b9a; stroke-width: 2; stroke-dasharray: 6 4; }
+    .module-stok { fill: rgba(46,125,50,0.04); stroke: #2e7d32; stroke-width: 2; stroke-dasharray: 6 4; }
+    .module-title { font-weight: 700; font-size: 14px; }
+  </style>
+</defs>
+
+<!-- =================== MODULE A: TECH-HANDVAT =================== -->
+<rect x="20" y="20" width="2160" height="1100" rx="10" class="module-handle"/>
+<text x="40" y="48" class="module-title" fill="#1565c0">MODULE A → Tech-handvat (op stok geschroefd)</text>
+
+<!-- USB-C female handvat -->
+<rect x="40" y="80" width="180" height="120" rx="6" class="comp"/>
+<text x="130" y="105" text-anchor="middle" class="comp-title">USB-C female</text>
+<text x="130" y="122" text-anchor="middle" class="comp-spec">2-draads (alleen laden)</text>
+<rect x="40" y="148" width="50" height="20" class="pin-bg"/>
+<text x="65" y="162" text-anchor="middle" class="pin">VBUS</text>
+<rect x="40" y="172" width="50" height="20" class="pin-bg"/>
+<text x="65" y="186" text-anchor="middle" class="pin">GND</text>
+
+<!-- TP4056 handvat -->
+<rect x="270" y="80" width="220" height="200" rx="6" class="comp"/>
+<text x="380" y="105" text-anchor="middle" class="comp-title">TP4056 + DW01</text>
+<text x="380" y="122" text-anchor="middle" class="comp-spec">USB-C laad / protect</text>
+<rect x="270" y="148" width="60" height="20" class="pin-bg"/>
+<text x="300" y="162" text-anchor="middle" class="pin">IN+</text>
+<rect x="270" y="172" width="60" height="20" class="pin-bg"/>
+<text x="300" y="186" text-anchor="middle" class="pin">IN-</text>
+<rect x="430" y="148" width="60" height="20" class="pin-bg"/>
+<text x="460" y="162" text-anchor="middle" class="pin">BAT+</text>
+<rect x="430" y="172" width="60" height="20" class="pin-bg"/>
+<text x="460" y="186" text-anchor="middle" class="pin">BAT-</text>
+<rect x="430" y="208" width="60" height="20" class="pin-bg"/>
+<text x="460" y="222" text-anchor="middle" class="pin">OUT+</text>
+<rect x="430" y="232" width="60" height="20" class="pin-bg"/>
+<text x="460" y="246" text-anchor="middle" class="pin">OUT-</text>
+
+<!-- LiPo handvat -->
+<rect x="540" y="80" width="200" height="120" rx="6" class="comp"/>
+<text x="640" y="105" text-anchor="middle" class="comp-title">Li-Po 3.7 V</text>
+<text x="640" y="122" text-anchor="middle" class="comp-spec">1000 mAh, JST-PH</text>
+<rect x="540" y="148" width="50" height="20" class="pin-bg"/>
+<text x="565" y="162" text-anchor="middle" class="pin">+</text>
+<rect x="540" y="172" width="50" height="20" class="pin-bg"/>
+<text x="565" y="186" text-anchor="middle" class="pin">-</text>
+
+<!-- Rocker switch handvat -->
+<rect x="800" y="80" width="180" height="120" rx="6" class="comp"/>
+<text x="890" y="105" text-anchor="middle" class="comp-title">Rocker switch</text>
+<text x="890" y="122" text-anchor="middle" class="comp-spec">SPST master power</text>
+<rect x="800" y="148" width="60" height="20" class="pin-bg"/>
+<text x="830" y="162" text-anchor="middle" class="pin">IN</text>
+<rect x="920" y="148" width="60" height="20" class="pin-bg"/>
+<text x="950" y="162" text-anchor="middle" class="pin">OUT</text>
+
+<!-- MT3608 -->
+<rect x="800" y="220" width="180" height="60" rx="6" class="comp"/>
+<text x="890" y="245" text-anchor="middle" class="comp-title">MT3608 boost</text>
+<text x="890" y="263" text-anchor="middle" class="comp-spec">3.7 → 5 V (audio)</text>
+
+<!-- Power chain wires handvat -->
+<path class="wire-pwr5" d="M 90,158 L 240,158 L 240,158 L 270,158" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 90,182 L 240,182 L 240,182 L 270,182" marker-end="url(#arrow)"/>
+<path class="wire-pwr37" d="M 490,158 L 540,158"/>
+<path class="wire-gnd" d="M 490,182 L 540,182"/>
+<path class="wire-pwr37" d="M 490,218 L 510,218 L 510,260 L 760,260 L 760,158 L 800,158" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 490,242 L 530,242 L 530,290 L 1080,290"/>
+<path class="wire-pwr37" d="M 980,158 L 1080,158"/>
+<path class="wire-pwr37" d="M 980,165 L 1000,165 L 1000,250 L 980,250" marker-end="url(#arrow)"/>
+
+<!-- XIAO ESP32-S3 -->
+<rect x="900" y="380" width="380" height="540" rx="8" class="comp"/>
+<text x="1090" y="408" text-anchor="middle" class="comp-title">XIAO ESP32-S3 (handvat)</text>
+<text x="1090" y="425" text-anchor="middle" class="comp-spec">WiFi + BLE 5.0, ontvangt ESP-NOW van controller</text>
+<rect x="900" y="450" width="80" height="22" class="pin-bg"/>
+<text x="940" y="465" text-anchor="middle" class="pin">5V</text>
+<rect x="900" y="478" width="80" height="22" class="pin-bg"/>
+<text x="940" y="493" text-anchor="middle" class="pin">3V3</text>
+<rect x="900" y="506" width="80" height="22" class="pin-bg"/>
+<text x="940" y="521" text-anchor="middle" class="pin">GND</text>
+<rect x="1200" y="450" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="465" text-anchor="middle" class="pin">D4 (SDA)</text>
+<rect x="1200" y="478" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="493" text-anchor="middle" class="pin">D5 (SCL)</text>
+<rect x="1200" y="506" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="521" text-anchor="middle" class="pin">D9 (PWM)</text>
+<rect x="1200" y="534" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="549" text-anchor="middle" class="pin">D6 (BCLK)</text>
+<rect x="1200" y="562" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="577" text-anchor="middle" class="pin">D7 (LRC)</text>
+<rect x="1200" y="590" width="80" height="22" class="pin-bg"/>
+<text x="1240" y="605" text-anchor="middle" class="pin">D8 (DIN)</text>
+<rect x="1130" y="900" width="80" height="22" class="pin-bg"/>
+<text x="1170" y="915" text-anchor="middle" class="pin">D3 (BTN)</text>
+<rect x="1080" y="380" width="60" height="20" class="pin-bg"/>
+<text x="1110" y="394" text-anchor="middle" class="pin">USB-C (flash)</text>
+
+<path class="wire-pwr37" d="M 1080,165 L 1080,440 L 940,440 L 940,450" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 1080,290 L 1080,395 L 880,395 L 880,517 L 900,517" marker-end="url(#arrow)"/>
+
+<!-- MT3608 -> MAX rail -->
+<rect x="1340" y="220" width="220" height="60" rx="6" class="comp"/>
+<text x="1450" y="245" text-anchor="middle" class="comp-title">→ 5V audio rail</text>
+<text x="1450" y="263" text-anchor="middle" class="comp-spec">enkel actief bij audio</text>
+<path class="wire-pwr5" d="M 980,250 L 1340,250" marker-end="url(#arrow)"/>
+
+<!-- DRV2605L -->
+<rect x="1380" y="380" width="240" height="220" rx="6" class="comp"/>
+<text x="1500" y="408" text-anchor="middle" class="comp-title">DRV2605L</text>
+<text x="1500" y="425" text-anchor="middle" class="comp-spec">I2C @ 0x5A, ERM</text>
+<rect x="1380" y="450" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="465" text-anchor="middle" class="pin">Vin</text>
+<rect x="1380" y="478" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="493" text-anchor="middle" class="pin">GND</text>
+<rect x="1380" y="506" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="521" text-anchor="middle" class="pin">SDA</text>
+<rect x="1380" y="534" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="549" text-anchor="middle" class="pin">SCL</text>
+<rect x="1540" y="500" width="80" height="22" class="pin-bg"/>
+<text x="1580" y="515" text-anchor="middle" class="pin">OUT+</text>
+<rect x="1540" y="528" width="80" height="22" class="pin-bg"/>
+<text x="1580" y="543" text-anchor="middle" class="pin">OUT-</text>
+
+<!-- Coin motor -->
+<rect x="1700" y="450" width="200" height="120" rx="6" class="comp"/>
+<text x="1800" y="475" text-anchor="middle" class="comp-title">Coin motor</text>
+<text x="1800" y="492" text-anchor="middle" class="comp-spec">DC 3V 80 mA, ERM</text>
+<rect x="1700" y="515" width="60" height="22" class="pin-bg"/>
+<text x="1730" y="530" text-anchor="middle" class="pin">+</text>
+<rect x="1700" y="540" width="60" height="22" class="pin-bg"/>
+<text x="1730" y="555" text-anchor="middle" class="pin">-</text>
+
+<path class="wire-i2c" d="M 1280,461 L 1330,461 L 1330,517 L 1380,517" marker-end="url(#arrow)"/>
+<path class="wire-i2c" d="M 1280,489 L 1340,489 L 1340,545 L 1380,545" marker-end="url(#arrow)"/>
+<path class="wire-pwr33" d="M 980,489 L 1180,489 L 1180,461 L 1380,461" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 980,517 L 1100,517 L 1100,640 L 1370,640 L 1370,489 L 1380,489"/>
+<path class="wire-out" d="M 1620,511 L 1700,526" marker-end="url(#arrow)"/>
+<path class="wire-out" d="M 1620,539 L 1700,551" marker-end="url(#arrow)"/>
+
+<!-- MG90S servo -->
+<rect x="1380" y="660" width="220" height="120" rx="6" class="comp"/>
+<text x="1490" y="685" text-anchor="middle" class="comp-title">MG90S servo</text>
+<text x="1490" y="702" text-anchor="middle" class="comp-spec">Mechanisch kompas</text>
+<rect x="1380" y="720" width="60" height="22" class="pin-bg"/>
+<text x="1410" y="735" text-anchor="middle" class="pin">V+</text>
+<rect x="1450" y="720" width="60" height="22" class="pin-bg"/>
+<text x="1480" y="735" text-anchor="middle" class="pin">GND</text>
+<rect x="1520" y="720" width="80" height="22" class="pin-bg"/>
+<text x="1560" y="735" text-anchor="middle" class="pin">SIG</text>
+
+<path class="wire-pwr37" d="M 1080,165 L 1080,360 L 1410,360 L 1410,720" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 980,517 L 1100,517 L 1100,820 L 1480,820 L 1480,742" marker-end="url(#arrow)"/>
+<g>
+  <rect x="1290" y="525" width="50" height="20" rx="2" fill="#fffde7" stroke="#666"/>
+  <text x="1315" y="539" text-anchor="middle" class="pin">1 kΩ</text>
+</g>
+<path class="wire-gpio" d="M 1280,517 L 1290,535"/>
+<path class="wire-gpio" d="M 1340,535 L 1560,535 L 1560,720" marker-end="url(#arrow)"/>
+
+<!-- MAX98357A + speaker -->
+<rect x="1380" y="820" width="220" height="180" rx="6" class="comp"/>
+<text x="1490" y="848" text-anchor="middle" class="comp-title">MAX98357A</text>
+<text x="1490" y="865" text-anchor="middle" class="comp-spec">I2S amp (opt-in)</text>
+<rect x="1380" y="885" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="900" text-anchor="middle" class="pin">Vin</text>
+<rect x="1380" y="911" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="926" text-anchor="middle" class="pin">GND</text>
+<rect x="1380" y="937" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="952" text-anchor="middle" class="pin">BCLK</text>
+<rect x="1380" y="963" width="80" height="22" class="pin-bg"/>
+<text x="1420" y="978" text-anchor="middle" class="pin">LRC</text>
+<rect x="1490" y="885" width="80" height="22" class="pin-bg"/>
+<text x="1530" y="900" text-anchor="middle" class="pin">DIN</text>
+<rect x="1490" y="911" width="80" height="22" class="pin-bg"/>
+<text x="1530" y="926" text-anchor="middle" class="pin">SD</text>
+<rect x="1490" y="937" width="80" height="22" class="pin-bg"/>
+<text x="1530" y="952" text-anchor="middle" class="pin">SP+</text>
+<rect x="1490" y="963" width="80" height="22" class="pin-bg"/>
+<text x="1530" y="978" text-anchor="middle" class="pin">SP-</text>
+
+<rect x="1700" y="880" width="220" height="120" rx="6" class="comp"/>
+<text x="1810" y="905" text-anchor="middle" class="comp-title">Speaker</text>
+<text x="1810" y="922" text-anchor="middle" class="comp-spec">36 mm, 2.5 W, 8 Ω</text>
+<rect x="1700" y="945" width="60" height="22" class="pin-bg"/>
+<text x="1730" y="960" text-anchor="middle" class="pin">+</text>
+<rect x="1700" y="970" width="60" height="22" class="pin-bg"/>
+<text x="1730" y="985" text-anchor="middle" class="pin">-</text>
+
+<path class="wire-pwr5" d="M 1450,280 L 1450,360 L 1340,360 L 1340,896 L 1380,896" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 1100,820 L 1100,922 L 1380,922" marker-end="url(#arrow)"/>
+<path class="wire-i2s" d="M 1280,545 L 1310,545 L 1310,948 L 1380,948" marker-end="url(#arrow)"/>
+<path class="wire-i2s" d="M 1280,573 L 1320,573 L 1320,974 L 1380,974" marker-end="url(#arrow)"/>
+<path class="wire-i2s" d="M 1280,601 L 1330,601 L 1330,896 L 1490,896" marker-end="url(#arrow)"/>
+<g>
+  <rect x="1602" y="911" width="40" height="22" rx="2" fill="#fffde7" stroke="#666"/>
+  <text x="1622" y="926" text-anchor="middle" class="pin">100k</text>
+</g>
+<path class="wire-gnd" d="M 1570,922 L 1602,922"/>
+<path class="wire-gnd" d="M 1642,922 L 1660,922 L 1660,1020 L 1100,1020 L 1100,820"/>
+<path class="wire-out" d="M 1570,948 L 1700,956" marker-end="url(#arrow)"/>
+<path class="wire-out" d="M 1570,974 L 1700,981" marker-end="url(#arrow)"/>
+
+<!-- HOTUT button -->
+<rect x="60" y="900" width="240" height="120" rx="6" class="comp"/>
+<text x="180" y="928" text-anchor="middle" class="comp-title">HOTUT drukknop</text>
+<text x="180" y="945" text-anchor="middle" class="comp-spec">Momentary, in handvat-cap</text>
+<rect x="80" y="965" width="80" height="22" class="pin-bg"/>
+<text x="120" y="980" text-anchor="middle" class="pin">SIG</text>
+<rect x="200" y="965" width="80" height="22" class="pin-bg"/>
+<text x="240" y="980" text-anchor="middle" class="pin">GND</text>
+
+<path class="wire-gpio" d="M 120,987 L 120,1060 L 1170,1060 L 1170,922" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 240,987 L 240,1080 L 380,1080 L 380,1080"/>
+<text class="wirelabel" x="700" y="1052" fill="#333">D3 (interne pull-up)</text>
+
+<!-- =================== MODULE B: WIZARD-OF-OZ CONTROLLER =================== -->
+<rect x="20" y="1180" width="2160" height="500" rx="10" class="module-ctrl"/>
+<text x="40" y="1208" class="module-title" fill="#6a1b9a">MODULE B → Wizard-of-Oz controller (fysiek apart, draadloos)</text>
+
+<!-- USB-C female controller -->
+<rect x="40" y="1240" width="180" height="120" rx="6" class="comp"/>
+<text x="130" y="1265" text-anchor="middle" class="comp-title">USB-C female</text>
+<text x="130" y="1282" text-anchor="middle" class="comp-spec">2-draads laden</text>
+<rect x="40" y="1308" width="50" height="20" class="pin-bg"/>
+<text x="65" y="1322" text-anchor="middle" class="pin">VBUS</text>
+<rect x="40" y="1332" width="50" height="20" class="pin-bg"/>
+<text x="65" y="1346" text-anchor="middle" class="pin">GND</text>
+
+<!-- TP4056 controller -->
+<rect x="270" y="1240" width="220" height="200" rx="6" class="comp"/>
+<text x="380" y="1265" text-anchor="middle" class="comp-title">TP4056 + DW01</text>
+<text x="380" y="1282" text-anchor="middle" class="comp-spec">USB-C laad / protect</text>
+<rect x="270" y="1308" width="60" height="20" class="pin-bg"/>
+<text x="300" y="1322" text-anchor="middle" class="pin">IN+</text>
+<rect x="270" y="1332" width="60" height="20" class="pin-bg"/>
+<text x="300" y="1346" text-anchor="middle" class="pin">IN-</text>
+<rect x="430" y="1308" width="60" height="20" class="pin-bg"/>
+<text x="460" y="1322" text-anchor="middle" class="pin">BAT+</text>
+<rect x="430" y="1332" width="60" height="20" class="pin-bg"/>
+<text x="460" y="1346" text-anchor="middle" class="pin">BAT-</text>
+<rect x="430" y="1368" width="60" height="20" class="pin-bg"/>
+<text x="460" y="1382" text-anchor="middle" class="pin">OUT+</text>
+<rect x="430" y="1392" width="60" height="20" class="pin-bg"/>
+<text x="460" y="1406" text-anchor="middle" class="pin">OUT-</text>
+
+<!-- LiPo controller -->
+<rect x="540" y="1240" width="200" height="120" rx="6" class="comp"/>
+<text x="640" y="1265" text-anchor="middle" class="comp-title">Li-Po 3.7 V</text>
+<text x="640" y="1282" text-anchor="middle" class="comp-spec">1000 mAh, JST-PH</text>
+<rect x="540" y="1308" width="50" height="20" class="pin-bg"/>
+<text x="565" y="1322" text-anchor="middle" class="pin">+</text>
+<rect x="540" y="1332" width="50" height="20" class="pin-bg"/>
+<text x="565" y="1346" text-anchor="middle" class="pin">-</text>
+
+<!-- Rocker switch controller -->
+<rect x="800" y="1240" width="180" height="120" rx="6" class="comp"/>
+<text x="890" y="1265" text-anchor="middle" class="comp-title">Rocker switch</text>
+<text x="890" y="1282" text-anchor="middle" class="comp-spec">SPST master power</text>
+<rect x="800" y="1308" width="60" height="20" class="pin-bg"/>
+<text x="830" y="1322" text-anchor="middle" class="pin">IN</text>
+<rect x="920" y="1308" width="60" height="20" class="pin-bg"/>
+<text x="950" y="1322" text-anchor="middle" class="pin">OUT</text>
+
+<!-- Power wires controller -->
+<path class="wire-pwr5" d="M 90,1318 L 270,1318" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 90,1342 L 270,1342" marker-end="url(#arrow)"/>
+<path class="wire-pwr37" d="M 490,1318 L 540,1318"/>
+<path class="wire-gnd" d="M 490,1342 L 540,1342"/>
+<path class="wire-pwr37" d="M 490,1378 L 510,1378 L 510,1420 L 760,1420 L 760,1318 L 800,1318" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 490,1402 L 530,1402 L 530,1450 L 1430,1450"/>
+
+<!-- XIAO ESP32-C3 -->
+<rect x="1080" y="1240" width="320" height="280" rx="8" class="comp"/>
+<text x="1240" y="1268" text-anchor="middle" class="comp-title">XIAO ESP32-C3 (controller)</text>
+<text x="1240" y="1285" text-anchor="middle" class="comp-spec">BLE 5.0 + WiFi, RISC-V</text>
+<rect x="1080" y="1310" width="80" height="22" class="pin-bg"/>
+<text x="1120" y="1325" text-anchor="middle" class="pin">5V</text>
+<rect x="1080" y="1338" width="80" height="22" class="pin-bg"/>
+<text x="1120" y="1353" text-anchor="middle" class="pin">3V3</text>
+<rect x="1080" y="1366" width="80" height="22" class="pin-bg"/>
+<text x="1120" y="1381" text-anchor="middle" class="pin">GND</text>
+<rect x="1320" y="1310" width="80" height="22" class="pin-bg"/>
+<text x="1360" y="1325" text-anchor="middle" class="pin">D0 (CLK)</text>
+<rect x="1320" y="1338" width="80" height="22" class="pin-bg"/>
+<text x="1360" y="1353" text-anchor="middle" class="pin">D1 (DT)</text>
+<rect x="1320" y="1366" width="80" height="22" class="pin-bg"/>
+<text x="1360" y="1381" text-anchor="middle" class="pin">D2 (SW)</text>
+<rect x="1200" y="1240" width="60" height="20" class="pin-bg"/>
+<text x="1230" y="1254" text-anchor="middle" class="pin">USB-C (flash)</text>
+
+<path class="wire-pwr37" d="M 980,1318 L 1080,1318" marker-end="url(#arrow)"/>
+<path class="wire-gnd" d="M 1080,1377 L 1060,1377 L 1060,1450 L 1430,1450"/>
+
+<!-- KY-040 encoder -->
+<rect x="1480" y="1290" width="280" height="200" rx="6" class="comp"/>
+<text x="1620" y="1318" text-anchor="middle" class="comp-title">KY-040 encoder</text>
+<text x="1620" y="1335" text-anchor="middle" class="comp-spec">Roterend + drukknop</text>
+<rect x="1500" y="1360" width="60" height="22" class="pin-bg"/>
+<text x="1530" y="1375" text-anchor="middle" class="pin">+ (Vcc)</text>
+<rect x="1500" y="1386" width="60" height="22" class="pin-bg"/>
+<text x="1530" y="1401" text-anchor="middle" class="pin">GND</text>
+<rect x="1580" y="1360" width="60" height="22" class="pin-bg"/>
+<text x="1610" y="1375" text-anchor="middle" class="pin">SW</text>
+<rect x="1580" y="1386" width="60" height="22" class="pin-bg"/>
+<text x="1610" y="1401" text-anchor="middle" class="pin">DT</text>
+<rect x="1660" y="1360" width="80" height="22" class="pin-bg"/>
+<text x="1700" y="1375" text-anchor="middle" class="pin">CLK</text>
+
+<!-- 3V3 to encoder -->
+<path class="wire-pwr33" d="M 1160,1349 L 1450,1349 L 1450,1371 L 1500,1371" marker-end="url(#arrow)"/>
+<text class="wirelabel" x="1240" y="1342">3V3 → encoder Vcc</text>
+
+<!-- GND to encoder -->
+<path class="wire-gnd" d="M 1160,1397 L 1440,1397 L 1500,1397" marker-end="url(#arrow)"/>
+
+<!-- Encoder CLK -> D0 -->
+<path class="wire-gpio" d="M 1700,1382 L 1700,1280 L 1360,1280 L 1360,1310" marker-end="url(#arrow)"/>
+<text class="wirelabel" x="1500" y="1273">CLK → D0</text>
+
+<!-- Encoder DT -> D1 -->
+<path class="wire-gpio" d="M 1640,1397 L 1640,1500 L 1360,1500 L 1360,1338" marker-end="url(#arrow)"/>
+<text class="wirelabel" x="1450" y="1494">DT → D1</text>
+
+<!-- Encoder SW -> D2 -->
+<path class="wire-gpio" d="M 1610,1382 L 1610,1530 L 1360,1530 L 1360,1366" marker-end="url(#arrow)"/>
+<text class="wirelabel" x="1440" y="1524">SW → D2</text>
+
+<!-- =================== WIRELESS LINK =================== -->
+<path class="wire-rf" d="M 1240,1240 C 1240,1140 1090,1140 1090,400" marker-end="url(#arrow)"/>
+<g>
+  <rect x="1880" y="100" width="280" height="80" rx="6" fill="#e0f7fa" stroke="#00838f" stroke-width="2"/>
+  <text x="2020" y="128" text-anchor="middle" class="comp-title" fill="#006064">ESP-NOW link</text>
+  <text x="2020" y="148" text-anchor="middle" class="comp-spec">2.4 GHz peer-to-peer</text>
+  <text x="2020" y="166" text-anchor="middle" class="comp-spec">~2 ms latency, ~50 Hz update-rate</text>
+</g>
+<path class="wire-rf" d="M 1880,140 L 1700,140" marker-end="url(#arrow)"/>
+<text class="wirelabel" x="1700" y="135" fill="#00838f">ESP32-C3 → ESP32-S3</text>
+
+<!-- =================== MODULE C: STOK-ONDERSTUK =================== -->
+<rect x="2230" y="20" width="350" height="600" rx="10" class="module-stok"/>
+<text x="2250" y="48" class="module-title" fill="#2e7d32">MODULE C</text>
+<text x="2250" y="68" class="module-title" fill="#2e7d32">Stok-onderstuk</text>
+<rect x="2270" y="100" width="280" height="500" rx="6" class="comp"/>
+<text x="2410" y="130" text-anchor="middle" class="comp-title">Conventionele witte stok</text>
+<text x="2410" y="148" text-anchor="middle" class="comp-spec">Geen elektronica</text>
+<text x="2410" y="180" text-anchor="middle" class="comp-spec">• M3-schroef epoxy-vast</text>
+<text x="2410" y="200" text-anchor="middle" class="comp-spec">  bovenaan ; schroeft in</text>
+<text x="2410" y="220" text-anchor="middle" class="comp-spec">  M3-insert van handvat</text>
+<text x="2410" y="260" text-anchor="middle" class="comp-spec">• Verwisselbare pin-tip</text>
+<text x="2410" y="280" text-anchor="middle" class="comp-spec">  onderaan (standaard)</text>
+<text x="2410" y="320" text-anchor="middle" class="comp-spec">• Lengte conform</text>
+<text x="2410" y="340" text-anchor="middle" class="comp-spec">  antropometrie</text>
+<text x="2410" y="380" text-anchor="middle" class="comp-spec">Modulair: tech-handvat</text>
+<text x="2410" y="400" text-anchor="middle" class="comp-spec">verwisselbaar met</text>
+<text x="2410" y="420" text-anchor="middle" class="comp-spec">standaard handgreep</text>
+<text x="2410" y="440" text-anchor="middle" class="comp-spec">via dezelfde schroef.</text>
+
+</svg>
+</div>
+
+<h2>Module A → Tech-handvat ; verbindingstabel</h2>
+<table class="connections">
+<thead><tr><th>Net</th><th>Van</th><th>Naar</th><th>Kleur</th></tr></thead>
+<tbody>
+<tr><td>USB-C VBUS</td><td>USB-C female VBUS</td><td>TP4056 IN+</td><td>5V (rood)</td></tr>
+<tr><td>USB-C GND</td><td>USB-C female GND</td><td>TP4056 IN-</td><td>GND (zwart)</td></tr>
+<tr><td>Battery +</td><td>TP4056 BAT+</td><td>Li-Po + via JST-PH</td><td>3.7V (oranje)</td></tr>
+<tr><td>Battery -</td><td>TP4056 BAT-</td><td>Li-Po - via JST-PH</td><td>GND (zwart)</td></tr>
+<tr><td>3.7V switch in</td><td>TP4056 OUT+</td><td>Rocker switch IN</td><td>3.7V (oranje)</td></tr>
+<tr><td>3.7V rail</td><td>Rocker switch OUT</td><td>XIAO ESP32-S3 5V, MT3608 IN+, MG90S V+ rood</td><td>3.7V (oranje)</td></tr>
+<tr><td>GND backbone</td><td>TP4056 OUT-</td><td>XIAO GND, alle modules GND</td><td>GND (zwart)</td></tr>
+<tr><td>Boost out 5V</td><td>MT3608 OUT+</td><td>MAX98357A Vin</td><td>5V (rood)</td></tr>
+<tr><td>3V3 logic rail</td><td>XIAO 3V3 pin</td><td>DRV2605L Vin</td><td>3V3 (geel)</td></tr>
+<tr><td>I2C SDA</td><td>XIAO D4 (GPIO 5)</td><td>DRV2605L SDA</td><td>I2C (blauw)</td></tr>
+<tr><td>I2C SCL</td><td>XIAO D5 (GPIO 6)</td><td>DRV2605L SCL</td><td>I2C (blauw)</td></tr>
+<tr><td>Servo PWM</td><td>XIAO D9 (GPIO 8)</td><td>1 kΩ serie → MG90S oranje (signaal)</td><td>GPIO (groen)</td></tr>
+<tr><td>I2S BCLK</td><td>XIAO D6 (GPIO 43)</td><td>MAX98357A BCLK</td><td>I2S (paars)</td></tr>
+<tr><td>I2S LRC</td><td>XIAO D7 (GPIO 44)</td><td>MAX98357A LRC</td><td>I2S (paars)</td></tr>
+<tr><td>I2S DIN</td><td>XIAO D8 (GPIO 7)</td><td>MAX98357A DIN</td><td>I2S (paars)</td></tr>
+<tr><td>MAX98357A SD</td><td>MAX98357A SD-pin</td><td>100 kΩ pull-down naar GND</td><td>GND (zwart)</td></tr>
+<tr><td>Speaker out +</td><td>MAX98357A SP+</td><td>Speaker terminal 1</td><td>Output (bruin)</td></tr>
+<tr><td>Speaker out -</td><td>MAX98357A SP-</td><td>Speaker terminal 2</td><td>Output (bruin)</td></tr>
+<tr><td>Coin motor +</td><td>DRV2605L OUT+</td><td>Coin motor terminal 1</td><td>Output (bruin)</td></tr>
+<tr><td>Coin motor -</td><td>DRV2605L OUT-</td><td>Coin motor terminal 2</td><td>Output (bruin)</td></tr>
+<tr><td>Push button SIG</td><td>HOTUT terminal 1</td><td>XIAO D3 (GPIO 4) interne pull-up</td><td>GPIO (groen)</td></tr>
+<tr><td>Push button GND</td><td>HOTUT terminal 2</td><td>GND-bus</td><td>GND (zwart)</td></tr>
+</tbody>
+</table>
+
+<h2>Module B → Wizard-of-Oz controller ; verbindingstabel</h2>
+<table class="connections">
+<thead><tr><th>Net</th><th>Van</th><th>Naar</th><th>Kleur</th></tr></thead>
+<tbody>
+<tr><td>USB-C VBUS</td><td>USB-C female VBUS</td><td>TP4056 IN+</td><td>5V (rood)</td></tr>
+<tr><td>USB-C GND</td><td>USB-C female GND</td><td>TP4056 IN-</td><td>GND (zwart)</td></tr>
+<tr><td>Battery +</td><td>TP4056 BAT+</td><td>Li-Po + via JST-PH</td><td>3.7V (oranje)</td></tr>
+<tr><td>Battery -</td><td>TP4056 BAT-</td><td>Li-Po - via JST-PH</td><td>GND (zwart)</td></tr>
+<tr><td>3.7V switch in</td><td>TP4056 OUT+</td><td>Rocker switch IN</td><td>3.7V (oranje)</td></tr>
+<tr><td>3.7V rail</td><td>Rocker switch OUT</td><td>XIAO ESP32-C3 5V pad</td><td>3.7V (oranje)</td></tr>
+<tr><td>GND backbone</td><td>TP4056 OUT-</td><td>XIAO C3 GND, encoder GND</td><td>GND (zwart)</td></tr>
+<tr><td>3V3 logic</td><td>XIAO C3 3V3 pin</td><td>KY-040 + (Vcc)</td><td>3V3 (geel)</td></tr>
+<tr><td>Encoder CLK</td><td>KY-040 CLK</td><td>XIAO C3 D0</td><td>GPIO (groen)</td></tr>
+<tr><td>Encoder DT</td><td>KY-040 DT</td><td>XIAO C3 D1</td><td>GPIO (groen)</td></tr>
+<tr><td>Encoder SW</td><td>KY-040 SW</td><td>XIAO C3 D2</td><td>GPIO (groen)</td></tr>
+</tbody>
+</table>
+
+<h2>Draadloze link (ESP-NOW)</h2>
+<table class="connections">
+<thead><tr><th>Eigenschap</th><th>Waarde</th></tr></thead>
+<tbody>
+<tr><td>Protocol</td><td>ESP-NOW (peer-to-peer op 2.4 GHz WiFi-radio)</td></tr>
+<tr><td>Pairing</td><td>MAC-adres van de handvat-S3 hardcoded in controller-firmware</td></tr>
+<tr><td>Update-rate</td><td>~50 Hz (elke 20 ms een EncoderUpdate-pakket)</td></tr>
+<tr><td>Latency</td><td>~2 ms typisch, &lt;5 ms piek</td></tr>
+<tr><td>Bereik</td><td>50 → 100 m line-of-sight, ~10 m door muren</td></tr>
+<tr><td>Encryptie</td><td>Optioneel via AES-128</td></tr>
+<tr><td>Payload</td><td>delta (int16), absolute (int16), buttons (uint8), sequence (uint8) ; ~6 bytes</td></tr>
+</tbody>
+</table>
+
+<div class="notes">
+  <b>Belangrijke notes</b>
+  <ul>
+    <li>De KY-040 encoder zit <span class="pill">NIET</span> in het handvat. Hij hangt aan de aparte controller-module (XIAO ESP32-C3). De handvat-XIAO ontvangt enkel de encoder-data draadloos via ESP-NOW.</li>
+    <li>Beide modules hebben hun eigen USB-C laad-poort, hun eigen Li-Po, hun eigen rocker-switch. Ze worden onafhankelijk opgeladen en aan/uit gezet.</li>
+    <li>De externe USB-C poorten (zowel handvat als controller) zijn <span class="pill">2-draads</span> ; alleen voor opladen via TP4056. Firmware-flashen gebeurt via de USB-C poort op de XIAO zelf (ESP32-S3 voor handvat, ESP32-C3 voor controller).</li>
+    <li>MT3608 boost staat alleen op het handvat (voor de 5 V audio-rail). De controller heeft géén MT3608 ; één enkele 3.7 V rail volstaat.</li>
+    <li>MAX98357A SD-pin via 100 kΩ pull-down naar GND houdt de versterker default in standby (audio off).</li>
+    <li>1 kΩ serieweerstand op de servo-signaal beschermt de XIAO GPIO bij eventuele short.</li>
+    <li>Module C (stok-onderstuk) is een conventionele witte stok zonder elektronica ; bovenaan zit een epoxy-vast geïntegreerde M3-stud die in de heatset-insert van het tech-handvat schroeft. Onderaan: standaard verwisselbare pin-tip.</li>
+  </ul>
+</div>
+
+</body>
+</html>
