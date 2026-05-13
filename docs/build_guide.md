@@ -59,7 +59,7 @@ Open [cad/exports/](../cad/exports/) en download:
 1. **XIAO ESP32-S3** op een mini-perfboard solderen met header-strip aan onderzijde.
 2. **DRV2605L breakout** ernaast monteren.
 3. **TP4056 USB-C laadcircuit** op het perfboard plaatsen.
-4. **MT3608 boost converter** ernaast (alleen actief bij audio-fallback ; output afregelen op 5 V vóór montage).
+4. **MT3608 boost converter** ernaast ; output afregelen op 5 V vóór montage. Voedt zowel de MG90S servo (altijd actief) als de MAX98357A audio-amp (opt-in, via SD-pin gegated).
 5. **MAX98357A I2S versterker** kunt u nu ook plaatsen, maar laat SD-pin open / naar GND in default-config om hem in stand-by te houden.
 6. **I2C-bedrading** tussen XIAO en DRV2605L:
    - XIAO D4 (SDA) → DRV2605L SDA
@@ -75,8 +75,9 @@ Open [cad/exports/](../cad/exports/) en download:
 8. **Coin vibration motor** ; 2× AWG28 draad van DRV2605L OUT+ en OUT− naar JST-PH 2-pin connector. Motor-zijde idem; polariteit is niet kritisch voor een ERM-coin motor.
 9. **MG90S servo** ; standaard 3-pins JR-stekker:
    - Bruin (GND) → gemeenschappelijke GND
-   - Rood (V+) → 3.7 V rail (Li-Po direct)
-   - Oranje (signaal) → XIAO D9 (GPIO 8) via 1 kΩ serie-weerstand (beschermt GPIO bij short)
+   - Rood (V+) → **5 V rail** uit MT3608 boost (zelfde rail als MAX98357A Vin) ; **niet** rechtstreeks aan Li-Po, want MG90S-datasheet vraagt 4.8-6 V
+   - Oranje (signaal) → XIAO D9 (GPIO 8). 3.3 V PWM is voldoende voor de MG90S, geen level shifter nodig. Een 1 kΩ serie-weerstand is optioneel als defensieve GPIO-bescherming maar niet vereist
+   - **Decoupling**: zet een **220-470 µF elco** tussen V+ en GND vlak bij de servo-stekker ; vangt stroompieken op zodat de XIAO niet reset
 10. **HOTUT drukknop** ; 2-pins JST-PH connector:
     - Pin 1 (signaal) → XIAO D3
     - Pin 2 → GND
@@ -93,7 +94,7 @@ Open [cad/exports/](../cad/exports/) en download:
 - Coin motor draden zijn dun (AWG30) ; krimpkous na elke soldeer voor trekontlasting.
 - I2C-bedrading kort houden (<10 cm) om ruis te vermijden.
 - I2S-bedrading idem: zo kort mogelijk, anders treedt aliasing-ruis op.
-- Servo-signaal: gebruik een 1 kΩ serie-weerstand op de signaal-lijn om de XIAO GPIO te beschermen.
+- Servo-voeding: plaats de **220-470 µF elco** tussen servo V+ en GND zo dicht mogelijk bij de servo-stekker (niet aan de MT3608-uitgang) ; daar vangt hij de korte stroompieken het effectiefst op.
 - Li-Po: nooit batterij solderen onder spanning. Altijd via JST-connector aansluiten zodat ze later veilig losgekoppeld kan worden.
 
 ---
@@ -246,7 +247,8 @@ Wizard-of-Oz testsessie opzetten met een echte gebruiker. Zie [reports and proto
 |---|---|---|
 | DRV2605L niet gevonden | I2C-bedrading gekruist, of pinnen niet ingesteld | Pinout checken in [wiring.md](wiring.md), I2C-scanner sketch draaien |
 | Coin motor voelt zwakjes | Motor niet stevig tegen handvat-wand | Meer VHB-tape, of motor verplaatsen naar hypothenar-zijde |
-| Servo trilt of jittert | Voeding instabiel, of PWM-signaal te dichtbij ruisbron | Aparte decoupling cap (100 µF) op servo +-lijn, signaaldraad weghouden van I2S-lijnen |
+| Servo trilt of jittert | Voeding instabiel (te kleine of geen elco), of PWM-signaal te dichtbij ruisbron | Vergroot decoupling cap naar 220-470 µF op servo V+-lijn, plaatsen vlak bij servo-stekker. Signaaldraad weghouden van I2S-lijnen |
+| XIAO reset bij servo-beweging | Stroompiek van servo doet 5 V rail kortstondig inzakken | Decoupling-elco vergroten of dichter bij servo zetten ; eventueel MT3608 output checken op 5.0 V (niet 4.5 V) |
 | Encoder slaat stappen over | Debounce-tijd te kort of interrupts niet geconfigureerd | Hardware-interrupt op CLK gebruiken (`attachInterrupt`) ipv polling |
 | Knop registreert dubbel | Debounce te kort | `BUTTON_DEBOUNCE_MS` in firmware naar 50 ms verhogen |
 | WiFi AP niet zichtbaar | XIAO niet juist geboot | Serial Monitor checken, eventueel reset-knop |

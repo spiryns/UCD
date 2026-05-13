@@ -75,12 +75,12 @@ De keten **testleider → KY-040 → ESP32-C3 → ESP-NOW → ESP32-S3 → servo
 | I2C SDA | D4 (GPIO 5) | DRV2605L SDA | I2C-pull-ups geïntegreerd op breakout |
 | I2C SCL | D5 (GPIO 6) | DRV2605L SCL | Idem |
 | Drukknop | D3 (GPIO 4) | HOTUT knop signaal | Interne pull-up, sluit naar GND |
-| Servo PWM | D9 (GPIO 8) | MG90S signaal-pin (oranje), via 1 kΩ serie | 50 Hz PWM, 1-2 ms duty |
+| Servo PWM | D9 (GPIO 8) | MG90S signaal-pin (oranje) | 50 Hz PWM, 1-2 ms duty. 3.3 V logic-level volstaat (MG90S triggert al boven ~2.5 V) |
 | I2S BCLK | D6 (GPIO 43) | MAX98357A BCLK | Bit clock voor audio |
 | I2S LRC | D7 (GPIO 44) | MAX98357A LRC | Left-right clock |
 | I2S DIN | D8 (GPIO 7) | MAX98357A DIN | Data input |
-| Servo + | 3.7V rail | MG90S V+ (rood) | Direct van Li-Po via switch (servo verdraagt 3.7-6V) |
-| Audio amp + | 5V rail (uit MT3608) | MAX98357A Vin | Alleen actief bij audio-fallback |
+| Servo + | 5V rail (uit MT3608) | MG90S V+ (rood) | Datasheet specificeert 4.8-6V; deelt rail met audio-amp |
+| Audio amp + | 5V rail (uit MT3608) | MAX98357A Vin | Zelfde rail als servo; SD-pin laag → stand-by tot audio-fallback geactiveerd |
 
 ### Voeding
 
@@ -91,13 +91,13 @@ flowchart LR
     BAT1 --> SW1[Rocker switch]
     SW1 --> RAIL37[3.7V rail]
     RAIL37 --> XIAOPWR[XIAO ESP32-S3]
-    RAIL37 --> SERVO[MG90S servo]
-    RAIL37 --> BOOST[MT3608 boost]
-    BOOST --> RAIL5[5V rail<br/>opt-in audio]
-    RAIL5 --> AMP[MAX98357A]
+    RAIL37 --> BOOST[MT3608 boost<br/>altijd aan]
+    BOOST --> RAIL5[5V rail]
+    RAIL5 --> SERVO[MG90S servo]
+    RAIL5 --> AMP[MAX98357A<br/>SD-pin gates audio]
 ```
 
-Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po die de XIAO en de servo voedt; één **5 V rail** uit de MT3608 boost converter die alleen actief is wanneer de audio-fallback wordt ingeschakeld; en het **USB-C laadkanaal** via de TP4056.
+Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po die de XIAO voedt; één **5 V rail** uit de MT3608 boost converter die zowel de MG90S servo als de MAX98357A audio-amp voedt; en het **USB-C laadkanaal** via de TP4056. De MT3608 staat **altijd aan** (de servo heeft volgens datasheet 4.8-6 V nodig om aan spec te draaien); de audio-amp wordt apart in stand-by gezet via zijn SD-pin wanneer audio-fallback niet actief is, zodat de speaker geen stroom trekt.
 
 ### Peripherals binnen het handvat
 
@@ -107,7 +107,7 @@ Drie rails binnen het handvat: één **3.7 V rail** rechtstreeks van de Li-Po di
 
 **DRV2605L → coin vibratiemotor** ; ERM-modus, I2C-adres 0x5A, motor hangt aan OUT+/OUT-.
 
-**MG90S servo → mechanisch kompas** ; via PWM op D9 met 1 kΩ serieweerstand voor GPIO-bescherming. De servo ontvangt zijn doelhoek van de XIAO, die op zijn beurt het signaal krijgt **van de controller-module via ESP-NOW**, niet van een lokaal aangesloten encoder.
+**MG90S servo → mechanisch kompas** ; PWM-signaal op D9 (3.3 V logic werkt direct, geen level shifter nodig). V+ op de 5 V rail uit de MT3608 boost, GND op de gemeenschappelijke massa. **Belangrijk**: plaats een **220-470 µF elco** tussen V+ en GND vlak bij de servo-stekker. De MG90S kan tot ~300 mA pieken trekken bij snelle beweging ; zonder buffercap zakt de 5 V rail kortstondig in en kan de XIAO resetten. Klassieke valkuil bij servo + microcontroller op één Li-Po. De servo ontvangt zijn doelhoek van de XIAO, die op zijn beurt het signaal krijgt **van de controller-module via ESP-NOW**, niet van een lokaal aangesloten encoder.
 
 **MAX98357A + speaker** ; I2S audio (opt-in fallback). SD-pin via 100 kΩ pull-down naar GND voor default-standby.
 
@@ -236,8 +236,9 @@ De MG90S verbruikt ~150-300 mA tijdens snelle beweging; in stilstand 5-10 mA.
 | XIAO ESP32-S3 (deep sleep) | ~14 µA | → | → |
 | DRV2605L (idle) | ~2 mA | ~6 mA | → |
 | Coin vibration motor | 0 mA | ~80 mA (continu) | ~120 mA piek |
-| MG90S servo | ~5 mA | ~150 mA (bewegend) | ~300 mA piek |
-| MAX98357A + speaker (audio uit) | ~0 mA (SD low) | → | → |
+| MG90S servo (op 5 V uit MT3608) | ~5 mA | ~150 mA (bewegend) | ~300 mA piek |
+| MT3608 boost (altijd aan, quiescent) | ~1 mA | ~3 mA (met servo-load) | → |
+| MAX98357A + speaker (audio uit, SD low) | ~0 mA | → | → |
 | MAX98357A + speaker (audio aan) | ~50 mA | ~250 mA | ~500 mA piek |
 | HOTUT knop | 0 mA (passief) | → | → |
 | **Totaal Wizard-of-Oz sessie (audio uit)** | **~40 mA** | **~250 mA** | **~550 mA piek** |

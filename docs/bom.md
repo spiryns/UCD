@@ -89,7 +89,7 @@ Eén drukknop = start/stop route + "geef overzicht" (double-press onderscheid). 
 | Boost converter | MT3608 step-up DC-DC 2-24 V → 5-28 V verstelbaar (afgeregeld op 5 V voor audio-rail) | 1 (uit pakket van 3) | https://www.amazon.nl/dp/B07R8C56DK/ |
 | USB-C laad-poort | KUOQIY USB-C female 2-draads (VBUS + GND, alleen laden) | 1 (uit pakket van 6) | https://www.amazon.nl/dp/B0CRTPQF6K/ |
 
-De Li-Po levert 3.7 V direct aan de XIAO en de coin motor. De MAX98357A audio-versterker heeft 5 V nodig; daarvoor is de MT3608 ingezet die de 3.7 V opwaardeert naar een stabiele 5 V rail (alleen ingeschakeld wanneer audio-fallback actief is, om batterij te sparen). De externe USB-C female-breakout (2-draads) dient enkel voor opladen via TP4056; firmware-flashen gebeurt via de USB-C poort op de XIAO ESP32-S3 zelf.
+De Li-Po levert 3.7 V direct aan de XIAO en (via de DRV2605L OUT-pinnen) de coin motor. De **MG90S servo** vraagt volgens datasheet 4.8-6 V om aan koppel-spec te draaien, en de **MAX98357A audio-versterker** heeft eveneens 5 V nodig. Daarvoor is de MT3608 boost ingezet die de 3.7 V opwaardeert naar een stabiele 5 V rail. De MT3608 staat **altijd aan** (servo moet altijd kunnen reageren op richting-updates); de audio-amp wordt apart in stand-by gezet via zijn SD-pin wanneer audio-fallback niet actief is, zodat de speaker geen stroom trekt. De externe USB-C female-breakout (2-draads) dient enkel voor opladen via TP4056; firmware-flashen gebeurt via de USB-C poort op de XIAO ESP32-S3 zelf.
 
 ---
 
@@ -165,6 +165,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 | Onderdeel | Specificatie | Aantal |
 |---|---|---|
 | JST-PH 2.0 mm connectoren | Mix van 2-pin, 3-pin, 5-pin connectoren met dopjes | Kit |
+| Decoupling-elco servo | 220-470 µF / 10 V elektrolytisch, low-ESR | 1 (handvat) |
 | Dupont jumper wires | ZDE 10 cm, Female-Female, Male-Female, Male-Male, 120 stuks | Kit |
 | Perfboard of mini-PCB | Voor DRV2605L ↔ XIAO bedrading (handvat) en ESP32-C3 ↔ encoder (controller) | 2 |
 | Krimpkous Ø2 mm | Voor trekontlasting bedrading | enkele mm |
