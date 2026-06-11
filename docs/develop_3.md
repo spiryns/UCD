@@ -1,6 +1,6 @@
 # Develop 3, UX & Service Design (SensePath)
 
-Dit document legt de concrete UX- en Service Design-beslissingen voor SensePath vast. Alle keuzes verwijzen expliciet naar het huidige prototype uit Develop 2: kunststof handvat met **hypothenar-kompasgleuf (H1–H5)**, één **in-handle vibratiemotor**, **IMU-gestuurde gripkalibratie**, **clip op bestaande witte stok**, gekoppelde **iOS-app**, en een **fail-safe herstart-flow**.
+Dit document legt de concrete UX- en Service Design-beslissingen voor SensePath vast. Alle keuzes verwijzen expliciet naar het huidige prototype uit Develop 2: kunststof handvat met **hypothenar-kompasgleuf (H1-H5)**, één **in-handle vibratiemotor**, **IMU-gestuurde gripkalibratie**, **clip op bestaande witte stok**, gekoppelde **iOS-app**, en een **fail-safe herstart-flow**.
 
 Visuele uitwerkingen:
 - [Stakeholder map (PNG)](develop_3/img/stakeholder_map.png)
@@ -41,10 +41,10 @@ Wat de gebruiker voor het eerst voelt/hoort:
 
 | Kanaal | Concrete spec | Waarom zo |
 |---|---|---|
-| **Gewicht** | 58–62 g (handvat + clip samen). P50-handvolwassene verwacht "telefoon-achtig compact". | Te licht (< 45 g) → *goedkoop gadget*; te zwaar (> 80 g) → belast de stokzwaai, Develop 1-feedback. |
-| **Eerste tast-textuur** | Soft-touch TPU-overmold, shore 70A, matige micro-textuur (Ra 3–4 μm). | Cursus *Human Senses* §11.2: matte rubberized grip → "controle/comfort". Hard-glans = "cheap/slippery". |
+| **Gewicht** | 58-62 g (handvat + clip samen). P50-handvolwassene verwacht "telefoon-achtig compact". | Te licht (< 45 g) → *goedkoop gadget*; te zwaar (> 80 g) → belast de stokzwaai, Develop 1-feedback. |
+| **Eerste tast-textuur** | Soft-touch TPU-overmold, shore 70A, matige micro-textuur (Ra 3-4 μm). | Cursus *Human Senses* §11.2: matte rubberized grip → "controle/comfort". Hard-glans = "cheap/slippery". |
 | **Temperatuur aanvoelen** | Materiaalkeuze PA12 + TPU = lage warmtegeleiding → voelt **warmer** dan metaal bij eerste aanraking. | Koud metaal = "klinisch/instrument"; warm polymeer = "persoonlijk object". |
-| **Clip-bevestiging** | Magnetische pre-alignering + mechanische *click* bij vergrendeling, hoorbaar **circa 45–55 dB** met lichte lage resonantie (2 kHz gedempt). | Intentional sound (cursus §11.3). Moet herkenbaar en kort zijn (< 80 ms), bevestigt installatie zonder app-check. |
+| **Clip-bevestiging** | Magnetische pre-alignering + mechanische *click* bij vergrendeling, hoorbaar **circa 45-55 dB** met lichte lage resonantie (2 kHz gedempt). | Intentional sound (cursus §11.3). Moet herkenbaar en kort zijn (< 80 ms), bevestigt installatie zonder app-check. |
 | **Unbox-ritueel** | Magneetsluiting doos, reliëfletters "SENSEPATH" op deksel, katoenen linnen binnenhoes. Geen plastic folie, geen twist-ties. | Aanraakbaar = leesbaar voor blinde gebruiker. Premium-tactiel ≠ medisch. |
 
 ### 2.2 Behavioral laag (tijdens gebruik)
@@ -66,7 +66,7 @@ Dit is de Develop 2-laag, nu verfijnd via microinteractions, zie §3.
 
 ## 3. Microinteractions, concrete specs (Saffer: trigger / rules / feedback / loops & modes)
 
-Alle patronen gebruiken de **in-handle LRA-motor** (lineaire resonantie-actuator, 170–230 Hz) en het **IMU-gestuurde kompaselement** in de H1–H5 gleuf. Intensiteit uitgedrukt als percentage van motor-peak (PWM-duty).
+Alle patronen gebruiken de **in-handle LRA-motor** (lineaire resonantie-actuator, 170-230 Hz) en het **IMU-gestuurde kompaselement** in de H1-H5 gleuf. Intensiteit uitgedrukt als percentage van motor-peak (PWM-duty).
 
 ### 3.1 Tabel microinteractions
 
@@ -80,7 +80,7 @@ Alle patronen gebruiken de **in-handle LRA-motor** (lineaire resonantie-actuator
 | M4 | **Bocht nadert** | Afstand tot keuzepunt = 5 m | Alleen 1× per keuzepunt | Crescendo: 5 pulsen @ 180 Hz, 100 ms elk, interval lineair van 1000 ms → 300 ms. Int. van 35 % → 60 %. Kompas tegelijk activeert richting (links/rechts) op hypothenar. | Start op 5 m, eindigt op 1 m. |
 | M5 | **Bocht correct genomen** | IMU detecteert rotatie binnen 15° van verwacht pad binnen 3 s na M4 | Alleen na succesvolle M4 | Dubbele "tick": 2 pulsen @ 200 Hz, 40 ms, 50 % int., interval 80 ms | Eenmalig. Mode: *succesbevestiging* (zelfde patroon ook bij bestemming, kortere variant). |
 | M6 | **Afwijking van route** | Off-path > 2 m gedurende > 4 s | Hysterese: moet 4 s aanhouden voor trigger | Ademende puls: 3 cycli @ 0,5 Hz, int. swing 15 % → 40 %. Kompas wijst naar dichtstbijzijnde ankerpunt. | Loop tot gebruiker terug < 1 m. |
-| M7 | **Fail-safe actief** (IMU-verlies / GPS-gat / confidence < 40 %) | Systeem-onzekerheid | Onmiddellijk; overschrijft M2–M6 | Lange zachte trilling 800 ms @ 120 Hz, 30 % int., gevolgd door 1,5 s stilte. Optioneel (app-setting) korte spraak via oortje: *"heroriënteer, hou je stok stil"*. | Loop tot IMU-heroriëntatie bevestigd. Mode: *pause*, geen andere cues. |
+| M7 | **Fail-safe actief** (IMU-verlies / GPS-gat / confidence < 40 %) | Systeem-onzekerheid | Onmiddellijk; overschrijft M2-M6 | Lange zachte trilling 800 ms @ 120 Hz, 30 % int., gevolgd door 1,5 s stilte. Optioneel (app-setting) korte spraak via oortje: *"heroriënteer, hou je stok stil"*. | Loop tot IMU-heroriëntatie bevestigd. Mode: *pause*, geen andere cues. |
 | M8 | **Bestemming bereikt** | GPS/beacon-match + user-geometrie stabiel 3 s | Alleen op routeafsluiting | Warme lange puls: 1 puls @ 160 Hz, 600 ms, fade-in 200 ms, peak 70 %, fade-out 300 ms | Eenmalig. Zelfde patroon wordt "brand signature". |
 | M9 | **Batterij low** (< 15 %) | Interval-contingent | Elke 10 min tot opgeladen | Drie korte ticks @ 220 Hz, 30 ms, 20 % int., interval 300 ms. Afwijkend hoog-frequent patroon ⇒ herkenbaar als "systeem-status", niet "route". | Loop elke 10 min. |
 | M10 | **Clip-bevestiging op stok** | Mechanisch contact + IMU detecteert stok-orientatie | Bij fysieke installatie | Geen motor-feedback; enkel de mechanische *click* (intentional sound). App geeft audio-bevestiging *"klaar om te starten"*. | Eenmalig per sessie. |
@@ -104,7 +104,7 @@ Twee patronen zijn doelbewust uniek om *brand recognition* op te bouwen:
 
 Vijf concentrische ringen, van kerngebruiker naar platform. Zie [develop_3/img/stakeholder_map.png](develop_3/img/stakeholder_map.png).
 
-**Sleutelinzicht**: ring 3–4 (infrastructuur + institutioneel) levert ~40 % van de *value delivery* maar heeft nul fysiek contact met de gebruiker. Dit is de harde PSS-test: de service moet werken zonder dat de gebruiker die backstage-actoren ooit ontmoet.
+**Sleutelinzicht**: ring 3-4 (infrastructuur + institutioneel) levert ~40 % van de *value delivery* maar heeft nul fysiek contact met de gebruiker. Dit is de harde PSS-test: de service moet werken zonder dat de gebruiker die backstage-actoren ooit ontmoet.
 
 ---
 
