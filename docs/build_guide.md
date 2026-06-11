@@ -6,7 +6,7 @@ Stap-voor-stap instructies om het SensePath MVP zelf te bouwen. Het systeem best
 
 - **Module A → Tech-handvat** (XIAO ESP32-S3 + servo + motor + audio + HOTUT-knop met dubbele rol + batterij; geen rocker-switch, power via deep-sleep) → secties 1 tot 5
 - **Module B → Wizard-of-Oz controller** (XIAO ESP32-C3 + KY-040 encoder + eigen batterij) → sectie 6
-- **Module C → Stok-onderstuk** (conventionele witte stok met M3-stud) → sectie 1.5 (samen met de print-stappen)
+- **Module C → Stok-onderstuk** (conventionele witte stok met 3D-geprint draadstuk) → sectie 1.5 (samen met de print-stappen)
 
 Lees eerst [bom.md](bom.md) voor de onderdelen en [wiring.md](wiring.md) voor het schakelschema. Geschatte bouwtijd: 6 → 10 uur (exclusief 3D-print). De controller-module voegt ongeveer 1.5 uur toe op de handvat-bouwtijd.
 
@@ -40,15 +40,15 @@ Open [cad/exports/](../cad/exports/) en download:
 ### Post-processing
 
 1. Supports verwijderen en gleuf-rand met fijn schuurpapier (P800) gladstrijken.
-2. Heatset-insert M3 onderaan het tech-handvat plaatsen met soldeerbout-tip op 220 °C ; verticaal indrukken tot oppervlakte gelijk. Dit is de schroefverbinding met het stok-onderstuk.
+2. De schroefdraad onderaan het tech-handvat wordt **mee-geprint** (geen heatset-insert) ; controleer de draadgang en strijk indien nodig glad met een M-tap of fijn schuurpapier. Dit is de schroefverbinding met het stok-onderstuk.
 3. Sferisch kompaselement op de servo-as schuiven (kruisbout meegeleverd met MG90S) en testen op vrije rotatie binnen de gleuf.
 
 ### Stok-onderstuk voorbereiden
 
 1. Conventionele lange witte stok nemen (aluminium of glasvezel) ; we behouden de bestaande pin-tip aan het loop-uiteinde, exact zoals bij commerciële witte stokken.
 2. Standaard handgreep van de stok verwijderen (meestal vastgelijmd of geklemd).
-3. M3-stud (~15 mm) **epoxy-vast integreren** in het top-uiteinde van de stok, zorgvuldig gecentreerd en met voldoende uithardingstijd. Dit is het mannelijke deel van de schroefverbinding.
-4. Na uitharding: het tech-handvat op de stud schroeven. Bij goed alignement is het tech-handvat dagelijks omwisselbaar met een standaard handgreep met M3-insert.
+3. 3D-geprint draadstuk (~15 mm) **epoxy-vast integreren** op het top-uiteinde van de stok, zorgvuldig gecentreerd en met voldoende uithardingstijd. Dit is het mannelijke deel van de schroefverbinding.
+4. Na uitharding: het tech-handvat op het draadstuk schroeven. Bij goed alignement is het tech-handvat dagelijks omwisselbaar met een standaard handgreep met dezelfde mee-geprinte schroefdraad.
 
 ---
 

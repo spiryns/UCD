@@ -12,7 +12,7 @@ De Deliver-fase sluit de Double Diamond door alle inzichten uit Discovery, Defin
 
 #### Wat SensePath in productie zou zijn
 
-SensePath in zijn definitieve vorm is een **tweedelige witte stok**. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte-opties, verwisselbare pin-tip), maar heeft bovenaan een **ingebedde M3-schroef** in het uiteinde. Het **tech-handvat** heeft een matching M3-insert en wordt erop geschroefd. Dezelfde schroefverbinding accepteert ook een conventionele handgreep zonder elektronica, zodat de gebruiker dagelijks kan kiezen tussen tech-grip (onbekende routes) en standaard-grip (gekende routes) zonder dat hij van stok hoeft te wisselen.
+SensePath in zijn definitieve vorm is een **tweedelige witte stok**. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte-opties, verwisselbare pin-tip), maar heeft bovenaan een **3D-geprinte schroefdraad** op het uiteinde. Het **tech-handvat** heeft een matching mee-geprinte schroefdraad en wordt erop geschroefd. Dezelfde schroefverbinding accepteert ook een conventionele handgreep zonder elektronica, zodat de gebruiker dagelijks kan kiezen tussen tech-grip (onbekende routes) en standaard-grip (gekende routes) zonder dat hij van stok hoeft te wisselen.
 
 In het tech-handvat zit een mechanisch kompaselement met sferisch contactoppervlak dat continue richting voelbaar maakt, aangedreven door een mini-servo en gestuurd door een hoog-nauwkeurige route-engine. Een geïntegreerde trilmotor levert drie haptische microsignalen op de cruciale beslismomenten (obstakel, koersafwijking, bocht-aankondiging). Een ingebouwde obstakeldetectie via ToF-sensoren op hoofd- en voethoogte vangt obstakels op die buiten het bereik van de stok vallen. Een smartphone-app via BLE verzorgt route-input en monitoring. Een interne accu met USB-C opladen maakt de unit autonoom inzetbaar, en een opt-in audio-fallback (speaker of Bluetooth-oortje) staat default uit voor reguliere gebruikers en kan worden ingeschakeld als noodvariant.
 
@@ -37,12 +37,12 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 - 3D-geprinte of injectie-geperste tech-handvat-core in PA6 unfilled
 - TPE Shore 65A overmold met fijne radiale ribbels
 - POM-knoppen met visueel-tactiele differentiatie
-- Heatset-insert M3 in het tech-handvat voor de schroefverbinding met de stok
+- Mee-geprinte schroefdraad in het tech-handvat voor de schroefverbinding met de stok
 - Antraciet of contrasterend rood tech-handvat, witte stok blijft wit (ISO 9999 + verkeerswetten)
 
 **Stok-onderstuk**
 - Conventioneel ontworpen lange witte stok in productie-grade aluminium of glasvezel
-- Ingebedde M3-schroef in het top-uiteinde, conform M3-insert in het tech-handvat
+- 3D-geprinte schroefdraad op het top-uiteinde, conform de mee-geprinte schroefdraad in het tech-handvat
 - Verwisselbare pin-tip aan het loop-uiteinde, exact zoals bij conventionele witte stokken
 - Lengte-opties volgens antropometrie (D1.2)
 
@@ -73,8 +73,8 @@ Wat we werkelijk gebouwd hebben, ligt bewust onder de productie-scope. Een acade
 
 Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
 
-1. **Stok-onderstuk** ; conventionele lange witte stok waarin we bovenaan een **M3-stud epoxy-vast hebben geïntegreerd**. De pin-tip aan het loop-uiteinde blijft verwisselbaar zoals bij elke commerciële witte stok.
-2. **Tech-handvat** ; schroeft via M3 heatset-insert op het stok-onderstuk. Bevat alle handvat-elektronica (zie hieronder).
+1. **Stok-onderstuk** ; conventionele lange witte stok waarop we bovenaan een **3D-geprint draadstuk vast hebben geïntegreerd**. De pin-tip aan het loop-uiteinde blijft verwisselbaar zoals bij elke commerciële witte stok.
+2. **Tech-handvat** ; schroeft via een mee-geprinte schroefdraad op het stok-onderstuk. Bevat alle handvat-elektronica (zie hieronder).
 3. **Wizard-of-Oz controller-module** ; fysiek apart, draadloos via ESP-NOW gekoppeld aan het handvat. Bevat een XIAO ESP32-C3, KY-040 encoder, eigen batterij en oplaadkanaal.
 
 #### Hardware-realisatie tech-handvat
@@ -118,7 +118,7 @@ Voor elke ontwerpbeslissing maakt de tabel hieronder helder wat **design** is (b
 
 | Inzicht uit onderzoek | Keuze in eindproduct | Realisatie in ons prototype |
 |---|---|---|
-| Modulariteit zonder afstand te doen van conventionele stok-ervaring | Tweedelige witte stok: conventioneel onderstuk + ingebedde M3-schroef + tech-handvat (of standaard handgreep) met M3-insert | Conventionele witte stok met epoxy-vast geïntegreerde M3-stud + PLA tech-handvat met heatset M3-insert (zelfde mechanisch principe) |
+| Modulariteit zonder afstand te doen van conventionele stok-ervaring | Tweedelige witte stok: conventioneel onderstuk + 3D-geprinte schroefdraad + tech-handvat (of standaard handgreep) met matching schroefdraad | Conventionele witte stok met 3D-geprint draadstuk + PLA tech-handvat met mee-geprinte schroefdraad (zelfde mechanisch principe) |
 | Continue koersfeedback in handpalm | Mechanisch kompas, servo-aangedreven, gestuurd door RTK GNSS-route uit smartphone-app | Mechanisch kompas, servo-aangedreven, gestuurd door een **aparte controller-module** (XIAO ESP32-C3 + KY-040 encoder) die draadloos via ESP-NOW met het handvat verbonden is |
 | Sferisch contactoppervlak in laagste gleufpositie | Identiek | Identiek |
 | 1 trilmotor + DRV2605L met 3 microinteracties | LRA + DRV2605L (cleaner onset/offset) | Coin vibratiemotor + DRV2605L (zelfde driver, ERM-actuator om kost) |

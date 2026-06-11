@@ -10,7 +10,7 @@ Dit document beschrijft hoe de elektronica in het MVP-prototype onderling verbon
 
 Het systeem bestaat uit **drie fysieke onderdelen** die elk een afzonderlijke rol hebben:
 
-1. **Stok-onderstuk** (passief) → conventionele witte stok met ingebedde M3-schroef bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
+1. **Stok-onderstuk** (passief) → conventionele witte stok met 3D-geprinte schroefdraad bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
 2. **Tech-handvat** (eindgebruiker) → bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in audio (MAX98357A + speaker), HOTUT drukknop (dubbele rol: functie + power-control via deep-sleep), Li-Po batterij + TP4056 USB-C oplaad, MT3608 boost voor 5V rail. Schroeft op het stok-onderstuk.
 3. **Wizard-of-Oz controller** (testleider) → een **fysiek aparte module** met een **XIAO ESP32-C3**, een KY-040 roterende encoder, eigen Li-Po batterij + TP4056 USB-C oplaad en eigen rocker-switch. **Draadloos** (ESP-NOW peer-to-peer) verbonden met het tech-handvat.
 

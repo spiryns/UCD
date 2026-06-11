@@ -5,11 +5,11 @@
 
 Deze BOM beschrijft de exacte componenten die voor het MVP-prototype zijn besteld en geïntegreerd. SensePath bestaat uit **drie fysieke modules**:
 
-1. **Stok-onderstuk** ; conventionele lange witte stok met ingebedde M3-schroef bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
-2. **Tech-handvat** ; schroeft op het stok-onderstuk via M3-insert. Bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in MAX98357A + speaker, HOTUT drukknop (dubbele rol: functie + power-control via XIAO deep-sleep), eigen Li-Po + TP4056 USB-C. **Geen rocker-switch** ; physical-design constraint, power wordt softwarematig geregeld.
+1. **Stok-onderstuk** ; conventionele lange witte stok met 3D-geprinte schroefdraad bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
+2. **Tech-handvat** ; schroeft op het stok-onderstuk via een mee-geprinte schroefdraad. Bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in MAX98357A + speaker, HOTUT drukknop (dubbele rol: functie + power-control via XIAO deep-sleep), eigen Li-Po + TP4056 USB-C. **Geen rocker-switch** ; physical-design constraint, power wordt softwarematig geregeld.
 3. **Wizard-of-Oz controller** ; **fysiek aparte module** voor de testleider. Bevat een XIAO ESP32-C3, KY-040 roterende encoder, eigen Li-Po + TP4056 USB-C + rocker-switch. **Draadloos** (ESP-NOW) verbonden met het tech-handvat ; geen kabel tussen testleider en gebruiker.
 
-Modules 2 en 3 hebben elk hun eigen voeding en kunnen onafhankelijk aan- en uitgezet worden. Het tech-handvat is dagelijks omwisselbaar met een gewone handgreep via dezelfde M3-schroefverbinding op het stok-onderstuk.
+Modules 2 en 3 hebben elk hun eigen voeding en kunnen onafhankelijk aan- en uitgezet worden. Het tech-handvat is dagelijks omwisselbaar met een gewone handgreep via dezelfde 3D-geprinte schroefverbinding op het stok-onderstuk.
 
 > Voor de bredere technische context: zie [wiring.md](wiring.md) voor het schakelschema en [build_guide.md](build_guide.md) voor de bouwinstructies.
 
@@ -106,7 +106,7 @@ De Li-Po levert 3.7 V direct aan de XIAO en (via de DRV2605L OUT-pinnen) de coin
 | Overmold-grip | (productie-doel: TPE Shore 65A; in prototype niet aanwezig) | 0 | CMF-keuze gevalideerd in Develop 3, niet geïntegreerd in MVP-print. |
 | Kompaselement | Sferisch contactoppervlak, laagste gleufpositie | 1 | Voorkeurconfiguratie uit Develop 2. |
 | Aluminium pin | M3 doorgaande as voor kompas-rotatie, gekoppeld aan servo-as | 1 | Vervangbare TPE-tip optioneel (winter / handschoenen). |
-| Heatset-insert | M3, messing | 1 | In de bodem van het tech-handvat, voor de schroefverbinding met het stok-onderstuk. |
+| Mee-geprinte schroefdraad | 3D-geprint in PLA (geen los onderdeel) | 0 | In de bodem van het tech-handvat, voor de schroefverbinding met het stok-onderstuk. |
 
 CMF-onderbouwing: zie Develop 3 in [README.md](../README.md).
 
@@ -157,8 +157,8 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 
 | Onderdeel | Specificatie | Aantal | Toelichting |
 |---|---|---|---|
-| Witte stok-onderstuk | Conventionele lange witte stok met verwisselbare pin-tip (productie-doel: aluminium of glasvezel; in prototype gemodificeerd standaardmodel) | 1 | Het onderstuk volgt de bestaande witte-stok-conventie. Wij integreren bovenaan een M3-stud (epoxy-vast in het uiteinde) waarop het tech-handvat geschroefd wordt. |
-| M3-stud | Roestvrij staal, ~15 mm | 1 | Ingebed in het top-uiteinde van de stok. Schroeft in de heatset-insert van het tech-handvat. |
+| Witte stok-onderstuk | Conventionele lange witte stok met verwisselbare pin-tip (productie-doel: aluminium of glasvezel; in prototype gemodificeerd standaardmodel) | 1 | Het onderstuk volgt de bestaande witte-stok-conventie. Wij integreren bovenaan een 3D-geprint draadstuk (vast op het uiteinde) waarop het tech-handvat geschroefd wordt. |
+| 3D-geprint draadstuk | PLA, ~15 mm | 1 | Vast op het top-uiteinde van de stok. Schroeft in de mee-geprinte schroefdraad van het tech-handvat. |
 | Verwisselbare pin-tip | Conventionele tip (rolling ball, ceramic, of glide tip) | 1 | Aan het loop-uiteinde, exact zoals bij commerciële witte stokken. |
 
 ---
@@ -177,7 +177,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 | Krimpkous Ø2 mm | Voor trekontlasting bedrading | enkele mm |
 | Soldeer + flux | Sn60/Pb40 of loodvrij | naar wens |
 | Schroeven | M2 / M3 set | enkele |
-| Epoxy of permanente fix | Voor M3-stud in stok-uiteinde, en voor fixatie motor / servo / batterij | naar wens |
+| Epoxy of permanente fix | Voor het draadstuk op het stok-uiteinde, en voor fixatie motor / servo / batterij | naar wens |
 | Dubbelzijdige tape | Bijkomende fixatie van elektronica tegen module-wanden | naar wens |
 
 ---
@@ -193,7 +193,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 | MG90S servo | €5 → €10 |
 | HOTUT knop + USB-C laad-poort | €8 → €12 |
 | TP4056 + MT3608 + Li-Po 1000 mAh | €10 → €15 |
-| 3D-print (PLA, ~80 g) + insert + pin + hardware | €8 → €15 |
+| 3D-print (PLA, ~80 g) + pin + hardware | €8 → €15 |
 | **Subtotaal handvat** | **€66 → €102** |
 
 **Module B → Wizard-of-Oz controller**
@@ -211,7 +211,7 @@ Identiek voedingsschema als het handvat (USB-C → TP4056 → Li-Po → switch �
 
 | Categorie | Richtprijs |
 |---|---|
-| Witte stok-onderstuk + M3-stud + epoxy | €15 → €30 |
+| Witte stok-onderstuk + 3D-geprint draadstuk + epoxy | €15 → €30 |
 | **Subtotaal stok** | **€15 → €30** |
 
 | **Totaal MVP-prototype (alle drie modules)** | **€108 → €176** |

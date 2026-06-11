@@ -15,11 +15,15 @@ Mensen die blind of slechtziend zijn navigeren buitenshuis relatief goed met GPS
 
 We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navigatieoplossingen, en via user interviews en feedbackmomenten met gebruikers en organisaties uit de blinden- en mobiliteitswereld. Daaruit kwamen duidelijke noden naar voren: betrouwbare "decision support" op keuzemomenten, zo weinig mogelijk telefoongebruik tijdens het stappen, en discrete feedback die ook in publieke context bruikbaar is.
 
-Onze oplossing is **SensePath**: een **tweedelige witte stok** die wij volledig als systeem leveren. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte, verwisselbare pin-tip), maar heeft bovenaan een **ingebedde M3-schroef** in het uiteinde. Daarop wordt ofwel een **tech-handvat** geschroefd dat de elektronica voor haptische navigatiebegeleiding bevat, ofwel een **gewone handgreep** voor wanneer de route gekend is. Op die manier behoudt de gebruiker volledig zijn bestaande stok-ervaring en voegt SensePath alleen toe wat nodig is op onbekende trajecten. Het tech-handvat is gekoppeld aan een eenvoudige app-workflow en vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
+Onze oplossing is **SensePath**: een **tweedelige witte stok** die wij volledig als systeem leveren. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte, verwisselbare pin-tip), maar heeft bovenaan een **3D-geprinte schroefdraad** op het uiteinde. Daarop wordt ofwel een **tech-handvat** geschroefd dat de elektronica voor haptische navigatiebegeleiding bevat, ofwel een **gewone handgreep** voor wanneer de route gekend is. Op die manier behoudt de gebruiker volledig zijn bestaande stok-ervaring en voegt SensePath alleen toe wat nodig is op onbekende trajecten. Het tech-handvat is gekoppeld aan een eenvoudige app-workflow en vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
 
 <p align="center">
-  <img src="img/Logosense1.png" width=""/>
+  <img src="img/Logosense1.png" alt="SensePath logo" width="320"/>
+</p>
 
+<p align="center">
+  <img src="img/WhatsApp Image 2026-01-07 at 20.23.09.jpeg" alt="SensePath tech-handvat geschroefd op een conventionele witte stok, met het haptisch kompas zichtbaar in de handpalm" width="600"/>
+  <br/><em><strong>SensePath</strong> → ① tech-handvat met geïntegreerde elektronica en mee-geprinte schroefdraad, ② sferisch kompaselement in de handpalm voor continue richtingsfeedback, ③ conventionele witte stok met verwisselbare pin-tip, ④ 3D-geprinte schroefdraad op het stok-uiteinde, koppelt het tech-handvat aan de stok en is dagelijks omwisselbaar voor een standaard handgreep.</em>
 </p>
 
 ---
@@ -39,15 +43,13 @@ Onze oplossing is **SensePath**: een **tweedelige witte stok** die wij volledig 
 
 **Verdieping per fase** (Double Diamond)
 
-| # | Fase | Pagina |
-|---|---|---|
-| 1 | Discovery | 📄 [docs/discovery.md](docs/discovery.md) |
-| 2 | Definition | 📄 [docs/definition.md](docs/definition.md) |
-| 3 | Design Requirements | 📄 [docs/design_requirements.md](docs/design_requirements.md) |
-| 4 | Develop 1 → functionele verfijning | 📄 [docs/develop_1.md](docs/develop_1.md) |
-| 5 | Develop 2 → usability & ergonomie | 📄 [docs/develop_2.md](docs/develop_2.md) |
-| 6 | Develop 3 → UX, CMF & real-life validatie | 📄 [docs/develop_3_overzicht.md](docs/develop_3_overzicht.md) |
-| 7 | Deliver → eindproduct & MVP-prototype | 📄 [docs/deliver.md](docs/deliver.md) |
+1. [Discovery](docs/discovery.md)
+2. [Definition](docs/definition.md)
+3. [Design Requirements](docs/design_requirements.md)
+4. [Develop 1](docs/develop_1.md) → functionele verfijning
+5. [Develop 2](docs/develop_2.md) → usability & ergonomie
+6. [Develop 3](docs/develop_3_overzicht.md) → UX, CMF & real-life validatie
+7. [Deliver](docs/deliver.md) → eindproduct & MVP-prototype
 
 ---
 
@@ -108,7 +110,7 @@ Finale validatie in realistische omgevingen, afronding prototype en documentatie
 
 ## Conclusie
 
-SensePath is een **tweedelige witte stok**: een conventioneel onderstuk met verwisselbare pin-tip en een **tech-handvat dat erop schroeft** via een M3-insert. Dezelfde schroefverbinding accepteert ook een gewone handgreep, zodat de gebruiker dagelijks kan kiezen tussen tech-grip (onbekende routes) en standaard-grip (gekende routes) zonder dat hij van stok hoeft te wisselen. Het tech-handvat vertaalt routebeslissingen naar discrete haptische signalen in de hand. Drie kerncomponenten dragen het concept: één trilmotor die drie onderscheidbare microinteracties (obstakel, koersafwijking, bocht-aankondiging) levert, een sferisch kompaselement in de laagste gleufpositie dat continue richting voelbaar maakt via een servo-aandrijving, en de modulaire schroefverbinding die het hele systeem omkeerbaar maakt.
+SensePath is een **tweedelige witte stok**: een conventioneel onderstuk met verwisselbare pin-tip en een **tech-handvat dat erop schroeft** via een 3D-geprinte schroefdraad. Dezelfde schroefverbinding accepteert ook een gewone handgreep, zodat de gebruiker dagelijks kan kiezen tussen tech-grip (onbekende routes) en standaard-grip (gekende routes) zonder dat hij van stok hoeft te wisselen. Het tech-handvat vertaalt routebeslissingen naar discrete haptische signalen in de hand. Drie kerncomponenten dragen het concept: één trilmotor die drie onderscheidbare microinteracties (obstakel, koersafwijking, bocht-aankondiging) levert, een sferisch kompaselement in de laagste gleufpositie dat continue richting voelbaar maakt via een servo-aandrijving, en de modulaire schroefverbinding die het hele systeem omkeerbaar maakt.
 
 Waarom dit het juiste antwoord is op het probleem uit Discovery, is geen kwestie van technologie maar van **positionering**. SensePath vervangt het stok-gebruik niet ; we behouden de conventionele stok-opbouw en voegen alleen toe wat nodig is. Het onderstuk blijft de primaire obstakeldetector, het tech-handvat levert wat de stok zelf niet kan: oriëntatie op keuzemomenten zonder dat het gehoor of de smartphone-aandacht ingezet moet worden in het default-gebruik. Een opt-in spraak-fallback (default uit) bestaat als noodvariant. Daarmee adresseert het ontwerp de drie pijnpunten die de Discovery-interviews scherp maakten: onzekerheid aan knooppunten, de wens om het gehoor vrij te houden in publieke context, en de minimale-telefoon-eis tijdens het stappen.
 

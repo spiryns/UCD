@@ -28,7 +28,7 @@ Deze map bevat de CAD-bestanden van de SensePath handvat-iteraties. De primaire 
   - Trilmotor tegen hypothenar-zijde (LRA in productie-vorm, coin vibratiemotor 10 × 2.7 mm in MVP-prototype)
   - MG90S servo voor mechanisch kompas
   - Bedieningselementen aan de achterkant (POM-knoppen volgens CMF-deepdive in productie-vorm; HOTUT IP67 metalen drukknop + SS12F44 schuifschakelaar in MVP-prototype voor robuust testen)
-  - Onderaan: heatset M3-insert voor schroefverbinding met het stok-onderstuk
+  - Onderaan: mee-geprinte schroefdraad voor schroefverbinding met het stok-onderstuk
 
 CMF-specs (uit Develop 3 CMF-deepdive, productie-doel):
 - Core: **PA6 unfilled** ; slag- en slijtvast voor dragend gedeelte (in MVP-prototype 3D-geprint in PLA voor snelheid)
