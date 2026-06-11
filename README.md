@@ -18,7 +18,7 @@ We onderzochten dit via deskresearch en benchmarking van bestaande (indoor) navi
 Onze oplossing is **SensePath**: een **tweedelige witte stok** die wij volledig als systeem leveren. Het onderstuk volgt de conventionele opbouw van bestaande witte stokken (gewicht, lengte, verwisselbare pin-tip), maar heeft bovenaan een **ingebedde M3-schroef** in het uiteinde. Daarop wordt ofwel een **tech-handvat** geschroefd dat de elektronica voor haptische navigatiebegeleiding bevat, ofwel een **gewone handgreep** voor wanneer de route gekend is. Op die manier behoudt de gebruiker volledig zijn bestaande stok-ervaring en voegt SensePath alleen toe wat nodig is op onbekende trajecten. Het tech-handvat is gekoppeld aan een eenvoudige app-workflow en vertaalt route-informatie naar haptische begeleiding op het juiste moment (bv. bij keuzes en bochten), zodat de gebruiker "hands-free, heads-up" kan blijven bewegen met de stok als primair hulpmiddel. Zo maakt SensePath indoor navigatie zelfstandiger, rustiger en betrouwbaarder.
 
 <p align="center">
-  <img src="img/Render hanvat1.png" alt="SensePath tech-handvat geschroefd op een conventionele witte stok, met het haptisch kompas zichtbaar in de handpalm" width="1500"/>
+  <img src="img/Logosense" alt="SensePath tech-handvat geschroefd op een conventionele witte stok, met het haptisch kompas zichtbaar in de handpalm" width="1500"/>
 
 
 ---
