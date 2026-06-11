@@ -1,30 +1,21 @@
-# CAD exports → STL en STEP
+# CAD exports → STL
 
-Format-onafhankelijke exports van [../protoype_handvat_trillingmotoren.prt](../protoype_handvat_trillingmotoren.prt) (Develop 3 finaal ontwerp).
+3D-print-klare STL-exports van het Develop 3 finale ontwerp. De NX-bronbestanden (`.prt` + zips) staan in [../](../).
 
-## Naming-conventie
+## Bestanden
 
-- `handvat_dev3_<onderdeel>.<format>`
-- Voorbeelden:
-  - `handvat_dev3_core.stl` ; buitenwand met gleufpositie
-  - `handvat_dev3_kompas.stl` ; sferisch kompaselement
-  - `handvat_dev3_cap.stl` ; afsluit-dop met knop-openingen
-  - `handvat_dev3_full.step` ; volledige assembly als STEP
-
-## Status
-
-| Bestand | Status |
+| Bestand | Onderdeel |
 |---|---|
-| handvat_dev3_core.stl | TODO ; export uit NX |
-| handvat_dev3_kompas.stl | TODO ; export uit NX |
-| handvat_dev3_cap.stl | TODO ; export uit NX |
-| handvat_dev3_full.step | TODO ; export uit NX |
+| `behuizingstok_3Dprint.stl` | Hoofdbehuizing van het tech-handvat (stok-zijde) |
+| `opzetstukbehuizing_3Dprint.stl` | Opzetstuk-behuizing bovenaan het handvat |
+| `servobehuizing_3Dprint.stl` | Behuizing voor de MG90S servo (kompas-aandrijving) |
+| `Kompas_3Dprint.stl` | Sferisch kompaselement, koppelt op de servo-as |
+| `elektronica_3Dprint.stl` | Houder/frame voor de elektronica in het handvat |
+| `boxhold_3Dprint.stl` | Behuizing van de Wizard-of-Oz controller-module |
 
-## Export-procedure (Siemens NX)
+Aanbevolen print-instellingen (laagdikte, infill, oriëntatie, materiaal) staan in de [build guide](../../docs/build_guide.md) → Sectie 1.
 
-1. Open `protoype_handvat_trillingmotoren.prt` in NX.
-2. **STL**: File → Export → STL → kies "Faceted Body" → tolerance 0.05 mm → output naar `handvat_dev3_<onderdeel>.stl`.
-3. **STEP**: File → Export → STEP 214 → output naar `handvat_dev3_full.step`.
-4. Commit-en-push naar `final-delivery` branch.
+## Opnieuw exporteren (Siemens NX)
 
-> Tot deze exports beschikbaar zijn, kunnen externe bouwers terecht bij het team voor een directe export op aanvraag.
+1. Open het betreffende bronbestand in [../](../) in NX.
+2. File → Export → STL → kies "Faceted Body" → tolerance 0.05 mm → output naar `<onderdeel>_3Dprint.stl`.

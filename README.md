@@ -5,7 +5,7 @@
 🔥 Supervised by `prof. dr. Bas Baccarne`, `Yannick Christiaens` & `Wouter Devriese`  
 🌱 Grown at `Ghent University` 🏛️ `Industrial Design Engineering` ([project overview](https://github.com/basbaccarne/human-centered-design))
 
-*19/01/2026*
+*Juni 2026*
 
 ---
 
@@ -41,10 +41,10 @@ Onze oplossing is **SensePath**: een **tweedelige witte stok** die wij volledig 
 1. [Discovery](docs/discovery.md)
 2. [Definition](docs/definition.md)
 3. [Design Requirements](docs/design_requirements.md)
-4. [Develop 1](docs/develop_1.md) → functionele verfijning
-5. [Develop 2](docs/develop_2.md) → usability & ergonomie
-6. [Develop 3](docs/develop_3_overzicht.md) → UX, CMF & real-life validatie
-7. [Deliver](docs/deliver.md) → eindproduct & MVP-prototype
+4. [Develop 1](docs/develop_1.md) 
+5. [Develop 2](docs/develop_2.md) 
+6. [Develop 3](docs/develop_3_overzicht.md) 
+7. [Deliver](docs/deliver.md) 
 
 ---
 
@@ -63,13 +63,13 @@ timeline
         Dec 2025  : Wave 2 verfijning + MoSCoW (N=5)
                   : Pivot → volledige stok wordt afneembaar handvat
     section Develop
-        Jan 2026  : Develop 1 functionele tests (N=5)
-        Feb 2026  : Develop 2 usability + ergonomie (N=5)
+        Mrt 2026  : Develop 1 functionele tests (N=5)
+        Apr 2026  : Develop 2 usability + ergonomie (N=5)
                   : Pivot → 3 trilmotoren wordt 1 LRA + DRV2605L
-        Apr 2026  : Develop 3 microinteracties + CMF (N=5)
-                  : Pivot → 9 trilpatronen wordt 3 kernsignalen (M4 M6 M9)
+        Mei 2026  : Develop 3 microinteracties + CMF (N=5)
+                  : Pivot → 10 trilpatronen wordt 3 kernsignalen (M4 M6 M9)
     section Deliver
-        Mei 2026  : Validatieplan GPS-precisie en autonome wandeling
+        Jun 2026  : Validatieplan GPS-precisie en autonome wandeling
                   : Open vraag → Wizard-of-Oz wordt autonoom systeem
 ```
 
@@ -109,7 +109,7 @@ SensePath is een **tweedelige witte stok**: een conventioneel onderstuk met verw
 
 Waarom dit het juiste antwoord is op het probleem uit Discovery, is geen kwestie van technologie maar van **positionering**. SensePath vervangt het stok-gebruik niet ; we behouden de conventionele stok-opbouw en voegen alleen toe wat nodig is. Het onderstuk blijft de primaire obstakeldetector, het tech-handvat levert wat de stok zelf niet kan: oriëntatie op keuzemomenten zonder dat het gehoor of de smartphone-aandacht ingezet moet worden in het default-gebruik. Een opt-in spraak-fallback (default uit) bestaat als noodvariant. Daarmee adresseert het ontwerp de drie pijnpunten die de Discovery-interviews scherp maakten: onzekerheid aan knooppunten, de wens om het gehoor vrij te houden in publieke context, en de minimale-telefoon-eis tijdens het stappen.
 
-De keuzes die deze positionering dragen, zijn telkens empirisch onderbouwd: de evolutie van 3 motoren naar 1 trilmotor (Develop 2), de versmalde gleuf zodat het kompas in de handpalm blijft (Develop 2), de reductie van 9 naar 3 trilpatronen (Develop 3), de keuze voor TPE Shore 65A overmold (Develop 3 CMF-deepdive). Voor de eindvalidatie wordt het kompas via een mini-servo aangestuurd, die de doelrichting **draadloos** ontvangt van een **aparte controller-module** die de testleider bedient ; daarmee kan het geheel realistisch getest worden zonder dat eerst een autonoom GPS-systeem geïntegreerd moet zijn. Volledige onderbouwing in [docs/design_requirements.md](docs/design_requirements.md).
+De keuzes die deze positionering dragen, zijn telkens empirisch onderbouwd: de evolutie van 3 motoren naar 1 trilmotor (Develop 2), de versmalde gleuf zodat het kompas in de handpalm blijft (Develop 2), de reductie van 10 naar 3 trilpatronen (Develop 3), de keuze voor TPE Shore 65A overmold (Develop 3 CMF-deepdive). Voor de eindvalidatie wordt het kompas via een mini-servo aangestuurd, die de doelrichting **draadloos** ontvangt van een **aparte controller-module** die de testleider bedient ; daarmee kan het geheel realistisch getest worden zonder dat eerst een autonoom GPS-systeem geïntegreerd moet zijn. Volledige onderbouwing in [docs/design_requirements.md](docs/design_requirements.md).
 
 Het MVP-prototype bestaat uit **drie fysieke modules**: het stok-onderstuk, het tech-handvat dat erop schroeft, en een **aparte Wizard-of-Oz controller-module** (eigen XIAO ESP32-C3, batterij en KY-040 encoder) die draadloos via ESP-NOW met het handvat communiceert. Het rapport onderscheidt bewust **het beoogde eindproduct** (productie-vorm met hoog-nauwkeurige RTK GNSS via FLEPOS / WALCORS, smartphone-app, ToF-obstakeldetectie en productie-materialen) van **ons MVP-prototype** (academisch deliverable met PLA-print, aparte controller-module als Wizard-of-Oz vervanger voor GPS, en bewust geen obstakeldetectie). Beide niveaus en de vertaalstap ertussen worden uiteengezet in de [Deliver](docs/deliver.md)-sectie. Voor de open onderzoeksvragen en aanbevelingen voor vervolgwerk: zie [Kritische reflectie](#kritische-reflectie).
 

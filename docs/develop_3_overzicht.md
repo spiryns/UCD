@@ -37,7 +37,7 @@ De UX-laag van Develop 3 is theoretisch onderbouwd in een afzonderlijk document 
 
 ### Onderzoeksvragen Develop 3
 
-- Welke set trilpatronen (max. drie tot vier signalen via één trilmotor) is voldoende **onderscheidbaar en intuïtief** om obstakel, route-afwijking en aankondiging van een afslag te communiceren zonder cognitieve overload?
+- Welke set trilpatronen (max. drie tot vier signalen via één trilmotor) is voldoende **onderscheidbaar en intuïtief** om een naderende afslag, een route-afwijking en een statusmelding te communiceren zonder cognitieve overload?
 - Op welk **moment vóór een afslag** wenst de gebruiker een voorbereidende trilling (uitgedrukt in stappen, meters of seconden)?
 - Wensen gebruikers één neutraal richtings-aankondigingssignaal in combinatie met het kompas, of een **expliciet onderscheid links/rechts** in het patroon zelf?
 - Welk **handvatmateriaal** (harde standaardstok, zachter indrukbaar handvat, kurk-element) wordt geprefereerd qua tactiliteit en bruikbaarheid in alle weersomstandigheden?
@@ -53,30 +53,30 @@ De test combineert drie opeenvolgende blokken in één sessie van ± 75 minuten 
 
 | Deelnemer | Leeftijd | Profiel | Locatie | Datum |
 |---|---|---|---|---|
-| Mario | 52 | Verloor zicht op leeftijd 30 | Licht en Liefde | 07/05/2026 |
+| Mario | 52 | Verloor zicht op 18-jarige leeftijd | Licht en Liefde | 07/05/2026 |
 | Jelle | 22 | Blind van geboorte | Licht en Liefde | 07/05/2026 |
-| Herman | 65 | Verloor zicht op leeftijd 18 | Licht en Liefde | 08/05/2026 |
+| Herman | 65 | Blind sinds geboorte | Licht en Liefde | 08/05/2026 |
 | Milo | 20 | Ziende controle (geblinddoekt) | Thuis | 08/05/2026 |
 | Milos | 20 | Ziende controle (geblinddoekt) | Thuis | 08/05/2026 |
 
 ### Prototypes
 
-**Handvat met geïntegreerde elektronica.** Het Develop 3 prototype is een 3D-geprint handvat met de uit Develop 2 geselecteerde voorkeurshoogte en sferisch contactoppervlak van het kompas. De gleuf is verkleind zodat het kompas binnen de handpalm blijft draaien in plaats van eruit te wijken. In het handvat zit een **XIAO ESP32-S3 microcontroller** gekoppeld aan een **DRV2605L haptische driver** die de **trilmotor (LRA)** aanstuurt. De microcontroller maakt een eigen WiFi-acces point ("SensePath") aan, waardoor de testleider via een webpagina op zijn telefoon (`http://192.168.4.1`) de trilpatronen kan aansturen tijdens de Wizard-of-Oz sessie.
+**Handvat met geïntegreerde elektronica.** Het Develop 3 prototype is een 3D-geprint handvat met de uit Develop 2 geselecteerde voorkeurshoogte en sferisch contactoppervlak van het kompas. De gleuf is verkleind zodat het kompas binnen de handpalm blijft draaien in plaats van eruit te wijken. In het handvat zit een **XIAO ESP32-S3 microcontroller** gekoppeld aan een **DRV2605L haptische driver** die de **coin vibratiemotor (ERM)** aanstuurt. De microcontroller maakt een eigen WiFi-acces point ("SensePath") aan, waardoor de testleider via een webpagina op zijn telefoon (`http://192.168.4.1`) de trilpatronen kan aansturen tijdens de Wizard-of-Oz sessie.
 
 <p align="center">
   <img src="../img/test-opstelling-dev3.png" alt="Trilmotor en microcontroller in handvat" width="40%"/>
-  <br/><em>Geïntegreerde XIAO ESP32-S3 + DRV2605L + LRA in het handvat.</em>
+  <br/><em>Geïntegreerde XIAO ESP32-S3 + DRV2605L + coin vibratiemotor (ERM) in het handvat.</em>
 </p>
 
-**Trilpatronen.** Het uitgebreide microinteractie-overzicht in [develop_3.md](develop_3.md) documenteert tien kandidaat-momenten (M1 → M10) verspreid over de hele user journey (route gestart, koers oké, bocht nadert, bocht correct genomen, afwijking, fail-safe, bestemming bereikt, batterij low, clip-bevestiging). Voor de Develop 3 user-test werden de **drie meest kritieke MVP-signalen** geselecteerd, omdat zij de kern van de navigatie-interactie dragen:
+**Trilpatronen.** Het uitgebreide microinteractie-overzicht in [develop_3.md](develop_3.md) documenteert tien kandidaat-momenten (M1 → M10) verspreid over de hele user journey (route gestart, koers oké, bocht nadert, bocht correct genomen, afwijking, fail-safe, bestemming bereikt, batterij low, clip-bevestiging). Voor de Develop 3 user-test werden de **drie meest kritieke MVP-signalen** geselecteerd, omdat zij de kern van de feedback-taal dragen (twee navigatie-cues plus een statussignaal):
 
 | MVP-signaal | Scenario | Pulslogica getest |
 |---|---|---|
-| **M4** | Obstakel recht vooruit | Twee korte scherpe trillingen na elkaar (Strong Click #12) |
-| **M6** | Route-afwijking, je loopt uit je geplande koers | Drie snelle trillingen achter elkaar (Strong Buzz #14) |
-| **M9** | Bocht nadert, voorbereidend signaal | Eén langere oplopende trilling (Buzz 1 #47) |
+| **M4** | Bocht nadert, voorbereidend signaal | Oplopende crescendo (5 pulsen, interval 1000 → 300 ms) |
+| **M6** | Route-afwijking, je loopt uit je geplande koers | Ademende pulsreeks (3 cycli @ 0,5 Hz) |
+| **M9** | Batterij low (< 15%) | Drie korte hoog-frequente ticks (@ 220 Hz) |
 
-Tijdens de leerfase kregen de deelnemers ook een aantal alternatieve patronen uit de bredere set te voelen (Soft Bump, Double Click, Triple Click, Transition Ramp variantes). Vervolgens werd hen gevraagd om per scenario een voorkeurspatroon te kiezen, om te valideren of de drie MVP-koppelingen voor blinde gebruikers ook intuïtief zijn (zie UG7 onder Resultaten).
+Tijdens de leerfase kregen de deelnemers ook een aantal alternatieve patronen uit de bredere set te voelen (Soft Bump, Double Click, Triple Click, Transition Ramp variantes). Vervolgens werd hen gevraagd om per scenario een voorkeurspatroon te kiezen, om te valideren of de drie MVP-koppelingen voor blinde gebruikers ook intuïtief zijn (zie UG10 onder Resultaten).
 
 **Wizard-of-Oz aansturing via telefoon.** Een eenvoudige webpagina op de telefoon van de testleider biedt knoppen om elk patroon real-time te triggeren. De deelnemer ziet of hoort de telefoon niet en interpreteert de trilling als systeem-output, wat de illusie van een werkend GPS-systeem creëert.
 
@@ -91,11 +91,11 @@ Tijdens de leerfase kregen de deelnemers ook een aantal alternatieve patronen ui
 
 #### UX-feedback
 
-**Mario** (52, blind sinds 30 jaar). De eerste obstakel-puls werd te kort en te zwak gevoeld om duidelijk op te merken; aankondiging en obstakel werden meermaals verward. Mario verwoordt expliciet de behoefte aan een richtingsindicatie in het patroon zelf: *"Ik ben er nog altijd niet mee akkoord dat je in je pulsen niet aangeeft welke kant je uit moet."* De aankondiging hoeft volgens hem maar twee stappen voor de bocht te komen. De buitencontext is merkbaar zwaarder qua concentratie dan de Develop 2 binnen-test.
+**Mario** (52, verloor zicht op zijn 18e). De eerste bocht-aankondiging werd te kort en te zwak gevoeld om duidelijk op te merken; de bocht-aankondiging en de route-afwijking werden meermaals verward. Mario verwoordt expliciet de behoefte aan een richtingsindicatie in het patroon zelf: *"Ik ben er nog altijd niet mee akkoord dat je in je pulsen niet aangeeft welke kant je uit moet."* De aankondiging hoeft volgens hem maar twee stappen voor de bocht te komen. De buitencontext is merkbaar zwaarder qua concentratie dan de Develop 2 binnen-test.
 
 **Jelle** (22, blind van geboorte). Bevestigt dat de versmalde gleuf werkt: *"Op deze hoogte heb ik duidelijker contact."* Voor hem zou het contactelement nog 1 mm hoger mogen. Aankondiging op ± 2 meter vooraf is voldoende. Hij heeft geen behoefte aan apart links/rechts in het patroon, het kompas volstaat voor hem. De terugkoppel-logica (terugdraaien naar midden = je staat juist) was niet meteen intuïtief, maar oplosbaar via uitleg. Cognitieve belasting buiten viel hem mee. Hij vraagt expliciet om een audio-fallback voor wanneer haptiek vastloopt.
 
-**Herman** (65, blind sinds 18 jaar). Het contactelement is volgens hem te klein, met name in winteromstandigheden met handschoenen. Bij langere wandelingen (één uur en meer) maakt hij zich zorgen over tactiele vermoeidheid en aandachtsverlies in de hand. Hij wenst een aankondigingsafstand rond ± 50 m, zoals zijn huidige GPS, en wil de richting al in het patroon zelf herkennen.
+**Herman** (65, blind sinds geboorte). Het contactelement is volgens hem te klein, met name in winteromstandigheden met handschoenen. Bij langere wandelingen (één uur en meer) maakt hij zich zorgen over tactiele vermoeidheid en aandachtsverlies in de hand. Hij wenst een aankondigingsafstand rond ± 50 m, zoals zijn huidige GPS, en wil de richting al in het patroon zelf herkennen.
 
 #### CMF-feedback
 
@@ -105,7 +105,7 @@ Over **kleur** benadrukte Mario expliciet dat het handvat moet contrasteren met 
 
 #### Subjectieve scores op Likert-schaal (1-7)
 
-Na afloop van de drie testblokken werd elke deelnemer gevraagd om de voorkeursconfiguratie te scoren op een Likert-schaal van 1 (helemaal niet akkoord) tot 7 (helemaal akkoord). De scores worden hieronder vergeleken met de Develop 2 referentie.
+Na afloop van de drie testblokken werd elke deelnemer gevraagd om de voorkeursconfiguratie te scoren op een Likert-schaal van 1 (helemaal niet akkoord) tot 7 (helemaal akkoord). De scores worden hieronder vergeleken met de Develop 2 referentie. Develop 3 hanteert eigen usability goals **UG8–UG12**, in aansluiting op UG1–UG7 uit Develop 2.
 
 | Metric | Develop 3 (avg) | Develop 2 (avg) |
 |---|---|---|
@@ -114,23 +114,23 @@ Na afloop van de drie testblokken werd elke deelnemer gevraagd om de voorkeursco
 | Cognitive load (1-7, hoog = weinig concentratie) | **4,33** | 4,67 |
 | Willingness (1-7) | **4,67** | 4,33 |
 
-**UG5 → Cognitieve belasting** daalde licht ten opzichte van Develop 2 (4,33 vs 4,67), volledig toe te schrijven aan Mario's score (3/7) die de buitencontext beduidend zwaarder ervaart dan de gecontroleerde labosetting. Dit valt binnen de protocol-marge "maximaal 1 punt lager", dus UG5 wordt gehaald. Jelle en Herman bleven op het Develop 2 niveau (5/7), wat bevestigt dat de cognitieve belasting voor de kerndoelgroep (audio-vrije navigatoren) hanteerbaar blijft in real-life.
+**UG8 → Cognitieve belasting** daalde licht ten opzichte van Develop 2 (4,33 vs 4,67), volledig toe te schrijven aan Mario's score (3/7) die de buitencontext beduidend zwaarder ervaart dan de gecontroleerde labosetting. Dit valt binnen de protocol-marge "maximaal 1 punt lager", dus UG8 wordt gehaald. Jelle en Herman bleven op het Develop 2 niveau (5/7), wat bevestigt dat de cognitieve belasting voor de kerndoelgroep (audio-vrije navigatoren) hanteerbaar blijft in real-life.
 
-**UG6 → Bereidheid tot gebruik** stijgt van 4,33 (Develop 2) naar 4,67. De gemiddelde stijging is bescheiden door Herman's lage score (3/7), die consistent blijft met zijn Develop 2 willingness van 2/7 en zijn voorkeur voor audio-navigatie. Mario en Jelle scoren 5 en 6, wat een duidelijke stijging is en UG6 (behoud of stijging) bevestigt.
+**UG9 → Bereidheid tot gebruik** stijgt van 4,33 (Develop 2) naar 4,67. De gemiddelde stijging is bescheiden door Herman's lage score (3/7), die consistent blijft met zijn Develop 2 willingness van 2/7 en zijn voorkeur voor audio-navigatie. Mario en Jelle scoren 5 en 6, wat een duidelijke stijging is en UG9 (behoud of stijging) bevestigt.
 
-#### Rangschikking trilpatronen (UG7)
+#### Rangschikking trilpatronen (UG10)
 
 Na de leerfase werden de deelnemers gevraagd om per scenario uit de bredere set (M1 → M10) hun top-3 te kiezen. De resultaten bevestigen de drie MVP-koppelingen, maar leggen wel een ontwerpprobleem bloot: de patronen liggen onderling te dicht bij elkaar in waargenomen sterkte.
 
 | Scenario | 1ste keuze | 2de keuze | 3de keuze |
 |---|---|---|---|
-| Obstakel recht vooruit | **M4** (kort scherp dubbel) | M5 (dubbele tick na bocht) | M9 (drie korte ticks) |
+| Bocht nadert | **M4** (oplopende crescendo) | M1 (zachte dubbele puls) | M5 (dubbele tick) |
 | Afwijking van route | **M6** (ademende pulsreeks) | M7 (lange zachte trilling) | M2 (zachte heartbeat) |
-| Bocht nadert | **M9** (drie korte ticks oplopend) | M4 (crescendo voor bocht) | M1 (zachte dubbele puls) |
+| Batterij low | **M9** (drie korte hoog-frequente ticks) | M5 (dubbele tick) | M2 (zachte heartbeat) |
 
-De drie geselecteerde MVP-koppelingen (M4, M6, M9) staan unaniem op de eerste plaats, wat bevestigt dat ze intuïtief aansluiten bij hun scenario. De tweede en derde keuzes komen wel uit de bredere kandidatenset, wat aantoont dat alternatieve patronen voor verschillende deelnemers ook denkbaar zijn. Mario en Jelle gaven echter beide aan dat het verschil in sterkte tussen de patronen onderling te klein is, waardoor obstakel en bocht nadert in twijfelgevallen verwisseld werden. Dit onderbouwt de design implicatie "scherper differentiëren in lengte of ritme".
+De drie geselecteerde MVP-koppelingen (M4, M6, M9) staan unaniem op de eerste plaats, wat bevestigt dat ze intuïtief aansluiten bij hun scenario. De tweede en derde keuzes komen wel uit de bredere kandidatenset, wat aantoont dat alternatieve patronen voor verschillende deelnemers ook denkbaar zijn. Mario en Jelle gaven echter beide aan dat het verschil in sterkte tussen de patronen onderling te klein is, waardoor de bocht-aankondiging en de route-afwijking in twijfelgevallen verwisseld werden. Dit onderbouwt de design implicatie "scherper differentiëren in lengte of ritme".
 
-#### Rangschikking handvatmateriaal (UG8)
+#### Rangschikking handvatmateriaal (UG11)
 
 De deelnemers rangschikten drie tactiele referenties van beste naar slechtste op tactiliteit en draagcomfort.
 
@@ -140,11 +140,11 @@ De deelnemers rangschikten drie tactiele referenties van beste naar slechtste op
 | 2de | Eigen huidige stok (harde standaard) |
 | 3de | Kurk |
 
-Twee van de drie deelnemers (Mario, Jelle) plaatsen het zachter handvat op de eerste plek, met hun eigen stok als tweede en kurk als derde. Herman wijkt af door zijn eigen stok bovenaan te plaatsen, omdat die voor hem de tactiele tikfeedback het zuiverste doorgeeft, maar zet het zachter alternatief eveneens op de tweede plek. Kurk wordt door alle drie als minst geschikt beoordeeld omwille van duurzaamheid en onderhoud. Dit bevestigt UG8 en de design implicatie om TPE Shore 65A overmold als hoofdmateriaal te kiezen, met de huidige harde stok-textuur als optie voor de eindgebruikers die dat verkiezen.
+Twee van de drie deelnemers (Mario, Jelle) plaatsen het zachter handvat op de eerste plek, met hun eigen stok als tweede en kurk als derde. Herman wijkt af door zijn eigen stok bovenaan te plaatsen, omdat die voor hem de tactiele tikfeedback het zuiverste doorgeeft, maar zet het zachter alternatief eveneens op de tweede plek. Kurk wordt door alle drie als minst geschikt beoordeeld omwille van duurzaamheid en onderhoud. Dit bevestigt UG11 en de design implicatie om TPE Shore 65A overmold als hoofdmateriaal te kiezen, met de huidige harde stok-textuur als optie voor de eindgebruikers die dat verkiezen.
 
-#### Kleurkeuze en contrast (UG9)
+#### Kleurkeuze en contrast (UG12)
 
-Zoals in de CMF-feedback hierboven beschreven, wijst UG9 in dezelfde richting: contrast tussen handvat en de witte stok is leidend, niet één specifieke kleur. Zwart of rood worden door Mario expliciet aanvaard, wit wordt afgewezen wegens vuilgevoeligheid en gebrek aan contrast.
+Zoals in de CMF-feedback hierboven beschreven, wijst UG12 in dezelfde richting: contrast tussen handvat en de witte stok is leidend, niet één specifieke kleur. Zwart of rood worden door Mario expliciet aanvaard, wit wordt afgewezen wegens vuilgevoeligheid en gebrek aan contrast.
 
 ### CMF-Deepdive
 
@@ -164,7 +164,7 @@ De **stok zelf** volgt de standaard ISO 9999:2016 (code 12 39 03 Tactile sticks)
 
 **UX**
 
-- **Aankondiging vs obstakel scherper differentiëren** in lengte of ritme. Mario's verwarring is een early warning die in een drukke straatcontext zal breken.
+- **Bocht-aankondiging vs route-afwijking scherper differentiëren** in lengte of ritme. Mario's verwarring is een early warning die in een drukke straatcontext zal breken.
 - **Richtingsinformatie (links/rechts) in het trilpatroon zelf** integreren als default, mét mogelijkheid om dit via app uit te schakelen voor power-users zoals Jelle die het kompas voldoende vinden.
 - **Aankondigingsafstand parametriseren** in software. De spread tussen 2 stappen (Mario), 2 meter (Jelle) en 50 meter (Herman) toont dat één universele default onhaalbaar is.
 - **Stille default**: het systeem mag niet ingrijpen bij elke micro-correctie, alleen bij echte gebeurtenissen. Dit is consistent met het *kalmte*-principe uit het UX-document.
@@ -182,7 +182,7 @@ De **stok zelf** volgt de standaard ISO 9999:2016 (code 12 39 03 Tactile sticks)
 ### Develop 3 conclusies
 
 - **De versmalde gleuf werkt** → expliciete bevestiging door Jelle dat het kompas op de juiste plek zit, geen heropening van die ontwerpkeuze nodig.
-- **De drie trilpatronen zijn principieel onderscheidbaar** maar de ruimte tussen aankondiging en obstakel is op de grens en moet aangescherpt worden voor de eindversie.
+- **De drie trilpatronen zijn principieel onderscheidbaar** maar de ruimte tussen de bocht-aankondiging en de route-afwijking is op de grens en moet aangescherpt worden voor de eindversie.
 - **Twee van de drie testers willen richtingsinformatie in het patroon zelf** → de Develop 1 hypothese dat het kompas alleen volstaat is door de meerderheid weerlegd.
 - **De optimale aankondigingsafstand bestaat niet als universele waarde** → personalisering via settings is geen luxe-extra maar een design requirement.
 - **Real-life cognitieve belasting blijft hanteerbaar** voor de kerndoelgroep (audio-vrije navigatoren), de Develop 2 winst houdt stand in een complexere context.

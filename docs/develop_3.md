@@ -70,7 +70,7 @@ Alle patronen gebruiken de **in-handle LRA-motor** (lineaire resonantie-actuator
 
 ### 3.1 Tabel microinteractions
 
-> De feedback-kolom hieronder geeft *voorbeelden* van trilpatronen per moment. De definitieve patronen voor de drie MVP-prioriteiten (M4 obstakel, M6 afwijking van route, M9 bocht nadert) zijn pas na de Develop 3 user-test gekozen op basis van de voorkeursrangschikking door de deelnemers.
+> De feedback-kolom hieronder geeft *voorbeelden* van trilpatronen per moment. De definitieve patronen voor de drie MVP-prioriteiten (M4 bocht nadert, M6 afwijking van route, M9 batterij low) zijn pas na de Develop 3 user-test gekozen op basis van de voorkeursrangschikking door de deelnemers.
 
 | # | Moment | Trigger | Regels | Voorbeeld feedback (wat de gebruiker voelt/hoort) | Loops & modes |
 |---|---|---|---|---|---|

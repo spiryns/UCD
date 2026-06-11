@@ -16,14 +16,22 @@ Lees eerst [bom.md](bom.md) voor de onderdelen en [wiring.md](wiring.md) voor he
 
 ## Sectie 1 → 3D-print
 
+<p align="center">
+  <img src="../img/3D print.png" alt="3D-geprinte onderdelen van het SensePath-handvat" width="600"/>
+  <br/><em>De 3D-geprinte onderdelen van het tech-handvat en de modules.</em>
+</p>
+
 ### Bestanden
 
-Open [cad/exports/](../cad/exports/) en download:
-- `handvat_dev3_core.stl` ; PA6 buitenwand met gleufpositie + servo-cavity + batterij-cavity
-- `handvat_dev3_kompas.stl` ; sferisch kompaselement, koppelt op servo-as
-- `handvat_dev3_cap.stl` ; afsluit-dop met knop-, encoder- en switch-openingen
+Open [cad/exports/](../cad/exports/) en download de STL-bestanden:
+- `behuizingstok_3Dprint.stl` ; hoofdbehuizing van het tech-handvat (stok-zijde)
+- `opzetstukbehuizing_3Dprint.stl` ; opzetstuk-behuizing bovenaan het handvat
+- `servobehuizing_3Dprint.stl` ; behuizing voor de MG90S servo (kompas-aandrijving)
+- `Kompas_3Dprint.stl` ; sferisch kompaselement, koppelt op de servo-as
+- `elektronica_3Dprint.stl` ; houder/frame voor de elektronica in het handvat
+- `boxhold_3Dprint.stl` ; behuizing van de Wizard-of-Oz controller-module
 
-> Zolang de exports nog niet aanwezig zijn: open de NX-files in [cad/](../cad/) en exporteer zelf naar STL (export → faceted body → coarse mesh).
+> De NX-bronbestanden staan in [cad/](../cad/); van daaruit kun je desgewenst zelf opnieuw exporteren (export → faceted body).
 
 ### Aanbevolen print-instellingen
 
@@ -53,6 +61,11 @@ Open [cad/exports/](../cad/exports/) en download:
 ---
 
 ## Sectie 2 → Elektronica solderen
+
+<p align="center">
+  <img src="../img/Assy Elek.jpeg" alt="Elektronica-assembly van het SensePath-handvat" width="600"/>
+  <br/><em>Elektronica-assembly: XIAO ESP32-S3, DRV2605L, MG90S servo, coin vibratiemotor en audio-amp.</em>
+</p>
 
 ### Volgorde (zie [wiring.md](wiring.md) voor pinout)
 
@@ -173,9 +186,9 @@ De **controller-firmware** (apart project, draait op de XIAO ESP32-C3) moet de K
 
 1. Li-Po-stekker aansluiten op TP4056 ; de XIAO ESP32-S3 moet binnen ~1 s booten (LED op de XIAO knippert). Bij eerste aansluiting boot het handvat altijd op (geen latching aan/uit-mechaniek).
 2. Voor losse handvat-test: smartphone WiFi → verbinden met SSID `SensePath`, wachtwoord `sensepath`. Browser → `http://192.168.4.1/`. (Voor de echte sessie: zie sectie 7 → integratie.)
-3. **Coin motor test**: trigger M4 (obstakel) → twee korte trillingen voelbaar.
-4. **Coin motor test**: trigger M6 (koersafwijking) → drie snelle trillingen.
-5. **Coin motor test**: trigger M9 (bocht-aankondiging) → één langere oplopende trilling.
+3. **Coin motor test**: trigger M4 (bocht nadert) → oplopende crescendo (5 pulsen) voelbaar.
+4. **Coin motor test**: trigger M6 (route-afwijking) → ademende pulsreeks (3 cycli) voelbaar.
+5. **Coin motor test**: trigger M9 (batterij low) → drie korte hoog-frequente ticks.
 6. **Drukknop short-press test**: HOTUT-knop kort indrukken ; status-melding in Serial Monitor (start/stop route).
 7. **Drukknop long-press test**: HOTUT-knop ≥3 s ingedrukt houden ; korte vibratie-cue als acknowledgement, dan stilte (XIAO in deep-sleep). Stroommeting via USB-C inline meter moet ~10 mA draw tonen i.p.v. ~40 mA.
 8. **Wake-up test**: HOTUT kort indrukken vanuit deep-sleep ; XIAO boot opnieuw, "SensePath start" verschijnt in Serial Monitor.

@@ -235,7 +235,7 @@ In Test 3 werd de voorkeurscombinatie uit Test 1 en Test 2 (laagste gleufpositie
 - **Cognitieve belasting daalt met 1,67 punten** op een 7-puntsschaal (van 3,00 naar 4,67), het sterkste bewijs dat ergonomische herontwerpkeuzes direct de mentale belasting verlagen. UG3 (≥4,50) is hiermee gehaald.
 - **Continue closed-loop kompasfeedback** (volledige uitwijking naar de doelrichting, geleidelijke terugkoppeling naar neutraal) sluit de Gulf of Evaluation die in Develop 1 de Compare-fase brak.
 - **Antropometrische verankering in NX (ANSUR II, P25-P75)** zorgt dat het handvat past bij het middelste 50% van de doelgroep en niet meer afhangt van individuele handgrootte.
-- **Bereidheid blijft het open vraagstuk**: Develop 2 bevestigt dat sommige gebruikers (audio-eerst navigators zoals Herman) buiten de kerndoelgroep van SensePath vallen, wat de gebruikerssegmentatie scherper maakt voor Develop 3.
+- **Bereidheid blijft het open vraagstuk**: Develop 2 bevestigt dat sommige gebruikers (audio-eerst navigators zoals Herman) buiten de kerndoelgroep van SensePath vallen, wat de gebruikerssegmentatie scherper maakt voor Develop 3. **UG5** (bereidheid ≥ 5,50) werd met 4,33 niet gehaald, en **UG4** (vertrouwen) werd in deze fase niet gemeten (n.v.t. in de benchmarktabel) ; beide worden meegenomen naar Develop 3.
 - **Een uitwisselbare kompasmodule** is de logische volgende stap, met ruimte voor persoonlijke voorkeur en een robuuste wintervariant voor handschoengebruik.
 
 ### Kritische reflectie Develop 2
