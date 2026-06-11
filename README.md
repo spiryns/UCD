@@ -113,6 +113,11 @@ De keuzes die deze positionering dragen, zijn telkens empirisch onderbouwd: de e
 
 Het MVP-prototype bestaat uit **drie fysieke modules**: het stok-onderstuk, het tech-handvat dat erop schroeft, en een **aparte Wizard-of-Oz controller-module** (eigen XIAO ESP32-C3, batterij en KY-040 encoder) die draadloos via ESP-NOW met het handvat communiceert. Het rapport onderscheidt bewust **het beoogde eindproduct** (productie-vorm met hoog-nauwkeurige RTK GNSS via FLEPOS / WALCORS, smartphone-app, ToF-obstakeldetectie en productie-materialen) van **ons MVP-prototype** (academisch deliverable met PLA-print, aparte controller-module als Wizard-of-Oz vervanger voor GPS, en bewust geen obstakeldetectie). Beide niveaus en de vertaalstap ertussen worden uiteengezet in de [Deliver](docs/deliver.md)-sectie. Voor de open onderzoeksvragen en aanbevelingen voor vervolgwerk: zie [Kritische reflectie](#kritische-reflectie).
 
+<p align="center">
+  <img src="img/Render huis binnen.png" alt="Render van SensePath in gebruik bij indoor navigatie" width="600"/>
+  <br/><em>SensePath in gebruik: indoor navigatie met de tweedelige witte stok.</em>
+</p>
+
 ---
 
 ## Kritische reflectie
