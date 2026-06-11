@@ -22,6 +22,11 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 
 #### Architectuur van het eindproduct
 
+<p align="center">
+  <img src="../img/ASSYNIEUW.png" alt="Assembly van het SensePath eindproduct" width="600"/>
+  <br/><em>Assembly-overzicht van het beoogde eindproduct: tech-handvat, kompasmechanisme en stok-onderstuk.</em>
+</p>
+
 **Hardware**
 - 1× microcontroller met BLE 5.0 + WiFi (productie-equivalent van XIAO ESP32-S3)
 - 1× DRV2605L haptische driver
@@ -66,6 +71,11 @@ Drie principes dragen de productie-vorm:
 Volledige onderbouwing in [design_requirements.md](design_requirements.md).
 
 ### Ons prototype → MVP voor academische deliverable
+
+<p align="center">
+  <img src="../img/Productfoto Prototype.png" alt="Productfoto van het SensePath MVP-prototype" width="600"/>
+  <br/><em>Productfoto van ons MVP-prototype: tech-handvat op de witte stok.</em>
+</p>
 
 Wat we werkelijk gebouwd hebben, ligt bewust onder de productie-scope. Een academisch project van één semester moet de **essentiële design-hypothesen** kunnen testen, niet het volledige product realiseren. Onze prototype-keuzes weerspiegelen die scope-beperking, met telkens een verantwoording voor de versimpeling.
 
