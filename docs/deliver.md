@@ -23,7 +23,7 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 #### Architectuur van het eindproduct
 
 <p align="center">
-  <img src="../img/ASSYNIEUW.png" alt="Assembly van het SensePath eindproduct" width="600"/>
+  <img src="../img/ASSYNIEUW.png" alt="Assembly van het SensePath eindproduct" width="1400"/>
   <br/><em>Assembly-overzicht van het beoogde eindproduct: tech-handvat, kompasmechanisme en stok-onderstuk.</em>
 </p>
 
@@ -73,7 +73,7 @@ Volledige onderbouwing in [design_requirements.md](design_requirements.md).
 ### Ons prototype → MVP voor academische deliverable
 
 <p align="center">
-  <img src="../img/Productfoto Prototype.png" alt="Productfoto van het SensePath MVP-prototype" width="600"/>
+  <img src="../img/Productfoto Prototype.png" alt="Productfoto van het SensePath MVP-prototype" width="1400"/>
   <br/><em>Productfoto van ons MVP-prototype: tech-handvat op de witte stok.</em>
 </p>
 

@@ -220,12 +220,50 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 
 ## Bronnen
 
+### Wetenschappelijke literatuur
+
 - Liu, G., Yu, T., Yu, C., Xu, H., Xu, S., Yang, C., Wang, F., Mi, H., & Shi, Y. (2021). Tactile Compass: Enabling visually impaired people to follow a path with continuous directional feedback. *Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems*. ACM. https://doi.org/10.1145/3411764.3445644
 - Guerreiro, J., Ahmetovic, D., Sato, D., Kitani, K., & Asakawa, C. (2019). Airport accessibility and navigation assistance for people with visual impairments. *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems*, 1-14.
 - Slade, P., Tambe, A., & Kochenderfer, M. J. (2021). Multimodal sensing and intuitive steering assistance improve navigation and mobility for people with impaired vision. *Science Robotics, 6*(59), eabg6594.
+- Martiniello, N., et al. (2020). *Aesthetics and perceived stigma of assistive technology for people with visual impairment.* (Geciteerd in de Develop 3 UX- en CMF-onderbouwing.)
+- Alary, F., et al. (2008). *Tactile acuity in the blind: a psychophysical study using a two-dimensional angle discrimination task.* Experimental Brain Research. (Tactiele drempelwaarden bij blinde gebruikers.)
+- Skedung, L., et al. (2018). *Tactiele perceptie van fijne oppervlaktetexturen.* (Leesbaarheid van grip-texturen voor oudere handen.)
+- Shostack, G. L. (1984). Designing services that deliver. *Harvard Business Review, 62*(1), 133-139.
+- Fogg, B. J. (2009). A behavior model for persuasive design. *Proceedings of the 4th International Conference on Persuasive Technology (Persuasive '09)*. ACM.
+- Vaes, K. (2014). *Product Stigmaticity: Understanding, measuring and managing product-related stigma* [Doctoraatsproefschrift, TU Delft & Universiteit Antwerpen].
+- Wertheimer, M. (1923). *Untersuchungen zur Lehre von der Gestalt* (Gestalt-perceptiewetten).
+
+### Ontwerptheorie & boeken
+
 - Norman, D. A. (2013). *The Design of Everyday Things: Revised and Expanded Edition.* Basic Books.
+- Norman, D. A. (2004). *Emotional Design: Why We Love (or Hate) Everyday Things.* Basic Books.
+- Norman, D. A. (2011). *Living with Complexity.* MIT Press.
+- Saffer, D. (2013). *Microinteractions: Designing with Details.* O'Reilly Media.
+- Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products.* Portfolio / Penguin.
+- Walter, A. (2011). *Designing for Emotion.* A Book Apart.
+
+### Normen, standaarden & richtlijnen
+
+- ISO 9999:2016. *Assistive products for persons with disability — Classification and terminology.* International Organization for Standardization.
+- World Health Organization. (2016). *Priority assistive products list (APL)* en *Assistive product specifications (APS).* WHO.
 - World Health Organization. (2023). *Blindness and vision impairment.* Geraadpleegd van https://www.who.int/news-room/fact-sheets/detail/blindness-and-visual-impairment
+- Gordon, C. C., et al. (2014). *2012 Anthropometric Survey of U.S. Army Personnel: Methods and Summary Statistics (ANSUR II).* U.S. Army Natick Soldier RD&E Center.
+
+### Methodologie
+
 - Design Council. (2005). *The Double Diamond: A universally accepted depiction of the design process.* Geraadpleegd van https://www.designcouncil.org.uk/double-diamond
+
+### Positionerings-infrastructuur
+
+- Digitaal Vlaanderen. *FLEPOS — Flemish Positioning Service* (RTK GNSS-correcties via NTRIP).
+- Service public de Wallonie (SPW). *WALCORS — Walloon Continuously Operating Reference Stations.*
+
+### Cursusmateriaal (Gebruiksgericht Ontwerpen, Universiteit Gent)
+
+- Baccarne, B. (2025-2026). *Project Gebruiksgericht Ontwerpen — cursusmateriaal* (IxD / Usability / UX, Cognition, Human Senses & Interfaces, Social Interaction & Behaviour, Evaluation Methods). Universiteit Gent. https://github.com/basbaccarne/human-centered-design
+
+### AI-tools
+
 - Anthropic. (2026). Claude (Claude Opus 4.7) [Groot taalmodel]. https://claude.ai
 - OpenAI. (2026). ChatGPT (GPT-4o) [Groot taalmodel]. https://chat.openai.com
 - Google DeepMind. (2026). Nano Banana Pro (Gemini 3 Pro Image) [AI-beeldgeneratiemodel].
