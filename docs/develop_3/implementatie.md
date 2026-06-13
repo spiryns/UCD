@@ -61,7 +61,7 @@ Drie sporen: **App**, **Elektronica** en **Hardware**. Per item een kolom "Bron"
 |---|---|---|
 | H1 | Handvat-behuizing, glasvezelversterkt PA12 | Anti-emotie "medicaliteit" |
 | H2 | Soft-touch TPU-overmold, shore 70A, micro-textuur Ra 3 tot 4 µm | Visceral laag "tast-textuur" |
-| H3 | Antraciet mat als hoofdkleur, donkergrijs accent | Primaire emotie "discretie" |
+| H3 | Olijfgroen (olive green) mat als hoofdkleur | Primaire emotie "discretie" |
 | H4 | Handvat-dimensies binnen P25 tot P75 ANSUR II (middle 50%) | Dev 2 D6.8 |
 | H5 | Kompasgleuf met compass-element op positie H1 (hypothenar) | Dev 2 D6.1 |
 | H6 | Sferisch kompaselement, medium protrusiehoogte | Dev 2 D6.2 + D6.3 |

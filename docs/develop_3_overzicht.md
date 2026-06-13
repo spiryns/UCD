@@ -175,7 +175,7 @@ De **stok zelf** volgt de standaard ISO 9999:2016 (code 12 39 03 Tactile sticks)
 
 - **Zachter handvatmateriaal** (TPE Shore 65A overmold) als hoofdkeuze. Afwijken van het standaard harde stokhandvat is gerechtvaardigd door de unanieme positieve reactie op de padelracket-referentie.
 - **Kurk hoogstens als grip-accent**, niet als hoofdmateriaal. Duurzaamheid in weer en straatgebruik weegt zwaarder dan tactiele appeal.
-- **Kleurregel**: contrasterend met de witte stok (zwart of rood handvat). Wit uitgesloten wegens vuilgevoeligheid en gebrek aan contrast.
+- **Kleurregel**: contrasterend met de witte stok ; uit het onderzoek kwam dat contrast leidend is, niet één specifieke kleur. Ons finale prototype is uitgevoerd in **olijfgroen (olive green)**. Wit uitgesloten wegens vuilgevoeligheid en gebrek aan contrast.
 - **De stok blijft wit** conform wettelijke vereisten in de meeste landen (ISO 9999, nationale verkeerswetten).
 - **Vervangbare pin** is randvoorwaarde, niet een latere optimalisatie. Herman's winter-zorg combineert met Jelle's millimeter-finetuning tot één gedeelde noodzaak.
 
@@ -187,7 +187,7 @@ De **stok zelf** volgt de standaard ISO 9999:2016 (code 12 39 03 Tactile sticks)
 - **De optimale aankondigingsafstand bestaat niet als universele waarde** → personalisering via settings is geen luxe-extra maar een design requirement.
 - **Real-life cognitieve belasting blijft hanteerbaar** voor de kerndoelgroep (audio-vrije navigatoren), de Develop 2 winst houdt stand in een complexere context.
 - **Zachter handvatmateriaal wint unaniem** → Develop 3 levert een eenduidige CMF-richting op voor het overmold (TPE Shore 65A), de grip-textuur (fijne radiale ribbels), de buttons (POM + TPE) en de pin-tip (TPE op aluminium).
-- **Kleur-keuze volgt een regel, geen voorkeur**: contrast met de witte stok is leidend (zwart of rood), niet esthetiek.
+- **Kleur-keuze volgt een regel, geen voorkeur**: contrast met de witte stok is leidend (niet één specifieke kleur), niet esthetiek. Ons finale prototype werd uitgevoerd in **olijfgroen (olive green)**.
 - **Vervangbare pin** is noodzakelijk om winterse handschoen-condities te dekken en individuele tactiele drempels te accommoderen.
 
 ### Kritische reflectie Develop 3
