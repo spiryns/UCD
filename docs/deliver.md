@@ -80,13 +80,13 @@ Volledige onderbouwing in [design_requirements.md](design_requirements.md).
 
 Wat we werkelijk gebouwd hebben, ligt bewust onder de productie-scope. Een academisch project van één semester moet de **essentiële design-hypothesen** kunnen testen, niet het volledige product realiseren. Onze prototype-keuzes weerspiegelen die scope-beperking, met telkens een verantwoording voor de versimpeling.
 
-#### Drie fysieke modules
+#### Drie onderdelen
 
-Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
+Het MVP-prototype is opgesplitst in drie onderdelen:
 
 1. **Stok-onderstuk** ; conventionele lange witte stok waarop we bovenaan een **3D-geprint draadstuk vast hebben geïntegreerd**. De pin-tip aan het loop-uiteinde blijft verwisselbaar zoals bij elke commerciële witte stok.
 2. **Tech-handvat** ; schroeft via een mee-geprinte schroefdraad op het stok-onderstuk. Bevat alle handvat-elektronica (zie hieronder).
-3. **Wizard-of-Oz controller-module** ; fysiek apart, draadloos via ESP-NOW gekoppeld aan het handvat. Bevat een XIAO ESP32-C3, KY-040 encoder, eigen batterij en oplaadkanaal.
+3. **Besturing** ; bepaalt welke richting en welke signalen het handvat krijgt. De besturing valt uiteen in een **fysieke besturing** (de Wizard-of-Oz controller-module die de testleider bedient) en een **digitale besturing** (de software op het handvat, de controller en de telefoon-app). Zie hieronder.
 
 #### Hardware-realisatie tech-handvat
 
@@ -106,19 +106,27 @@ Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
 - **Interne Li-Po 1000 mAh** + **TP4056 USB-C laadcircuit** ; aparte USB-C laad-poort, firmware-flashen via de eigen USB-C poort van de XIAO.
 - **MT3608 boost converter** ; verzorgt de 5 V rail voor de servo en de audio-versterker (staat altijd aan; de audio-amp wordt apart via zijn SD-pin in stand-by gezet).
 
-#### Hardware-realisatie Wizard-of-Oz controller (aparte module)
+#### Hardware-realisatie besturing
+
+De **besturing** stuurt het handvat aan en bestaat uit twee complementaire lagen: een **fysieke** laag (de controller die de testleider in handen heeft) en een **digitale** laag (de software die de signalen genereert en doorstuurt). Samen vormen ze de Wizard-of-Oz-brug die een toekomstig autonoom GPS-systeem nabootst.
+
+**Fysieke besturing → Wizard-of-Oz controller-module**
 
 <p align="center">
   <img src="../img/Foto controller.png" alt="Wizard-of-Oz controller-module" width="1400"/>
   <br/><em>De aparte Wizard-of-Oz controller-module: XIAO ESP32-C3 + KY-040 encoder in een 3D-geprinte PLA-behuizing, draadloos via ESP-NOW gekoppeld aan het handvat.</em>
 </p>
 
-- **XIAO ESP32-C3** als microcontroller, eigen firmware. Verstuurt encoder-deltas via ESP-NOW naar het handvat.
+- **XIAO ESP32-C3** als microcontroller, met eigen firmware ([src/firmware/controller/main.cpp](../src/firmware/controller/main.cpp)). Verstuurt encoder-deltas via ESP-NOW naar het handvat.
 - **KY-040 roterende encoder** met geïntegreerde drukknop. De testleider draait de encoder; elke positie-update gaat draadloos naar het handvat dat op zijn beurt de servo aanstuurt.
 - **Eigen Li-Po 1000 mAh + TP4056 USB-C laadcircuit + rocker-switch + USB-C laad-poort** ; identieke voedingsschema als het handvat, zonder MT3608 (geen audio nodig op de controller).
 - **3D-print PLA case** (~60 × 40 × 25 mm) met encoder bovenaan en switch + USB-C op de zijkant.
 
-Daarmee voelt de testleider mechanische rotatie alsof hij een echte stuurinterface in handen heeft, en is de bridge naar een toekomstig autonoom GPS-systeem cleaner gedefinieerd: de wijziging zit niet in het handvat zelf maar in wie/wat de richtingsdata genereert (controller-encoder vs GPS-engine).
+Daarmee voelt de testleider mechanische rotatie alsof hij een echte stuurinterface in handen heeft, en is de brug naar een toekomstig autonoom GPS-systeem cleaner gedefinieerd: de wijziging zit niet in het handvat zelf maar in wie/wat de richtingsdata genereert (controller-encoder vs GPS-engine).
+
+**Digitale besturing → software**
+
+De digitale laag vertaalt de fysieke input naar richting, haptiek en audio. Ze bestaat uit de firmware op het handvat ([src/firmware/handle/main.cpp](../src/firmware/handle/main.cpp)), de firmware op de controller ([src/firmware/controller/main.cpp](../src/firmware/controller/main.cpp)) en de toegankelijke telefoon-app ([src/app/](../src/app/)) die het handvat zelf via WiFi serveert. De volledige software-architectuur staat beschreven in [docs/software.md](software.md).
 
 #### Waarom dit voldoende is om de essentiële interacties te valideren
 
