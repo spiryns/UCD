@@ -212,9 +212,13 @@ AI werd **niet** ingezet voor het uitvoeren of analyseren van user interviews, h
 | Bill of Materials | [docs/bom.md](docs/bom.md) |
 | Schakelschema | [docs/wiring.md](docs/wiring.md) |
 | Build guide | [docs/build_guide.md](docs/build_guide.md) |
+| Software-architectuur | [docs/software.md](docs/software.md) |
 | CAD-bestanden | [cad/](cad/) |
-| CAD-exports (STL/STEP) | [cad/exports/](cad/exports/) |
-| Firmware | [src/firmware/sensepath_esp32/](src/firmware/sensepath_esp32/) |
+| Volledig 3D-model handvat (STEP) | [cad/Finaal Prototype.stp](cad/Finaal%20Prototype.stp) |
+| CAD-exports (STL per onderdeel) | [cad/exports/](cad/exports/) |
+| Firmware handvat | [src/firmware/handle/main.cpp](src/firmware/handle/main.cpp) |
+| Firmware controller | [src/firmware/controller/main.cpp](src/firmware/controller/main.cpp) |
+| Telefoon-app | [src/app/](src/app/) |
 
 ---
 

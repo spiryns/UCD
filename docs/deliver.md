@@ -132,8 +132,11 @@ Het prototype test wat het ontwerp daadwerkelijk uniek maakt: de combinatie van 
 | [wiring.md](wiring.md) | Schakelschema per module + ESP-NOW link + power budget |
 | [build_guide.md](build_guide.md) | Stap-voor-stap bouwinstructies (handvat + controller + integratie-test) |
 | [Project context/sensepath_wiring_schematic.html](../Project%20context/sensepath_wiring_schematic.html) | Visueel wiring-schema in browser, met beide modules en de draadloze link |
-| [cad/](../cad/) | CAD-bronbestanden Siemens NX + STL/STEP exports in [cad/exports/](../cad/exports/) |
-| [src/firmware/sensepath_esp32/](../src/firmware/sensepath_esp32/) | Arduino firmware voor het handvat (ESP-NOW receiver + servo + audio); controller-firmware staat in een aparte sketch nog te schrijven |
+| [cad/](../cad/) | CAD-bronbestanden Siemens NX, het volledige 3D-model van het handvat [Finaal Prototype.stp](../cad/Finaal%20Prototype.stp) (STEP), en STL-exports per onderdeel in [cad/exports/](../cad/exports/) |
+| [docs/software.md](software.md) | Software-architectuur: handvat-firmware, controller-firmware en telefoon-app |
+| [src/firmware/handle/main.cpp](../src/firmware/handle/main.cpp) | Firmware van het handvat (ESP32-S3): servo-kompas, haptiek, audio en webserver |
+| [src/firmware/controller/main.cpp](../src/firmware/controller/main.cpp) | Firmware van de Wizard-of-Oz controller (ESP32-C3): encoder + afslagknop via ESP-NOW |
+| [src/app/](../src/app/) | Toegankelijke telefoon-app (browser) voor bestemming, navigatie, live kompas en instellingen |
 
 ### Vertaalstap → prototype tegenover eindproduct
 
