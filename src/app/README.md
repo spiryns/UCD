@@ -18,8 +18,12 @@ serveren, dus de firmware heeft er een C-versie van nodig (`handle/webapp.h`, ee
 PROGMEM-string). Die wordt **automatisch gegenereerd** - bewerk dus `index.html`,
 nooit `webapp.h` rechtstreeks:
 
-```
-src/app/index.html ──(tools/html2header.py)──▶ src/firmware/handle/webapp.h ──▶ firmware
+```mermaid
+flowchart LR
+    IDX["index.html<br/>de app"]
+    IDX -->|html2header.py| WH["handle/webapp.h"]
+    WH -->|flashen| DEV["handvat serveert<br/>de app over WiFi"]
+    IDX -->|mock_server.py| LAP["browser op<br/>je laptop"]
 ```
 
 Na een wijziging in `index.html`:

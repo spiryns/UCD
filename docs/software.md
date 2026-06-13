@@ -19,12 +19,12 @@ centrale knooppunt: het stuurt de fysieke feedback aan én serveert de app.
 
 ```mermaid
 graph LR
-    C["Controller<br/>ESP32-C3<br/>rotary-encoder + afslagknop"]
-    H["Handvat<br/>ESP32-S3<br/>servo-kompas, trilmotor,<br/>speaker, webserver"]
+    C["Controller<br/>ESP32-C3<br/>encoder + afslagknop"]
+    H["Handvat<br/>ESP32-S3<br/>servo, trilmotor,<br/>speaker, webserver"]
     P["Telefoon<br/>browser-app"]
-    C -- "ESP-NOW<br/>(draadloos, peer-to-peer)" --> H
-    P -- "WiFi / HTTP REST" --> H
-    H -- "JSON: kompas + instellingen" --> P
+    C -->|ESP-NOW draadloos| H
+    P -->|WiFi / HTTP REST| H
+    H -->|JSON kompas + instellingen| P
 ```
 
 | Apparaat | Chip | Rol |
@@ -75,9 +75,9 @@ als veilige noodgreep bestaan.
 stateDiagram-v2
     [*] --> Rust
     Rust --> Ingedrukt: knop omlaag
-    Ingedrukt --> Kort: los < 0.4 s
-    Ingedrukt --> Lang: los 3-6 s
-    Ingedrukt --> DeepSleep: vasthouden >= 6 s
+    Ingedrukt --> Kort: los binnen 0.4 s
+    Ingedrukt --> Lang: los na 3 tot 6 s
+    Ingedrukt --> DeepSleep: vasthouden 6 s of langer
     Kort --> Dubbel: 2e druk binnen 0.4 s
     Kort --> ActieKort: geen 2e druk
     Dubbel --> ActieDubbel
@@ -144,15 +144,15 @@ De app praat met het handvat over gewone HTTP. De twee belangrijkste stromen:
 
 ```mermaid
 sequenceDiagram
-    participant E as Encoder (controller)
-    participant H as Handvat (servo + webserver)
+    participant E as Encoder
+    participant H as Handvat
     participant A as Telefoon-app
-    E->>H: ESP-NOW: encoderstand
-    H->>H: servo volgt (kompas beweegt)
-    loop elke 100 ms (tijdens route)
+    E->>H: ESP-NOW encoderstand
+    H->>H: servo volgt, kompas beweegt
+    loop elke 100 ms tijdens route
         A->>H: GET /api/servo
-        H-->>A: {"angle": N}
-        A->>A: kompas-naald draait mee (digital twin)
+        H-->>A: hoek als JSON
+        A->>A: kompas-naald draait mee
     end
 ```
 
@@ -193,7 +193,7 @@ Elke wijziging in de app wordt als JSON naar het handvat gestuurd, daar
 
 ```mermaid
 flowchart LR
-    A[Telefoon:<br/>wijzig instelling] -->|POST /api/settings| H[Handvat]
+    A[Telefoon<br/>wijzigt instelling] -->|POST /api/settings| H[Handvat]
     H -->|bewaren| N[(NVS flash)]
     H -->|toepassen| FX[sterkte / afslag-patroon /<br/>knop-acties / audio]
     A -. preview .-> H
