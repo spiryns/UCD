@@ -29,7 +29,7 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 
 **Hardware**
 - 1× microcontroller met BLE 5.0 + WiFi (productie-equivalent van XIAO ESP32-S3)
-- 1× DRV2605L haptische driver
+- 1× Adafruit DRV2605L haptische motordriver (ADA2305)
 - 1× LRA-trilmotor (200 Hz resonance, productie-grade)
 - 1× MG90S-equivalente servo voor mechanisch kompas
 - 1× sferisch kompaselement, laagste gleufpositie, vervangbare aluminium pin met optionele TPE-tip
@@ -97,6 +97,7 @@ Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
 
 - **3D-print in PLA** in plaats van PA6 + TPE-overmold ; sneller iteratie en lagere kost. De vormfactor en grip-textuur zijn behouden, alleen de materiaal-feel verschilt. CMF-keuzes zijn onderbouwd in Develop 3 maar niet als gecombineerd prototype getest.
 - **XIAO ESP32-S3** als microcontroller, ontvangt richting-updates via ESP-NOW van de controller-module.
+- **Adafruit DRV2605L haptische motordriver** (ADA2305) ; I2C-gekoppeld aan de XIAO, bevat 123 ingebouwde haptische effecten en stuurt de coin vibratiemotor aan in ERM-modus.
 - **Coin vibratiemotor** in plaats van LRA ; goedkoper en breder beschikbaar. Wordt aangedreven door dezelfde DRV2605L (in ERM-modus); de drie haptische microsignalen blijven herkenbaar.
 - **MG90S mini-servo** voor aansturing van het mechanisch kompas. Identiek aan de productie-vision.
 - **Geen obstakeldetectie** in het prototype. Methodische keuze: het stok-onderstuk blijft de primaire detector, en het toevoegen van ToF-sensors zou een confounding variabele introduceren in de haptische-navigatie-tests die we willen doen. Voor productie is obstakeldetectie volwaardig opgenomen (D2.5 + D2.6).
