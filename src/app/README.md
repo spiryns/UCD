@@ -8,7 +8,33 @@ WiFi - geen app-store, geen installatie, werkt in elke browser.
 src/app/
 ├── index.html      ← de volledige app (HTML + CSS + JS in één bestand)
 ├── mock_server.py  ← test de app op je laptop, zonder hardware
+├── demo.html       ← zelfstandige demo (online te bekijken, zonder hardware)
 └── README.md       ← dit bestand
+```
+
+## De app online bekijken (live demo)
+
+Wil je de app gewoon in je browser zien, zonder hardware? Er is een **zelfstandige
+demo** (`demo.html`) waarin de handvat-backend is nagebootst: de kompasnaald
+beweegt vanzelf en de instellingen reageren.
+
+**Open de demo direct (geen installatie nodig):**
+
+https://htmlpreview.github.io/?https://github.com/spiryns/UCD/blob/firmware/src/app/demo.html
+
+> In de demo is de hardware gesimuleerd en Google Maps uitgeschakeld (de echte key
+> blijft geheim). Je ziet de volledige UI, het toegankelijkheids-gedrag en de live
+> kompas-twin. Start een route met een willekeurige bestemming en ga naar de
+> Navigatie-tab om de naald te zien bewegen.
+
+**Voor een nette, permanente URL** kan de repo-eigenaar GitHub Pages aanzetten:
+repo *Settings -> Pages -> Source: Deploy from a branch* -> kies de branch + map
+*(root)*. De app staat dan op `https://spiryns.github.io/UCD/src/app/demo.html`.
+
+De demo wordt uit `index.html` gegenereerd; regenereer hem na een wijziging met:
+
+```bash
+python ../firmware/tools/html2header.py demo
 ```
 
 ## Hoe het bij de firmware past

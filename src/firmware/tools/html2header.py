@@ -21,6 +21,37 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))   # repo-root
 SRC  = os.path.join(ROOT, "src", "app", "index.html")
 OUT  = os.path.join(ROOT, "src", "firmware", "handle", "webapp.h")
+DEMO = os.path.join(ROOT, "src", "app", "demo.html")
+
+# Mini-mock die de hardware-backend (/api/...) in de pagina zelf nabootst, zodat
+# de app ook als losse link werkt (GitHub Pages / htmlpreview). De twin-naald
+# beweegt automatisch; POSTs antwoorden netjes met "ok". Wordt vooraan in <head>
+# ingespoten zodat de override actief is voordat de app-code draait.
+DEMO_MOCK = """<script>
+/* SensePath DEMO-modus: bootst de handvat-backend na zodat de app ook zonder
+   hardware werkt. De digital-twin-naald beweegt vanzelf. */
+(function () {
+  const real = window.fetch ? window.fetch.bind(window) : null;
+  const t0 = Date.now();
+  const demoAngle = () => Math.round(90 + 28 * Math.sin((Date.now() - t0) / 1500));
+  const settings = {btn_short:7,btn_double:8,btn_long:0,vib_intensity:1,vib_m4:47,
+    vib_m6:12,vib_turn_right:1,vib_turn_left:2,audio_enabled:1,tts_rate:10,emergency:""};
+  const J = (o) => Promise.resolve(new Response(JSON.stringify(o), {status:200, headers:{'Content-Type':'application/json'}}));
+  const T = (s) => Promise.resolve(new Response(s, {status:200, headers:{'Content-Type':'text/plain'}}));
+  window.fetch = function (url, opts) {
+    const u = String(url);
+    const get = !opts || !opts.method || String(opts.method).toUpperCase() === 'GET';
+    if (u.includes('/api/servo') && get) return J({angle: demoAngle()});
+    if (u.includes('/api/settings') && get) return J(settings);
+    if (u.includes('/api/destinations') && get) return J([]);
+    if (u.includes('/api/state')) return J({route_active:true, destination:''});
+    if (u.includes('/api/pending')) return T('');
+    if (u.includes('/api/')) return T('ok');
+    return real ? real(url, opts) : Promise.reject(new Error('geen netwerk in demo'));
+  };
+})();
+</script>
+"""
 
 DELIM_OPEN  = 'R"HTML('
 DELIM_CLOSE = ')HTML"'
@@ -64,8 +95,26 @@ def extract():
     print(f"index.html geschreven: {len(html)} bytes (uit {os.path.relpath(OUT, ROOT)})")
 
 
+def build_demo():
+    # Maakt een zelfstandige demo.html uit index.html door de mock in <head> te
+    # zetten. Werkt als losse link (GitHub Pages / htmlpreview), zonder hardware.
+    with open(SRC, encoding="utf-8") as f:
+        html = f.read()
+    marker = "</head>"
+    if marker in html:
+        html = html.replace(marker, DEMO_MOCK + marker, 1)
+    else:
+        html = DEMO_MOCK + html
+    with open(DEMO, "w", encoding="utf-8", newline="\n") as f:
+        f.write(html)
+    print(f"demo.html gegenereerd: {len(html)} bytes (uit {os.path.relpath(SRC, ROOT)})")
+
+
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "extract":
+    mode = sys.argv[1] if len(sys.argv) > 1 else "generate"
+    if mode == "extract":
         extract()
+    elif mode == "demo":
+        build_demo()
     else:
         generate()

@@ -5,6 +5,9 @@ Deze map bevat de volledige werkende software van het SensePath-prototype: de
 
 > Volledige software-architectuur met diagrammen, endpoints en datastromen:
 > **[../docs/software.md](../docs/software.md)**
+>
+> **Live demo van de app (zonder hardware):**
+> https://htmlpreview.github.io/?https://github.com/spiryns/UCD/blob/firmware/src/app/demo.html
 
 ## Het systeem in één oogopslag
 
