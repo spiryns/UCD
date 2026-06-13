@@ -37,13 +37,14 @@ De kerninteractie van SensePath, een continu meedraaiend mechanisch kompas, vere
 - 1× drukknop + harde aan/uit-switch
 - 1× speaker + I2S-versterker voor opt-in audio
 - 1× Li-ion accu (1500-2500 mAh) met USB-C laadcircuit + battery management
+- 1× MT3608-equivalente boost converter voor de 5 V rail (servo + audio-versterker)
 
 **Behuizing**
 - 3D-geprinte of injectie-geperste tech-handvat-core in PA6 unfilled
 - TPE Shore 65A overmold met fijne radiale ribbels
 - POM-knoppen met visueel-tactiele differentiatie
 - Mee-geprinte schroefdraad in het tech-handvat voor de schroefverbinding met de stok
-- Antraciet of contrasterend rood tech-handvat, witte stok blijft wit (ISO 9999 + verkeerswetten)
+- Olijfgroen (olive green) tech-handvat, contrasterend met de witte stok die wit blijft (ISO 9999 + verkeerswetten)
 
 **Stok-onderstuk**
 - Conventioneel ontworpen lange witte stok in productie-grade aluminium of glasvezel
@@ -89,6 +90,11 @@ Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
 
 #### Hardware-realisatie tech-handvat
 
+<p align="center">
+  <img src="../img/Assy Elek.jpeg" alt="Elektronica-assembly van het tech-handvat (prototype)" width="1400"/>
+  <br/><em>Elektronica-assembly van het tech-handvat: XIAO ESP32-S3, DRV2605L, coin vibratiemotor, MG90S servo, MAX98357A audio-amp, MT3608 boost en Li-Po.</em>
+</p>
+
 - **3D-print in PLA** in plaats van PA6 + TPE-overmold ; sneller iteratie en lagere kost. De vormfactor en grip-textuur zijn behouden, alleen de materiaal-feel verschilt. CMF-keuzes zijn onderbouwd in Develop 3 maar niet als gecombineerd prototype getest.
 - **XIAO ESP32-S3** als microcontroller, ontvangt richting-updates via ESP-NOW van de controller-module.
 - **Coin vibratiemotor** in plaats van LRA ; goedkoper en breder beschikbaar. Wordt aangedreven door dezelfde DRV2605L (in ERM-modus); de drie haptische microsignalen blijven herkenbaar.
@@ -97,8 +103,14 @@ Het MVP-prototype is opgesplitst in drie afzonderlijke onderdelen:
 - **Speaker + MAX98357A I2S-versterker** voor opt-in audio-fallback (default uit via SD-pin door XIAO D10 gegated; MT3608 boost staat altijd aan voor de servo, en SD-pin laag houdt enkel de audio-amp in stand-by).
 - **HOTUT IP67 metalen drukknop** met dubbele rol: short-press = start/stop route, double-press = "geef overzicht", long-press (≥3 s) = XIAO gaat in deep-sleep ("uit"-stand), druk uit deep-sleep = wake via EXT0 op RTC-GPIO 4. Geen rocker-switch op het handvat (physical-design constraint in de cap-geometrie); deep-sleep "off" trekt nog ~10 mA quiescent (~4 dagen autonomie in opslag).
 - **Interne Li-Po 1000 mAh** + **TP4056 USB-C laadcircuit** ; aparte USB-C laad-poort, firmware-flashen via de eigen USB-C poort van de XIAO.
+- **MT3608 boost converter** ; verzorgt de 5 V rail voor de servo en de audio-versterker (staat altijd aan; de audio-amp wordt apart via zijn SD-pin in stand-by gezet).
 
 #### Hardware-realisatie Wizard-of-Oz controller (aparte module)
+
+<p align="center">
+  <img src="../img/Foto controller.png" alt="Wizard-of-Oz controller-module" width="1400"/>
+  <br/><em>De aparte Wizard-of-Oz controller-module: XIAO ESP32-C3 + KY-040 encoder in een 3D-geprinte PLA-behuizing, draadloos via ESP-NOW gekoppeld aan het handvat.</em>
+</p>
 
 - **XIAO ESP32-C3** als microcontroller, eigen firmware. Verstuurt encoder-deltas via ESP-NOW naar het handvat.
 - **KY-040 roterende encoder** met geïntegreerde drukknop. De testleider draait de encoder; elke positie-update gaat draadloos naar het handvat dat op zijn beurt de servo aanstuurt.
@@ -144,7 +156,7 @@ Voor elke ontwerpbeslissing maakt de tabel hieronder helder wat **design** is (b
 | Voeding | Li-ion (1500 → 2500 mAh) + custom PCB met USB-C | Per module: Li-Po 1000 mAh + TP4056 USB-C laad-poort (apart laden van handvat en controller) |
 | Wizard-of-Oz aansturing tijdens testen | n.v.t. (in productie GPS-autonoom) | Aparte controller-module: XIAO ESP32-C3 + KY-040 encoder + eigen batterij, ESP-NOW link met het handvat |
 | Vervangbare aluminium pin met optionele TPE-tip | Productie-pin + TPE-tip set | Aluminium pin (TPE-tip nog niet gefabriceerd) |
-| Witte stok blijft wit, contrast-handvat | Antraciet of contrasterend rood, ISO 9999 conform | PLA in beschikbare kleur, geen finale CMF |
+| Witte stok blijft wit, contrast-handvat | Olijfgroen (olive green), contrasterend met de witte stok, ISO 9999 conform | PLA in olijfgroen (olive green) |
 
 Zie [design_requirements.md](design_requirements.md) voor de formele requirement-mapping.
 
