@@ -12,7 +12,7 @@ Het systeem bestaat uit **drie fysieke onderdelen** die elk een afzonderlijke ro
 
 1. **Stok-onderstuk** (passief) → conventionele witte stok met 3D-geprinte schroefdraad bovenaan en verwisselbare pin-tip onderaan. Geen elektronica.
 2. **Tech-handvat** (eindgebruiker) → bevat de XIAO ESP32-S3, DRV2605L + coin vibratiemotor, MG90S servo voor mechanisch kompas, opt-in audio (MAX98357A + speaker), HOTUT drukknop (dubbele rol: functie + power-control via deep-sleep), Li-Po batterij + TP4056 USB-C oplaad, MT3608 boost voor 5V rail. Schroeft op het stok-onderstuk.
-3. **Wizard-of-Oz controller** (testleider) → een **fysiek aparte module** met een **XIAO ESP32-C3**, een KY-040 roterende encoder, eigen Li-Po batterij + TP4056 USB-C oplaad en eigen rocker-switch. **Draadloos** (ESP-NOW peer-to-peer) verbonden met het tech-handvat.
+3. **Wizard-of-Oz controller** (testleider) → een **fysiek aparte module** met een **XIAO ESP32-C3**, een KY-040 roterende encoder en eigen Li-Po batterij + TP4056 USB-C oplaad. **Draadloos** (ESP-NOW peer-to-peer) verbonden met het tech-handvat.
 
 ```mermaid
 flowchart LR
@@ -21,11 +21,10 @@ flowchart LR
         C3[XIAO ESP32-C3]
         BAT2[Li-Po 1000 mAh]
         TP2[TP4056 USB-C]
-        SW2[Rocker switch]
         USBC2[USB-C laad-poort]
         USBC2 --> TP2
         TP2 <--> BAT2
-        BAT2 --> SW2 --> C3
+        BAT2 --> C3
         ENC -->|CLK / DT / SW| C3
     end
 
@@ -63,6 +62,12 @@ De keten **testleider → KY-040 → ESP32-C3 → ESP-NOW → ESP32-S3 → servo
 ---
 
 ## Module 1 → tech-handvat (XIAO ESP32-S3)
+
+![Schakeling van het tech-handvat met XIAO ESP32-S3 als centrale microcontroller, omringd door alle peripherals en het voedingscircuit](../img/schakeling-handvat-sensepath.png)
+
+*Schakelschema van het tech-handvat (Cirkit Designer). Centraal staat de **XIAO ESP32-S3** met USB-C-poort bovenaan. Linksboven de **HOTUT drukknop** naar D3. Onderaan de **MG90S servo** voor het mechanisch kompas, daarboven de **DRV2605L** breakout die de coin vibratiemotor aandrijft via I2C. Bovenaan de I2S audio-keten met **MAX98357A** versterker en speaker (opt-in fallback). Rechts het voedingstraject: **USB-C laadpoort** → **TP4056** → **Li-Po 1000 mAh** → enerzijds direct naar de XIAO 5V-pad, anderzijds via de **MT3608 boost** naar de 5 V rail voor servo en audio-amp. Het groene perfboard (20×80 mm) onderin is de fysieke draagplaat voor handmatige soldeerverbindingen.*
+
+> **Opmerking** ; deze visualisatie toont een tussen-iteratie waarin nog een aparte rocker-switch zat (de zwarte kantelschakelaar in het midden). In de finale uitvoering (zie de tabel hieronder + de paragraaf [Voeding](#voeding)) is die rocker vervangen door power-control via de HOTUT-drukknop in combinatie met deep-sleep, wat één component en één behuizings-uitsparing uitspaart.
 
 ### Pinout-tabel
 
@@ -155,14 +160,13 @@ De controller is een **fysiek aparte module** die de testleider in de hand houdt
 - 1× KY-040 roterende encoder met geïntegreerde drukknop
 - 1× Li-Po 3.7 V 1000 mAh
 - 1× TP4056 USB-C laadcircuit
-- 1× rocker switch voor harde aan/uit
 - 1× USB-C female laad-poort
 
 ### Pinout-tabel
 
 | Functie | XIAO ESP32-C3 pin | Naar | Opmerking |
 |---|---|---|---|
-| 5V in | 5V-pad | TP4056 OUT+ via rocker-switch | Voeding na switch |
+| 5V in | 5V-pad | TP4056 OUT+ direct | Continu gevoed; aan/uit via firmware-deep-sleep of fysiek loskoppelen Li-Po |
 | 3V3 uit | 3V3 | KY-040 + (Vcc) | Voor encoder logic |
 | GND | GND | Encoder GND, batterij GND, TP4056 GND | Gemeenschappelijke massa binnen de controller |
 | Encoder CLK | D0 (GPIO 2) | KY-040 CLK (A) | Interrupt-capable input |
@@ -177,8 +181,7 @@ De controller is een **fysiek aparte module** die de testleider in de hand houdt
 flowchart LR
     USBC2[USB-C laad-poort] --> TP2[TP4056]
     TP2 <--> BAT2[Li-Po 3.7V 1000mAh]
-    BAT2 --> SW2[Rocker switch]
-    SW2 --> C3[XIAO ESP32-C3]
+    BAT2 --> C3[XIAO ESP32-C3]
     C3 --> ENC[KY-040 encoder]
 ```
 
